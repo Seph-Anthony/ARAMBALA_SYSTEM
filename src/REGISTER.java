@@ -33,8 +33,8 @@ public class REGISTER extends javax.swing.JFrame {
         jEditorPane1 = new javax.swing.JEditorPane();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         pass = new javax.swing.JTextField();
         conpass = new javax.swing.JTextField();
         jLabel75 = new javax.swing.JLabel();
@@ -590,16 +590,16 @@ public class REGISTER extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/chekchek.png"))); // NOI18N
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 290, 340));
+
         jLabel2.setBackground(new java.awt.Color(0, 102, 102));
         jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("PROUCT MANAGEMENT");
+        jLabel2.setText("PROD TRACK");
         jLabel2.setToolTipText("");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 350, 470, 220));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/trolleypdate.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 380, 230));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 430, 220));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 720));
 
@@ -3295,7 +3295,7 @@ public class REGISTER extends javax.swing.JFrame {
         jLabel3.setText("Username:");
         jPanel261.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
-        jLabel269.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/usersmall.png"))); // NOI18N
+        jLabel269.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
         jPanel261.add(jLabel269, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 60));
 
         jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 350, 690));

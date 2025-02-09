@@ -41,11 +41,10 @@ public class LOGIN extends javax.swing.JFrame {
         password = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         username = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         toregister = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -73,6 +72,7 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         login10 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -118,9 +118,6 @@ public class LOGIN extends javax.swing.JFrame {
         username.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 310, 50));
 
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/usersmall.png"))); // NOI18N
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 40, 90, 50));
-
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
             public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
@@ -137,12 +134,9 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("PROUCT MANAGEMENT");
+        jLabel2.setText("PROD TRACK");
         jLabel2.setToolTipText("");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 250, 470, 220));
-
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/trolleypdate.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 380, 230));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 310, 430, 220));
 
         jPanel4.setBackground(new java.awt.Color(204, 255, 255));
 
@@ -158,6 +152,9 @@ public class LOGIN extends javax.swing.JFrame {
         );
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 360, 500));
+
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/chekchek.png"))); // NOI18N
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, 290, 340));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 620));
 
@@ -372,6 +369,9 @@ public class LOGIN extends javax.swing.JFrame {
 
         jPanel5.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 120, 50));
 
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
+        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 20, 60, 90));
+
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 350, 580));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -443,6 +443,14 @@ public class LOGIN extends javax.swing.JFrame {
    else if(password.getText().length()<8){
        
        JOptionPane.showMessageDialog(null,"Password must be atleast 8 characters long","Error Password",JOptionPane.ERROR_MESSAGE);
+       
+   }
+   
+   else if (!(username.getText().isEmpty() || password.getText().isEmpty())){
+       
+         REGISTER re = new REGISTER();
+       re.setVisible(true);
+       this.dispose();
        
    }
 
@@ -550,11 +558,11 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
