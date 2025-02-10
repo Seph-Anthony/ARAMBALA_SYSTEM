@@ -35,9 +35,6 @@ public class REGISTER extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        pass = new javax.swing.JTextField();
-        conpass = new javax.swing.JTextField();
-        jLabel75 = new javax.swing.JLabel();
         jPanel261 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         tologin = new javax.swing.JPanel();
@@ -568,6 +565,9 @@ public class REGISTER extends javax.swing.JFrame {
         usernamere = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel269 = new javax.swing.JLabel();
+        conpass = new javax.swing.JTextField();
+        jLabel75 = new javax.swing.JLabel();
+        pass = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -591,7 +591,7 @@ public class REGISTER extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/chekchek.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 290, 340));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 150, 290, 340));
 
         jLabel2.setBackground(new java.awt.Color(0, 102, 102));
         jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
@@ -599,25 +599,9 @@ public class REGISTER extends javax.swing.JFrame {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("PROD TRACK");
         jLabel2.setToolTipText("");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 370, 430, 220));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 410, 430, 220));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 720));
-
-        pass.setBackground(new java.awt.Color(204, 204, 204));
-        pass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        pass.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 470, 310, 40));
-
-        conpass.setBackground(new java.awt.Color(204, 204, 204));
-        conpass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        conpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        conpass.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 540, 310, 40));
-
-        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel75.setText("Confirm Password:");
-        jPanel1.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 520, -1, -1));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 790));
 
         jPanel261.setBackground(new java.awt.Color(204, 255, 255));
         jPanel261.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -644,7 +628,7 @@ public class REGISTER extends javax.swing.JFrame {
         jLabel7.setText("Already have an account? Click Here");
         tologin.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
 
-        jPanel261.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 640, -1, 40));
+        jPanel261.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 700, -1, 40));
 
         jPanel260.setBackground(new java.awt.Color(0, 102, 102));
         jPanel260.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -674,7 +658,7 @@ public class REGISTER extends javax.swing.JFrame {
                 .addContainerGap(12, Short.MAX_VALUE))
         );
 
-        jPanel261.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, -1, -1));
+        jPanel261.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 640, -1, -1));
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -3239,11 +3223,11 @@ public class REGISTER extends javax.swing.JFrame {
 
         jPanel4.add(jPanel132, new org.netbeans.lib.awtextra.AbsoluteConstraints(670, 560, 90, 40));
 
-        jPanel261.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 580, 90, 40));
+        jPanel261.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 640, 90, 40));
 
         jLabel74.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel74.setText("Password:");
-        jPanel261.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
+        jPanel261.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, -1, -1));
 
         contact.setBackground(new java.awt.Color(204, 204, 204));
         contact.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -3298,7 +3282,23 @@ public class REGISTER extends javax.swing.JFrame {
         jLabel269.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
         jPanel261.add(jLabel269, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 60));
 
-        jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 350, 690));
+        conpass.setBackground(new java.awt.Color(204, 204, 204));
+        conpass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        conpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        conpass.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel261.add(conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 580, 310, 40));
+
+        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel75.setText("Confirm Password:");
+        jPanel261.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, -1, -1));
+
+        pass.setBackground(new java.awt.Color(204, 204, 204));
+        pass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pass.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel261.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, 310, 40));
+
+        jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 10, 350, 760));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -3311,7 +3311,7 @@ public class REGISTER extends javax.swing.JFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 713, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 786, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
