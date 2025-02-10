@@ -3328,7 +3328,7 @@ public class REGISTER extends javax.swing.JFrame {
     }//GEN-LAST:event_tologinMouseClicked
 
     private void jPanel260MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel260MouseClicked
-      usernamere.setText(null);
+   usernamere.setText(null);
      fname.setText(null);
       lname.setText(null);
       email.setText(null);
@@ -3338,7 +3338,7 @@ public class REGISTER extends javax.swing.JFrame {
     }//GEN-LAST:event_jPanel260MouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
-    if(usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() || 
+    if( usernamere.getText().isEmpty() ||fname.getText().isEmpty() || lname.getText().isEmpty() || 
    email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() || 
    conpass.getText().isEmpty()) {
 

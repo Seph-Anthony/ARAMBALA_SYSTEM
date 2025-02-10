@@ -40,7 +40,7 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         password = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        username = new javax.swing.JTextField();
+        email = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -95,7 +95,7 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Username:");
+        jLabel3.setText("Email:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
 
         password.setBackground(new java.awt.Color(204, 204, 204));
@@ -112,11 +112,11 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 170, 70));
 
-        username.setBackground(new java.awt.Color(204, 204, 204));
-        username.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        username.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 310, 50));
+        email.setBackground(new java.awt.Color(204, 204, 204));
+        email.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        email.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 310, 50));
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -391,7 +391,7 @@ public class LOGIN extends javax.swing.JFrame {
 
     
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
-       username.setText(null);
+       email.setText(null);
        password.setText(null);
     }//GEN-LAST:event_resetMouseClicked
 
@@ -433,10 +433,10 @@ public class LOGIN extends javax.swing.JFrame {
     }//GEN-LAST:event_login6MouseClicked
 
     private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
-   if(username.getText().isEmpty() || password.getText().isEmpty() ){
+   if(email.getText().isEmpty() || password.getText().isEmpty() ){
            
            JOptionPane.showMessageDialog(null,"Invalid Registration","Error Registration",JOptionPane.ERROR_MESSAGE);
-        username.getText();
+        email.getText();
         password.getText();
        }
    
@@ -446,7 +446,7 @@ public class LOGIN extends javax.swing.JFrame {
        
    }
    
-   else if (!(username.getText().isEmpty() || password.getText().isEmpty())){
+   else if (!(email.getText().isEmpty() || password.getText().isEmpty())){
        
          REGISTER re = new REGISTER();
        re.setVisible(true);
@@ -551,6 +551,7 @@ public class LOGIN extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -589,7 +590,6 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JPanel reset;
     private javax.swing.JPanel reset1;
     private javax.swing.JPanel toregister;
-    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 
 }
