@@ -40,7 +40,7 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         password = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        email = new javax.swing.JTextField();
+        username = new javax.swing.JTextField();
         jPanel3 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -95,7 +95,7 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 290, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setText("Email:");
+        jLabel3.setText("Username:");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 170, -1, -1));
 
         password.setBackground(new java.awt.Color(204, 204, 204));
@@ -112,11 +112,11 @@ public class LOGIN extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 90, 170, 70));
 
-        email.setBackground(new java.awt.Color(204, 204, 204));
-        email.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        email.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 310, 50));
+        username.setBackground(new java.awt.Color(204, 204, 204));
+        username.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        username.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        username.setBorder(new javax.swing.border.MatteBorder(null));
+        jPanel1.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 190, 310, 50));
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
@@ -131,7 +131,7 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel2.setFont(new java.awt.Font("Showcard Gothic", 1, 36)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("PROD TRACK");
@@ -390,17 +390,6 @@ public class LOGIN extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     
-    private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
-       email.setText(null);
-       password.setText(null);
-    }//GEN-LAST:event_resetMouseClicked
-
-    private void toregisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toregisterMouseClicked
-       REGISTER re = new REGISTER();
-       re.setVisible(true);
-       this.dispose();
-    }//GEN-LAST:event_toregisterMouseClicked
-
     private void jPanel3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel3AncestorAdded
         // TODO add your handling code here:
         
@@ -408,112 +397,120 @@ public class LOGIN extends javax.swing.JFrame {
        
     }//GEN-LAST:event_jPanel3AncestorAdded
 
-    private void login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login1MouseClicked
+    private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
+        //        reset.setBackground(excolor);
+    }//GEN-LAST:event_resetMouseExited
 
-    private void login3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login3MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login3MouseClicked
+    private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
+        //      reset.setBackground(logcolor);
+    }//GEN-LAST:event_resetMouseEntered
 
-    private void login2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login2MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login2MouseClicked
-
-    private void login5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login5MouseClicked
-
-    private void login7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login7MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login7MouseClicked
-
-    private void login6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login6MouseClicked
-
-    private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
-   if(email.getText().isEmpty() || password.getText().isEmpty() ){
-           
-           JOptionPane.showMessageDialog(null,"Invalid Registration","Error Registration",JOptionPane.ERROR_MESSAGE);
-        email.getText();
-        password.getText();
-       }
-   
-   else if(password.getText().length()<8){
-       
-       JOptionPane.showMessageDialog(null,"Password must be atleast 8 characters long","Error Password",JOptionPane.ERROR_MESSAGE);
-       
-   }
-   
-   else if (!(email.getText().isEmpty() || password.getText().isEmpty())){
-       
-         REGISTER re = new REGISTER();
-       re.setVisible(true);
-       this.dispose();
-       
-   }
-
-   
-//   if(usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() || 
-//   email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() || 
-//   conpass.getText().isEmpty()) {
-//
-//    JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.", 
-//                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-//} 
-//else if (pass.getText().length() < 8) {
-//    JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.", 
-//                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-//} 
-//else if (!contact.getText().matches("\\d+")) { // Ensures only numbers in contact
-//    JOptionPane.showMessageDialog(null, "Contact number must contain only digits.", 
-//                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-//} 
-//else if (!pass.getText().equals(conpass.getText())) {
-//    JOptionPane.showMessageDialog(null, "Passwords do not match.", 
-//                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-//} 
-//else {
-//    JOptionPane.showMessageDialog(null, "Registration Successful!", 
-//                                  "Success", JOptionPane.INFORMATION_MESSAGE);
-//}
-
-      
-        
-    }//GEN-LAST:event_login4MouseClicked
-
-    private void login8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login8MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login8MouseClicked
-
-    private void login10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login10MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login10MouseClicked
-
-    private void login9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_login9MouseClicked
+    private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
+        username.setText(null);
+        password.setText(null);
+    }//GEN-LAST:event_resetMouseClicked
 
     private void reset1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_reset1MouseClicked
 
-    private void login4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseEntered
-// login4.setBackground(logcolor);
-    }//GEN-LAST:event_login4MouseEntered
+    private void login9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login9MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login9MouseClicked
+
+    private void login10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login10MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login10MouseClicked
+
+    private void login8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login8MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login8MouseClicked
+
+    private void login2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login2MouseClicked
+
+    private void login3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login3MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login3MouseClicked
+
+    private void login1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login1MouseClicked
 
     private void login4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseExited
-//       login4.setBackground(excolor);
+        //       login4.setBackground(excolor);
     }//GEN-LAST:event_login4MouseExited
 
-    private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
-//      reset.setBackground(logcolor);
-    }//GEN-LAST:event_resetMouseEntered
+    private void login4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseEntered
+        // login4.setBackground(logcolor);
+    }//GEN-LAST:event_login4MouseEntered
 
-    private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
-//        reset.setBackground(excolor);
-    }//GEN-LAST:event_resetMouseExited
+    private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
+        if(username.getText().isEmpty() || password.getText().isEmpty() ){
+
+            JOptionPane.showMessageDialog(null,"Invalid Registration","Error Registration",JOptionPane.ERROR_MESSAGE);
+            username.getText();
+            password.getText();
+        }
+
+        else if(password.getText().length()<8){
+
+            JOptionPane.showMessageDialog(null,"Password must be atleast 8 characters long","Error Password",JOptionPane.ERROR_MESSAGE);
+
+        }
+
+        else if (!(username.getText().isEmpty() || password.getText().isEmpty())){
+
+            REGISTER re = new REGISTER();
+            re.setVisible(true);
+            this.dispose();
+
+        }
+
+        //   if(usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+            //   email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ||
+            //   conpass.getText().isEmpty()) {
+            //
+            //    JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
+                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
+            //}
+        //else if (pass.getText().length() < 8) {
+            //    JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
+                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
+            //}
+        //else if (!contact.getText().matches("\\d+")) { // Ensures only numbers in contact
+            //    JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
+            //}
+        //else if (!pass.getText().equals(conpass.getText())) {
+            //    JOptionPane.showMessageDialog(null, "Passwords do not match.",
+                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
+            //}
+        //else {
+            //    JOptionPane.showMessageDialog(null, "Registration Successful!",
+                //                                  "Success", JOptionPane.INFORMATION_MESSAGE);
+            //}
+
+    }//GEN-LAST:event_login4MouseClicked
+
+    private void login6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login6MouseClicked
+
+    private void login7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login7MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login7MouseClicked
+
+    private void login5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login5MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_login5MouseClicked
+
+    private void toregisterMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_toregisterMouseClicked
+        REGISTER re = new REGISTER();
+        re.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_toregisterMouseClicked
 
     /**
      * @param args the command line arguments
@@ -551,7 +548,6 @@ public class LOGIN extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField email;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -590,6 +586,7 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JPanel reset;
     private javax.swing.JPanel reset1;
     private javax.swing.JPanel toregister;
+    private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 
 }
