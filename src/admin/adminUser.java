@@ -266,6 +266,11 @@ public void displayData(){
         jLabel4.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
         jLabel4.setText("DASHBOARD");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         jPanel11.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, 40));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
@@ -365,6 +370,14 @@ public void displayData(){
     private void usernamere4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamere4ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_usernamere4ActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        
+        admin ad = new admin();
+        ad.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments

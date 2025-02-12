@@ -1,4 +1,5 @@
 
+import admin.admin;
 import config.dbConnect;
 import javax.swing.JOptionPane;
 
@@ -3389,16 +3390,16 @@ public class REGISTER extends javax.swing.JFrame {
 
         JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return; // Stop further processing
+        return; 
     } else if (selectedType == null || selectedType.equals("Please Select a Type")) {
         JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
-    } else if (!email.getText().matches("^[\\w-\\.]+@gmail\\.com$")) { // Gmail validation
-        JOptionPane.showMessageDialog(null, "Please enter a valid Gmail address.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    } else if (pass.getText().length() < 8) {
+    }else if (!email.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@gmail\\.com$")) {
+    JOptionPane.showMessageDialog(null, "Please enter a valid Gmail address.",
+            "Error Registration", JOptionPane.ERROR_MESSAGE);
+    return;
+} else if (pass.getText().length() < 8) {
         JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
@@ -3416,8 +3417,12 @@ public class REGISTER extends javax.swing.JFrame {
                     + "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "','" + email.getText() + "', '" + contact.getText() + "','" + selectedType + "','" + conpass.getText() + "','Pending' ) ") == 1) {
 
                 JOptionPane.showMessageDialog(null, "Submitted Successfully");
-                LOGIN log = new LOGIN();
-                log.setVisible(true);
+//                LOGIN log = new LOGIN();
+//                log.setVisible(true);
+                    admin ad = new admin();
+                    ad.setVisible(true);
+
+
                 this.dispose();
             } else {
                 JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
