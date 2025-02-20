@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package admin;
+package customer;
 
+import admin.admin;
 import config.dbConnect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,12 +15,12 @@ import net.proteanit.sql.DbUtils;
  *
  * @author Admin
  */
-public class adminUser extends javax.swing.JFrame {
+public class userdashboard extends javax.swing.JFrame {
 
     /**
      * Creates new form adminUser
      */
-    public adminUser() {
+    public userdashboard() {
         initComponents();
         displayData();
     }
@@ -27,18 +28,18 @@ public class adminUser extends javax.swing.JFrame {
     
 
 
-public void displayData(){
-        try{
-            dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT * FROM user");
-            tableuser.setModel(DbUtils.resultSetToTableModel(rs));
-             rs.close();
-        }catch(SQLException ex){
-            System.out.println("Errors: "+ex.getMessage());
-        
-        }
-        
-    }
+//public void displayData(){
+//        try{
+//            dbConnect dbc = new dbConnect();
+//            ResultSet rs = dbc.getData("SELECT * FROM user");
+//            tableuser.setModel(DbUtils.resultSetToTableModel(rs));
+//             rs.close();
+//        }catch(SQLException ex){
+//            System.out.println("Errors: "+ex.getMessage());
+//        
+//        }
+//        
+//    }
 
 
 
@@ -76,21 +77,7 @@ public void displayData(){
         jLabel16 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
         usernamere1 = new javax.swing.JTextField();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jPanel11 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        usernamere2 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        usernamere = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        usernamere3 = new javax.swing.JTextField();
-        jLabel22 = new javax.swing.JLabel();
-        usernamere4 = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -112,9 +99,9 @@ public void displayData(){
         ));
         jScrollPane1.setViewportView(tableuser);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 700, 430));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 570, 430));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 740, 480));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 190, 590, 480));
 
         jPanel4.setBackground(new java.awt.Color(204, 204, 204));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
@@ -236,107 +223,11 @@ public void displayData(){
 
         jPanel1.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 130, 50));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Search User");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 110, -1, -1));
-
         usernamere1.setBackground(new java.awt.Color(204, 204, 204));
         usernamere1.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         usernamere1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         usernamere1.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel1.add(usernamere1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 310, 50));
-
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("USER PAGE");
-        jLabel2.setToolTipText("");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, 220, 70));
-
-        jPanel11.setBackground(new java.awt.Color(204, 255, 255));
-        jPanel11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
-        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel4.setText("DASHBOARD");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-        });
-        jPanel11.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 170, -1, 40));
-
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
-        jPanel11.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 60, 60, 90));
-
-        usernamere2.setBackground(new java.awt.Color(204, 204, 204));
-        usernamere2.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        usernamere2.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernamere2.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel11.add(usernamere2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 160, 200, 60));
-
-        jLabel10.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel10.setText("CUSTOMER");
-        jPanel11.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
-
-        usernamere.setBackground(new java.awt.Color(204, 204, 204));
-        usernamere.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        usernamere.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernamere.setBorder(new javax.swing.border.MatteBorder(null));
-        usernamere.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernamereActionPerformed(evt);
-            }
-        });
-        jPanel11.add(usernamere, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, 200, 70));
-
-        jLabel21.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel21.setText("PRODUCT");
-        jPanel11.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
-
-        usernamere3.setBackground(new java.awt.Color(204, 204, 204));
-        usernamere3.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        usernamere3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernamere3.setBorder(new javax.swing.border.MatteBorder(null));
-        usernamere3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernamere3ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(usernamere3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 200, 70));
-
-        jLabel22.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel22.setText("PROCESS");
-        jPanel11.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 440, -1, -1));
-
-        usernamere4.setBackground(new java.awt.Color(204, 204, 204));
-        usernamere4.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
-        usernamere4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernamere4.setBorder(new javax.swing.border.MatteBorder(null));
-        usernamere4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                usernamere4ActionPerformed(evt);
-            }
-        });
-        jPanel11.add(usernamere4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 200, 70));
-
-        jLabel7.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        jLabel7.setText("__________________");
-        jPanel11.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 200, -1));
-
-        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 270, 670));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 1020, 690));
+        jPanel1.add(usernamere1, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 180, 50));
 
         jLabel6.setBackground(new java.awt.Color(0, 102, 102));
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
@@ -348,7 +239,7 @@ public void displayData(){
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 898, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -358,26 +249,6 @@ public void displayData(){
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void usernamereActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamereActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernamereActionPerformed
-
-    private void usernamere3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamere3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernamere3ActionPerformed
-
-    private void usernamere4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_usernamere4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_usernamere4ActionPerformed
-
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        // TODO add your handling code here:
-        
-        admin ad = new admin();
-        ad.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
@@ -396,26 +267,26 @@ public void displayData(){
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(adminUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userdashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(adminUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userdashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(adminUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userdashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(adminUser.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(userdashboard.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new adminUser().setVisible(true);
+                new userdashboard().setVisible(true);
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -424,23 +295,14 @@ public void displayData(){
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel19;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -450,10 +312,6 @@ public void displayData(){
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable tableuser;
-    private javax.swing.JTextField usernamere;
     private javax.swing.JTextField usernamere1;
-    private javax.swing.JTextField usernamere2;
-    private javax.swing.JTextField usernamere3;
-    private javax.swing.JTextField usernamere4;
     // End of variables declaration//GEN-END:variables
 }
