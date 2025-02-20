@@ -5,7 +5,7 @@
  */
 package customer;
 
-import admin.admin;
+import admin.admindash;
 import config.dbConnect;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,7 +22,7 @@ public class userdashboard extends javax.swing.JFrame {
      */
     public userdashboard() {
         initComponents();
-        displayData();
+//        displayData();
     }
 
     
