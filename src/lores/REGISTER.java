@@ -4,6 +4,7 @@ package lores;
 import lores.LOGIN;
 import admin.admindash;
 import config.dbConnect;
+import java.awt.Color;
 import javax.swing.JOptionPane;
 
 /*
@@ -23,6 +24,9 @@ public class REGISTER extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
     }
+    
+      Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -46,8 +50,6 @@ public class REGISTER extends javax.swing.JFrame {
         jLabel269 = new javax.swing.JLabel();
         jPanel261 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jPanel260 = new javax.swing.JPanel();
-        jLabel73 = new javax.swing.JLabel();
         register = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
@@ -578,6 +580,8 @@ public class REGISTER extends javax.swing.JFrame {
         ty = new javax.swing.JComboBox<>();
         tologin = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
+        reset = new javax.swing.JPanel();
+        jLabel73 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -647,40 +651,16 @@ public class REGISTER extends javax.swing.JFrame {
         jLabel5.setToolTipText("");
         jPanel261.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, -10, 220, 70));
 
-        jPanel260.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel260.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel260MouseClicked(evt);
-            }
-        });
-
-        jLabel73.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel73.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel73.setText("RESET");
-
-        javax.swing.GroupLayout jPanel260Layout = new javax.swing.GroupLayout(jPanel260);
-        jPanel260.setLayout(jPanel260Layout);
-        jPanel260Layout.setHorizontalGroup(
-            jPanel260Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel260Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel73)
-                .addContainerGap(22, Short.MAX_VALUE))
-        );
-        jPanel260Layout.setVerticalGroup(
-            jPanel260Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel260Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel73)
-                .addContainerGap(12, Short.MAX_VALUE))
-        );
-
-        jPanel261.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, -1, -1));
-
         register.setBackground(new java.awt.Color(0, 102, 102));
         register.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 registerMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                registerMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                registerMouseExited(evt);
             }
         });
         register.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -3349,6 +3329,28 @@ public class REGISTER extends javax.swing.JFrame {
 
         jPanel261.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, 40));
 
+        reset.setBackground(new java.awt.Color(0, 102, 102));
+        reset.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                resetMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                resetMouseExited(evt);
+            }
+        });
+        reset.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel73.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel73.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel73.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel73.setText("RESET");
+        reset.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(-2, 11, 90, -1));
+
+        jPanel261.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 90, 40));
+
         jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 370, 660));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -3376,7 +3378,7 @@ public class REGISTER extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_tologinMouseClicked
 
-    private void jPanel260MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel260MouseClicked
+    private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
    usernamere.setText(null);
      fname.setText(null);
       lname.setText(null);
@@ -3385,7 +3387,7 @@ public class REGISTER extends javax.swing.JFrame {
       pass.setText(null);
       conpass.setText(null);
       
-    }//GEN-LAST:event_jPanel260MouseClicked
+    }//GEN-LAST:event_resetMouseClicked
 
     private void registerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseClicked
   
@@ -3453,6 +3455,23 @@ public class REGISTER extends javax.swing.JFrame {
     private void tyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tyActionPerformed
+
+    private void registerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseEntered
+        register.setBackground(logcolor);
+    }//GEN-LAST:event_registerMouseEntered
+
+    private void registerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseExited
+      register.setBackground(excolor);
+    }//GEN-LAST:event_registerMouseExited
+
+    private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
+           reset.setBackground(logcolor);
+    }//GEN-LAST:event_resetMouseEntered
+
+    private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
+            reset.setBackground(excolor);
+
+    }//GEN-LAST:event_resetMouseExited
 
     /**
      * @param args the command line arguments
@@ -3946,7 +3965,6 @@ public class REGISTER extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel258;
     private javax.swing.JPanel jPanel259;
     private javax.swing.JPanel jPanel26;
-    private javax.swing.JPanel jPanel260;
     private javax.swing.JPanel jPanel261;
     private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
@@ -4032,6 +4050,7 @@ public class REGISTER extends javax.swing.JFrame {
     private javax.swing.JTextField lname;
     private javax.swing.JTextField pass;
     private javax.swing.JPanel register;
+    private javax.swing.JPanel reset;
     private javax.swing.JPanel tologin;
     private javax.swing.JComboBox<String> ty;
     private javax.swing.JTextField usernamere;

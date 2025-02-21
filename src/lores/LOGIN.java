@@ -24,8 +24,8 @@ public class LOGIN extends javax.swing.JFrame {
         
     }
     
-//    Color logcolor = new Color(147,202,237);
-//    Color excolor = new Color(0,102,102);
+    Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -107,6 +107,11 @@ public class LOGIN extends javax.swing.JFrame {
         password.setForeground(new java.awt.Color(0, 102, 102));
         password.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         password.setBorder(new javax.swing.border.MatteBorder(null));
+        password.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                passwordActionPerformed(evt);
+            }
+        });
         jPanel1.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 310, 310, 50));
 
         username.setBackground(new java.awt.Color(204, 204, 204));
@@ -397,11 +402,11 @@ public class LOGIN extends javax.swing.JFrame {
 
     
     private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
-        //        reset.setBackground(excolor);
+                reset.setBackground(excolor);
     }//GEN-LAST:event_resetMouseExited
 
     private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
-        //      reset.setBackground(logcolor);
+              reset.setBackground(logcolor);
     }//GEN-LAST:event_resetMouseEntered
 
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
@@ -438,11 +443,11 @@ public class LOGIN extends javax.swing.JFrame {
     }//GEN-LAST:event_login1MouseClicked
 
     private void login4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseExited
-        //       login4.setBackground(excolor);
+               login4.setBackground(excolor);
     }//GEN-LAST:event_login4MouseExited
 
     private void login4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseEntered
-        // login4.setBackground(logcolor);
+         login4.setBackground(logcolor);
     }//GEN-LAST:event_login4MouseEntered
 
     private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
@@ -514,6 +519,10 @@ public class LOGIN extends javax.swing.JFrame {
     private void jPanel3AncestorAdded(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanel3AncestorAdded
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel3AncestorAdded
+
+    private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_passwordActionPerformed
 
     /**
      * @param args the command line arguments
