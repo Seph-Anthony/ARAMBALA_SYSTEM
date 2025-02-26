@@ -5,6 +5,8 @@ import lores.LOGIN;
 import admin.admindash;
 import config.dbConnect;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /*
@@ -27,6 +29,58 @@ public class REGISTER extends javax.swing.JFrame {
     
       Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
+    
+   public static String mail, usname;
+    
+    
+    public boolean dupcheck(){
+        
+        dbConnect db = new dbConnect();
+         
+        try{
+        String que = "SELECT * FROM user WHERE u_username='"+usernamere.getText()+"' OR u_email='"+email.getText()+"'";    
+            ResultSet resultset = db.getData(que);
+        
+            
+            if(resultset.next()){
+              
+                
+                mail = resultset.getString("u_email");
+            
+                if(mail.equals(email.getText())){
+                    
+                    JOptionPane.showMessageDialog(null, "The email already existed",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    email.setText("");
+                }
+                
+                
+                
+                usname = resultset.getString("u_username");
+                 if(usname.equals(usernamere.getText())){
+                    
+                    JOptionPane.showMessageDialog(null, "The username already existed",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    usernamere.setText("");
+                }
+                
+                
+                
+                System.out.println(""+usname);
+             return true;   
+            }
+            
+            else {
+                
+                return false;
+            }
+            
+            
+        }catch(SQLException ex){
+            System.out.println(""+ex);
+            return false;
+        }
+    }
 
     /** This method is called from within the constructor to
      * initialize the form.
@@ -3411,10 +3465,20 @@ public class REGISTER extends javax.swing.JFrame {
             "Error Registration", JOptionPane.ERROR_MESSAGE);
     return;
 } else if (pass.getText().length() < 8) {
+    
         JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
+        pass.setText("");
         return;
-    } else if (!contact.getText().matches("\\d+")) {
+    }
+else if (dupcheck()){
+    
+        System.out.println("Duplicated Exist!");
+     
+}
+
+
+else if (!contact.getText().matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
@@ -3422,23 +3486,46 @@ public class REGISTER extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Passwords do not match.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
-    } else { // All validations passed
+    }
+    
+    else { // All validations passed
         try {
+            
+            
+            // Determine the status based on the selected type
+            String status = "Pending";
+            if ("Admin".equals(selectedType)) {
+                status = "Active";
+            }
+            
             if (db.insertData("INSERT INTO user (u_username, u_fname, u_lname,u_email, u_contact, u_type, u_password, u_stat) "
-                    + "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "','" + email.getText() + "', '" + contact.getText() + "','" + selectedType + "','" + conpass.getText() + "','Pending' ) ") == 1) {
+                    + "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "','" + email.getText() + "', '" + contact.getText() + "','" + selectedType + "','" + conpass.getText() + "','"+status+"' ) ") == 1) {
 
                 JOptionPane.showMessageDialog(null, "Submitted Successfully");
 //                LOGIN log = new LOGIN();
 //                log.setVisible(true);
                     if ("Admin".equals(selectedType)) {
-                // Direct to admin package and admindash JFrame
+                
                 admin.admindash adminDash = new admin.admindash();
                 adminDash.setVisible(true);
-            } else {
-                // Direct to other frames or packages as needed
-                // For example, if you have a LOGIN frame for other user types
-                LOGIN log = new LOGIN();
-                log.setVisible(true);
+            }
+                    else if ("Customer".equals(selectedType)){
+                        
+                        LOGIN loglog = new LOGIN();
+                        loglog.setVisible(true);
+                        
+                        
+                    }
+                    
+                    else if("Employee".equals(selectedType)){
+                        LOGIN log = new LOGIN();
+                        log.setVisible(true);
+                    }
+                    
+                    
+                    else {
+         JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+
             }
 
                 this.dispose();

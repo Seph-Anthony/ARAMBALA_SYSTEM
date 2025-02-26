@@ -1,8 +1,15 @@
 package lores;
 
 
+import admin.admindash;
+import config.dbConnect;
+import customer.userdashboard;
+import employ.employdash;
 import javax.swing.JOptionPane;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -23,6 +30,41 @@ public class LOGIN extends javax.swing.JFrame {
         
         
     }
+    
+     public static String  stat;
+     public static String ty;
+    
+     public static boolean logcheck(String username, String password ){
+        
+        dbConnect db = new dbConnect();
+         
+        try{
+         String que = "SELECT * FROM user WHERE u_username='"+username+"' AND u_password='"+password+"'";  
+            ResultSet resultset = db.getData(que);
+        
+            
+            if(resultset.next()){
+              stat = resultset.getString("u_stat");
+              ty = resultset.getString("u_type");
+              
+                
+             
+             return true;   
+            }
+            
+            else {
+                
+                return false;
+            }
+            
+            
+        }catch(SQLException ex){
+         
+            return false;
+        }
+    }
+    
+
     
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
@@ -157,7 +199,7 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 30, 360, 500));
 
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/chekchek.png"))); // NOI18N
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 60, 290, 320));
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, 290, 320));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 630));
 
@@ -451,26 +493,79 @@ public class LOGIN extends javax.swing.JFrame {
     }//GEN-LAST:event_login4MouseEntered
 
     private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
-        if(username.getText().isEmpty() || password.getText().isEmpty() ){
-
-            JOptionPane.showMessageDialog(null,"Invalid Registration","Error Registration",JOptionPane.ERROR_MESSAGE);
-            username.getText();
-            password.getText();
+       
+        if(logcheck(username.getText(),password.getText())){
+              if (!stat.equals("Active")){
+         
+            JOptionPane.showMessageDialog(null, "Account not Active");
+            
         }
-
-        else if(password.getText().length()<8){
-
-            JOptionPane.showMessageDialog(null,"Password must be atleast 8 characters long","Error Password",JOptionPane.ERROR_MESSAGE);
-
+              
+              
+              else{ 
+                       JOptionPane.showMessageDialog(null, "Login Successfully!");
+                       if(ty.equals("Admin")){
+                           
+                           admin.admindash adminDash = new admin.admindash();
+                adminDash.setVisible(true);
+                this.dispose();
+                       }
+                       
+                       else if(ty.equals("Customer")){
+                           userdashboard use = new userdashboard();
+                           use.setVisible(true);
+                           this.dispose();
+                       }
+                       
+                       else if (ty.equals("Employee")){
+                           employdash em = new employdash();
+                           em.setVisible(true);
+                           this.dispose();
+                       }
+                       
+                       
+         
+              }
+          
+              
+       
+            
         }
-
-        else if (!(username.getText().isEmpty() || password.getText().isEmpty())){
-
-            REGISTER re = new REGISTER();
-            re.setVisible(true);
-            this.dispose();
-
+      
+        
+        else {
+            
+            JOptionPane.showMessageDialog(null,"Invalid Account!");
         }
+        
+//        if(username.getText().isEmpty() || password.getText().isEmpty() ){
+//
+//            JOptionPane.showMessageDialog(null,"Invalid Registration","Error Registration",JOptionPane.ERROR_MESSAGE);
+//            username.getText();
+//            password.getText();
+//        }
+//
+//        else if(password.getText().length()<8){
+//
+//            JOptionPane.showMessageDialog(null,"Password must be atleast 8 characters long","Error Password",JOptionPane.ERROR_MESSAGE);
+//
+//        }
+//
+//        else if (!(username.getText().isEmpty() || password.getText().isEmpty())){
+//
+//            
+//            REGISTER re = new REGISTER();
+//            re.setVisible(true);
+//            this.dispose();
+//
+//        }
+//        
+//        else if (dupcheck()){
+//            
+//           
+//            
+//        }
+        
 
         //   if(usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
             //   email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ||
