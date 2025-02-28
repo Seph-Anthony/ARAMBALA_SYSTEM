@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 28, 2025 at 02:51 PM
+-- Generation Time: Feb 28, 2025 at 03:07 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -76,7 +76,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`u_id`, `u_username`, `u_fname`, `u_lname`, `u_email`, `u_contact`, `u_type`, `u_password`, `u_stat`) VALUES
-(1, 'joseph', 'Joseph Anthony', 'Arambala', 'josephanthony@gmail.com', '09786546785', 'Admin', 'josephanthony', 'Active');
+(1, 'joseph', 'Joseph Anthony', 'Arambala', 'josephanthony@gmail.com', '09786546785', 'Admin', 'josephanthony', 'Active'),
+(2, 'lloydt', 'Lloydy', 'Anthony', 'll@gmail.com', '09888765433', 'Customer', 'passpass', 'Pending');
 
 --
 -- Indexes for dumped tables
@@ -122,7 +123,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints for dumped tables
