@@ -3,8 +3,8 @@ package lores;
 
 import admin.admindash;
 import config.dbConnect;
-import customer.userdashboard;
-import employ.employdash;
+import USER.customerdashboard;
+import USER.employdash;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -512,7 +512,7 @@ public class LOGIN extends javax.swing.JFrame {
                        }
                        
                        else if(ty.equals("Customer")){
-                           userdashboard use = new userdashboard();
+                           customerdashboard use = new customerdashboard();
                            use.setVisible(true);
                            this.dispose();
                        }

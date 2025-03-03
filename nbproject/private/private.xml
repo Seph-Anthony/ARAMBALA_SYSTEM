@@ -5,10 +5,11 @@
         <group>
             <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/config/dbConnect.java</file>
             <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/admin/admindash.java</file>
-            <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/employ/employdash.java</file>
-            <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/customer/userdashboard.java</file>
+            <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/USER/employdash.java</file>
+            <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/USER/userdashboard.java</file>
             <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/lores/REGISTER.java</file>
             <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/lores/LOGIN.java</file>
+            <file>file:/C:/Users/Admin/Desktop/ARAMBALA_SYSTEM/src/admin/addcus.java</file>
         </group>
     </open-files>
 </project-private>

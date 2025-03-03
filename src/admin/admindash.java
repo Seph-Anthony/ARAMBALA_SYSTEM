@@ -6,7 +6,7 @@
 package admin;
 
 import config.dbConnect;
-import customer.userdashboard;
+import USER.customerdashboard;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,7 +36,7 @@ public class admindash extends javax.swing.JFrame {
 public void displayData(){
         try{
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT * FROM user");
+            ResultSet rs = dbc.getData("SELECT u_id, u_username, u_fname, u_lname, u_email, u_contact, u_type, u_stat FROM user");
             admintable.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
         }catch(SQLException ex){
@@ -350,8 +350,8 @@ public void displayData(){
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/adminnisha.png"))); // NOI18N
-        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 140));
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
+        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 160));
 
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 10, 190, 160));
 

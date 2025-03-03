@@ -26,13 +26,9 @@ public class REGISTER extends javax.swing.JFrame {
         initComponents();
         this.setResizable(false);
     }
-    
       Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
-    
    public static String mail, usname;
-    
-    
     public boolean dupcheck(){
         
         dbConnect db = new dbConnect();
@@ -40,11 +36,7 @@ public class REGISTER extends javax.swing.JFrame {
         try{
         String que = "SELECT * FROM user WHERE u_username='"+usernamere.getText()+"' OR u_email='"+email.getText()+"'";    
             ResultSet resultset = db.getData(que);
-        
-            
             if(resultset.next()){
-              
-                
                 mail = resultset.getString("u_email");
             
                 if(mail.equals(email.getText())){
@@ -53,9 +45,6 @@ public class REGISTER extends javax.swing.JFrame {
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
                     email.setText("");
                 }
-                
-                
-                
                 usname = resultset.getString("u_username");
                  if(usname.equals(usernamere.getText())){
                     
@@ -63,9 +52,6 @@ public class REGISTER extends javax.swing.JFrame {
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
                     usernamere.setText("");
                 }
-                
-                
-                
                 System.out.println(""+usname);
              return true;   
             }
@@ -74,8 +60,6 @@ public class REGISTER extends javax.swing.JFrame {
                 
                 return false;
             }
-            
-            
         }catch(SQLException ex){
             System.out.println(""+ex);
             return false;
@@ -692,7 +676,7 @@ public class REGISTER extends javax.swing.JFrame {
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 430, 670));
 
         jLabel269.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
-        jPanel1.add(jLabel269, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 80, 60));
+        jPanel1.add(jLabel269, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 40, 60));
 
         jPanel261.setBackground(new java.awt.Color(255, 255, 255));
         jPanel261.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
