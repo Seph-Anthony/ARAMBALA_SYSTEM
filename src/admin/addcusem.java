@@ -11,12 +11,12 @@ import java.awt.Color;
  *
  * @author Admin
  */
-public class addcus extends javax.swing.JFrame {
+public class addcusem extends javax.swing.JFrame {
 
     /**
      * Creates new form addcus
      */
-    public addcus() {
+    public addcusem() {
         initComponents();
     }
     
@@ -12539,6 +12539,11 @@ public class addcus extends javax.swing.JFrame {
 
         jPanel1028.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1028.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        jPanel1028.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1028MouseClicked(evt);
+            }
+        });
         jPanel1028.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -12723,6 +12728,12 @@ public class addcus extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_passActionPerformed
 
+    private void jPanel1028MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1028MouseClicked
+        admindash add = new admindash();
+        add.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel1028MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -12740,20 +12751,21 @@ public class addcus extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(addcus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addcusem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(addcus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addcusem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(addcus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addcusem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(addcus.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(addcusem.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new addcus().setVisible(true);
+                new addcusem().setVisible(true);
             }
         });
     }

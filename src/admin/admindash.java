@@ -201,6 +201,9 @@ public void displayData(){
 
         customerni.setBackground(new java.awt.Color(255, 255, 255));
         customerni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerniMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 customerniMouseEntered(evt);
             }
@@ -289,6 +292,9 @@ public void displayData(){
 
         employee.setBackground(new java.awt.Color(255, 255, 255));
         employee.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                employeeMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 employeeMouseEntered(evt);
             }
@@ -454,6 +460,24 @@ public void displayData(){
     private void productMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productMouseExited
         product.setBackground(excolor);
     }//GEN-LAST:event_productMouseExited
+
+    private void customerniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerniMouseClicked
+        // TODO add your handling code here:
+        
+        cuspage cus = new cuspage();
+        cus.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_customerniMouseClicked
+
+    private void employeeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeMouseClicked
+        // TODO add your handling code here:
+        
+         
+        empage cus = new empage();
+        cus.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_employeeMouseClicked
 
     /**
      * @param args the command line arguments
