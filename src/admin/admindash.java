@@ -7,9 +7,11 @@ package admin;
 
 import config.dbConnect;
 import USER.customerdashboard;
+import config.SessionClass;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.JOptionPane;
 import lores.LOGIN;
 import lores.REGISTER;
 import net.proteanit.sql.DbUtils;
@@ -91,7 +93,7 @@ public void displayData(){
         employee = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
+        admindash = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jTextField1 = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
@@ -102,6 +104,8 @@ public void displayData(){
         admintable = new javax.swing.JTable();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        adinfo = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
 
         jPanel261.setBackground(new java.awt.Color(204, 255, 255));
@@ -110,6 +114,11 @@ public void displayData(){
         jToolBar1.setRollover(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -156,7 +165,7 @@ public void displayData(){
 
         jPanel7.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 170, -1));
 
-        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 190, 170));
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 190, 190, 170));
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
         jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -221,7 +230,7 @@ public void displayData(){
 
         jPanel8.add(customerni, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 170, 40));
 
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 190, 170));
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 190, 190, 170));
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -257,7 +266,7 @@ public void displayData(){
 
         jPanel11.add(process, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 180, 40));
 
-        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 200, 170));
+        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 190, 200, 170));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -312,7 +321,7 @@ public void displayData(){
 
         jPanel3.add(employee, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 170, 50));
 
-        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 180, 190, 170));
+        jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 190, 190, 170));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -321,16 +330,16 @@ public void displayData(){
         jLabel8.setVerifyInputWhenFocusTarget(false);
         jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 550, 50));
 
-        jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("OVERVIEW");
-        jLabel18.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 130, 150, 30));
+        admindash.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        admindash.setForeground(new java.awt.Color(255, 255, 255));
+        admindash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        admindash.setText("ADMIN");
+        admindash.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(admindash, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 110, 90, 30));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 140, 10));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 140, 10));
 
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -338,21 +347,26 @@ public void displayData(){
                 jTextField1ActionPerformed(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 350, 30));
+        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 350, 30));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 350, 50, 50));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 360, 50, 50));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("USERS");
         jLabel19.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 90, 30));
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 90, 30));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel6MouseClicked(evt);
+            }
+        });
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -392,6 +406,19 @@ public void displayData(){
 
         jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 60, 60));
 
+        jLabel24.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setText("OVERVIEW");
+        jLabel24.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 150, 30));
+
+        adinfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        adinfo.setForeground(new java.awt.Color(255, 255, 255));
+        adinfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        adinfo.setText("ID");
+        jPanel2.add(adinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, 80, 20));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 660));
 
         jTextField2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
@@ -402,7 +429,7 @@ public void displayData(){
         });
         jPanel1.add(jTextField2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 350, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 660));
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 640));
 
         pack();
         setLocationRelativeTo(null);
@@ -479,6 +506,36 @@ public void displayData(){
         this.dispose();
     }//GEN-LAST:event_employeeMouseClicked
 
+    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+        // TODO add your handling code here:
+        
+        admininfo add = new admininfo();
+        add.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+      // TODO add your handling code here:
+          SessionClass ses = SessionClass.getInstance();
+          
+          if(ses.getU_id() == 0 ){
+              JOptionPane.showMessageDialog(null,"No account, login first!");
+              LOGIN log = new LOGIN();
+              log.setVisible(true);
+              this.dispose();
+              
+          }
+          
+          else{
+       admindash.setText(""+ses.getUsername());
+       adinfo.setText(""+ses.getU_id());
+       
+          }  
+       
+       
+        
+    }//GEN-LAST:event_formWindowActivated
+
     /**
      * @param args the command line arguments
      */
@@ -516,6 +573,8 @@ public void displayData(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel adinfo;
+    private javax.swing.JLabel admindash;
     private javax.swing.JTable admintable;
     private javax.swing.JPanel customerni;
     private javax.swing.JPanel employee;
@@ -527,12 +586,12 @@ public void displayData(){
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

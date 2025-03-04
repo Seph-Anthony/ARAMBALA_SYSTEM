@@ -252,6 +252,7 @@ public class empage extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
@@ -309,7 +310,7 @@ public class empage extends javax.swing.JFrame {
 
     private void addemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addemMouseClicked
   
-        addcusem cus = new addcusem();
+        updateuser cus = new updateuser();
         cus.setVisible(true);
     this.dispose();
         

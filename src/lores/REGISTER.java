@@ -3444,10 +3444,11 @@ public class REGISTER extends javax.swing.JFrame {
         JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
-    }else if (!email.getText().matches("^[a-zA-Z0-9_+&*-]+(?:\\.[a-zA-Z0-9_+&*-]+)*@gmail\\.com$")) {
-    JOptionPane.showMessageDialog(null, "Please enter a valid Gmail address.",
+    }else if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+    JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
             "Error Registration", JOptionPane.ERROR_MESSAGE);
     return;
+    
 } else if (pass.getText().length() < 8) {
     
         JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
@@ -3455,6 +3456,19 @@ public class REGISTER extends javax.swing.JFrame {
         pass.setText("");
         return;
     }
+
+else if (!contact.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+else if (contact.getText().length() < 11 || contact.getText().length() > 15) {
+    JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+            "Error Registration", JOptionPane.ERROR_MESSAGE);
+    contact.setText("");
+    return;
+}
 else if (dupcheck()){
     
         System.out.println("Duplicated Exist!");
@@ -3462,11 +3476,8 @@ else if (dupcheck()){
 }
 
 
-else if (!contact.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    } else if (!pass.getText().equals(conpass.getText())) {
+
+ else if (!pass.getText().equals(conpass.getText())) {
         JOptionPane.showMessageDialog(null, "Passwords do not match.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;

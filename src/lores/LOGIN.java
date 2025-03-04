@@ -5,6 +5,7 @@ import admin.admindash;
 import config.dbConnect;
 import USER.customerdashboard;
 import USER.employdash;
+import config.SessionClass;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -44,11 +45,21 @@ public class LOGIN extends javax.swing.JFrame {
         
             
             if(resultset.next()){
+                
               stat = resultset.getString("u_stat");
               ty = resultset.getString("u_type");
-              
+              SessionClass ses = SessionClass.getInstance();
                 
-             
+              
+             ses.setU_id(resultset.getInt("u_id"));
+               ses.setUsername(resultset.getString("u_username"));
+            ses.setFname(resultset.getString("u_fname"));
+            ses.setLname(resultset.getString("u_lname"));
+           ses.setEmail(resultset.getString("u_email"));
+            ses.setContact(resultset.getString("u_contact"));
+             ses.setType(resultset.getString("u_type")); 
+               ses.setStat(resultset.getString("u_stat"));
+        
              return true;   
             }
             
@@ -130,6 +141,11 @@ public class LOGIN extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -435,7 +451,7 @@ public class LOGIN extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 619, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 598, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -522,17 +538,8 @@ public class LOGIN extends javax.swing.JFrame {
                            em.setVisible(true);
                            this.dispose();
                        }
-                       
-                       
-         
               }
-          
-              
-       
-            
         }
-      
-        
         else {
             
             JOptionPane.showMessageDialog(null,"Invalid Account!");
@@ -618,6 +625,12 @@ public class LOGIN extends javax.swing.JFrame {
     private void passwordActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passwordActionPerformed
+
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments

@@ -45,12 +45,8 @@ public class admininfo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         fname = new javax.swing.JTextField();
-        conpass = new javax.swing.JTextField();
-        jLabel75 = new javax.swing.JLabel();
         contact = new javax.swing.JTextField();
         jLabel270 = new javax.swing.JLabel();
-        pass = new javax.swing.JTextField();
-        jLabel74 = new javax.swing.JLabel();
         jPanel1028 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel1038 = new javax.swing.JLabel();
@@ -86,6 +82,7 @@ public class admininfo extends javax.swing.JFrame {
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 810, 110));
 
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -111,17 +108,19 @@ public class admininfo extends javax.swing.JFrame {
 
         jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 210));
 
+        email.setEditable(false);
         email.setBackground(new java.awt.Color(204, 204, 204));
         email.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         email.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 370, 200, 30));
+        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 200, 30));
 
         jLabel72.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel72.setForeground(new java.awt.Color(0, 102, 102));
         jLabel72.setText("Email:");
-        jPanel2.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 350, -1, -1));
+        jPanel2.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
 
+        lname.setEditable(false);
         lname.setBackground(new java.awt.Color(204, 204, 204));
         lname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -133,6 +132,7 @@ public class admininfo extends javax.swing.JFrame {
         jLabel71.setText("Last Name:");
         jPanel2.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 250, -1, -1));
 
+        usernamere.setEditable(false);
         usernamere.setBackground(new java.awt.Color(204, 204, 204));
         usernamere.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         usernamere.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -149,23 +149,14 @@ public class admininfo extends javax.swing.JFrame {
         jLabel1.setText("First Name:");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, -1, -1));
 
+        fname.setEditable(false);
         fname.setBackground(new java.awt.Color(204, 204, 204));
         fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         fname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         fname.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel2.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 200, 30));
 
-        conpass.setBackground(new java.awt.Color(204, 204, 204));
-        conpass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        conpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        conpass.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel2.add(conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 370, 200, 30));
-
-        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel75.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel75.setText("Confirm Password:");
-        jPanel2.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 350, -1, -1));
-
+        contact.setEditable(false);
         contact.setBackground(new java.awt.Color(204, 204, 204));
         contact.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         contact.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -176,22 +167,6 @@ public class admininfo extends javax.swing.JFrame {
         jLabel270.setForeground(new java.awt.Color(0, 102, 102));
         jLabel270.setText("Contact");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 150, -1, -1));
-
-        pass.setBackground(new java.awt.Color(204, 204, 204));
-        pass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        pass.setBorder(new javax.swing.border.MatteBorder(null));
-        pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
-            }
-        });
-        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 200, 30));
-
-        jLabel74.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel74.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel74.setText("Password:");
-        jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
 
         jPanel1028.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1028.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -236,7 +211,9 @@ public class admininfo extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 821, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -244,11 +221,8 @@ public class admininfo extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passActionPerformed
 
     /**
      * @param args the command line arguments
@@ -286,7 +260,6 @@ public class admininfo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField conpass;
     private javax.swing.JTextField contact;
     private javax.swing.JTextField email;
     private javax.swing.JTextField fname;
@@ -302,8 +275,6 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
-    private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel1026;
@@ -315,7 +286,6 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JTextField lname;
-    private javax.swing.JTextField pass;
     private javax.swing.JTextField usernamere;
     // End of variables declaration//GEN-END:variables
 }

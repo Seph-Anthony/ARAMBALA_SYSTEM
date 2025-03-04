@@ -5,7 +5,13 @@
  */
 package admin;
 
+import config.dbConnect;
 import java.awt.Color;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -18,6 +24,21 @@ public class cuspage extends javax.swing.JFrame {
      */
     public cuspage() {
         initComponents();
+        showdata();
+    }
+    
+    
+public void showdata(){
+        try{
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT * FROM user");
+            usertable.setModel(DbUtils.resultSetToTableModel(rs));
+             rs.close();
+        }catch(SQLException ex){
+            System.out.println("Errors: "+ex.getMessage());
+        
+        }
+        
     }
        Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
@@ -40,7 +61,7 @@ public class cuspage extends javax.swing.JFrame {
         jPanel5 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        usertable = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jLabel19 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
@@ -92,7 +113,7 @@ public class cuspage extends javax.swing.JFrame {
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 782, -1, -1));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        usertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -100,7 +121,7 @@ public class cuspage extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(usertable);
 
         jPanel5.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 600, 480));
 
@@ -220,6 +241,9 @@ public class cuspage extends javax.swing.JFrame {
         editem.setBackground(new java.awt.Color(255, 255, 255));
         editem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
         editem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editemMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 editemMouseEntered(evt);
             }
@@ -324,12 +348,64 @@ cusdash.setBackground(logcolor);
     private void addemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addemMouseClicked
         // TODO add your handling code here:
        
-        addcusem cus = new addcusem();
+       updateuser cus = new updateuser();
+       cus.add.setEnabled(true);
+      cus.update.setEnabled(false);
         cus.setVisible(true);
         this.dispose();
         
     }//GEN-LAST:event_addemMouseClicked
 
+    private void editemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editemMouseClicked
+        // TODO add your handling code here:
+        
+        int rowindex = usertable.getSelectedRow();
+        
+        if(rowindex<0){
+            JOptionPane.showMessageDialog(null,"PLEASE SELECT AN ITEM");
+            
+        } else{
+            
+        
+        try{
+        dbConnect db = new dbConnect();
+         TableModel tbl =  usertable.getModel();
+       ResultSet rs = db.getData("SELECT * FROM  user WHERE u_id = '"+tbl.getValueAt(rowindex, 0)+"'");
+      if(rs.next()){
+            updateuser up = new updateuser();
+            
+            up.uid.setText(""+rs.getInt("u_id"));
+            up.usernamere.setText(""+rs.getString("u_username"));
+       up.fname.setText(""+rs.getString("u_fname"));
+       up.lname.setText(""+rs.getString("u_lname"));
+       up.email.setText(""+rs.getString("u_email"));
+       up.contact.setText(""+rs.getString("u_contact"));
+       up.ty.setSelectedItem(""+rs.getString("u_type"));
+       up.pass.setText(""+rs.getString("u_password"));
+      up.status.setSelectedItem(""+rs.getString("u_stat"));
+      
+      up.add.setEnabled(false);
+      up.update.setEnabled(true);
+        up.setVisible(true);
+        this.dispose();
+       
+      }
+        }
+        
+        catch(SQLException ex){
+            System.out.println(""+ex);
+        } 
+        }
+        
+//        TableModel tbl =  usertable.getModel();
+        
+         
+        
+//        updateuser up = new updateuser();
+//        up.setVisible(true);
+//        this.dispose();
+    }//GEN-LAST:event_editemMouseClicked
+    
     /**
      * @param args the command line arguments
      */
@@ -399,8 +475,8 @@ cusdash.setBackground(logcolor);
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTree jTree1;
+    private javax.swing.JTable usertable;
     // End of variables declaration//GEN-END:variables
 }
