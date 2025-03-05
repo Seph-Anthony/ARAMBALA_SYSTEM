@@ -96,11 +96,12 @@
                       <Color blue="66" green="66" red="0" type="rgb"/>
                     </Property>
                     <Property name="horizontalAlignment" type="int" value="0"/>
+                    <Property name="text" type="java.lang.String" value="ADD USER"/>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="0" y="0" width="690" height="70"/>
+                      <AbsoluteConstraints x="0" y="0" width="700" height="70"/>
                     </Constraint>
                   </Constraints>
                 </Component>

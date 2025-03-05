@@ -131,9 +131,9 @@ public void showdata(){
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Customer");
+        jLabel19.setText("Users ");
         jLabel19.setVerifyInputWhenFocusTarget(false);
-        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 130, 30));
+        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 130, 30));
 
         jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jTextField1.addActionListener(new java.awt.event.ActionListener() {
@@ -141,11 +141,11 @@ public void showdata(){
                 jTextField1ActionPerformed(evt);
             }
         });
-        jPanel6.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 140, 260, 30));
+        jPanel6.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 140, 260, 30));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 50, 50));
+        jPanel6.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 130, 50, 50));
 
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel6.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(-60, 80, 600, -1));
@@ -160,14 +160,14 @@ public void showdata(){
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("CUSTOMER'S PAGE");
+        jLabel8.setText("USER'S PAGE");
         jLabel8.setVerifyInputWhenFocusTarget(false);
         jPanel14.add(jLabel8);
 
         jPanel6.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 320, -1));
 
         jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/group.png"))); // NOI18N
-        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 100, 100, 90));
+        jPanel6.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 100, 90));
 
         jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, 620, 660));
 
@@ -348,7 +348,7 @@ cusdash.setBackground(logcolor);
     private void addemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addemMouseClicked
         // TODO add your handling code here:
        
-       updateuser cus = new updateuser();
+       adduser cus = new adduser();
        cus.add.setEnabled(true);
       cus.update.setEnabled(false);
         cus.setVisible(true);
@@ -372,7 +372,7 @@ cusdash.setBackground(logcolor);
          TableModel tbl =  usertable.getModel();
        ResultSet rs = db.getData("SELECT * FROM  user WHERE u_id = '"+tbl.getValueAt(rowindex, 0)+"'");
       if(rs.next()){
-            updateuser up = new updateuser();
+            adduser up = new adduser();
             
             up.uid.setText(""+rs.getInt("u_id"));
             up.usernamere.setText(""+rs.getString("u_username"));
