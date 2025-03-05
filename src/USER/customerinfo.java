@@ -259,25 +259,25 @@ public class customerinfo extends javax.swing.JFrame {
 
     }//GEN-LAST:event_tologinMouseClicked
 
-    private void txtfnamessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfnamessActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfnamessActionPerformed
-
-    private void txtlnamessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlnamessActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtlnamessActionPerformed
-
-    private void txtcontactssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcontactssActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcontactssActionPerformed
+    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
+   
+    }//GEN-LAST:event_jLabel20MouseClicked
 
     private void txtemailssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailssActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtemailssActionPerformed
 
-    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-   
-    }//GEN-LAST:event_jLabel20MouseClicked
+    private void txtcontactssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcontactssActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcontactssActionPerformed
+
+    private void txtlnamessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlnamessActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtlnamessActionPerformed
+
+    private void txtfnamessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfnamessActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtfnamessActionPerformed
 
     /**
      * @param args the command line arguments

@@ -28,7 +28,12 @@ public class admindash extends javax.swing.JFrame {
     public admindash() {
         initComponents();
         displayData();
+        AllUsers();
+        AllProd();
+        AllProcess();
     }
+    
+   
     
        Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
@@ -48,6 +53,79 @@ public void displayData(){
         
     }
 
+public void AllUsers() {
+    try {
+        // Connect to the database
+        dbConnect dbc = new dbConnect();
+        
+        // Query to get the total number of users
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM user");
+        
+        if (rs.next()) {
+            // Retrieve the total count from the query result
+            int totalUsers = rs.getInt("totalusers");
+            
+            // Assuming you have a JLabel named lblTotalUsers to display the count
+            totaluser.setText(" " + totalUsers);
+        }
+        
+        // Close the ResultSet
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+}
+
+public void AllProd() {
+    try {
+        // Connect to the database
+        dbConnect dbc = new dbConnect();
+        
+        // Query to get the total number of users
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalproducts FROM product");
+        
+        if (rs.next()) {
+            // Retrieve the total count from the query result
+            int totalPROD = rs.getInt("totalproducts");
+            
+            // Assuming you have a JLabel named lblTotalUsers to display the count
+            totalproduct.setText(" " + totalPROD);
+        }
+        
+        // Close the ResultSet
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+}
+
+public void AllProcess() {
+    try {
+        // Connect to the database
+        dbConnect dbc = new dbConnect();
+        
+        // Query to get the total number of users
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalpro FROM process");
+        
+        if (rs.next()) {
+            // Retrieve the total count from the query result
+            int totalPRO = rs.getInt("totalpro");
+            
+            // Assuming you have a JLabel named lblTotalUsers to display the count
+            totalprocess.setText(" " + totalPRO);
+        }
+        
+        // Close the ResultSet
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+}
+
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,9 +142,10 @@ public void displayData(){
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
         product = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        totalproduct = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
@@ -74,15 +153,17 @@ public void displayData(){
         jLabel16 = new javax.swing.JLabel();
         jTextField5 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        jTextField12 = new javax.swing.JTextField();
         customerni = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        totaluser = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
         process = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        totalprocess = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         admindash = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -132,11 +213,7 @@ public void displayData(){
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
-        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 80, 60));
-
-        jTextField10.setEditable(false);
-        jTextField10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel7.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 70, 40));
+        jPanel7.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 80, 60));
 
         product.setBackground(new java.awt.Color(255, 255, 255));
         product.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -155,6 +232,18 @@ public void displayData(){
         product.add(jLabel13);
 
         jPanel7.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 170, -1));
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        totalproduct.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        totalproduct.setForeground(new java.awt.Color(0, 102, 102));
+        totalproduct.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalproduct.setText("0");
+        jPanel5.add(totalproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 3, 80, -1));
+
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 80, 40));
 
         jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 190, 170));
 
@@ -195,10 +284,6 @@ public void displayData(){
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/customergamay.png"))); // NOI18N
         jPanel8.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 80, 70));
 
-        jTextField12.setEditable(false);
-        jTextField12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel8.add(jTextField12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 70, 40));
-
         customerni.setBackground(new java.awt.Color(255, 255, 255));
         customerni.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -221,6 +306,22 @@ public void displayData(){
 
         jPanel8.add(customerni, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 170, 40));
 
+        totaluser.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        totaluser.setForeground(new java.awt.Color(0, 102, 102));
+        totaluser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totaluser.setText("0");
+        totaluser.setFocusTraversalPolicyProvider(true);
+        totaluser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                totaluserMouseClicked(evt);
+            }
+        });
+        jPanel8.add(totaluser, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 80, 40));
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        jPanel8.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 80, 40));
+
         jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 190, 170));
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
@@ -233,10 +334,6 @@ public void displayData(){
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/checkgamay.png"))); // NOI18N
         jPanel11.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 80, 70));
-
-        jTextField11.setEditable(false);
-        jTextField11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel11.add(jTextField11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 70, 40));
 
         process.setBackground(new java.awt.Color(255, 255, 255));
         process.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -256,6 +353,18 @@ public void displayData(){
         process.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 100, 20));
 
         jPanel11.add(process, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 180, 40));
+
+        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel12.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        totalprocess.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        totalprocess.setForeground(new java.awt.Color(0, 102, 102));
+        totalprocess.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        totalprocess.setText("0");
+        jPanel12.add(totalprocess, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 40));
+
+        jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 80, 40));
 
         jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 190, 200, 170));
 
@@ -455,6 +564,11 @@ public void displayData(){
         
     }//GEN-LAST:event_formWindowActivated
 
+    private void totaluserMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_totaluserMouseClicked
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_totaluserMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -515,23 +629,26 @@ public void displayData(){
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel261;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField5;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel process;
     private javax.swing.JPanel product;
+    private javax.swing.JLabel totalprocess;
+    private javax.swing.JLabel totalproduct;
+    private javax.swing.JLabel totaluser;
     // End of variables declaration//GEN-END:variables
 }
