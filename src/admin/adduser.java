@@ -148,12 +148,6 @@ Color logcolor = new Color(63,195,128);
         jLabel1039 = new javax.swing.JLabel();
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
-        update = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        delete = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         jPanel1030 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -376,6 +370,7 @@ Color logcolor = new Color(63,195,128);
         });
         jPanel2.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 390, 30, 40));
 
+        uid.setEditable(false);
         uid.setBackground(new java.awt.Color(204, 204, 204));
         uid.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         uid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -394,62 +389,6 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 810, 430));
-
-        update.setBackground(new java.awt.Color(0, 102, 102));
-        update.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        update.setEnabled(false);
-        update.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                updateMouseClicked(evt);
-            }
-        });
-        update.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Update");
-        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel12MouseClicked(evt);
-            }
-        });
-        jPanel6.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 20));
-
-        update.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, 170, 60));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Update");
-        jLabel13.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel13MouseClicked(evt);
-            }
-        });
-        update.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 20));
-
-        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, 170, 60));
-
-        delete.setBackground(new java.awt.Color(0, 102, 102));
-        delete.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        delete.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("Delete");
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-        });
-        delete.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 20));
-
-        jPanel1.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 560, 170, 60));
 
         add.setBackground(new java.awt.Color(0, 102, 102));
         add.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -492,7 +431,7 @@ Color logcolor = new Color(63,195,128);
         });
         add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 20));
 
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 560, 170, 60));
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 170, 60));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -692,10 +631,6 @@ else if (dupcheck()){
         // TODO add your handling code here:
     }//GEN-LAST:event_contactActionPerformed
 
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel5MouseClicked
-
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel10MouseClicked
@@ -708,91 +643,9 @@ else if (dupcheck()){
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel11MouseClicked
 
-    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel12MouseClicked
-
-    private void jLabel13MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel13MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel13MouseClicked
-
     private void uidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uidActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_uidActionPerformed
-
-    private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-        // TODO add your handling code here:
-        
-         dbConnect db = new dbConnect();
-     
-    String selectedType = (String) ty.getSelectedItem();
-    String selectType = (String)   status.getSelectedItem();
-
-    if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ||
-            conpass.getText().isEmpty()) {
-
-        JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return; 
-    } else if (selectedType == null || selectedType.equals("Please Select a Type")) {
-        JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    else if (selectType == null || selectType.equals("Please Select a Type")) {
-        JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    }else if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-    JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
-    return;
-    
-} else if (pass.getText().length() < 8) {
-    
-        JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        pass.setText("");
-        return;
-    }
-
-else if (!contact.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-else if (contact.getText().length() < 11 || contact.getText().length() > 15) {
-    JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
-    contact.setText("");
-    return;
-}
-else if (updatecheck()){
-    
-        System.out.println("Duplicated Exist!");
-     
-}
-
-
-
- else if (!pass.getText().equals(conpass.getText())) {
-        JOptionPane.showMessageDialog(null, "Passwords do not match.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
- else {
-        db.updateData("UPDATE user SET u_username ='"+usernamere.getText()+"',u_fname='"+fname.getText()+"',u_lname ='"+lname.getText()+"',u_email='"+email.getText()+"'"
-                + ",u_contact='"+contact.getText()+"',u_type='"+ty.getSelectedItem()+"',u_password='"+pass.getText()+"',u_stat='"+status.getSelectedItem()+"' WHERE u_id ='"+uid.getText()+"' ");
-  
-                JOptionPane.showMessageDialog(null, "Submitted Successfully");     
- }
-                
-
-                
- 
-    }//GEN-LAST:event_updateMouseClicked
 
     /**
      * @param args the command line arguments
@@ -835,7 +688,6 @@ else if (updatecheck()){
     public javax.swing.JTextField conpass;
     public javax.swing.JTextField contact;
     private javax.swing.JPanel dd;
-    public javax.swing.JPanel delete;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
     private javax.swing.JLabel jLabel1;
@@ -843,15 +695,12 @@ else if (updatecheck()){
     private javax.swing.JLabel jLabel1038;
     private javax.swing.JLabel jLabel1039;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel271;
     private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel71;
@@ -868,13 +717,11 @@ else if (updatecheck()){
     private javax.swing.JPanel jPanel260;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
     public javax.swing.JTextField lname;
     public javax.swing.JTextField pass;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> ty;
     public javax.swing.JTextField uid;
-    public javax.swing.JPanel update;
     public javax.swing.JTextField usernamere;
     // End of variables declaration//GEN-END:variables
 }
