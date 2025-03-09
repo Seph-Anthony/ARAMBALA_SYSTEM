@@ -362,7 +362,7 @@ Color logcolor = new Color(63,195,128);
         });
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 210, 30));
 
-        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/UNDOGEGE.png"))); // NOI18N
+        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
         jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1039MouseClicked(evt);

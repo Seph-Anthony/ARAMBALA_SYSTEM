@@ -5,6 +5,10 @@
  */
 package USER;
 
+import config.SessionClass;
+import javax.swing.JOptionPane;
+import lores.LOGIN;
+
 /**
  *
  * @author Admin
@@ -32,19 +36,14 @@ public class customerinfo extends javax.swing.JFrame {
         tologin = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        txtuserss = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        txtfnamess = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtlnamess = new javax.swing.JTextField();
-        txtcontactss = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
-        txtemailss = new javax.swing.JTextField();
         jPanel1026 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jPanel1027 = new javax.swing.JPanel();
@@ -53,10 +52,29 @@ public class customerinfo extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        txtid = new javax.swing.JTextField();
         jLabel21 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        passwordshow = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        contactshow = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        usernameshow = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        lshow = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
+        fshow = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        idshow = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        emailshow = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowActivated(java.awt.event.WindowEvent evt) {
+                formWindowActivated(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -80,27 +98,20 @@ public class customerinfo extends javax.swing.JFrame {
 
         jPanel3.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, 40));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setText("CUSTOMER INFORMATION");
         jLabel9.setToolTipText("");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 360, 30));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 50, 530, 30));
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/research.png"))); // NOI18N
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 20, 60, 40));
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/group.png"))); // NOI18N
+        jPanel3.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 100, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 780, 90));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        txtuserss.setBackground(new java.awt.Color(204, 204, 204));
-        txtuserss.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtuserss.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtuserss.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        jPanel2.add(txtuserss, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 170, 30));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
@@ -110,72 +121,27 @@ public class customerinfo extends javax.swing.JFrame {
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
         jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 150, 160));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 190, 170));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 190, 170));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("Username");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 200, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setText("First Name");
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
 
-        txtfnamess.setBackground(new java.awt.Color(204, 204, 204));
-        txtfnamess.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtfnamess.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtfnamess.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        txtfnamess.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtfnamessActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtfnamess, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 170, 30));
-
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 102));
         jLabel6.setText("Last Name");
         jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, -1));
 
-        txtlnamess.setBackground(new java.awt.Color(204, 204, 204));
-        txtlnamess.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtlnamess.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtlnamess.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        txtlnamess.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtlnamessActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtlnamess, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 170, 30));
-
-        txtcontactss.setBackground(new java.awt.Color(204, 204, 204));
-        txtcontactss.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtcontactss.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtcontactss.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        txtcontactss.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtcontactssActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtcontactss, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 170, 30));
-
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel7.setText("Contact");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
-
-        txtemailss.setEditable(false);
-        txtemailss.setBackground(new java.awt.Color(204, 204, 204));
-        txtemailss.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtemailss.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtemailss.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        txtemailss.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtemailssActionPerformed(evt);
-            }
-        });
-        jPanel2.add(txtemailss, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 170, 30));
+        jLabel7.setText("Password");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
 
         jPanel1026.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1026.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
@@ -199,7 +165,7 @@ public class customerinfo extends javax.swing.JFrame {
 
         jPanel1026.add(jPanel1027, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 150, 40));
 
-        jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 170, 40));
+        jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 170, 40));
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -218,7 +184,7 @@ public class customerinfo extends javax.swing.JFrame {
         jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
 
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/arrowback.png"))); // NOI18N
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
         jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel20MouseClicked(evt);
@@ -226,16 +192,92 @@ public class customerinfo extends javax.swing.JFrame {
         });
         jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 50, 40));
 
-        txtid.setBackground(new java.awt.Color(204, 204, 204));
-        txtid.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        txtid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        txtid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        jPanel2.add(txtid, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 80, 30));
-
         jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 102, 102));
         jLabel21.setText("ID:");
-        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, -1, -1));
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        passwordshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        passwordshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        passwordshow.setEnabled(false);
+        jPanel6.add(passwordshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 40));
+
+        jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 220, 190, 40));
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        contactshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        contactshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        contactshow.setEnabled(false);
+        jPanel8.add(contactshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 40));
+
+        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 190, 40));
+
+        jPanel9.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        usernameshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        usernameshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        usernameshow.setEnabled(false);
+        jPanel9.add(usernameshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 40));
+
+        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 220, 190, 40));
+
+        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        lshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        lshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lshow.setEnabled(false);
+        jPanel10.add(lshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 40));
+
+        jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 190, 40));
+
+        jPanel11.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        fshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        fshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        fshow.setEnabled(false);
+        jPanel11.add(fshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 40));
+
+        jPanel2.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 190, 40));
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        idshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        idshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        idshow.setEnabled(false);
+        jPanel7.add(idshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 40));
+
+        jPanel2.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 90, 40));
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel11.setText("Contact");
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
+
+        jPanel12.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        emailshow.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        emailshow.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emailshow.setEnabled(false);
+        jPanel12.add(emailshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, 40));
+
+        jPanel2.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 190, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 780, 400));
 
@@ -247,7 +289,7 @@ public class customerinfo extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 581, Short.MAX_VALUE)
         );
 
         pack();
@@ -263,21 +305,32 @@ public class customerinfo extends javax.swing.JFrame {
    
     }//GEN-LAST:event_jLabel20MouseClicked
 
-    private void txtemailssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtemailssActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtemailssActionPerformed
-
-    private void txtcontactssActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcontactssActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcontactssActionPerformed
-
-    private void txtlnamessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtlnamessActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtlnamessActionPerformed
-
-    private void txtfnamessActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtfnamessActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtfnamessActionPerformed
+    private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
+         SessionClass ses = SessionClass.getInstance();
+          
+          if(ses.getU_id() == 0 ){
+              JOptionPane.showMessageDialog(null,"No account, login first!");
+              LOGIN log = new LOGIN();
+              log.setVisible(true);
+              this.dispose();
+              
+          }
+          
+          else{
+              usernameshow.setText(""+ses.getUsername());
+              fshow.setText(""+ses.getFname());
+              lshow.setText(""+ses.getLname());
+              contactshow.setText(""+ses.getContact());
+              emailshow.setText(""+ses.getEmail());
+              idshow.setText(""+ses.getU_id());
+            passwordshow.setText(""+ses.getPass());
+              
+              
+//       userid.setText(""+ses.getUsername());
+//       userid.setText(""+ses.getU_id());
+//       
+          }  
+    }//GEN-LAST:event_formWindowActivated
 
     /**
      * @param args the command line arguments
@@ -315,11 +368,16 @@ public class customerinfo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel contactshow;
+    private javax.swing.JLabel emailshow;
+    private javax.swing.JLabel fshow;
+    private javax.swing.JLabel idshow;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel25;
@@ -330,18 +388,22 @@ public class customerinfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel1026;
     private javax.swing.JPanel jPanel1027;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
+    private javax.swing.JLabel lshow;
+    private javax.swing.JLabel passwordshow;
     private javax.swing.JPanel tologin;
-    private javax.swing.JTextField txtcontactss;
-    private javax.swing.JTextField txtemailss;
-    private javax.swing.JTextField txtfnamess;
-    private javax.swing.JTextField txtid;
-    private javax.swing.JTextField txtlnamess;
-    private javax.swing.JTextField txtuserss;
+    private javax.swing.JLabel usernameshow;
     // End of variables declaration//GEN-END:variables
 }

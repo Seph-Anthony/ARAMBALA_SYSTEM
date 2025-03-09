@@ -354,7 +354,7 @@ public class updateuser extends javax.swing.JFrame {
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 90, 20));
 
         status.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Active", "Pending", " ", " " }));
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active" }));
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);
@@ -362,7 +362,7 @@ public class updateuser extends javax.swing.JFrame {
         });
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 210, 30));
 
-        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/UNDOGEGE.png"))); // NOI18N
+        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
         jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1039MouseClicked(evt);

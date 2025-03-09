@@ -64,7 +64,7 @@ public class admininfo extends javax.swing.JFrame {
         id = new javax.swing.JLabel();
         conad = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
-        contact = new javax.swing.JLabel();
+        password = new javax.swing.JLabel();
         lad = new javax.swing.JPanel();
         jPanel17 = new javax.swing.JPanel();
         lastname1 = new javax.swing.JLabel();
@@ -75,6 +75,10 @@ public class admininfo extends javax.swing.JFrame {
         jPanel10 = new javax.swing.JPanel();
         usernameid = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
+        jLabel73 = new javax.swing.JLabel();
+        conad1 = new javax.swing.JPanel();
+        jPanel16 = new javax.swing.JPanel();
+        contact = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -136,23 +140,23 @@ public class admininfo extends javax.swing.JFrame {
 
         jLabel72.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel72.setText("Email:");
-        jPanel2.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 100, -1, -1));
+        jPanel2.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, -1, -1));
 
         jLabel71.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel71.setText("Last Name:");
-        jPanel2.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 290, -1, -1));
+        jLabel71.setText("Password");
+        jPanel2.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 270, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("ID");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, -1, -1));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setText("First Name:");
-        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, -1, -1));
+        jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, -1, -1));
 
         jLabel270.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel270.setText("Contact");
-        jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 190, -1, -1));
+        jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
 
         jPanel1028.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1028.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -178,12 +182,12 @@ public class admininfo extends javax.swing.JFrame {
         jLabel4.setText("Click Here!");
         jPanel1027.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 90, 30));
 
-        jPanel2.add(jPanel1027, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 310, 240, 50));
+        jPanel2.add(jPanel1027, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 240, 50));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Edit Information");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 290, 120, 20));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 120, 20));
 
         fad.setBackground(new java.awt.Color(255, 255, 255));
         fad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -222,7 +226,7 @@ public class admininfo extends javax.swing.JFrame {
         firstname1.setText("First Name");
         fad.add(firstname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
 
-        jPanel2.add(fad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 240, 50));
+        jPanel2.add(fad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 240, 50));
 
         userid.setBackground(new java.awt.Color(255, 255, 255));
         userid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -239,7 +243,7 @@ public class admininfo extends javax.swing.JFrame {
         id.setText("id");
         userid.add(id, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 30));
 
-        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 80, 30));
+        jPanel2.add(userid, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, 80, 30));
 
         conad.setBackground(new java.awt.Color(255, 255, 255));
         conad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -250,13 +254,13 @@ public class admininfo extends javax.swing.JFrame {
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         conad.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 140, 40));
 
-        contact.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        contact.setForeground(new java.awt.Color(0, 102, 102));
-        contact.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        contact.setText("Contact");
-        conad.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
+        password.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        password.setForeground(new java.awt.Color(0, 102, 102));
+        password.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        password.setText("Password");
+        conad.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
 
-        jPanel2.add(conad, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 240, 50));
+        jPanel2.add(conad, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 290, 240, 50));
 
         lad.setBackground(new java.awt.Color(255, 255, 255));
         lad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -273,7 +277,7 @@ public class admininfo extends javax.swing.JFrame {
         lastname1.setText("Last Name");
         lad.add(lastname1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
 
-        jPanel2.add(lad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 310, 240, 50));
+        jPanel2.add(lad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 290, 240, 50));
 
         ead.setBackground(new java.awt.Color(255, 255, 255));
         ead.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -290,7 +294,7 @@ public class admininfo extends javax.swing.JFrame {
         email.setText("Email");
         ead.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
 
-        jPanel2.add(ead, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 120, 240, 50));
+        jPanel2.add(ead, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 100, 240, 50));
 
         userad.setBackground(new java.awt.Color(255, 255, 255));
         userad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -307,13 +311,34 @@ public class admininfo extends javax.swing.JFrame {
         usernameid.setText("username");
         userad.add(usernameid, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
 
-        jPanel2.add(userad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 240, 50));
+        jPanel2.add(userad, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 100, 240, 50));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setText("Username:");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 100, -1, -1));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 810, 430));
+        jLabel73.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel73.setText("Last Name:");
+        jPanel2.add(jLabel73, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 270, -1, -1));
+
+        conad1.setBackground(new java.awt.Color(255, 255, 255));
+        conad1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        conad1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel16.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        conad1.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 140, 40));
+
+        contact.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        contact.setForeground(new java.awt.Color(0, 102, 102));
+        contact.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        contact.setText("Contact");
+        conad1.add(contact, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 220, 50));
+
+        jPanel2.add(conad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 240, 50));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 810, 450));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setForeground(new java.awt.Color(0, 102, 102));
@@ -353,9 +378,10 @@ public class admininfo extends javax.swing.JFrame {
               usernameid.setText(""+ses.getUsername());
               firstname1.setText(""+ses.getFname());
               lastname1.setText(""+ses.getLname());
-              contact.setText(""+ses.getContact());
+              password.setText(""+ses.getContact());
               email.setText(""+ses.getEmail());
               id.setText(""+ses.getU_id());
+              password.setText(""+ses.getPass());
               
               
 //       userid.setText(""+ses.getUsername());
@@ -408,6 +434,7 @@ public class admininfo extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel conad;
+    private javax.swing.JPanel conad1;
     private javax.swing.JLabel contact;
     private javax.swing.JPanel ead;
     private javax.swing.JLabel email;
@@ -426,6 +453,7 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
+    private javax.swing.JLabel jLabel73;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -438,6 +466,7 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
+    private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
@@ -449,6 +478,7 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JPanel lad;
     private javax.swing.JLabel lastname1;
+    private javax.swing.JLabel password;
     public javax.swing.JPanel userad;
     private javax.swing.JPanel userid;
     private javax.swing.JLabel usernameid;

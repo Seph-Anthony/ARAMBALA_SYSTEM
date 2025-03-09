@@ -59,6 +59,7 @@ public class LOGIN extends javax.swing.JFrame {
             ses.setContact(resultset.getString("u_contact"));
              ses.setType(resultset.getString("u_type")); 
                ses.setStat(resultset.getString("u_stat"));
+               ses.setPass(resultset.getString("u_password"));
         
              return true;   
             }

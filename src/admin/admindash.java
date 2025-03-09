@@ -257,6 +257,9 @@ public void AllProcess() {
 
         product.setBackground(new java.awt.Color(255, 255, 255));
         product.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                productMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 productMouseEntered(evt);
             }
@@ -621,6 +624,15 @@ public void AllProcess() {
         product.setBackground(logcolor);
     }//GEN-LAST:event_productMouseEntered
 
+    private void productMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_productMouseClicked
+        // TODO add your handling code here:
+        
+        prodpage pro = new prodpage();
+        pro.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_productMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -703,6 +715,6 @@ public void AllProcess() {
     private javax.swing.JPanel product;
     private javax.swing.JLabel totalprocess;
     private javax.swing.JLabel totalproduct;
-    private javax.swing.JLabel totaluser1;
+    public javax.swing.JLabel totaluser1;
     // End of variables declaration//GEN-END:variables
 }

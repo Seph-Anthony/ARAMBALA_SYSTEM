@@ -20,10 +20,18 @@ public class SessionClass {
         private String contact;
          private String type;
           private String stat;
-          
+          private String pass;
           private SessionClass() {
     
           }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
 
     public static synchronized SessionClass getInstance() {
        if(instance == null){

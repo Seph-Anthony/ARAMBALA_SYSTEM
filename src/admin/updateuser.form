@@ -672,12 +672,8 @@
                   <Font name="Tahoma" size="12" style="1"/>
                 </Property>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="5">
-                    <StringItem index="0" value="Please Select a Type"/>
-                    <StringItem index="1" value="Active"/>
-                    <StringItem index="2" value="Pending"/>
-                    <StringItem index="3" value=" "/>
-                    <StringItem index="4" value=" "/>
+                  <StringArray count="1">
+                    <StringItem index="0" value="Active"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -697,7 +693,7 @@
             <Component class="javax.swing.JLabel" name="jLabel1039">
               <Properties>
                 <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                  <Image iconType="3" name="/image/UNDOGEGE.png"/>
+                  <Image iconType="3" name="/image/undostan.png"/>
                 </Property>
               </Properties>
               <Events>

@@ -56,45 +56,46 @@ public void displayData(){
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        eminfo = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabem = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel12 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         jTextField8 = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jPanel15 = new javax.swing.JPanel();
-        jLabel26 = new javax.swing.JLabel();
-        jLabel27 = new javax.swing.JLabel();
-        product = new javax.swing.JPanel();
-        jLabel28 = new javax.swing.JLabel();
-        jLabel30 = new javax.swing.JLabel();
-        jLabel31 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
+        jLabel20 = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
-        product1 = new javax.swing.JPanel();
+        viewni = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         emdash = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
+        product = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        product2 = new javax.swing.JPanel();
+        jLabel36 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel38 = new javax.swing.JLabel();
+        jLabel39 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel19 = new javax.swing.JPanel();
+        jLabel21 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        jPanel21 = new javax.swing.JPanel();
+        employeeinfo = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -110,37 +111,10 @@ public void displayData(){
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setText("EMPLOYEE DASHBOARD");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 310, 30));
-
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel13.setBackground(new java.awt.Color(63, 195, 128));
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Total Pending:");
-        jLabel13.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 150, 30));
-
-        jLabel17.setBackground(new java.awt.Color(63, 195, 128));
-        jLabel17.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel17.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel17.setText("USER ID");
-        jLabel17.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 0, 120, 30));
-
-        eminfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        eminfo.setForeground(new java.awt.Color(255, 255, 255));
-        eminfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        eminfo.setText("ID");
-        jPanel2.add(eminfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(680, 30, 70, 30));
-
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 770, 70));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 490, 30));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
@@ -156,7 +130,7 @@ public void displayData(){
         ));
         jScrollPane1.setViewportView(tabem);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 740, 260));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 740, 220));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -171,45 +145,10 @@ public void displayData(){
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, 0, 190));
 
-        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel12.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setText("Product");
-        jLabel12.setVerifyInputWhenFocusTarget(false);
-        jPanel8.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
-
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setText("Product");
-        jLabel15.setVerifyInputWhenFocusTarget(false);
-        jPanel10.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
-
-        jLabel16.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel16.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setText("Customer");
-        jLabel16.setVerifyInputWhenFocusTarget(false);
-        jPanel10.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 150, 50));
-
-        jTextField7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel10.add(jTextField7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 130, 50));
-
-        jPanel8.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 190, 140));
-
-        jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 190, 30));
-
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("Users Order Overview:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 240, 30));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 10, 240, 30));
 
         jTextField8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jTextField8.addActionListener(new java.awt.event.ActionListener() {
@@ -217,67 +156,22 @@ public void displayData(){
                 jTextField8ActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 250, 290, 30));
+        jPanel3.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 40, 290, 30));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 230, 50, 50));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 20, 50, 50));
 
-        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 770, 300));
 
-        jLabel26.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel26.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel26.setText("Product");
-        jLabel26.setVerifyInputWhenFocusTarget(false);
-        jPanel15.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
-
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
-        jPanel15.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 70, 60));
-
-        product.setBackground(new java.awt.Color(255, 255, 255));
-        product.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                productMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                productMouseExited(evt);
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
+        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel20MouseClicked(evt);
             }
         });
-
-        jLabel28.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel28.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel28.setText("View");
-        product.add(jLabel28);
-
-        jLabel30.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel30.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel30.setText("Product");
-        product.add(jLabel30);
-
-        jLabel31.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel31.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel31.setText("Details");
-        product.add(jLabel31);
-
-        jPanel15.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
-
-        jTextField10.setEditable(false);
-        jTextField10.setForeground(new java.awt.Color(0, 102, 102));
-        jTextField10.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField10ActionPerformed(evt);
-            }
-        });
-        jPanel15.add(jTextField10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 70, 30));
-
-        jPanel3.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 20, 220, 180));
+        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 50, 40));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -292,15 +186,20 @@ public void displayData(){
 
         jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/staffgamay.png"))); // NOI18N
-        jPanel16.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 70, 60));
+        jPanel16.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 70, 60));
 
-        product1.setBackground(new java.awt.Color(255, 255, 255));
-        product1.addMouseListener(new java.awt.event.MouseAdapter() {
+        viewni.setBackground(new java.awt.Color(255, 255, 255));
+        viewni.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        viewni.setFocusable(false);
+        viewni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewniMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                product1MouseEntered(evt);
+                viewniMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                product1MouseExited(evt);
+                viewniMouseExited(evt);
             }
         });
 
@@ -308,23 +207,23 @@ public void displayData(){
         jLabel33.setForeground(new java.awt.Color(0, 102, 102));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel33.setText("View");
-        product1.add(jLabel33);
+        viewni.add(jLabel33);
 
         jLabel34.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(0, 102, 102));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel34.setText("Your");
-        product1.add(jLabel34);
+        viewni.add(jLabel34);
 
         jLabel35.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(0, 102, 102));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Details");
-        product1.add(jLabel35);
+        viewni.add(jLabel35);
 
-        jPanel16.add(product1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 130));
+        jPanel16.add(viewni, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
 
-        jPanel3.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 220, 180));
+        jPanel1.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 210, 160));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -332,7 +231,7 @@ public void displayData(){
 
         jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 150, 140));
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 170, 140));
 
         emdash.setBackground(new java.awt.Color(63, 195, 128));
         emdash.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -340,40 +239,156 @@ public void displayData(){
         emdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emdash.setText("User");
         emdash.setVerifyInputWhenFocusTarget(false);
-        jPanel5.add(emdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 0, 90, 30));
+        jPanel5.add(emdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 0, 90, 30));
 
-        jLabel19.setBackground(new java.awt.Color(63, 195, 128));
-        jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel19.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel19.setText("Welcome!");
-        jLabel19.setVerifyInputWhenFocusTarget(false);
-        jPanel5.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 30));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 150, 250, 200));
 
-        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 240, 180));
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel18.setBackground(new java.awt.Color(63, 195, 128));
-        jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel18.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Total Pending:");
-        jLabel18.setVerifyInputWhenFocusTarget(false);
-        jPanel3.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 150, 30));
+        jLabel26.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Product");
+        jLabel26.setVerifyInputWhenFocusTarget(false);
+        jPanel15.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 770, 550));
-
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/arrowback.png"))); // NOI18N
-        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel20MouseClicked(evt);
+        product.setBackground(new java.awt.Color(255, 255, 255));
+        product.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        product.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                productMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                productMouseExited(evt);
             }
         });
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 50, 40));
 
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/research.png"))); // NOI18N
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 0, 70, 50));
+        jLabel28.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("View");
+        product.add(jLabel28);
+
+        jLabel30.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("Product");
+        product.add(jLabel30);
+
+        jLabel31.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel31.setText("Details");
+        product.add(jLabel31);
+
+        jPanel15.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 110, 100));
+
+        product2.setBackground(new java.awt.Color(255, 255, 255));
+        product2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        product2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                product2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                product2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                product2MouseExited(evt);
+            }
+        });
+
+        jLabel36.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel36.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel36.setText("View");
+        product2.add(jLabel36);
+
+        jLabel37.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("Process");
+        product2.add(jLabel37);
+
+        jLabel38.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel38.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel38.setText("Details");
+        product2.add(jLabel38);
+
+        jPanel15.add(product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 110, 100));
+
+        jLabel39.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel39.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
+        jPanel15.add(jLabel39, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 70, 60));
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/shopping-cartgamay.png"))); // NOI18N
+        jPanel15.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 120, 60, 70));
+
+        jPanel1.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 220, 200));
+
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setBackground(new java.awt.Color(63, 195, 128));
+        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Total Pending:");
+        jLabel13.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 150, 30));
+
+        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 50, 130, 30));
+
+        jLabel21.setBackground(new java.awt.Color(63, 195, 128));
+        jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("Pending Process");
+        jLabel21.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 10, 250, 30));
+
+        jLabel22.setBackground(new java.awt.Color(63, 195, 128));
+        jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("USER ID");
+        jLabel22.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 10, 150, 30));
+
+        jLabel23.setBackground(new java.awt.Color(63, 195, 128));
+        jLabel23.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("Complete Process");
+        jLabel23.setVerifyInputWhenFocusTarget(false);
+        jPanel2.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 250, 30));
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 50, 130, 30));
+
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        employeeinfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        employeeinfo.setForeground(new java.awt.Color(0, 102, 102));
+        employeeinfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel21.add(employeeinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 80, 30));
+
+        jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 130, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 790, 150));
+
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/staffstandard.png"))); // NOI18N
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, -10, 150, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -402,23 +417,21 @@ public void displayData(){
         product.setBackground(logcolor);
     }//GEN-LAST:event_productMouseEntered
 
-    private void jTextField10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField10ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField10ActionPerformed
-
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
         LOGIN re = new LOGIN ();
         re.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel20MouseClicked
 
-    private void product1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product1MouseEntered
+    private void viewniMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewniMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_product1MouseEntered
+          viewni.setBackground(logcolor);
+    }//GEN-LAST:event_viewniMouseEntered
 
-    private void product1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product1MouseExited
+    private void viewniMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewniMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_product1MouseExited
+          viewni.setBackground(excolor);
+    }//GEN-LAST:event_viewniMouseExited
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
@@ -434,11 +447,37 @@ public void displayData(){
          
          else{
        emdash.setText(""+ses.getUsername());
-        eminfo.setText(""+ses.getU_id());
+        employeeinfo.setText(""+ses.getU_id());
          }
         
         
     }//GEN-LAST:event_formWindowActivated
+
+    private void product2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product2MouseEntered
+        // TODO add your handling code here:
+        
+          product2.setBackground(logcolor);
+    }//GEN-LAST:event_product2MouseEntered
+
+    private void product2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product2MouseExited
+        // TODO add your handling code here:
+          product2.setBackground(excolor);
+    }//GEN-LAST:event_product2MouseExited
+
+    private void product2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product2MouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_product2MouseClicked
+
+    private void viewniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewniMouseClicked
+        // TODO add your handling code here:
+        
+        employeeinfo em = new employeeinfo();
+        em.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_viewniMouseClicked
 
     /**
      * @param args the command line arguments
@@ -477,19 +516,16 @@ public void displayData(){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel emdash;
-    private javax.swing.JLabel eminfo;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel employeeinfo;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel20;
+    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
-    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel30;
@@ -498,25 +534,29 @@ public void displayData(){
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
+    private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
+    private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel39;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel20;
+    private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField7;
     private javax.swing.JTextField jTextField8;
     private javax.swing.JPanel product;
-    private javax.swing.JPanel product1;
+    private javax.swing.JPanel product2;
     private javax.swing.JTable tabem;
+    private javax.swing.JPanel viewni;
     // End of variables declaration//GEN-END:variables
 }

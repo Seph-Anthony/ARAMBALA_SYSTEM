@@ -3490,7 +3490,7 @@ else if (dupcheck()){
             // Determine the status based on the selected type
             String status = "Pending";
             if ("Admin".equals(selectedType)) {
-                status = "Active";
+                status = "Pending";
             }
             
             if (db.insertData("INSERT INTO user (u_username, u_fname, u_lname,u_email, u_contact, u_type, u_password, u_stat) "

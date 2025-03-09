@@ -9,6 +9,7 @@ import config.dbConnect;
 import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import net.proteanit.sql.DbUtils;
 
 /**
  *
@@ -23,8 +24,29 @@ public class prodpage extends javax.swing.JFrame {
         initComponents();
         AllProd();
     }
+    
+    
+    
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
+    
+    
+        
+public void displayData(){
+        try{
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT p_id, p_name, p_price, p_stock, p_status FROM product");
+            prodtable.setModel(DbUtils.resultSetToTableModel(rs));
+             rs.close();
+        }catch(SQLException ex){
+            System.out.println("Errors: "+ex.getMessage());
+        
+        }
+        
+    }
+    
+    
+    
     public void AllProd() {
     try {
         // Connect to the database
@@ -60,6 +82,7 @@ public class prodpage extends javax.swing.JFrame {
     private void initComponents() {
 
         jSpinner1 = new javax.swing.JSpinner();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -89,13 +112,15 @@ public class prodpage extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        prodtable = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         cusdash = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+
+        jPasswordField1.setText("jPasswordField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -109,7 +134,7 @@ public class prodpage extends javax.swing.JFrame {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, -1, -1));
 
-        jPanel7.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
@@ -129,7 +154,7 @@ public class prodpage extends javax.swing.JFrame {
 
         jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 170, 240, 150));
 
-        jPanel6.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel8.setBackground(new java.awt.Color(255, 255, 255));
@@ -150,7 +175,7 @@ public class prodpage extends javax.swing.JFrame {
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 170, 270, 150));
 
-        jPanel5.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
@@ -187,6 +212,7 @@ public class prodpage extends javax.swing.JFrame {
         jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         totalprod2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        totalprod2.setForeground(new java.awt.Color(0, 102, 102));
         totalprod2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel11.add(totalprod2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 40));
 
@@ -207,6 +233,7 @@ public class prodpage extends javax.swing.JFrame {
         jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         totalprod1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        totalprod1.setForeground(new java.awt.Color(0, 102, 102));
         totalprod1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel13.add(totalprod1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 40));
 
@@ -217,6 +244,7 @@ public class prodpage extends javax.swing.JFrame {
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         totalprod.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        totalprod.setForeground(new java.awt.Color(0, 102, 102));
         totalprod.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel14.add(totalprod, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 110, 40));
 
@@ -235,7 +263,7 @@ public class prodpage extends javax.swing.JFrame {
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        prodtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -243,7 +271,7 @@ public class prodpage extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(prodtable);
 
         jPanel12.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 125, 820, 220));
 
@@ -391,10 +419,11 @@ public class prodpage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable prodtable;
     private javax.swing.JLabel totalprod;
     private javax.swing.JLabel totalprod1;
     private javax.swing.JLabel totalprod2;

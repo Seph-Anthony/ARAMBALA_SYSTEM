@@ -231,7 +231,7 @@ public void showdata(){
         jLabel21.setForeground(new java.awt.Color(0, 102, 102));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("Add User");
-        addem.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, -1));
+        addem.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, -1));
 
         jPanel21.add(addem, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 180, 50));
 
@@ -277,6 +277,7 @@ public void showdata(){
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("Delete User");
         delem.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 30));
 
@@ -627,7 +628,7 @@ cusdash.setBackground(logcolor);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel act;
+    public javax.swing.JLabel act;
     private javax.swing.JPanel addem;
     private javax.swing.JPanel cusdash;
     private javax.swing.JPanel delem;
