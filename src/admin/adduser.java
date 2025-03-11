@@ -117,6 +117,7 @@ Color logcolor = new Color(63,195,128);
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1026 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -138,9 +139,6 @@ Color logcolor = new Color(63,195,128);
         jLabel270 = new javax.swing.JLabel();
         pass = new javax.swing.JTextField();
         jLabel74 = new javax.swing.JLabel();
-        dd = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel1038 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ty = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -148,6 +146,7 @@ Color logcolor = new Color(63,195,128);
         jLabel1039 = new javax.swing.JLabel();
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
+        jLabel1040 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         jPanel1030 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -171,7 +170,10 @@ Color logcolor = new Color(63,195,128);
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("ADD USER");
         jLabel6.setToolTipText("");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 70));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 240, 70));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/addthis.png"))); // NOI18N
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 70, 70));
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 700, 70));
 
@@ -307,31 +309,6 @@ Color logcolor = new Color(63,195,128);
         jLabel74.setText("Password:");
         jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, -1, -1));
 
-        dd.setBackground(new java.awt.Color(255, 255, 255));
-        dd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        dd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ddMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ddMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ddMouseExited(evt);
-            }
-        });
-        dd.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel7.setText("Dashboard");
-        dd.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
-
-        jLabel1038.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dsahdash.png"))); // NOI18N
-        dd.add(jLabel1038, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 20, -1));
-
-        jPanel2.add(dd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 160, 40));
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -362,13 +339,13 @@ Color logcolor = new Color(63,195,128);
         });
         jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 210, 30));
 
-        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
+        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
         jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1039MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 390, 30, 40));
+        jPanel2.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 40, 40));
 
         uid.setEditable(false);
         uid.setBackground(new java.awt.Color(204, 204, 204));
@@ -387,6 +364,14 @@ Color logcolor = new Color(63,195,128);
         jLabel271.setForeground(new java.awt.Color(0, 102, 102));
         jLabel271.setText("ID");
         jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
+
+        jLabel1040.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
+        jLabel1040.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1040MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 390, 30, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 810, 430));
 
@@ -458,37 +443,12 @@ Color logcolor = new Color(63,195,128);
         // TODO add your handling code here:
     }//GEN-LAST:event_tyActionPerformed
 
-    private void ddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ddMouseEntered
-        // TODO add your handling code here:
-        
-        dd.setBackground(logcolor);
-    }//GEN-LAST:event_ddMouseEntered
-
-    private void ddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ddMouseExited
-        // TODO add your handling code here:
-        
-         dd.setBackground(excolor);
-    }//GEN-LAST:event_ddMouseExited
-
-    private void ddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ddMouseClicked
-        // TODO add your handling code here:
-        
-         admindash dd = new admindash();
-        
-        dd.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ddMouseClicked
-
     private void jLabel1039MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1039MouseClicked
         // TODO add your handling code here:
         
-        usernamere.setText(null);
-     fname.setText(null);
-      lname.setText(null);
-      email.setText(null);
-     contact.setText(null);
-      pass.setText(null);
-      conpass.setText(null);
+      admindash ad = new admindash();
+      ad.setVisible(true);
+      this.dispose();
     }//GEN-LAST:event_jLabel1039MouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
@@ -647,6 +607,18 @@ else if (dupcheck()){
         // TODO add your handling code here:
     }//GEN-LAST:event_uidActionPerformed
 
+    private void jLabel1040MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1040MouseClicked
+        // TODO add your handling code here:
+        
+         usernamere.setText(null);
+     fname.setText(null);
+      lname.setText(null);
+      email.setText(null);
+     contact.setText(null);
+      pass.setText(null);
+      conpass.setText(null);
+    }//GEN-LAST:event_jLabel1040MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -687,13 +659,12 @@ else if (dupcheck()){
     public javax.swing.JPanel add;
     public javax.swing.JTextField conpass;
     public javax.swing.JTextField contact;
-    private javax.swing.JPanel dd;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel1038;
     private javax.swing.JLabel jLabel1039;
+    private javax.swing.JLabel jLabel1040;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
@@ -701,8 +672,8 @@ else if (dupcheck()){
     private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel74;

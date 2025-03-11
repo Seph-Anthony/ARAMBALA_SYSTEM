@@ -7,12 +7,13 @@ package admin;
 
 import config.dbConnect;
 import java.awt.Color;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
-
+import java.sql.Connection;
 /**
  *
  * @author Admin
@@ -152,10 +153,13 @@ public void showdata(){
         jLabel19 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
-        act = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
-        pending = new javax.swing.JLabel();
         jPanel19 = new javax.swing.JPanel();
+        jPanel13 = new javax.swing.JPanel();
+        pending = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        act = new javax.swing.JLabel();
+        jPanel15 = new javax.swing.JPanel();
         totaluser = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         jPanel8 = new javax.swing.JPanel();
@@ -266,6 +270,9 @@ public void showdata(){
         delem.setBackground(new java.awt.Color(255, 255, 255));
         delem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
         delem.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                delemMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 delemMouseEntered(evt);
             }
@@ -358,23 +365,21 @@ public void showdata(){
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
         jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        act.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        act.setForeground(new java.awt.Color(0, 102, 102));
-        act.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        act.setFocusTraversalPolicyProvider(true);
-        act.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                actMouseClicked(evt);
-            }
-        });
-        jPanel18.add(act, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 40));
-
         jPanel6.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 80, 80, -1));
 
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
         jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel6.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 80, -1));
+
+        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel6.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 80, -1));
+
+        jPanel13.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pending.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         pending.setForeground(new java.awt.Color(0, 102, 102));
@@ -385,20 +390,37 @@ public void showdata(){
                 pendingMouseClicked(evt);
             }
         });
-        jPanel22.add(pending, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 40));
+        jPanel13.add(pending, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 60, 40));
 
-        jPanel6.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 80, 80, -1));
+        jPanel6.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 100, 40));
 
-        jPanel19.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel19.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel14.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel14.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        act.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        act.setForeground(new java.awt.Color(0, 102, 102));
+        act.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        act.setFocusTraversalPolicyProvider(true);
+        act.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                actMouseClicked(evt);
+            }
+        });
+        jPanel14.add(act, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 60, 40));
+
+        jPanel6.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 80, 100, 40));
+
+        jPanel15.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel15.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel15.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         totaluser.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         totaluser.setForeground(new java.awt.Color(0, 102, 102));
         totaluser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel19.add(totaluser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 40));
+        jPanel15.add(totaluser, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 60, 40));
 
-        jPanel6.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 80, 80, -1));
+        jPanel6.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 100, 40));
 
         jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 820, 220));
 
@@ -590,6 +612,14 @@ cusdash.setBackground(logcolor);
     private void actMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_actMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_actMouseClicked
+
+    private void delemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delemMouseClicked
+        // TODO add your handling code here:
+        
+    
+        
+        
+    }//GEN-LAST:event_delemMouseClicked
     
     /**
      * @param args the command line arguments
@@ -655,6 +685,9 @@ cusdash.setBackground(logcolor);
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
+    private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel19;
     private javax.swing.JPanel jPanel2;

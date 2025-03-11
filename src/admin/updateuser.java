@@ -113,10 +113,12 @@ public class updateuser extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jCheckBoxMenuItem1 = new javax.swing.JCheckBoxMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel1026 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -138,9 +140,6 @@ public class updateuser extends javax.swing.JFrame {
         jLabel270 = new javax.swing.JLabel();
         pass = new javax.swing.JTextField();
         jLabel74 = new javax.swing.JLabel();
-        dd = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel1038 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ty = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -148,10 +147,14 @@ public class updateuser extends javax.swing.JFrame {
         jLabel1039 = new javax.swing.JLabel();
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
+        jLabel1040 = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+
+        jCheckBoxMenuItem1.setSelected(true);
+        jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -171,7 +174,10 @@ public class updateuser extends javax.swing.JFrame {
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setText("UPDATE USER");
         jLabel6.setToolTipText("");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 700, 70));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 300, 70));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/editthis.png"))); // NOI18N
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 80, 70));
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 700, 70));
 
@@ -307,31 +313,6 @@ public class updateuser extends javax.swing.JFrame {
         jLabel74.setText("Password:");
         jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, -1, -1));
 
-        dd.setBackground(new java.awt.Color(255, 255, 255));
-        dd.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        dd.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ddMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ddMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ddMouseExited(evt);
-            }
-        });
-        dd.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel7.setText("Dashboard");
-        dd.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
-
-        jLabel1038.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dsahdash.png"))); // NOI18N
-        dd.add(jLabel1038, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 20, -1));
-
-        jPanel2.add(dd, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 160, 40));
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -387,6 +368,14 @@ public class updateuser extends javax.swing.JFrame {
         jLabel271.setForeground(new java.awt.Color(0, 102, 102));
         jLabel271.setText("ID");
         jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
+
+        jLabel1040.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
+        jLabel1040.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1040MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 40, 40));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 830, 440));
 
@@ -458,27 +447,6 @@ public class updateuser extends javax.swing.JFrame {
     private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_passActionPerformed
-
-    private void ddMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ddMouseClicked
-        // TODO add your handling code here:
-
-        admindash dd = new admindash();
-
-        dd.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_ddMouseClicked
-
-    private void ddMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ddMouseEntered
-        // TODO add your handling code here:
-
-        dd.setBackground(logcolor);
-    }//GEN-LAST:event_ddMouseEntered
-
-    private void ddMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ddMouseExited
-        // TODO add your handling code here:
-
-        dd.setBackground(excolor);
-    }//GEN-LAST:event_ddMouseExited
 
     private void tyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tyActionPerformed
         // TODO add your handling code here:
@@ -580,6 +548,14 @@ public class updateuser extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_updateMouseClicked
 
+    private void jLabel1040MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1040MouseClicked
+        // TODO add your handling code here:
+
+        admindash ad = new admindash();
+        ad.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel1040MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -618,12 +594,12 @@ public class updateuser extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JTextField conpass;
     public javax.swing.JTextField contact;
-    private javax.swing.JPanel dd;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
+    private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel1038;
     private javax.swing.JLabel jLabel1039;
+    private javax.swing.JLabel jLabel1040;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
@@ -632,8 +608,8 @@ public class updateuser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel74;

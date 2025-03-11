@@ -302,7 +302,9 @@ public class customerinfo extends javax.swing.JFrame {
     }//GEN-LAST:event_tologinMouseClicked
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-   
+   customerdashboard cus = new customerdashboard();
+   cus.setVisible(true);
+   this.dispose();
     }//GEN-LAST:event_jLabel20MouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated

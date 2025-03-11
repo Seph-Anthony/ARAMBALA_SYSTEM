@@ -46,9 +46,6 @@ public class admininfo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel270 = new javax.swing.JLabel();
-        jPanel1028 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel1038 = new javax.swing.JLabel();
         jPanel1027 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -79,6 +76,7 @@ public class admininfo extends javax.swing.JFrame {
         conad1 = new javax.swing.JPanel();
         jPanel16 = new javax.swing.JPanel();
         contact = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -157,20 +155,6 @@ public class admininfo extends javax.swing.JFrame {
         jLabel270.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel270.setText("Contact");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
-
-        jPanel1028.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1028.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
-        jPanel1028.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel7.setText("Dashboard");
-        jPanel1028.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, -1, -1));
-
-        jLabel1038.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dsahdash.png"))); // NOI18N
-        jPanel1028.add(jLabel1038, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 20, -1));
-
-        jPanel2.add(jPanel1028, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 160, 40));
 
         jPanel1027.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1027.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -338,6 +322,10 @@ public class admininfo extends javax.swing.JFrame {
 
         jPanel2.add(conad1, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 240, 50));
 
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 70, 50));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 100, 810, 450));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
@@ -442,7 +430,7 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel firstname1;
     private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel1038;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel272;
@@ -450,7 +438,6 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
@@ -460,7 +447,6 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel1026;
     private javax.swing.JPanel jPanel1027;
-    private javax.swing.JPanel jPanel1028;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;

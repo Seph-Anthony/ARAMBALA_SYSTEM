@@ -76,7 +76,47 @@ public class LOGIN extends javax.swing.JFrame {
         }
     }
     
-
+   public static boolean prodinput(){
+        // ariiii ang problemaa AHHHH
+        
+        dbConnect db = new dbConnect();
+         
+        try{
+         String que = "SELECT * FROM user WHERE u_username='"+username+"' AND u_password='"+password+"'";  
+            ResultSet resultset = db.getData(que);
+        
+            
+            if(resultset.next()){
+                
+              stat = resultset.getString("u_stat");
+              ty = resultset.getString("u_type");
+              SessionClass ses = SessionClass.getInstance();
+                
+              
+             ses.setU_id(resultset.getInt("u_id"));
+               ses.setUsername(resultset.getString("u_username"));
+            ses.setFname(resultset.getString("u_fname"));
+            ses.setLname(resultset.getString("u_lname"));
+           ses.setEmail(resultset.getString("u_email"));
+            ses.setContact(resultset.getString("u_contact"));
+             ses.setType(resultset.getString("u_type")); 
+               ses.setStat(resultset.getString("u_stat"));
+               ses.setPass(resultset.getString("u_password"));
+        
+             return true;   
+            }
+            
+            else {
+                
+                return false;
+            }
+            
+            
+        }catch(SQLException ex){
+         
+            return false;
+        }
+    }
     
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
@@ -151,17 +191,17 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(null);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 102, 102));
         jLabel1.setText("Password:");
         jPanel1.add(jLabel1);
-        jLabel1.setBounds(480, 290, 72, 17);
+        jLabel1.setBounds(480, 290, 80, 19);
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("Username:");
         jPanel1.add(jLabel3);
-        jLabel3.setBounds(480, 170, 74, 17);
+        jLabel3.setBounds(480, 170, 100, 19);
 
         password.setBackground(new java.awt.Color(204, 204, 204));
         password.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -245,6 +285,7 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel5.add(toregister, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 290, 40));
 
         login4.setBackground(new java.awt.Color(0, 102, 102));
+        login4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         login4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 login4MouseClicked(evt);
@@ -258,10 +299,11 @@ public class LOGIN extends javax.swing.JFrame {
         });
         login4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("LOGIN");
-        login4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        login4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 7, 100, 40));
 
         login5.setBackground(new java.awt.Color(0, 102, 102));
         login5.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -311,6 +353,7 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel5.add(login4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 420, 120, 50));
 
         reset.setBackground(new java.awt.Color(0, 102, 102));
+        reset.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         reset.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 resetMouseClicked(evt);
@@ -324,10 +367,11 @@ public class LOGIN extends javax.swing.JFrame {
         });
         reset.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("RESET");
-        reset.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        reset.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 7, 100, 40));
 
         login1.setBackground(new java.awt.Color(0, 102, 102));
         login1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -437,10 +481,10 @@ public class LOGIN extends javax.swing.JFrame {
         jPanel5.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 420, 120, 50));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
-        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 40, 60));
+        jPanel5.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 40, 60));
 
         jLabel5.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("LOGIN");

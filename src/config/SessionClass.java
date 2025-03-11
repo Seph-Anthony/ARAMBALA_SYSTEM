@@ -21,9 +21,20 @@ public class SessionClass {
          private String type;
           private String stat;
           private String pass;
+          
+          private int p_id;
+           private String p_name;
+            private String p_category;
+             private String p_brand;
+              private int p_price;
+               private int p_stock;
+                private String p_status ;
           private SessionClass() {
     
           }
+          
+          
+          
 
     public String getPass() {
         return pass;
@@ -108,6 +119,66 @@ public class SessionClass {
 
     public void setStat(String stat) {
         this.stat = stat;
+    }
+    
+    
+    
+    
+
+    public int getP_id() {
+        return p_id;
+    }
+
+    public void setP_id(int p_id) {
+        this.p_id = p_id;
+    }
+
+    public String getP_name() {
+        return p_name;
+    }
+
+    public void setP_name(String p_name) {
+        this.p_name = p_name;
+    }
+
+    public String getP_category() {
+        return p_category;
+    }
+
+    public void setP_category(String p_category) {
+        this.p_category = p_category;
+    }
+
+    public String getP_brand() {
+        return p_brand;
+    }
+
+    public void setP_brand(String p_brand) {
+        this.p_brand = p_brand;
+    }
+
+    public int getP_price() {
+        return p_price;
+    }
+
+    public void setP_price(int p_price) {
+        this.p_price = p_price;
+    }
+
+    public int getP_stock() {
+        return p_stock;
+    }
+
+    public void setP_stock(int p_stock) {
+        this.p_stock = p_stock;
+    }
+
+    public String getP_status() {
+        return p_status;
+    }
+
+    public void setP_status(String p_status) {
+        this.p_status = p_status;
     }
 
               
