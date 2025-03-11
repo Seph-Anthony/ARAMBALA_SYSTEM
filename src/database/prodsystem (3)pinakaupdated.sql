@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 05, 2025 at 05:24 AM
+-- Generation Time: Mar 11, 2025 at 06:38 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -48,10 +48,20 @@ CREATE TABLE `process` (
 CREATE TABLE `product` (
   `p_id` int(10) NOT NULL,
   `p_name` varchar(20) NOT NULL,
+  `p_category` varchar(20) NOT NULL,
+  `p_brand` varchar(50) NOT NULL,
   `p_price` decimal(10,0) NOT NULL,
   `p_stock` int(200) NOT NULL,
   `p_status` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `product`
+--
+
+INSERT INTO `product` (`p_id`, `p_name`, `p_category`, `p_brand`, `p_price`, `p_stock`, `p_status`) VALUES
+(2, 'Noodles', 'Food and Bevarage', 'Lucky Me', 25, 22, 'Available'),
+(3, 'Piattos', 'Food and Bevarage', 'Oishi', 15, 0, 'Not Available');
 
 -- --------------------------------------------------------
 
@@ -79,11 +89,12 @@ INSERT INTO `user` (`u_id`, `u_username`, `u_fname`, `u_lname`, `u_email`, `u_co
 (1, 'joseph', 'Joseph Anthony', 'Arambala', 'josephanthony@gmail.com', '09786546785', 'Admin', 'josephanthony', 'Active'),
 (2, 'lloydt', 'Lloydyyy', 'Anthony', 'll@gmail.com', '09888765433', 'Customer', 'passpass', 'Active'),
 (3, 'larrylar', 'Larry Zak', 'Macheldon', 'yaay@yahoo.com', '09876856431', 'Employee', 'larry12345', 'Active'),
-(5, 'heartt', 'Immaa', 'Imalay', 'imai@gmail.com', '252643636363', 'Employee', 'heartgiven', 'Pending'),
-(6, 'robottt', 'Peter', 'Grifin', 'pet@gmail.com', '77777777777777', 'Employee', 'pppetppet', 'Pending'),
+(5, 'HEATT', 'Immaa', 'Imalay', 'imai@gmail.com', '252643636363', 'Employee', 'heartgiven', 'Active'),
+(6, 'robotjud', 'Peter', 'Grifin', 'pet@gmail.com', '77777777777777', 'Employee', 'pppetppet', 'Pending'),
 (7, 'riri', 'Rim', 'Adlawan', 'adlaw@gmail.com', '129359328592385', 'Customer', 'ggg123456', 'Pending'),
 (8, 'adminadded', 'Mark', 'Grayson', 'grayson@gmail.com', '09564332121', 'Customer', 'graysongray', 'Pending'),
-(9, 'noel', 'Nolan', 'Grayson', 'noel@gmail.com', '09887564231', 'Customer', 'invincible', 'Active');
+(9, 'noel', 'Nolan', 'Grayson', 'noel@gmail.com', '09887564231', 'Customer', 'invincible', 'Active'),
+(12, 'test', 'test', 'test', 'test@stcecilia.edu.ph', '09123456778', 'Admin', 'P@ssword', 'Active');
 
 --
 -- Indexes for dumped tables
@@ -123,13 +134,13 @@ ALTER TABLE `process`
 -- AUTO_INCREMENT for table `product`
 --
 ALTER TABLE `product`
-  MODIFY `p_id` int(10) NOT NULL AUTO_INCREMENT;
+  MODIFY `p_id` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- Constraints for dumped tables
