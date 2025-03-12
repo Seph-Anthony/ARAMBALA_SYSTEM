@@ -7,6 +7,7 @@ package admin;
 
 import config.dbConnect;
 import java.awt.Color;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -29,6 +30,11 @@ public class prodpage extends javax.swing.JFrame {
         AvailableProd();
         NotAvail();
     }
+    
+    
+//    by the way the name of my database table is product, and the attribute are u_id, u_username, u_fname, u_lname, u_email, u_contact, u_type and u_password. 
+//    and the Jtable is prodtable. I want to add a functionality of my delete product through jpanel. what input should I do. give me the code
+    
     
     public void NotAvail(){
     
@@ -199,6 +205,9 @@ public void AvailableProd(){
         DELETE.setBackground(new java.awt.Color(255, 255, 255));
         DELETE.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         DELETE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DELETEMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 DELETEMouseEntered(evt);
             }
@@ -547,6 +556,13 @@ public void AvailableProd(){
 //        this.dispose();
         
     }//GEN-LAST:event_EDITMouseClicked
+
+    private void DELETEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseClicked
+        // TODO add your handling code here:
+        
+      
+        
+    }//GEN-LAST:event_DELETEMouseClicked
 
     /**
      * @param args the command line arguments

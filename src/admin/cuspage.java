@@ -31,6 +31,7 @@ public class cuspage extends javax.swing.JFrame {
         PendingUser();
     }
     
+    
 public void PendingUser(){
     
     try{
@@ -165,7 +166,7 @@ public void showdata(){
         jPanel8 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         usertable = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
+        searchuser = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         cusdash = new javax.swing.JPanel();
@@ -445,13 +446,13 @@ public void showdata(){
 
         jPanel8.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 780, 220));
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        searchuser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        searchuser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                searchuserActionPerformed(evt);
             }
         });
-        jPanel8.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 260, 30));
+        jPanel8.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 260, 30));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 102, 102));
@@ -496,9 +497,9 @@ public void showdata(){
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void searchuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchuserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_searchuserActionPerformed
 
     private void cusdashMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cusdashMouseEntered
 cusdash.setBackground(logcolor);       
@@ -618,6 +619,7 @@ cusdash.setBackground(logcolor);
     private void delemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delemMouseClicked
         // TODO add your handling code here:
         
+        
     
         
         
@@ -707,9 +709,9 @@ cusdash.setBackground(logcolor);
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTree jTree1;
     public javax.swing.JLabel pending;
+    private javax.swing.JTextField searchuser;
     private javax.swing.JLabel totaluser;
     private javax.swing.JTable usertable;
     // End of variables declaration//GEN-END:variables
