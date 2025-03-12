@@ -168,6 +168,11 @@ public class customerinfo extends javax.swing.JFrame {
         jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 170, 40));
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4MouseClicked(evt);
+            }
+        });
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -333,6 +338,14 @@ public class customerinfo extends javax.swing.JFrame {
 //       
           }  
     }//GEN-LAST:event_formWindowActivated
+
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        // TODO add your handling code here:
+        
+        updateinfor up = new updateinfor();
+        up.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel4MouseClicked
 
     /**
      * @param args the command line arguments
