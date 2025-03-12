@@ -5,7 +5,9 @@
  */
 package admin;
 
+import config.dbConnect;
 import java.awt.Color;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -54,8 +56,11 @@ public class updateprod extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         pprice = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        pstock = new javax.swing.JTextField();
+        pstatus = new javax.swing.JTextField();
         pcat = new javax.swing.JComboBox<>();
+        pstock = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        jLabel1039 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -143,7 +148,8 @@ public class updateprod extends javax.swing.JFrame {
 
         jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 170, 40));
 
-        pname.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        pname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         pname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,7 +173,8 @@ public class updateprod extends javax.swing.JFrame {
         jLabel5.setText("Product Brand:");
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, -1, -1));
 
-        pbrand.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        pbrand.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pbrand.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pbrand.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         pbrand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -181,7 +188,9 @@ public class updateprod extends javax.swing.JFrame {
         jLabel6.setText("ID:");
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
 
-        pid.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        pid.setEditable(false);
+        pid.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         pid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -195,7 +204,8 @@ public class updateprod extends javax.swing.JFrame {
         jLabel7.setText("Product Price:");
         jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
 
-        pprice.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        pprice.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pprice.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pprice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         pprice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -206,10 +216,26 @@ public class updateprod extends javax.swing.JFrame {
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel10.setText("Product Stock:");
-        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, -1, -1));
+        jLabel10.setText("Product Status:");
+        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, -1, -1));
 
-        pstock.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        pstatus.setEditable(false);
+        pstatus.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pstatus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        pstatus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        pstatus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pstatusActionPerformed(evt);
+            }
+        });
+        jPanel5.add(pstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 190, 50));
+
+        pcat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        pcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food and Bevarage", "Household Essentials", "Personal Care & Wellness", "Suppliess and Utilities" }));
+        jPanel5.add(pcat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 190, 50));
+
+        pstock.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        pstock.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pstock.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         pstock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,9 +244,19 @@ public class updateprod extends javax.swing.JFrame {
         });
         jPanel5.add(pstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 190, 50));
 
-        pcat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        pcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food and Bevarage", "Household Essentials", "Personal Care & Wellness", "Suppliess and Utilities" }));
-        jPanel5.add(pcat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 190, 50));
+        jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel12.setText("Product Stock:");
+        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, -1, -1));
+
+        jLabel1039.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
+        jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1039MouseClicked(evt);
+            }
+        });
+        jPanel5.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 50, 50));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 760, 390));
 
@@ -245,7 +281,7 @@ public class updateprod extends javax.swing.JFrame {
         jLabel11.setText("UPDATE PRODUCT");
         add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 200, 30));
 
-        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 540, 220, 70));
+        jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 540, 220, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -278,13 +314,88 @@ public class updateprod extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_ppriceActionPerformed
 
-    private void pstockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pstockActionPerformed
+    private void pstatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pstatusActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_pstockActionPerformed
+    }//GEN-LAST:event_pstatusActionPerformed
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
 
        
+    dbConnect db = new dbConnect();
+
+    // Get the selected category from the JComboBox
+    String selectedCategory = (String) pcat.getSelectedItem();
+
+    // Validate input fields
+    if (pname.getText().isEmpty() || pprice.getText().isEmpty() || pstock.getText().isEmpty() ||
+        pbrand.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
+            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validate category selection
+    if (selectedCategory == null || selectedCategory.equals("Select Category")) {
+        JOptionPane.showMessageDialog(null, "Please select a valid Category Type.",
+            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validate price (must be a positive number)
+    String priceText = pprice.getText();
+    try {
+        double price = Double.parseDouble(priceText);
+        if (price < 0) {
+            JOptionPane.showMessageDialog(null, "Invalid Price: Price cannot be negative.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Invalid Price: Please enter a valid number.",
+            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validate stock (must be a positive integer)
+    if (!pstock.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(null, "Invalid Stock Input.",
+            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+   
+
+    // Determine product status based on stock
+    int stock = Integer.parseInt(pstock.getText());
+    String status = (stock == 0) ? "Not Available" : "Available";
+
+    // Build the SQL query
+    String query = "UPDATE product SET " +
+    "p_name = '" + pname.getText() + "', " +
+    "p_category = '" + selectedCategory + "', " +
+    "p_brand = '" + pbrand.getText() + "', " +
+    "p_price = " + pprice.getText() + ", " +
+    "p_stock = " + stock + ", " +
+    "p_status = '" + status + "' " +
+    "WHERE p_id = '" + pid + "'";
+
+    try {
+        // Execute the query
+        int result = db.insertData(query);
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(null, "Product added successfully.");
+           
+        } else {
+            JOptionPane.showMessageDialog(null, "Error adding product. Please check your input or try again.",
+                "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(),
+            "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace(); // Print the stack trace for debugging
+    }
+     
 
     }//GEN-LAST:event_addMouseClicked
 
@@ -299,6 +410,18 @@ public class updateprod extends javax.swing.JFrame {
         // TODO add your handling code here:
         add.setBackground(excolor);
     }//GEN-LAST:event_addMouseExited
+
+    private void pstockActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pstockActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pstockActionPerformed
+
+    private void jLabel1039MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1039MouseClicked
+        // TODO add your handling code here:
+
+        admindash ad = new admindash();
+        ad.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel1039MouseClicked
 
     /**
      * @param args the command line arguments
@@ -339,7 +462,9 @@ public class updateprod extends javax.swing.JFrame {
     private javax.swing.JPanel add;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel1039;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -360,6 +485,7 @@ public class updateprod extends javax.swing.JFrame {
     public javax.swing.JTextField pid;
     public javax.swing.JTextField pname;
     public javax.swing.JTextField pprice;
+    public javax.swing.JTextField pstatus;
     public javax.swing.JTextField pstock;
     // End of variables declaration//GEN-END:variables
 }

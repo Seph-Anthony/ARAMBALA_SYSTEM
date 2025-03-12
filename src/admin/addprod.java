@@ -25,40 +25,46 @@ public class addprod extends javax.swing.JFrame {
         initComponents();
         
     }
-     public static String productname;
+  public static String productname, brand;
+//    public boolean dupcheck(){
+//        
+//        dbConnect db = new dbConnect();
+//         
+//        try{
+//        String que = "SELECT * FROM product WHERE p_name='"+proname.getText()+"' OR p_brand='"+probrand.getText()+"'";    
+//            ResultSet resultset = db.getData(que);
+//            if(resultset.next()){
+//                brand = resultset.getString("p_brand");
+//            
+//                if(brand.equals(probrand.getText())){
+//                    
+//                    JOptionPane.showMessageDialog(null, "The email already existed",
+//                "Error Registration", JOptionPane.ERROR_MESSAGE);
+//                    probrand.setText("");
+//                }
+//                productname = resultset.getString("p_name");
+//                 if(productname.equals(proname.getText())){
+//                    
+//                    JOptionPane.showMessageDialog(null, "The username already existed",
+//                "Error Registration", JOptionPane.ERROR_MESSAGE);
+//                    proname.setText("");
+//                }
+//                System.out.println(""+productname);
+//             return true;   
+//            }
+//            
+//            else {
+//                
+//                return false;
+//            }
+//        }catch(SQLException ex){
+//            System.out.println(""+ex);
+//            return false;
+//        }
+//    }
     
-       Color logcolor = new Color(63,195,128);
+    Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
-     public boolean dupcheck(){
-        
-        dbConnect db = new dbConnect();
-         
-        try{
-        String que = "SELECT * FROM product WHERE u_username='"+proname.getText()+"' ";
-            ResultSet resultset = db.getData(que);
-            if(resultset.next()){
-               
-              
-                productname = resultset.getString("u_username");
-                 if(productname.equals(proname.getText())){
-                    
-                    JOptionPane.showMessageDialog(null, "The username already existed",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-                    proname.setText("");
-                }
-                System.out.println(""+proname);
-             return true;   
-            }
-            
-            else {
-                
-                return false;
-            }
-        }catch(SQLException ex){
-            System.out.println(""+ex);
-            return false;
-        }
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -160,7 +166,7 @@ public class addprod extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 760, 120));
 
         prostock.setBackground(new java.awt.Color(240, 240, 240));
-        prostock.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        prostock.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         prostock.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         prostock.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -170,7 +176,7 @@ public class addprod extends javax.swing.JFrame {
         jPanel1.add(prostock, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 310, 240, 50));
 
         proprice.setBackground(new java.awt.Color(240, 240, 240));
-        proprice.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        proprice.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         proprice.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         proprice.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -190,7 +196,7 @@ public class addprod extends javax.swing.JFrame {
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, -1, -1));
 
         probrand.setBackground(new java.awt.Color(240, 240, 240));
-        probrand.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        probrand.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         probrand.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         probrand.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -224,7 +230,7 @@ public class addprod extends javax.swing.JFrame {
         jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 40, -1, -1));
 
         proname.setBackground(new java.awt.Color(240, 240, 240));
-        proname.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        proname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         proname.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         proname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -260,7 +266,7 @@ public class addprod extends javax.swing.JFrame {
         jPanel5.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 50, 50));
 
         prodcategory.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        prodcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food and Bevarage", "Household Essentials", "Personal Care & Wellness", "Suppliess and Utilities" }));
+        prodcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food Bevarage", "Household Essentials", "Personal Wellness", "Suppliess Utilities" }));
         jPanel5.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 240, 50));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 760, 390));
@@ -377,6 +383,8 @@ public class addprod extends javax.swing.JFrame {
             "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
     }
+    
+   
 
     // Determine product status based on stock
     int stock = Integer.parseInt(prostock.getText());

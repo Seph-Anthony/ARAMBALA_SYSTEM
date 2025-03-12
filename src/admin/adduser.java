@@ -218,7 +218,7 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 210));
 
         email.setBackground(new java.awt.Color(204, 204, 204));
-        email.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        email.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         email.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 200, 30));
@@ -229,7 +229,7 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jLabel72, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, -1, -1));
 
         lname.setBackground(new java.awt.Color(204, 204, 204));
-        lname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         lname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         lname.setBorder(new javax.swing.border.MatteBorder(null));
         lname.addActionListener(new java.awt.event.ActionListener() {
@@ -245,7 +245,7 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 190, -1, -1));
 
         usernamere.setBackground(new java.awt.Color(204, 204, 204));
-        usernamere.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        usernamere.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         usernamere.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         usernamere.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel2.add(usernamere, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 200, 30));
@@ -261,13 +261,13 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, -1, -1));
 
         fname.setBackground(new java.awt.Color(204, 204, 204));
-        fname.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        fname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         fname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         fname.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel2.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 200, 30));
 
         conpass.setBackground(new java.awt.Color(204, 204, 204));
-        conpass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        conpass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         conpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         conpass.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel2.add(conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 210, 30));
@@ -278,7 +278,7 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, -1, -1));
 
         contact.setBackground(new java.awt.Color(204, 204, 204));
-        contact.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        contact.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         contact.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         contact.setBorder(new javax.swing.border.MatteBorder(null));
         contact.addActionListener(new java.awt.event.ActionListener() {
@@ -294,7 +294,7 @@ Color logcolor = new Color(63,195,128);
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
 
         pass.setBackground(new java.awt.Color(204, 204, 204));
-        pass.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        pass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pass.setBorder(new javax.swing.border.MatteBorder(null));
         pass.addActionListener(new java.awt.event.ActionListener() {
@@ -349,7 +349,7 @@ Color logcolor = new Color(63,195,128);
 
         uid.setEditable(false);
         uid.setBackground(new java.awt.Color(204, 204, 204));
-        uid.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        uid.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         uid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         uid.setBorder(new javax.swing.border.MatteBorder(null));
         uid.setEnabled(false);

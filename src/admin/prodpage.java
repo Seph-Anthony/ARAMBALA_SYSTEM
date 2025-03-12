@@ -58,7 +58,7 @@ public class prodpage extends javax.swing.JFrame {
 public void displayData(){
         try{
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT p_id, p_name, p_price, p_stock, p_status FROM product");
+            ResultSet rs = dbc.getData("SELECT * FROM product");
             prodtable.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
         }catch(SQLException ex){
@@ -361,6 +361,8 @@ public void AvailableProd(){
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        prodtable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        prodtable.setForeground(new java.awt.Color(0, 102, 102));
         prodtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -511,22 +513,19 @@ public void AvailableProd(){
          TableModel tbl =  prodtable.getModel();
        ResultSet rs = db.getData("SELECT * FROM  product WHERE p_id = '"+tbl.getValueAt(rowindex, 0)+"'");
       if(rs.next()){
-            updateuser up = new updateuser();
+            updateprod up = new updateprod();
+        
             
-           up.pid.setText(""+rs.getInt("p_id"));
+             up.pid.setText(""+rs.getInt("p_id"));
             up.pname.setText(""+rs.getString("p_name"));
-            
-            
-//            up.uid.setText(""+rs.getInt("u_id"));
-//            up.usernamere.setText(""+rs.getString("u_username"));
-//       up.fname.setText(""+rs.getString("u_fname"));
-//       up.lname.setText(""+rs.getString("u_lname"));
-//       up.email.setText(""+rs.getString("u_email"));
-//       up.contact.setText(""+rs.getString("u_contact"));
-//       up.ty.setSelectedItem(""+rs.getString("u_type"));
-//       up.pass.setText(""+rs.getString("u_password"));
-//      up.status.setSelectedItem(""+rs.getString("u_stat"));
-      
+            up.pcat.setSelectedItem(""+rs.getString("p_category"));
+              up.pbrand.setText(""+rs.getString("p_brand"));
+              up.pprice.setText(""+rs.getString("p_price"));
+              up.pname.setText(""+rs.getString("p_name"));
+              up.pstatus.setText(""+rs.getString("p_status"));
+              up.pstock.setText(""+rs.getInt("p_stock"));
+
+     
       up.setVisible(true);
       
         this.dispose();

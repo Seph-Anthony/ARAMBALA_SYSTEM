@@ -431,6 +431,8 @@ public void showdata(){
         jPanel8.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        usertable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        usertable.setForeground(new java.awt.Color(0, 102, 102));
         usertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
