@@ -522,7 +522,7 @@ public void displayData(){
 
         emuser.setBackground(new java.awt.Color(63, 195, 128));
         emuser.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
-        emuser.setForeground(new java.awt.Color(255, 255, 255));
+        emuser.setForeground(new java.awt.Color(0, 102, 102));
         emuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emuser.setVerifyInputWhenFocusTarget(false);
         jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));

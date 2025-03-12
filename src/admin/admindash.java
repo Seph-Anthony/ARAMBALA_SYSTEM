@@ -25,6 +25,12 @@ import lores.LOGIN;
 import lores.REGISTER;
 import net.proteanit.sql.DbUtils;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+
 /**
  *
  * @author Admin
@@ -41,6 +47,19 @@ public class admindash extends javax.swing.JFrame {
         AllProd();
         AllProcess();
       
+         // Add ActionListener to the search button
+        SearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username =searchuser.getText().trim();
+                if (!username.isEmpty()) {
+                    searchUser(username);
+                } else {
+                    JOptionPane.showMessageDialog(admindash.this, "Please enter a username.");
+                }
+            }
+        });
+        
     }
     
    
@@ -48,7 +67,17 @@ public class admindash extends javax.swing.JFrame {
        Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
     
- 
+ private void searchUser(String username) {
+        try {
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT u_id, u_username, u_fname, u_lname, u_email, u_contact, u_type, u_stat FROM user WHERE u_username = '" + username + "'");
+            admintable.setModel(DbUtils.resultSetToTableModel(rs));
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching for user.");
+        }
+    }
     
 public void displayData(){
         try{
@@ -205,7 +234,7 @@ public void AllProcess() {
         jLabel8 = new javax.swing.JLabel();
         admindash = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
+        searchuser = new javax.swing.JTextField();
         jLabel19 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
@@ -228,6 +257,8 @@ public void AllProcess() {
         jPanel19 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         admintable = new javax.swing.JTable();
+        resetbutton = new javax.swing.JButton();
+        SearchButton = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
 
         jPanel261.setBackground(new java.awt.Color(204, 255, 255));
@@ -365,13 +396,20 @@ public void AllProcess() {
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 140, 10));
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+        searchuser.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        searchuser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchuser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        searchuser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                searchuserMouseReleased(evt);
             }
         });
-        jPanel2.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 420, 30));
+        searchuser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchuserActionPerformed(evt);
+            }
+        });
+        jPanel2.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 370, 420, 30));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(255, 255, 255));
@@ -506,7 +544,7 @@ public void AllProcess() {
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 360, 50, 50));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 360, 50, 50));
 
         jPanel19.setBackground(new java.awt.Color(0, 102, 102));
         jPanel19.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
@@ -522,11 +560,41 @@ public void AllProcess() {
 
             }
         ));
+        admintable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                admintableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(admintable);
 
         jPanel19.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 780, 270));
 
         jPanel2.add(jPanel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 800, 290));
+
+        resetbutton.setBackground(new java.awt.Color(255, 255, 255));
+        resetbutton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        resetbutton.setText("RESET");
+        resetbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetbuttonMouseClicked(evt);
+            }
+        });
+        resetbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetbuttonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(resetbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 370, 100, 30));
+
+        SearchButton.setBackground(new java.awt.Color(255, 255, 255));
+        SearchButton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        SearchButton.setText("SEARCH");
+        SearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchButtonActionPerformed(evt);
+            }
+        });
+        jPanel2.add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 100, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 720));
 
@@ -613,9 +681,9 @@ public void AllProcess() {
         this.dispose();
     }//GEN-LAST:event_jPanel6MouseClicked
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void searchuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchuserActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_searchuserActionPerformed
 
     private void processMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processMouseExited
         process.setBackground(excolor);
@@ -641,6 +709,50 @@ public void AllProcess() {
         this.dispose();
         
     }//GEN-LAST:event_productMouseClicked
+
+    private void searchuserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchuserMouseReleased
+        // TODO add your handling code here:
+      
+            
+        
+        
+    }//GEN-LAST:event_searchuserMouseReleased
+
+    private void admintableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admintableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_admintableMouseClicked
+
+    private void resetbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetbuttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resetbuttonActionPerformed
+
+    private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchButtonActionPerformed
+
+    private void resetbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetbuttonMouseClicked
+      
+   try {
+        // Call the displayData method to reset the table and show all data
+        displayData();
+        
+        // Optionally, you can also reset the total user count
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM user");
+        
+        if (rs.next()) {
+            int totalUsers = rs.getInt("totalusers");
+            totaluser1.setText(" " + totalUsers); // Update the total user count label
+        }
+        
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error resetting the table.");
+    }
+
+    }//GEN-LAST:event_resetbuttonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -669,7 +781,31 @@ public void AllProcess() {
         }
         //</editor-fold>
         //</editor-fold>
+  try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new admindash().setVisible(true);
+            }
+        });
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -679,6 +815,7 @@ public void AllProcess() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton SearchButton;
     private javax.swing.JLabel adinfo;
     private javax.swing.JLabel admindash;
     private javax.swing.JTable admintable;
@@ -715,13 +852,14 @@ public void AllProcess() {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JToolBar jToolBar1;
     private javax.swing.JPanel process;
     private javax.swing.JPanel product;
+    private javax.swing.JButton resetbutton;
+    private javax.swing.JTextField searchuser;
     private javax.swing.JLabel totalprocess;
     private javax.swing.JLabel totalproduct;
     public javax.swing.JLabel totaluser1;

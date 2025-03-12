@@ -5,6 +5,7 @@
  */
 package admin;
 
+import USER.updateinfor;
 import config.dbConnect;
 import java.awt.Color;
 import java.sql.PreparedStatement;
@@ -14,6 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 import java.sql.Connection;
+
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
+
 /**
  *
  * @author Admin
@@ -29,6 +38,32 @@ public class cuspage extends javax.swing.JFrame {
         AllUsers();
         ActiveUser();
         PendingUser();
+        
+        
+         searchpanel.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username =searchuser.getText().trim();
+                if (!username.isEmpty()) {
+                    searchUser(username);
+                } else {
+                    JOptionPane.showMessageDialog(cuspage.this, "Please enter a username.");
+                }
+            }
+        });
+    }
+    
+       
+ private void searchUser(String username) {
+        try {
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT u_id, u_username, u_fname, u_lname, u_email, u_contact, u_type, u_stat FROM user WHERE u_username = '" + username + "'");
+            usertable.setModel(DbUtils.resultSetToTableModel(rs));
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching for user.");
+        }
     }
     
     
@@ -168,10 +203,11 @@ public void showdata(){
         usertable = new javax.swing.JTable();
         searchuser = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         cusdash = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        searchpanel = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
 
         jScrollPane2.setViewportView(jTree1);
 
@@ -446,24 +482,22 @@ public void showdata(){
 
         jPanel8.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 780, 220));
 
+        searchuser.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        searchuser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         searchuser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         searchuser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 searchuserActionPerformed(evt);
             }
         });
-        jPanel8.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 260, 30));
+        jPanel8.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 80, 270, 30));
 
         jLabel20.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel20.setForeground(new java.awt.Color(0, 102, 102));
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setText("Users ");
         jLabel20.setVerifyInputWhenFocusTarget(false);
-        jPanel8.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 90, 30));
-
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel8.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 50, 50));
+        jPanel8.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 90, 30));
 
         cusdash.setBackground(new java.awt.Color(255, 255, 255));
         cusdash.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -488,6 +522,29 @@ public void showdata(){
         cusdash.add(jLabel17);
 
         jPanel8.add(cusdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 70, 180, 50));
+
+        searchpanel.setBackground(new java.awt.Color(0, 102, 102));
+        searchpanel.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        searchpanel.setForeground(new java.awt.Color(255, 255, 255));
+        searchpanel.setText("SEARCH");
+        searchpanel.setBorder(null);
+        jPanel8.add(searchpanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 100, 40));
+
+        jButton1.setBackground(new java.awt.Color(0, 102, 102));
+        jButton1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("RESET");
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jButton1MouseClicked(evt);
+            }
+        });
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+        jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 100, 40));
 
         jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 800, 350));
 
@@ -576,6 +633,9 @@ cusdash.setBackground(logcolor);
        ResultSet rs = db.getData("SELECT * FROM  user WHERE u_id = '"+tbl.getValueAt(rowindex, 0)+"'");
       if(rs.next()){
             updateuser up = new updateuser();
+           
+            
+            
             
             up.uid.setText(""+rs.getInt("u_id"));
             up.usernamere.setText(""+rs.getString("u_username"));
@@ -619,11 +679,91 @@ cusdash.setBackground(logcolor);
     private void delemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delemMouseClicked
         // TODO add your handling code here:
         
-        
+        int rowIndex = usertable.getSelectedRow();
+    
+    if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a product to delete.");
+        return;
+    }
+    
+    // Get the product ID from the selected row
+    TableModel model = usertable.getModel();
+    int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
+    
+    // Confirmation dialog
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to delete this product?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION
+    );
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // Connect to the database
+            dbConnect dbc = new dbConnect();
+            
+            // Prepare the DELETE query
+            String query = "DELETE FROM user WHERE u_id = ?";
+            PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+            pstmt.setInt(1, productId);
+            
+            // Execute the query
+            int rowsDeleted = pstmt.executeUpdate();
+            
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "User deleted successfully.");
+                
+                // Refresh the table to reflect the changes
+                showdata();
+                
+                // Update the counts
+                AllUsers();
+                PendingUser();
+                ActiveUser();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete the User.");
+            }
+            
+            // Close the statement
+            pstmt.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error deleting the product.");
+        }
+    }
     
         
         
     }//GEN-LAST:event_delemMouseClicked
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+        // TODO add your handling code here:
+        
+        try {
+        // Call the displayData method to reset the table and show all data
+        showdata();
+        
+        // Optionally, you can also reset the total user count
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM user");
+        
+        if (rs.next()) {
+            int totalUsers = rs.getInt("totalusers");
+            totaluser.setText(" " + totalUsers); // Update the total user count label
+        }
+        
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error resetting the table.");
+    }
+    }//GEN-LAST:event_jButton1MouseClicked
     
     /**
      * @param args the command line arguments
@@ -652,7 +792,37 @@ cusdash.setBackground(logcolor);
         }
         //</editor-fold>
         //</editor-fold>
+  try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(admindash.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
 
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new admindash().setVisible(true);
+            }
+        });
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new admindash().setVisible(true);
+            }
+        });
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
@@ -667,6 +837,7 @@ cusdash.setBackground(logcolor);
     private javax.swing.JPanel cusdash;
     private javax.swing.JPanel delem;
     private javax.swing.JPanel editem;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
@@ -680,7 +851,6 @@ cusdash.setBackground(logcolor);
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -711,6 +881,7 @@ cusdash.setBackground(logcolor);
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTree jTree1;
     public javax.swing.JLabel pending;
+    private javax.swing.JButton searchpanel;
     private javax.swing.JTextField searchuser;
     private javax.swing.JLabel totaluser;
     private javax.swing.JTable usertable;

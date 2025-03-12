@@ -14,6 +14,11 @@ import javax.swing.JOptionPane;
 import javax.swing.table.TableModel;
 import net.proteanit.sql.DbUtils;
 
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.*;
 /**
  *
  * @author Admin
@@ -29,6 +34,32 @@ public class prodpage extends javax.swing.JFrame {
         displayData();
         AvailableProd();
         NotAvail();
+        
+        
+        searchbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username =prodsearch.getText().trim();
+                if (!username.isEmpty()) {
+                    searchUser(username);
+                } else {
+                    JOptionPane.showMessageDialog(prodpage.this, "Please enter a username.");
+                }
+            }
+        });
+        
+    }
+    
+     private void searchUser(String username) {
+        try {
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT p_id, p_name, p_category, p_brand, p_price, p_stock, p_status FROM product WHERE p_name = '" + username + "'");
+            protable.setModel(DbUtils.resultSetToTableModel(rs));
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching for user.");
+        }
     }
     
     
@@ -65,7 +96,7 @@ public void displayData(){
         try{
             dbConnect dbc = new dbConnect();
             ResultSet rs = dbc.getData("SELECT * FROM product");
-            prodtable.setModel(DbUtils.resultSetToTableModel(rs));
+            protable.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
         }catch(SQLException ex){
             System.out.println("Errors: "+ex.getMessage());
@@ -166,13 +197,14 @@ public void AvailableProd(){
         jLabel8 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        prodtable = new javax.swing.JTable();
-        jTextField1 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
+        protable = new javax.swing.JTable();
+        prodsearch = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
         cusdash = new javax.swing.JPanel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
+        resetbutton = new javax.swing.JButton();
+        searchbutton = new javax.swing.JButton();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -370,9 +402,9 @@ public void AvailableProd(){
         jPanel12.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        prodtable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        prodtable.setForeground(new java.awt.Color(0, 102, 102));
-        prodtable.setModel(new javax.swing.table.DefaultTableModel(
+        protable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        protable.setForeground(new java.awt.Color(0, 102, 102));
+        protable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -380,21 +412,19 @@ public void AvailableProd(){
 
             }
         ));
-        jScrollPane1.setViewportView(prodtable);
+        jScrollPane1.setViewportView(protable);
 
         jPanel12.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(12, 125, 820, 220));
 
-        jTextField1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        prodsearch.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        prodsearch.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        prodsearch.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        prodsearch.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                prodsearchActionPerformed(evt);
             }
         });
-        jPanel12.add(jTextField1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 90, 260, 30));
-
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel12.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 50, 50));
+        jPanel12.add(prodsearch, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 90, 260, 30));
 
         jLabel25.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(0, 102, 102));
@@ -426,6 +456,28 @@ public void AvailableProd(){
 
         jPanel12.add(cusdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 70, 180, 50));
 
+        resetbutton.setBackground(new java.awt.Color(0, 102, 102));
+        resetbutton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        resetbutton.setForeground(new java.awt.Color(255, 255, 255));
+        resetbutton.setText("RESET");
+        resetbutton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetbuttonMouseClicked(evt);
+            }
+        });
+        resetbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                resetbuttonActionPerformed(evt);
+            }
+        });
+        jPanel12.add(resetbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 80, 100, 40));
+
+        searchbutton.setBackground(new java.awt.Color(0, 102, 102));
+        searchbutton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        searchbutton.setForeground(new java.awt.Color(255, 255, 255));
+        searchbutton.setText("SEARCH");
+        jPanel12.add(searchbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 100, 40));
+
         jPanel1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 840, 350));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -443,9 +495,9 @@ public void AvailableProd(){
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void prodsearchActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodsearchActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_prodsearchActionPerformed
 
     private void cusdashMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cusdashMouseClicked
         admindash yes = new admindash();
@@ -509,7 +561,7 @@ public void AvailableProd(){
         // TODO add your handling code here:
         
         
-         int rowindex = prodtable.getSelectedRow();
+         int rowindex = protable.getSelectedRow();
         
         if(rowindex<0){
             JOptionPane.showMessageDialog(null,"PLEASE SELECT AN ITEM");
@@ -519,7 +571,7 @@ public void AvailableProd(){
         
         try{
         dbConnect db = new dbConnect();
-         TableModel tbl =  prodtable.getModel();
+         TableModel tbl =  protable.getModel();
        ResultSet rs = db.getData("SELECT * FROM  product WHERE p_id = '"+tbl.getValueAt(rowindex, 0)+"'");
       if(rs.next()){
             updateprod up = new updateprod();
@@ -558,11 +610,93 @@ public void AvailableProd(){
     }//GEN-LAST:event_EDITMouseClicked
 
     private void DELETEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseClicked
-        // TODO add your handling code here:
-        
       
+        // Inside the DELETEMouseClicked method
+
+    int rowIndex = protable.getSelectedRow();
+    
+    if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a product to delete.");
+        return;
+    }
+    
+    // Get the product ID from the selected row
+    TableModel model = protable.getModel();
+    int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
+    
+    // Confirmation dialog
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to delete this product?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION
+    );
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // Connect to the database
+            dbConnect dbc = new dbConnect();
+            
+            // Prepare the DELETE query
+            String query = "DELETE FROM product WHERE p_id = ?";
+            PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+            pstmt.setInt(1, productId);
+            
+            // Execute the query
+            int rowsDeleted = pstmt.executeUpdate();
+            
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "Product deleted successfully.");
+                
+                // Refresh the table to reflect the changes
+                displayData();
+                
+                // Update the counts
+                AllProd();
+                AvailableProd();
+                NotAvail();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete the product.");
+            }
+            
+            // Close the statement
+            pstmt.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error deleting the product.");
+        }
+    }
         
     }//GEN-LAST:event_DELETEMouseClicked
+
+    private void resetbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetbuttonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_resetbuttonActionPerformed
+
+    private void resetbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetbuttonMouseClicked
+        // TODO add your handling code here:
+        
+         try {
+        // Call the displayData method to reset the table and show all data
+        displayData();
+        
+        // Optionally, you can also reset the total user count
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM user");
+        
+        if (rs.next()) {
+            int totalUsers = rs.getInt("totalusers");
+            totalprod.setText(" " + totalUsers); // Update the total user count label
+        }
+        
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error resetting the table.");
+    }
+        
+    }//GEN-LAST:event_resetbuttonMouseClicked
 
     /**
      * @param args the command line arguments
@@ -619,7 +753,6 @@ public void AvailableProd(){
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -637,10 +770,12 @@ public void AvailableProd(){
     private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JLabel notavail;
-    private javax.swing.JTable prodtable;
+    private javax.swing.JTextField prodsearch;
+    private javax.swing.JTable protable;
+    private javax.swing.JButton resetbutton;
+    private javax.swing.JButton searchbutton;
     private javax.swing.JLabel totalprod;
     // End of variables declaration//GEN-END:variables
 }

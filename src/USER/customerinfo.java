@@ -20,6 +20,13 @@ public class customerinfo extends javax.swing.JFrame {
      */
     public customerinfo() {
         initComponents();
+        
+        updatePanel.addMouseListener(new java.awt.event.MouseAdapter() {
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        updatePanelMouseClicked(evt);
+    }
+});
+        
     }
 
     /**
@@ -48,7 +55,7 @@ public class customerinfo extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jPanel1027 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        updatePanel = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -167,21 +174,21 @@ public class customerinfo extends javax.swing.JFrame {
 
         jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 170, 40));
 
-        jPanel4.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        updatePanel.setBackground(new java.awt.Color(0, 102, 102));
+        updatePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel4MouseClicked(evt);
+                updatePanelMouseClicked(evt);
             }
         });
-        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        updatePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Update Information");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 210, -1));
+        updatePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 210, -1));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 210, 40));
+        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 210, 40));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 102, 102));
@@ -339,13 +346,23 @@ public class customerinfo extends javax.swing.JFrame {
           }  
     }//GEN-LAST:event_formWindowActivated
 
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+    private void updatePanelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatePanelMouseClicked
         // TODO add your handling code here:
+    // Retrieve the information from the labels
+    
+     int id = Integer.parseInt(idshow.getText()); // Get the ID from the idshow label
+    String email = emailshow.getText();
+    String contact = contactshow.getText();
+    String password = passwordshow.getText();
         
-        updateinfor up = new updateinfor();
-        up.setVisible(true);
+
+        // Open the updateinfor form and pass the information
+        updateinfor updateForm = new updateinfor(id, email, contact, password);
+        updateForm.setVisible(true);
         this.dispose();
-    }//GEN-LAST:event_jPanel4MouseClicked
+    
+   
+    }//GEN-LAST:event_updatePanelMouseClicked
 
     /**
      * @param args the command line arguments
@@ -410,7 +427,6 @@ public class customerinfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
@@ -419,6 +435,7 @@ public class customerinfo extends javax.swing.JFrame {
     private javax.swing.JLabel lshow;
     private javax.swing.JLabel passwordshow;
     private javax.swing.JPanel tologin;
+    private javax.swing.JPanel updatePanel;
     private javax.swing.JLabel usernameshow;
     // End of variables declaration//GEN-END:variables
 }
