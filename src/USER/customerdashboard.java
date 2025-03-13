@@ -129,7 +129,7 @@ public void AllProd() {
         dbConnect dbc = new dbConnect();
         
         // Query to get the total number of users
-        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM user");
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM product");
         
         if (rs.next()) {
             // Retrieve the total count from the query result
@@ -584,7 +584,7 @@ public void AllProd() {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 11, Short.MAX_VALUE))
         );
 
         pack();

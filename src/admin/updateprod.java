@@ -232,6 +232,7 @@ public class updateprod extends javax.swing.JFrame {
 
         pcat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         pcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food and Bevarage", "Household Essentials", "Personal Care & Wellness", "Suppliess and Utilities" }));
+        pcat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel5.add(pcat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 190, 50));
 
         pstock.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N

@@ -7,7 +7,9 @@ package admin;
 
 import java.awt.Color;
 import config.dbConnect;
+import config.passwordHasher;
 import java.awt.Color;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -133,11 +135,8 @@ Color logcolor = new Color(63,195,128);
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         fname = new javax.swing.JTextField();
-        conpass = new javax.swing.JTextField();
-        jLabel75 = new javax.swing.JLabel();
         contact = new javax.swing.JTextField();
         jLabel270 = new javax.swing.JLabel();
-        pass = new javax.swing.JTextField();
         jLabel74 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ty = new javax.swing.JComboBox<>();
@@ -147,6 +146,7 @@ Color logcolor = new Color(63,195,128);
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
         jLabel1040 = new javax.swing.JLabel();
+        pass = new javax.swing.JPasswordField();
         add = new javax.swing.JPanel();
         jPanel1030 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -220,7 +220,7 @@ Color logcolor = new Color(63,195,128);
         email.setBackground(new java.awt.Color(204, 204, 204));
         email.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         email.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        email.setBorder(new javax.swing.border.MatteBorder(null));
+        email.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 280, 200, 30));
 
         jLabel72.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -231,7 +231,7 @@ Color logcolor = new Color(63,195,128);
         lname.setBackground(new java.awt.Color(204, 204, 204));
         lname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         lname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        lname.setBorder(new javax.swing.border.MatteBorder(null));
+        lname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         lname.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 lnameActionPerformed(evt);
@@ -247,7 +247,7 @@ Color logcolor = new Color(63,195,128);
         usernamere.setBackground(new java.awt.Color(204, 204, 204));
         usernamere.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         usernamere.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usernamere.setBorder(new javax.swing.border.MatteBorder(null));
+        usernamere.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(usernamere, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, 200, 30));
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -263,24 +263,13 @@ Color logcolor = new Color(63,195,128);
         fname.setBackground(new java.awt.Color(204, 204, 204));
         fname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         fname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        fname.setBorder(new javax.swing.border.MatteBorder(null));
+        fname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel2.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 200, 30));
-
-        conpass.setBackground(new java.awt.Color(204, 204, 204));
-        conpass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        conpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        conpass.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel2.add(conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 210, 30));
-
-        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel75.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel75.setText("Confirm Password:");
-        jPanel2.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, -1, -1));
 
         contact.setBackground(new java.awt.Color(204, 204, 204));
         contact.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         contact.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        contact.setBorder(new javax.swing.border.MatteBorder(null));
+        contact.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         contact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 contactActionPerformed(evt);
@@ -292,17 +281,6 @@ Color logcolor = new Color(63,195,128);
         jLabel270.setForeground(new java.awt.Color(0, 102, 102));
         jLabel270.setText("Contact");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
-
-        pass.setBackground(new java.awt.Color(204, 204, 204));
-        pass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        pass.setBorder(new javax.swing.border.MatteBorder(null));
-        pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
-            }
-        });
-        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 210, 30));
 
         jLabel74.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel74.setForeground(new java.awt.Color(0, 102, 102));
@@ -317,6 +295,7 @@ Color logcolor = new Color(63,195,128);
 
         ty.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ty.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Admin", "Customer", "Employee", " " }));
+        ty.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         ty.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 tyActionPerformed(evt);
@@ -332,6 +311,7 @@ Color logcolor = new Color(63,195,128);
 
         status.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Active", "Pending", " ", " " }));
+        status.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);
@@ -351,7 +331,7 @@ Color logcolor = new Color(63,195,128);
         uid.setBackground(new java.awt.Color(204, 204, 204));
         uid.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         uid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        uid.setBorder(new javax.swing.border.MatteBorder(null));
+        uid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         uid.setEnabled(false);
         uid.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,6 +352,10 @@ Color logcolor = new Color(63,195,128);
             }
         });
         jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 390, 30, 40));
+
+        pass.setText("jPasswordField1");
+        pass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 210, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 810, 430));
 
@@ -435,10 +419,6 @@ Color logcolor = new Color(63,195,128);
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passActionPerformed
-
     private void tyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tyActionPerformed
@@ -460,8 +440,7 @@ Color logcolor = new Color(63,195,128);
     String selectType = (String)   status.getSelectedItem();
 
     if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ||
-            conpass.getText().isEmpty()) {
+            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ) {
 
         JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
@@ -503,29 +482,14 @@ else if (contact.getText().length() < 11 || contact.getText().length() > 15) {
 else if (dupcheck()){
     
         System.out.println("Duplicated Exist!");
-     
-}
-
-
-
- else if (!pass.getText().equals(conpass.getText())) {
-        JOptionPane.showMessageDialog(null, "Passwords do not match.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
     
-    else { // All validations passed
-        try {
-            
-            
-            // Determine the status based on the selected type
-//            String status = "Pending";
-//            if ("Admin".equals(selectedType)) {
-//                status = "Active";
-//            }
-            
+}
+    else { 
+      
+try{
+            String passwords = passwordHasher.hashPassword(pass.getText());
             if (db.insertData("INSERT INTO user (u_username, u_fname, u_lname,u_email, u_contact, u_type, u_password, u_stat) "
-                    + "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "','" + email.getText() + "', '" + contact.getText() + "','" + selectedType + "','" + conpass.getText() + "','"+selectType+"' ) ") == 1) {
+                    + "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "','" + email.getText() + "', '" + contact.getText() + "','" + selectedType + "','"+passwords+"','"+selectType+"' ) ") == 1) {
 
                 JOptionPane.showMessageDialog(null, "Submitted Successfully");
 //                LOGIN log = new LOGIN();
@@ -571,11 +535,10 @@ else if (dupcheck()){
             } else {
                 JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace(); // Important for debugging!
-        }
-
+            
+}catch(NoSuchAlgorithmException ex){
+        System.out.println(""+ex);
+    }
     }
     }//GEN-LAST:event_addMouseClicked
 
@@ -616,7 +579,7 @@ else if (dupcheck()){
       email.setText(null);
      contact.setText(null);
       pass.setText(null);
-      conpass.setText(null);
+    
     }//GEN-LAST:event_jLabel1040MouseClicked
 
     /**
@@ -657,7 +620,6 @@ else if (dupcheck()){
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel add;
-    public javax.swing.JTextField conpass;
     public javax.swing.JTextField contact;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
@@ -677,7 +639,6 @@ else if (dupcheck()){
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -689,7 +650,7 @@ else if (dupcheck()){
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     public javax.swing.JTextField lname;
-    public javax.swing.JTextField pass;
+    private javax.swing.JPasswordField pass;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> ty;
     public javax.swing.JTextField uid;

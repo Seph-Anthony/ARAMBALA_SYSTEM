@@ -8,6 +8,10 @@ package USER;
 import static admin.updateuser.mail;
 import static admin.updateuser.usname;
 import config.dbConnect;
+import config.passwordHasher;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.security.NoSuchAlgorithmException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -36,6 +40,22 @@ public class updateinfor extends javax.swing.JFrame {
         emailField.setText(email);
         contactField.setText(contact);
         passwordField.setText(password);
+        
+         seepass2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (passwordField.getEchoChar() == '\0') {
+                    // Hide the password
+                    passwordField.setEchoChar('•'); // Default echo character for passwords
+                    seepass.setText("Show Password");
+                } else {
+                    // Show the password
+                    passwordField.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass.setText("Hide Password");
+                }
+            }
+        });
     }
   
   private void initComponentss() {
@@ -43,7 +63,7 @@ public class updateinfor extends javax.swing.JFrame {
         idField = new javax.swing.JTextField(); // Initialize idField
         emailField = new javax.swing.JTextField();
         contactField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JTextField();
+       
 
         // Add other initialization code here...
     }
@@ -119,17 +139,17 @@ public boolean dupcheck() {
         jLabel1 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        conpassField = new javax.swing.JTextField();
         contactField = new javax.swing.JTextField();
         emailField = new javax.swing.JTextField();
-        passwordField = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         idField = new javax.swing.JTextField();
+        passwordField = new javax.swing.JPasswordField();
+        seepass = new javax.swing.JLabel();
+        seepass2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
@@ -153,16 +173,6 @@ public boolean dupcheck() {
         jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        conpassField.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        conpassField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        conpassField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        conpassField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                conpassFieldActionPerformed(evt);
-            }
-        });
-        jPanel6.add(conpassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 310, 310, 50));
-
         contactField.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         contactField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         contactField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -171,7 +181,7 @@ public boolean dupcheck() {
                 contactFieldActionPerformed(evt);
             }
         });
-        jPanel6.add(contactField, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 40, 310, 50));
+        jPanel6.add(contactField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 310, 50));
 
         emailField.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         emailField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -181,37 +191,22 @@ public boolean dupcheck() {
                 emailFieldActionPerformed(evt);
             }
         });
-        jPanel6.add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 130, 310, 50));
-
-        passwordField.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        passwordField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        passwordField.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordFieldActionPerformed(evt);
-            }
-        });
-        jPanel6.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 220, 310, 50));
-
-        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel15.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel15.setText("Confirm Password:");
-        jPanel6.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 290, -1, -1));
+        jPanel6.add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 310, 50));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 102, 102));
         jLabel16.setText("ID:");
-        jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 102, 102));
         jLabel17.setText("Email:");
-        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 110, -1, -1));
+        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 102, 102));
         jLabel18.setText("Password:");
-        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, -1, -1));
+        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 280, -1, -1));
 
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
@@ -225,7 +220,7 @@ public boolean dupcheck() {
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 102, 102));
         jLabel19.setText("Contact:");
-        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 20, -1, -1));
+        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 100, -1, -1));
 
         idField.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         idField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -235,7 +230,19 @@ public boolean dupcheck() {
                 idFieldActionPerformed(evt);
             }
         });
-        jPanel6.add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 60, 50));
+        jPanel6.add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, 310, 50));
+
+        passwordField.setText("jPasswordField1");
+        passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel6.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 300, 260, 50));
+
+        seepass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel6.add(seepass, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 330, 30, 30));
+
+        seepass2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel6.add(seepass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 310, 30, 30));
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 430, 410));
 
@@ -284,10 +291,6 @@ public boolean dupcheck() {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void conpassFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_conpassFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_conpassFieldActionPerformed
-
     private void contactFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_contactFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_contactFieldActionPerformed
@@ -295,10 +298,6 @@ public boolean dupcheck() {
     private void emailFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emailFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_emailFieldActionPerformed
-
-    private void passwordFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordFieldActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
         employdash em = new employdash();
@@ -311,7 +310,11 @@ public boolean dupcheck() {
         
         dbConnect db = new dbConnect();
 
+        
+        try{
        
+String passwords = passwordHasher.hashPassword(passwordField.getText());
+
 
         if (emailField.getText().isEmpty() || contactField.getText().isEmpty() || passwordField.getText().isEmpty() ) {
 
@@ -354,18 +357,16 @@ public boolean dupcheck() {
             System.out.println("Duplication Exist!");
         }
 
-        else if (!passwordField.getText().equals(conpassField.getText())) {
-            JOptionPane.showMessageDialog(null, "Passwords do not match.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+       
         else {
-            db.updateData("UPDATE user SET u_email ='"+emailField.getText()+"',u_contact='"+contactField.getText()+"',u_password ='"+passwordField.getText()+"' WHERE u_id ='"+idField.getText()+"'");
+            db.updateData("UPDATE user SET u_email ='"+emailField.getText()+"',u_contact='"+contactField.getText()+"',u_password ='"+passwords+"' WHERE u_id ='"+idField.getText()+"'");
 
             JOptionPane.showMessageDialog(null, "Submitted Successfully");
         }
     
-     
+        }catch(NoSuchAlgorithmException ex){
+        System.out.println(""+ex);
+    }
     
         
         
@@ -396,13 +397,11 @@ public boolean dupcheck() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField conpassField;
     public javax.swing.JTextField contactField;
     public javax.swing.JTextField emailField;
     private javax.swing.JTextField idField;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
@@ -415,7 +414,9 @@ public boolean dupcheck() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    public javax.swing.JTextField passwordField;
+    private javax.swing.JPasswordField passwordField;
+    private javax.swing.JLabel seepass;
+    private javax.swing.JLabel seepass2;
     private javax.swing.JPanel updateclick;
     // End of variables declaration//GEN-END:variables
 }

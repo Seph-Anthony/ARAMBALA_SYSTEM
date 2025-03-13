@@ -9,6 +9,8 @@ import static admin.adduser.mail;
 import static admin.adduser.usname;
 import config.dbConnect;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -24,6 +26,22 @@ public class updateuser extends javax.swing.JFrame {
      */
     public updateuser() {
         initComponents();
+        
+         seepass.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (pass.getEchoChar() == '\0') {
+                    // Hide the password
+                    pass.setEchoChar('•'); // Default echo character for passwords
+                    seepass.setText("Show Password");
+                } else {
+                    // Show the password
+                    pass.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass.setText("Hide Password");
+                }
+            }
+        });
     }
     
      public static String mail, usname;
@@ -134,11 +152,8 @@ public class updateuser extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         fname = new javax.swing.JTextField();
-        conpass = new javax.swing.JTextField();
-        jLabel75 = new javax.swing.JLabel();
         contact = new javax.swing.JTextField();
         jLabel270 = new javax.swing.JLabel();
-        pass = new javax.swing.JTextField();
         jLabel74 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ty = new javax.swing.JComboBox<>();
@@ -148,6 +163,8 @@ public class updateuser extends javax.swing.JFrame {
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
         jLabel1040 = new javax.swing.JLabel();
+        pass = new javax.swing.JPasswordField();
+        seepass = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -270,17 +287,6 @@ public class updateuser extends javax.swing.JFrame {
         fname.setBorder(new javax.swing.border.MatteBorder(null));
         jPanel2.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 150, 200, 30));
 
-        conpass.setBackground(new java.awt.Color(204, 204, 204));
-        conpass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        conpass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        conpass.setBorder(new javax.swing.border.MatteBorder(null));
-        jPanel2.add(conpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 340, 210, 30));
-
-        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel75.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel75.setText("Confirm Password:");
-        jPanel2.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 320, -1, -1));
-
         contact.setBackground(new java.awt.Color(204, 204, 204));
         contact.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         contact.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -297,27 +303,16 @@ public class updateuser extends javax.swing.JFrame {
         jLabel270.setText("Contact");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
 
-        pass.setBackground(new java.awt.Color(204, 204, 204));
-        pass.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        pass.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        pass.setBorder(new javax.swing.border.MatteBorder(null));
-        pass.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passActionPerformed(evt);
-            }
-        });
-        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 210, 30));
-
         jLabel74.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel74.setForeground(new java.awt.Color(0, 102, 102));
         jLabel74.setText("Password:");
-        jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, -1, -1));
+        jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("User Type:");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 80, 20));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 80, 20));
 
         ty.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ty.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Admin", "Customer", "Employee", " " }));
@@ -326,13 +321,13 @@ public class updateuser extends javax.swing.JFrame {
                 tyActionPerformed(evt);
             }
         });
-        jPanel2.add(ty, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 210, 30));
+        jPanel2.add(ty, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 210, 30));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("User Status");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 90, 20));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 90, 20));
 
         status.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active" }));
@@ -341,7 +336,7 @@ public class updateuser extends javax.swing.JFrame {
                 statusActionPerformed(evt);
             }
         });
-        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 210, 30));
+        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 210, 30));
 
         jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
         jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -362,12 +357,12 @@ public class updateuser extends javax.swing.JFrame {
                 uidActionPerformed(evt);
             }
         });
-        jPanel2.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 210, 30));
+        jPanel2.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 210, 30));
 
         jLabel271.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel271.setForeground(new java.awt.Color(0, 102, 102));
         jLabel271.setText("ID");
-        jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
+        jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 110, -1, -1));
 
         jLabel1040.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
         jLabel1040.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -376,6 +371,13 @@ public class updateuser extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 40, 40));
+
+        pass.setText("jPasswordField1");
+        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 210, 30));
+
+        seepass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(seepass, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 330, 30, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 830, 440));
 
@@ -444,10 +446,6 @@ public class updateuser extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_contactActionPerformed
 
-    private void passActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_passActionPerformed
-
     private void tyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tyActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_tyActionPerformed
@@ -465,7 +463,7 @@ public class updateuser extends javax.swing.JFrame {
         email.setText(null);
         contact.setText(null);
         pass.setText(null);
-        conpass.setText(null);
+       
     }//GEN-LAST:event_jLabel1039MouseClicked
 
     private void uidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uidActionPerformed
@@ -489,8 +487,7 @@ public class updateuser extends javax.swing.JFrame {
         String selectType = (String)   status.getSelectedItem();
 
         if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ||
-            conpass.getText().isEmpty()) {
+            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ) {
 
             JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
@@ -535,11 +532,7 @@ public class updateuser extends javax.swing.JFrame {
 
         }
 
-        else if (!pass.getText().equals(conpass.getText())) {
-            JOptionPane.showMessageDialog(null, "Passwords do not match.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+
         else {
             db.updateData("UPDATE user SET u_username ='"+usernamere.getText()+"',u_fname='"+fname.getText()+"',u_lname ='"+lname.getText()+"',u_email='"+email.getText()+"'"
                 + ",u_contact='"+contact.getText()+"',u_type='"+ty.getSelectedItem()+"',u_password='"+pass.getText()+"',u_stat='"+status.getSelectedItem()+"' WHERE u_id ='"+uid.getText()+"' ");
@@ -592,7 +585,6 @@ public class updateuser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JTextField conpass;
     public javax.swing.JTextField contact;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
@@ -613,7 +605,6 @@ public class updateuser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel74;
-    private javax.swing.JLabel jLabel75;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -625,7 +616,8 @@ public class updateuser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JTextField lname;
-    public javax.swing.JTextField pass;
+    public javax.swing.JPasswordField pass;
+    private javax.swing.JLabel seepass;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> ty;
     public javax.swing.JTextField uid;

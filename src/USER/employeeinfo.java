@@ -204,9 +204,9 @@ public class employeeinfo extends javax.swing.JFrame {
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("Update Information");
-        updatePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 210, -1));
+        updatePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, -1));
 
-        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 300, 210, 40));
+        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 210, 40));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 102, 102));

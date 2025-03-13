@@ -267,6 +267,7 @@ public class addprod extends javax.swing.JFrame {
 
         prodcategory.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         prodcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food Bevarage", "Household Essentials", "Personal Wellness", "Suppliess Utilities" }));
+        prodcategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel5.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 240, 50));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 760, 390));

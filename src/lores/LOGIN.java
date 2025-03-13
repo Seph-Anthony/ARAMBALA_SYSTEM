@@ -6,8 +6,10 @@ import config.dbConnect;
 import USER.customerdashboard;
 import USER.employdash;
 import config.SessionClass;
+import config.passwordHasher;
 import javax.swing.JOptionPane;
 import java.awt.Color;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -27,7 +29,7 @@ public class LOGIN extends javax.swing.JFrame {
     public LOGIN() {
         initComponents();
         this.setResizable(false);
-        
+      
         
         
     }
@@ -35,59 +37,71 @@ public class LOGIN extends javax.swing.JFrame {
      public static String  stat;
      public static String ty;
     
-     public static boolean logcheck(String username, String password ){
-        
-        dbConnect db = new dbConnect();
-         
-        try{
-         String que = "SELECT * FROM user WHERE u_username='"+username+"' AND u_password='"+password+"'";  
-            ResultSet resultset = db.getData(que);
-        
-            
-            if(resultset.next()){
-                
-              stat = resultset.getString("u_stat");
-              ty = resultset.getString("u_type");
-              SessionClass ses = SessionClass.getInstance();
-                
-              
-             ses.setU_id(resultset.getInt("u_id"));
-               ses.setUsername(resultset.getString("u_username"));
-            ses.setFname(resultset.getString("u_fname"));
-            ses.setLname(resultset.getString("u_lname"));
-           ses.setEmail(resultset.getString("u_email"));
-            ses.setContact(resultset.getString("u_contact"));
-             ses.setType(resultset.getString("u_type")); 
-               ses.setStat(resultset.getString("u_stat"));
-               ses.setPass(resultset.getString("u_password"));
-        
-             return true;   
-            }
-            
-            else {
-                
-                return false;
-            }
-            
-            
-        }catch(SQLException ex){
-         
-            return false;
-        }
-    }
+//     public static boolean logcheck(String username, String password ){
+//        
+//        dbConnect db = new dbConnect();
+//         
+//        try{
+//         String que = "SELECT * FROM user WHERE u_username='"+username+"' AND u_password='"+password+"'";  
+//            ResultSet resultset = db.getData(que);
+//        
+//            
+//            if(resultset.next()){
+//                
+//              stat = resultset.getString("u_stat");
+//              ty = resultset.getString("u_type");
+//              SessionClass ses = SessionClass.getInstance();
+//                
+//              
+//             ses.setU_id(resultset.getInt("u_id"));
+//               ses.setUsername(resultset.getString("u_username"));
+//            ses.setFname(resultset.getString("u_fname"));
+//            ses.setLname(resultset.getString("u_lname"));
+//           ses.setEmail(resultset.getString("u_email"));
+//            ses.setContact(resultset.getString("u_contact"));
+//             ses.setType(resultset.getString("u_type")); 
+//               ses.setStat(resultset.getString("u_stat"));
+//               ses.setPass(resultset.getString("u_password"));
+//        
+//             return true;   
+//            }
+//            
+//            else {
+//                
+//                return false;
+//            }
+//            
+//            
+//        }catch(SQLException ex){
+//         
+//            return false;
+//        }
+//    }
     
    public static boolean prodinput(String username, String password){
         // ariiii ang problemaa AHHHH
         
         dbConnect db = new dbConnect();
-         
-        try{
-         String que = "SELECT * FROM user WHERE u_username='"+username+"' AND u_password='"+password+"'";  
-            ResultSet resultset = db.getData(que);
         
-            
+        
+        
+        
+        
+        try{
+         String que = "SELECT * FROM user WHERE u_username='"+username+"'";  
+            ResultSet resultset = db.getData(que);
             if(resultset.next()){
                 
+            
+             
+                String hashedPass = resultset.getString("u_password");
+                String rehashedPass = passwordHasher.hashPassword(password);
+                
+               
+                
+                
+                if(hashedPass.equals(rehashedPass)){
+                      
               stat = resultset.getString("u_stat");
               ty = resultset.getString("u_type");
               SessionClass ses = SessionClass.getInstance();
@@ -104,6 +118,13 @@ public class LOGIN extends javax.swing.JFrame {
                ses.setPass(resultset.getString("u_password"));
         
              return true;   
+                    
+                }
+                else{
+                    return false;
+                }
+                
+        
             }
             
             else {
@@ -112,12 +133,13 @@ public class LOGIN extends javax.swing.JFrame {
             }
             
             
-        }catch(SQLException ex){
+        }catch(SQLException | NoSuchAlgorithmException ex){
          
             return false;
         }
+
     }
-    
+
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
 
@@ -561,7 +583,7 @@ public class LOGIN extends javax.swing.JFrame {
 
     private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
        
-        if(logcheck(username.getText(),password.getText())){
+        if(prodinput(username.getText(),password.getText())){
               if (!stat.equals("Active")){
          
             JOptionPane.showMessageDialog(null, "Account not Active");
