@@ -46,9 +46,6 @@ public class admininfo extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jLabel270 = new javax.swing.JLabel();
-        jPanel1027 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
         fad = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jPanel12 = new javax.swing.JPanel();
@@ -155,23 +152,6 @@ public class admininfo extends javax.swing.JFrame {
         jLabel270.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel270.setText("Contact");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 170, -1, -1));
-
-        jPanel1027.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1027.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel1027.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("Tahoma", 3, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 0, 0));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("Click Here!");
-        jPanel1027.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 90, 30));
-
-        jPanel2.add(jPanel1027, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 380, 240, 50));
-
-        jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Edit Information");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 360, 120, 20));
 
         fad.setBackground(new java.awt.Color(255, 255, 255));
         fad.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -435,18 +415,15 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel73;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel1026;
-    private javax.swing.JPanel jPanel1027;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;

@@ -8,6 +8,8 @@ package USER;
 import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -26,17 +28,49 @@ public class employdash extends javax.swing.JFrame {
     public employdash() {
         initComponents();
         displayData();
+        CompleteProd();
+        PendingProd();
+        AllPProcess();
+        
+          searchbutton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username =searchorder.getText().trim();
+                if (!username.isEmpty()) {
+                    searchUser(username);
+                } else {
+                    JOptionPane.showMessageDialog(employdash.this, "Please enter a Product.");
+                }
+            }
+        });
+        
     }
  Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
 
     
+    
+    
+     private void searchUser(String username) {
+        try {
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT s_id, u_id, p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date FROM process WHERE u_id = '" + username + "'");
+            tableorder.setModel(DbUtils.resultSetToTableModel(rs));
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching for order.");
+        }
+    }
+    
+    
+    
         
 public void displayData(){
         try{
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT u_id,u_username, u_fname, u_lname, u_contact, u_type, u_stat FROM user");
-            tabem.setModel(DbUtils.resultSetToTableModel(rs));
+            ResultSet rs = dbc.getData("SELECT * FROM process");
+            tableorder.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
         }catch(SQLException ex){
             System.out.println("Errors: "+ex.getMessage());
@@ -44,6 +78,67 @@ public void displayData(){
         }
         
     }
+
+
+public void CompleteProd(){
+    
+    try{
+             dbConnect dbc = new dbConnect();
+             ResultSet rs= dbc.getData("select count(*) as acctt FROM process WHERE s_status = 'Complete' ");
+             
+             if(rs.next()){
+              
+                 int activeuserr = rs.getInt("acctt");
+                 complete.setText(""+activeuserr );
+                 
+             }
+        
+    }catch(SQLException e){
+        System.out.println("Error: "+ e.getMessage());
+    }
+    
+}
+public void AllPProcess() {
+    try {
+        // Connect to the database
+        dbConnect dbc = new dbConnect();
+        
+        // Query to get the total number of users
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM process");
+        
+        if (rs.next()) {
+            // Retrieve the total count from the query result
+            int totalUsers = rs.getInt("totalusers");
+            
+            // Assuming you have a JLabel named lblTotalUsers to display the count
+            total.setText(" " + totalUsers);
+        }
+        
+        // Close the ResultSet
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+    }
+}
+public void PendingProd(){
+    
+    try{
+             dbConnect dbc = new dbConnect();
+             ResultSet rs= dbc.getData("select count(*) as acctt FROM process WHERE s_status = 'Pending' ");
+             
+             if(rs.next()){
+              
+                 int activeuserr = rs.getInt("acctt");
+                 pending.setText(""+activeuserr );
+                 
+             }
+        
+    }catch(SQLException e){
+        System.out.println("Error: "+ e.getMessage());
+    }
+    
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -59,11 +154,13 @@ public void displayData(){
         jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tabem = new javax.swing.JTable();
+        tableorder = new javax.swing.JTable();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        searchorder = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
+        resetbuton = new javax.swing.JButton();
+        searchbutton = new javax.swing.JButton();
         jLabel20 = new javax.swing.JLabel();
         jPanel15 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
@@ -82,7 +179,7 @@ public void displayData(){
         jPanel17 = new javax.swing.JPanel();
         jLabel27 = new javax.swing.JLabel();
         jLabel43 = new javax.swing.JLabel();
-        product1 = new javax.swing.JPanel();
+        colorni = new javax.swing.JPanel();
         jLabel40 = new javax.swing.JLabel();
         jLabel41 = new javax.swing.JLabel();
         jLabel42 = new javax.swing.JLabel();
@@ -98,16 +195,19 @@ public void displayData(){
         jLabel47 = new javax.swing.JLabel();
         jLabel48 = new javax.swing.JLabel();
         jPanel20 = new javax.swing.JPanel();
+        pending = new javax.swing.JLabel();
         viewni3 = new javax.swing.JPanel();
         jLabel49 = new javax.swing.JLabel();
         jLabel50 = new javax.swing.JLabel();
         jLabel51 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
+        complete = new javax.swing.JLabel();
         viewni4 = new javax.swing.JPanel();
         jLabel52 = new javax.swing.JLabel();
         jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
+        total = new javax.swing.JLabel();
         emdash = new javax.swing.JLabel();
         jPanel24 = new javax.swing.JPanel();
         emuser = new javax.swing.JLabel();
@@ -140,7 +240,7 @@ public void displayData(){
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        tabem.setModel(new javax.swing.table.DefaultTableModel(
+        tableorder.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -148,7 +248,7 @@ public void displayData(){
 
             }
         ));
-        jScrollPane1.setViewportView(tabem);
+        jScrollPane1.setViewportView(tableorder);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 740, 190));
 
@@ -170,17 +270,34 @@ public void displayData(){
         jLabel7.setText("Users Order Overview:");
         jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 180, 30));
 
-        jTextField8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        searchorder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        searchorder.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                searchorderActionPerformed(evt);
             }
         });
-        jPanel3.add(jTextField8, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 290, 20));
+        jPanel3.add(searchorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 290, 30));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
         jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 50, 50));
+
+        resetbuton.setBackground(new java.awt.Color(0, 102, 102));
+        resetbuton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        resetbuton.setForeground(new java.awt.Color(255, 255, 255));
+        resetbuton.setText("RESET");
+        resetbuton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                resetbutonMouseClicked(evt);
+            }
+        });
+        jPanel3.add(resetbuton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 100, 40));
+
+        searchbutton.setBackground(new java.awt.Color(0, 102, 102));
+        searchbutton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        searchbutton.setForeground(new java.awt.Color(255, 255, 255));
+        searchbutton.setText("SEARCH");
+        jPanel3.add(searchbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 100, 40));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 770, 270));
 
@@ -313,37 +430,37 @@ public void displayData(){
         jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
         jPanel17.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 70, 60));
 
-        product1.setBackground(new java.awt.Color(255, 255, 255));
-        product1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        product1.addMouseListener(new java.awt.event.MouseAdapter() {
+        colorni.setBackground(new java.awt.Color(255, 255, 255));
+        colorni.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        colorni.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                product1MouseEntered(evt);
+                colorniMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                product1MouseExited(evt);
+                colorniMouseExited(evt);
             }
         });
-        product1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        colorni.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel40.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel40.setForeground(new java.awt.Color(0, 102, 102));
         jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel40.setText("View");
-        product1.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        colorni.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
 
         jLabel41.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel41.setForeground(new java.awt.Color(0, 102, 102));
         jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel41.setText("Product");
-        product1.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 50, 90, -1));
+        colorni.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 50, 90, -1));
 
         jLabel42.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel42.setForeground(new java.awt.Color(0, 102, 102));
         jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel42.setText("Details");
-        product1.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        colorni.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
 
-        jPanel17.add(product1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
+        jPanel17.add(colorni, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
 
         jPanel1.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 210, 150));
 
@@ -374,9 +491,9 @@ public void displayData(){
         employeeinfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         employeeinfo.setForeground(new java.awt.Color(0, 102, 102));
         employeeinfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel21.add(employeeinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+        jPanel21.add(employeeinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
-        jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 90, 30));
+        jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, 100, 30));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -424,6 +541,12 @@ public void displayData(){
         jPanel20.setBackground(new java.awt.Color(255, 255, 255));
         jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pending.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        pending.setForeground(new java.awt.Color(0, 102, 102));
+        pending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel20.add(pending, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+
         viewni2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
 
         jPanel2.add(viewni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 110, 120));
@@ -464,6 +587,12 @@ public void displayData(){
         jPanel22.setBackground(new java.awt.Color(255, 255, 255));
         jPanel22.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel22.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        complete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        complete.setForeground(new java.awt.Color(0, 102, 102));
+        complete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel22.add(complete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+
         viewni3.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
 
         jPanel2.add(viewni3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 110, 120));
@@ -504,6 +633,12 @@ public void displayData(){
         jPanel23.setBackground(new java.awt.Color(255, 255, 255));
         jPanel23.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel23.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        total.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        total.setForeground(new java.awt.Color(0, 102, 102));
+        total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel23.add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+
         viewni4.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
 
         jPanel2.add(viewni4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 110, 120));
@@ -521,13 +656,13 @@ public void displayData(){
         jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         emuser.setBackground(new java.awt.Color(63, 195, 128));
-        emuser.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        emuser.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         emuser.setForeground(new java.awt.Color(0, 102, 102));
         emuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emuser.setVerifyInputWhenFocusTarget(false);
-        jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 90, 30));
+        jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 100, 30));
 
-        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 90, 30));
+        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 50, 100, 30));
 
         emdash1.setBackground(new java.awt.Color(63, 195, 128));
         emdash1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -557,9 +692,9 @@ public void displayData(){
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void searchorderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchorderActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_searchorderActionPerformed
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
         LOGIN re = new LOGIN ();
@@ -623,13 +758,17 @@ public void displayData(){
         
     }//GEN-LAST:event_viewniMouseClicked
 
-    private void product1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product1MouseEntered
+    private void colorniMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorniMouseEntered
         // TODO add your handling code here:
-    }//GEN-LAST:event_product1MouseEntered
+        
+        colorni.setBackground(logcolor);
+        
+    }//GEN-LAST:event_colorniMouseEntered
 
-    private void product1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product1MouseExited
+    private void colorniMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorniMouseExited
         // TODO add your handling code here:
-    }//GEN-LAST:event_product1MouseExited
+        colorni.setBackground(excolor);
+    }//GEN-LAST:event_colorniMouseExited
 
     private void viewni2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewni2MouseClicked
         // TODO add your handling code here:
@@ -667,6 +806,33 @@ public void displayData(){
         // TODO add your handling code here:
     }//GEN-LAST:event_viewni4MouseExited
 
+    private void resetbutonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetbutonMouseClicked
+        // TODO add your handling code here:
+        
+        try {
+        // Call the displayData method to reset the table and show all data
+        displayData();
+        CompleteProd();
+        PendingProd();
+        AllPProcess();;
+        // Optionally, you can also reset the total user count
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM process");
+        
+        if (rs.next()) {
+            int totalUsers = rs.getInt("totalusers");
+            total.setText(" " + totalUsers); // Update the total user count label
+        }
+        
+        rs.close();
+        
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error resetting the table.");
+    }
+        
+    }//GEN-LAST:event_resetbutonMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -703,6 +869,8 @@ public void displayData(){
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel colorni;
+    private javax.swing.JLabel complete;
     private javax.swing.JLabel emdash;
     private javax.swing.JLabel emdash1;
     private javax.swing.JLabel employeeinfo;
@@ -755,10 +923,13 @@ public void displayData(){
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JPanel product1;
+    private javax.swing.JLabel pending;
     private javax.swing.JPanel product2;
-    private javax.swing.JTable tabem;
+    private javax.swing.JButton resetbuton;
+    private javax.swing.JButton searchbutton;
+    private javax.swing.JTextField searchorder;
+    private javax.swing.JTable tableorder;
+    private javax.swing.JLabel total;
     private javax.swing.JPanel viewni;
     private javax.swing.JPanel viewni2;
     private javax.swing.JPanel viewni3;

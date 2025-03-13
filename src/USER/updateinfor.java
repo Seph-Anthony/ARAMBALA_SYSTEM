@@ -8,6 +8,7 @@ package USER;
 import static admin.updateuser.mail;
 import static admin.updateuser.usname;
 import config.dbConnect;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -24,7 +25,7 @@ public class updateinfor extends javax.swing.JFrame {
      */
     
   
-  
+  String mail;
  
     
   public updateinfor(int id, String email, String contact, String password) {
@@ -46,8 +47,65 @@ public class updateinfor extends javax.swing.JFrame {
 
         // Add other initialization code here...
     }
+public boolean dupcheck() {
+    dbConnect db = new dbConnect();
+    try {
+        String query = "SELECT * FROM user WHERE u_email = ?";
+        PreparedStatement pstmt = db.getConnection().prepareStatement(query);
+        pstmt.setString(1, emailField.getText());
+        ResultSet resultset = pstmt.executeQuery();
+
+        if (resultset.next()) {
+            mail = resultset.getString("u_email");
+            if (mail.equals(emailField.getText())) {
+                JOptionPane.showMessageDialog(null, "The email already exists",
+                    "Error Registration", JOptionPane.ERROR_MESSAGE);
+                emailField.setText("");
+                return true;
+            }
+            return true;
+        } else {
+            return false;
+        }
+    } catch (SQLException ex) {
+        System.out.println("" + ex);
+        return false;
+    }
+}
   
-     public static String mail, usname;
+  
+    public boolean updatecheck(){
+        
+        dbConnect db = new dbConnect();
+         
+        try{
+        String que = "SELECT * FROM user WHERE u_email='"+emailField.getText()+"' ";    
+            ResultSet resultset = db.getData(que);
+            if(resultset.next()){
+                mail = resultset.getString("u_email");
+            
+                if(mail.equals(emailField.getText())){
+                    
+                    JOptionPane.showMessageDialog(null, "The email already existed",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    emailField.setText("");
+                    
+                    return true;
+                }
+               
+             return true;   
+            }
+            
+            else {
+                
+                return false;
+            }
+        }catch(SQLException ex){
+            System.out.println(""+ex);
+            return false;
+        }
+    }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -76,7 +134,7 @@ public class updateinfor extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        updateclick = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -203,22 +261,22 @@ public class updateinfor extends javax.swing.JFrame {
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 430, 100));
 
-        jPanel1.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+        updateclick.setBackground(new java.awt.Color(0, 102, 102));
+        updateclick.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        updateclick.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel1MouseClicked(evt);
+                updateclickMouseClicked(evt);
             }
         });
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        updateclick.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("UPDATE INFORMATION");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 30));
+        updateclick.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 30));
 
-        jPanel3.add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 550, 210, 50));
+        jPanel3.add(updateclick, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 550, 210, 50));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 610));
 
@@ -248,14 +306,70 @@ public class updateinfor extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabel20MouseClicked
 
-    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+    private void updateclickMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateclickMouseClicked
        
         
+        dbConnect db = new dbConnect();
+
+       
+
+        if (emailField.getText().isEmpty() || contactField.getText().isEmpty() || passwordField.getText().isEmpty() ) {
+
+            JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            return;
+        } 
+     else if (!emailField.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            return;
+
+        } else if (passwordField.getText().length() < 8) {
+
+            JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            passwordField.setText("");
+            return;
+        }
+
+        else if (!contactField.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        else if (contactField.getText().length() < 11 || contactField.getText().length() > 15) {
+            JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            contactField.setText("");
+            return;
+        }
+        else if (updatecheck()){
+
+            System.out.println("Duplicated Exist!");
+
+        }
+        else if (dupcheck()){
+            
+            System.out.println("Duplication Exist!");
+        }
+
+        else if (!passwordField.getText().equals(conpassField.getText())) {
+            JOptionPane.showMessageDialog(null, "Passwords do not match.",
+                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        else {
+            db.updateData("UPDATE user SET u_email ='"+emailField.getText()+"',u_contact='"+contactField.getText()+"',u_password ='"+passwordField.getText()+"' WHERE u_id ='"+idField.getText()+"'");
+
+            JOptionPane.showMessageDialog(null, "Submitted Successfully");
+        }
+    
      
+    
         
         
-        
-    }//GEN-LAST:event_jPanel1MouseClicked
+    }//GEN-LAST:event_updateclickMouseClicked
 
     private void idFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_idFieldActionPerformed
         // TODO add your handling code here:
@@ -297,11 +411,11 @@ public class updateinfor extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JTextField passwordField;
+    private javax.swing.JPanel updateclick;
     // End of variables declaration//GEN-END:variables
 }
