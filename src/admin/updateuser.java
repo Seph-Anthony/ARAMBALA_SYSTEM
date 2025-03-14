@@ -7,13 +7,17 @@ package admin;
 
 import static admin.adduser.mail;
 import static admin.adduser.usname;
+import config.SessionClass;
 import config.dbConnect;
+import config.passwordHasher;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import lores.LOGIN;
 
 /**
  *
@@ -27,18 +31,52 @@ public class updateuser extends javax.swing.JFrame {
     public updateuser() {
         initComponents();
         
-         seepass.addMouseListener(new MouseAdapter() {
+        
+          seepass3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 // Toggle password visibility
-                if (pass.getEchoChar() == '\0') {
+                if (confirmpass.getEchoChar() == '\0') {
                     // Hide the password
-                    pass.setEchoChar('•'); // Default echo character for passwords
-                    seepass.setText("Show Password");
+                    confirmpass.setEchoChar('•'); // Default echo character for passwords
+                    seepass3.setText("Show Password");
                 } else {
                     // Show the password
-                    pass.setEchoChar('\0'); // Set echo char to null to show the password
-                    seepass.setText("Hide Password");
+                    confirmpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass3.setText("Hide Password");
+                }
+            }
+        });
+        
+          seepass2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (newpass.getEchoChar() == '\0') {
+                    // Hide the password
+                    newpass.setEchoChar('•'); // Default echo character for passwords
+                    seepass2.setText("Show Password");
+                } else {
+                    // Show the password
+                    newpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass2.setText("Hide Password");
+                }
+            }
+        });
+        
+        
+         seepass1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (oldpass.getEchoChar() == '\0') {
+                    // Hide the password
+                    oldpass.setEchoChar('•'); // Default echo character for passwords
+                    seepass1.setText("Show Password");
+                } else {
+                    // Show the password
+                    oldpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass1.setText("Hide Password");
                 }
             }
         });
@@ -159,16 +197,22 @@ public class updateuser extends javax.swing.JFrame {
         ty = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
         status = new javax.swing.JComboBox<>();
-        jLabel1039 = new javax.swing.JLabel();
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
         jLabel1040 = new javax.swing.JLabel();
-        pass = new javax.swing.JPasswordField();
-        seepass = new javax.swing.JLabel();
+        oldpass = new javax.swing.JPasswordField();
+        seepass3 = new javax.swing.JLabel();
+        confirmpass = new javax.swing.JPasswordField();
+        jLabel75 = new javax.swing.JLabel();
+        newpass = new javax.swing.JPasswordField();
+        jLabel76 = new javax.swing.JLabel();
+        seepass1 = new javax.swing.JLabel();
+        seepass2 = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jLabel1039 = new javax.swing.JLabel();
 
         jCheckBoxMenuItem1.setSelected(true);
         jCheckBoxMenuItem1.setText("jCheckBoxMenuItem1");
@@ -300,19 +344,19 @@ public class updateuser extends javax.swing.JFrame {
 
         jLabel270.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel270.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel270.setText("Contact");
+        jLabel270.setText("Contact:");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
 
         jLabel74.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel74.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel74.setText("Password:");
-        jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 310, -1, -1));
+        jLabel74.setText("Confirm Password:");
+        jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 370, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("User Type:");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 180, 80, 20));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 100, 80, 20));
 
         ty.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ty.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Admin", "Customer", "Employee", " " }));
@@ -321,13 +365,13 @@ public class updateuser extends javax.swing.JFrame {
                 tyActionPerformed(evt);
             }
         });
-        jPanel2.add(ty, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 210, 30));
+        jPanel2.add(ty, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 120, 210, 30));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("User Status");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 90, 20));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 90, 20));
 
         status.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active" }));
@@ -336,15 +380,7 @@ public class updateuser extends javax.swing.JFrame {
                 statusActionPerformed(evt);
             }
         });
-        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, 210, 30));
-
-        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
-        jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1039MouseClicked(evt);
-            }
-        });
-        jPanel2.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 390, 30, 40));
+        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 180, 210, 30));
 
         uid.setEditable(false);
         uid.setBackground(new java.awt.Color(204, 204, 204));
@@ -357,12 +393,12 @@ public class updateuser extends javax.swing.JFrame {
                 uidActionPerformed(evt);
             }
         });
-        jPanel2.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 210, 30));
+        jPanel2.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 50, 210, 30));
 
         jLabel271.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel271.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel271.setText("ID");
-        jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 110, -1, -1));
+        jLabel271.setText("ID:");
+        jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 30, -1, -1));
 
         jLabel1040.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
         jLabel1040.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -371,13 +407,31 @@ public class updateuser extends javax.swing.JFrame {
             }
         });
         jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 40, 40));
+        jPanel2.add(oldpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 250, 210, 30));
 
-        pass.setText("jPasswordField1");
-        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 330, 210, 30));
+        seepass3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(seepass3, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 390, 40, 30));
+        jPanel2.add(confirmpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, 210, 30));
 
-        seepass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        seepass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
-        jPanel2.add(seepass, new org.netbeans.lib.awtextra.AbsoluteConstraints(790, 330, 30, 30));
+        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel75.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel75.setText("Old Password:");
+        jPanel2.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 230, -1, -1));
+        jPanel2.add(newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 320, 210, 30));
+
+        jLabel76.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel76.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel76.setText("Enter New Password:");
+        jPanel2.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, -1, -1));
+
+        seepass1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(seepass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 250, 40, 30));
+
+        seepass2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(seepass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 320, 40, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 830, 440));
 
@@ -420,6 +474,14 @@ public class updateuser extends javax.swing.JFrame {
 
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, 170, 60));
 
+        jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
+        jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1039MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(820, 580, 30, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -430,12 +492,11 @@ public class updateuser extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 647, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 647, Short.MAX_VALUE)
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void lnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_lnameActionPerformed
@@ -462,8 +523,9 @@ public class updateuser extends javax.swing.JFrame {
         lname.setText(null);
         email.setText(null);
         contact.setText(null);
-        pass.setText(null);
-       
+        oldpass.setText(null);
+       newpass.setText(null);
+       confirmpass.setText(null);
     }//GEN-LAST:event_jLabel1039MouseClicked
 
     private void uidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uidActionPerformed
@@ -483,11 +545,42 @@ public class updateuser extends javax.swing.JFrame {
 
         dbConnect db = new dbConnect();
 
+        try{
+            SessionClass ses = SessionClass.getInstance();
+            
+            
+            
+            String query = "SELECT * FROM user WHERE u_id = '"+ses.getU_id()+"'" ;
+            ResultSet resultset = db.getData(query);
+                    if(resultset.next()){
+                         String oldp = resultset.getString("u_password");
+                       String oldhash = passwordHasher.hashPassword(oldpass.getText());
+                        
+                        if(oldp.equals(oldhash)){
+                            String npass = passwordHasher.hashPassword(newpass.getText());
+                            db.updateData("UPDATE user SET u_password = '"+npass+"'");
+                            
+                            JOptionPane.showMessageDialog(null, "Successfully Updated!");
+                            LOGIN log = new LOGIN();
+                            log.setVisible(true);
+                            this.dispose();
+                            
+                        }
+                        else{
+                            
+                            JOptionPane.showMessageDialog(null, "Old Password Is Incorrect");
+                        }
+                        
+                    }
+        }catch(SQLException | NoSuchAlgorithmException ex){
+            System.out.println(""+ex);
+        }
+        
         String selectedType = (String) ty.getSelectedItem();
         String selectType = (String)   status.getSelectedItem();
 
         if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ) {
+            email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty() ) {
 
             JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
@@ -506,11 +599,11 @@ public class updateuser extends javax.swing.JFrame {
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
             return;
 
-        } else if (pass.getText().length() < 8) {
+        } else if (oldpass.getText().length() < 8) {
 
             JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
                 "Error Registration", JOptionPane.ERROR_MESSAGE);
-            pass.setText("");
+            oldpass.setText("");
             return;
         }
 
@@ -535,7 +628,7 @@ public class updateuser extends javax.swing.JFrame {
 
         else {
             db.updateData("UPDATE user SET u_username ='"+usernamere.getText()+"',u_fname='"+fname.getText()+"',u_lname ='"+lname.getText()+"',u_email='"+email.getText()+"'"
-                + ",u_contact='"+contact.getText()+"',u_type='"+ty.getSelectedItem()+"',u_password='"+pass.getText()+"',u_stat='"+status.getSelectedItem()+"' WHERE u_id ='"+uid.getText()+"' ");
+                + ",u_contact='"+contact.getText()+"',u_type='"+ty.getSelectedItem()+"',u_password='"+oldpass.getText()+"',u_stat='"+status.getSelectedItem()+"' WHERE u_id ='"+uid.getText()+"' ");
 
             JOptionPane.showMessageDialog(null, "Submitted Successfully");
         }
@@ -585,6 +678,7 @@ public class updateuser extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPasswordField confirmpass;
     public javax.swing.JTextField contact;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
@@ -605,6 +699,8 @@ public class updateuser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
     private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -616,8 +712,11 @@ public class updateuser extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     public javax.swing.JTextField lname;
-    public javax.swing.JPasswordField pass;
-    private javax.swing.JLabel seepass;
+    private javax.swing.JPasswordField newpass;
+    public javax.swing.JPasswordField oldpass;
+    private javax.swing.JLabel seepass1;
+    private javax.swing.JLabel seepass2;
+    private javax.swing.JLabel seepass3;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> ty;
     public javax.swing.JTextField uid;

@@ -644,7 +644,7 @@ cusdash.setBackground(logcolor);
        up.email.setText(""+rs.getString("u_email"));
        up.contact.setText(""+rs.getString("u_contact"));
        up.ty.setSelectedItem(""+rs.getString("u_type"));
-       up.pass.setText(""+rs.getString("u_password"));
+       up.oldpass.setText(""+rs.getString("u_password"));
       up.status.setSelectedItem(""+rs.getString("u_stat"));
       
       up.setVisible(true);

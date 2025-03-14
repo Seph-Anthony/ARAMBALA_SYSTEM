@@ -5,10 +5,13 @@
  */
 package admin;
 
+import config.SessionClass;
 import java.awt.Color;
 import config.dbConnect;
 import config.passwordHasher;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,6 +28,39 @@ public class adduser extends javax.swing.JFrame {
      */
     public adduser() {
         initComponents();
+        
+           see1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (confirmpass.getEchoChar() == '\0') {
+                    // Hide the password
+                    confirmpass.setEchoChar('•'); // Default echo character for passwords
+                    see1.setText("Show Password");
+                } else {
+                    // Show the password
+                    confirmpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    see1.setText("Hide Password");
+                }
+            }
+        });
+        
+        
+           see.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (newpass.getEchoChar() == '\0') {
+                    // Hide the password
+                    newpass.setEchoChar('•'); // Default echo character for passwords
+                    see.setText("Show Password");
+                } else {
+                    // Show the password
+                    newpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    see.setText("Hide Password");
+                }
+            }
+        });
     }
     
      public static String mail, usname;
@@ -137,7 +173,6 @@ Color logcolor = new Color(63,195,128);
         fname = new javax.swing.JTextField();
         contact = new javax.swing.JTextField();
         jLabel270 = new javax.swing.JLabel();
-        jLabel74 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         ty = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
@@ -146,7 +181,12 @@ Color logcolor = new Color(63,195,128);
         uid = new javax.swing.JTextField();
         jLabel271 = new javax.swing.JLabel();
         jLabel1040 = new javax.swing.JLabel();
-        pass = new javax.swing.JPasswordField();
+        jLabel75 = new javax.swing.JLabel();
+        confirmpass = new javax.swing.JPasswordField();
+        newpass = new javax.swing.JPasswordField();
+        jLabel76 = new javax.swing.JLabel();
+        see = new javax.swing.JLabel();
+        see1 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         jPanel1030 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -177,7 +217,7 @@ Color logcolor = new Color(63,195,128);
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 700, 70));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 810, 110));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 820, 110));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
@@ -282,16 +322,11 @@ Color logcolor = new Color(63,195,128);
         jLabel270.setText("Contact");
         jPanel2.add(jLabel270, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 320, -1, -1));
 
-        jLabel74.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jLabel74.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel74.setText("Password:");
-        jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 260, -1, -1));
-
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setText("User Type:");
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 130, 80, 20));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 130, 80, 20));
 
         ty.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         ty.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Admin", "Customer", "Employee", " " }));
@@ -301,13 +336,13 @@ Color logcolor = new Color(63,195,128);
                 tyActionPerformed(evt);
             }
         });
-        jPanel2.add(ty, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 210, 30));
+        jPanel2.add(ty, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 150, 210, 30));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("User Status");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 90, 20));
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 190, 90, 20));
 
         status.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Please Select a Type", "Active", "Pending", " ", " " }));
@@ -317,7 +352,7 @@ Color logcolor = new Color(63,195,128);
                 statusActionPerformed(evt);
             }
         });
-        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 210, 210, 30));
+        jPanel2.add(status, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 210, 30));
 
         jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
         jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -338,12 +373,12 @@ Color logcolor = new Color(63,195,128);
                 uidActionPerformed(evt);
             }
         });
-        jPanel2.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 200, 30));
+        jPanel2.add(uid, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 210, 30));
 
         jLabel271.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel271.setForeground(new java.awt.Color(0, 102, 102));
         jLabel271.setText("ID");
-        jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 60, -1, -1));
+        jPanel2.add(jLabel271, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 60, -1, -1));
 
         jLabel1040.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
         jLabel1040.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -351,13 +386,29 @@ Color logcolor = new Color(63,195,128);
                 jLabel1040MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 390, 30, 40));
+        jPanel2.add(jLabel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, 30, 40));
 
-        pass.setText("jPasswordField1");
-        pass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 280, 210, 30));
+        jLabel75.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel75.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel75.setText("Confirm Password:");
+        jPanel2.add(jLabel75, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 320, -1, -1));
+        jPanel2.add(confirmpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 340, 210, 30));
+        jPanel2.add(newpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 280, 210, 30));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 810, 430));
+        jLabel76.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jLabel76.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel76.setText("Enter Password:");
+        jPanel2.add(jLabel76, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 260, -1, -1));
+
+        see.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        see.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(see, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 280, 40, 30));
+
+        see1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        see1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(see1, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 340, 40, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 820, 430));
 
         add.setBackground(new java.awt.Color(0, 102, 102));
         add.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -433,113 +484,94 @@ Color logcolor = new Color(63,195,128);
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
         // TODO add your handling code here:
-        
-         dbConnect db = new dbConnect();
-  
-    String selectedType = (String) ty.getSelectedItem();
-    String selectType = (String)   status.getSelectedItem();
 
+     dbConnect db = new dbConnect();
+try {
+    // Validate all fields
     if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ) {
+        email.getText().isEmpty() || contact.getText().isEmpty() || newpass.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        return; 
-    } else if (selectedType == null || selectedType.equals("Please Select a Type")) {
+    // Validate user type selection
+    String selectedType = (String) ty.getSelectedItem();
+    if (selectedType == null || selectedType.equals("Please Select a Type")) {
         JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
-    else if (selectType == null || selectType.equals("Please Select a Type")) {
+
+    // Validate status selection
+    String selectType = (String) status.getSelectedItem();
+    if (selectType == null || selectType.equals("Please Select a Type")) {
         JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
-    }else if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-    JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
-    return;
-    
-} else if (pass.getText().length() < 8) {
-    
+    }
+
+    // Validate email format
+    if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validate password length
+    if (newpass.getText().length() < 8) {
         JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-        pass.setText("");
+            "Error", JOptionPane.ERROR_MESSAGE);
+        newpass.setText("");
         return;
     }
 
-else if (!contact.getText().matches("\\d+")) {
+    // Validate contact number
+    if (!contact.getText().matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (contact.getText().length() < 11 || contact.getText().length() > 15) {
+        JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        contact.setText("");
         return;
     }
 
-else if (contact.getText().length() < 11 || contact.getText().length() > 15) {
-    JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
-    contact.setText("");
-    return;
-}
-else if (dupcheck()){
-    
+    // Check for duplicate entries (assuming dupcheck() is defined elsewhere)
+    if (dupcheck()) {
         System.out.println("Duplicated Exist!");
-    
+        return;
+    }
+
+    // Hash the new password
+    String hashedPassword = passwordHasher.hashPassword(newpass.getText());
+
+    // Insert new user into the database
+    String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat) " +
+                   "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "', " +
+                   "'" + email.getText() + "', '" + contact.getText() + "', '" + selectedType + "', '" + hashedPassword + "', '" + selectType + "')";
+
+    if (db.insertData(query) == 1) {
+        JOptionPane.showMessageDialog(null, "User Successfully Added");
+
+        // Redirect based on user type or status
+        if ("Admin".equals(selectedType) || "Customer".equals(selectedType) || "Employee".equals(selectedType) ||
+            "Active".equals(selectType) || "Pending".equals(selectType)) {
+            admin.admindash adminDash = new admin.admindash();
+            adminDash.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+        this.dispose(); // Close the current window
+    } else {
+        JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+} catch (NoSuchAlgorithmException ex) {
+    System.out.println("Error: " + ex);
+    JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
 }
-    else { 
-      
-try{
-            String passwords = passwordHasher.hashPassword(pass.getText());
-            if (db.insertData("INSERT INTO user (u_username, u_fname, u_lname,u_email, u_contact, u_type, u_password, u_stat) "
-                    + "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "','" + email.getText() + "', '" + contact.getText() + "','" + selectedType + "','"+passwords+"','"+selectType+"' ) ") == 1) {
-
-                JOptionPane.showMessageDialog(null, "Submitted Successfully");
-//                LOGIN log = new LOGIN();
-//                log.setVisible(true);
-               
-                
-              if ("Admin".equals(selectedType)) {
-                
-                admin.admindash adminDash = new admin.admindash();
-                adminDash.setVisible(true);
-            }
-                    else if ("Customer".equals(selectedType)){
-                        
-                        admin.admindash adminDash = new admin.admindash();
-                adminDash.setVisible(true);
-                        
-                        
-                    }
-                    
-                    else if("Employee".equals(selectedType)){
-                         admin.admindash adminDash = new admin.admindash();
-                adminDash.setVisible(true);
-                    }
-                    
-                    else if ("Active".equals(selectType)){
-                          admin.admindash adminDash = new admin.admindash();
-                adminDash.setVisible(true);
-                    }
-                    else if("Pending".equals(selectType)){
-                          admin.admindash adminDash = new admin.admindash();
-                adminDash.setVisible(true);
-                    }
-                    
-                    
-                    else {
-         JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
-
-            }
-            
-                
-
-                this.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
-            
-}catch(NoSuchAlgorithmException ex){
-        System.out.println(""+ex);
-    }
-    }
     }//GEN-LAST:event_addMouseClicked
 
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
@@ -578,7 +610,7 @@ try{
       lname.setText(null);
       email.setText(null);
      contact.setText(null);
-      pass.setText(null);
+      
     
     }//GEN-LAST:event_jLabel1040MouseClicked
 
@@ -620,6 +652,7 @@ try{
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JPanel add;
+    private javax.swing.JPasswordField confirmpass;
     public javax.swing.JTextField contact;
     public javax.swing.JTextField email;
     public javax.swing.JTextField fname;
@@ -638,7 +671,8 @@ try{
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel71;
     private javax.swing.JLabel jLabel72;
-    private javax.swing.JLabel jLabel74;
+    private javax.swing.JLabel jLabel75;
+    private javax.swing.JLabel jLabel76;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -650,7 +684,9 @@ try{
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel5;
     public javax.swing.JTextField lname;
-    private javax.swing.JPasswordField pass;
+    private javax.swing.JPasswordField newpass;
+    private javax.swing.JLabel see;
+    private javax.swing.JLabel see1;
     public javax.swing.JComboBox<String> status;
     public javax.swing.JComboBox<String> ty;
     public javax.swing.JTextField uid;

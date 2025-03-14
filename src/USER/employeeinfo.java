@@ -467,7 +467,7 @@ public class employeeinfo extends javax.swing.JFrame {
         
 
         // Open the updateinfor form and pass the information
-        updateinfor updateForm = new updateinfor(id, email, contact, password);
+        updateinfor updateForm = new updateinfor( email, contact, password);
         updateForm.setVisible(true);
         this.dispose();
        

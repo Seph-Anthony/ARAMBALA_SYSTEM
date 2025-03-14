@@ -29,7 +29,7 @@ public class SessionClass {
               private int p_price;
                private int p_stock;
                 private String p_status ;
-          private SessionClass() {
+          public SessionClass() {
     
           }
           
