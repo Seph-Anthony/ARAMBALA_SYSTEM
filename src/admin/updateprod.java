@@ -7,6 +7,9 @@ package admin;
 
 import config.dbConnect;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +25,27 @@ public class updateprod extends javax.swing.JFrame {
         initComponents();
     }
     
+        private void logProductAdditionAction(int userId, String productName) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "Product Updated: " + productName);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log product addition action: " + e.getMessage());
+    }
+}
+private int getCurrentUserId() {
+    // Access the user ID from the SessionClass
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+    
     
        Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
@@ -35,6 +59,7 @@ public class updateprod extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jSpinner1 = new javax.swing.JSpinner();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -189,6 +214,7 @@ public class updateprod extends javax.swing.JFrame {
         jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
 
         pid.setEditable(false);
+        pid.setBackground(new java.awt.Color(255, 255, 255));
         pid.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -220,6 +246,7 @@ public class updateprod extends javax.swing.JFrame {
         jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, -1, -1));
 
         pstatus.setEditable(false);
+        pstatus.setBackground(new java.awt.Color(255, 255, 255));
         pstatus.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pstatus.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pstatus.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -259,7 +286,7 @@ public class updateprod extends javax.swing.JFrame {
         });
         jPanel5.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 50, 50));
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 760, 390));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 760, 390));
 
         add.setBackground(new java.awt.Color(0, 102, 102));
         add.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -386,7 +413,8 @@ public class updateprod extends javax.swing.JFrame {
 
         if (result == 1) {
             JOptionPane.showMessageDialog(null, "Product added successfully.");
-           
+            int currentUserId = getCurrentUserId(); // Get the user ID
+            logProductAdditionAction(currentUserId, pname.getText());
         } else {
             JOptionPane.showMessageDialog(null, "Error adding product. Please check your input or try again.",
                 "Error", JOptionPane.ERROR_MESSAGE);
@@ -481,6 +509,7 @@ public class updateprod extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
+    private javax.swing.JSpinner jSpinner1;
     public javax.swing.JTextField pbrand;
     public javax.swing.JComboBox<String> pcat;
     public javax.swing.JTextField pid;

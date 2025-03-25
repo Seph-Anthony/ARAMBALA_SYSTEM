@@ -13,6 +13,8 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -62,7 +64,26 @@ public class adduser extends javax.swing.JFrame {
             }
         });
     }
-    
+     private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User Added: " + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log product addition action: " + e.getMessage());
+    }
+}
+private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
      public static String mail, usname;
     public boolean dupcheck(){
         
@@ -162,7 +183,7 @@ Color logcolor = new Color(63,195,128);
         jPanel1027 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel260 = new javax.swing.JPanel();
-        jLabel272 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
         jLabel72 = new javax.swing.JLabel();
         lname = new javax.swing.JTextField();
@@ -251,9 +272,9 @@ Color logcolor = new Color(63,195,128);
         jPanel260.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel260.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel272.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel272.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
-        jPanel260.add(jLabel272, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 160));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel260.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 190));
 
         jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 210));
 
@@ -554,7 +575,9 @@ try {
 
     if (db.insertData(query) == 1) {
         JOptionPane.showMessageDialog(null, "User Successfully Added");
-
+   // Log the product addition action
+            int currentUserId = getCurrentUserId(); // Get the user ID
+            logProductAdditionAction(currentUserId, usernamere.getText());
         // Redirect based on user type or status
         if ("Admin".equals(selectedType) || "Customer".equals(selectedType) || "Employee".equals(selectedType) ||
             "Active".equals(selectType) || "Pending".equals(selectType)) {
@@ -661,10 +684,10 @@ try {
     private javax.swing.JLabel jLabel1039;
     private javax.swing.JLabel jLabel1040;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel271;
-    private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

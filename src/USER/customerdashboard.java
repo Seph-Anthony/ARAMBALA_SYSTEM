@@ -183,9 +183,9 @@ public void AllProd() {
         jLabel24 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
         cusdash = new javax.swing.JLabel();
         cusinfo1 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -356,23 +356,23 @@ public void AllProd() {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 40, 160, 160));
-
         cusdash.setBackground(new java.awt.Color(63, 195, 128));
         cusdash.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         cusdash.setForeground(new java.awt.Color(0, 102, 102));
         cusdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cusdash.setText("User");
         cusdash.setVerifyInputWhenFocusTarget(false);
-        jPanel5.add(cusdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 90, 30));
+        jPanel5.add(cusdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 200, 30));
 
         cusinfo1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cusinfo1.setForeground(new java.awt.Color(0, 102, 102));
         cusinfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cusinfo1.setText("id");
-        jPanel5.add(cusinfo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 80, 30));
+        jPanel5.add(cusinfo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 70, 30));
+
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 160, 140));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 240, 200));
 

@@ -8,6 +8,8 @@ package admin;
 
 import config.dbConnect;
 import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -25,6 +27,27 @@ public class addprod extends javax.swing.JFrame {
         initComponents();
         
     }
+    
+    private void logProductAdditionAction(int userId, String productName) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "Product Added: " + productName);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log product addition action: " + e.getMessage());
+    }
+}
+private int getCurrentUserId() {
+    // Access the user ID from the SessionClass
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
   public static String productname, brand;
 //    public boolean dupcheck(){
 //        
@@ -345,10 +368,8 @@ public class addprod extends javax.swing.JFrame {
  
     dbConnect db = new dbConnect();
 
-    // Get the selected category from the JComboBox
     String selectedCategory = (String) prodcategory.getSelectedItem();
 
-    // Validate input fields
     if (proname.getText().isEmpty() || proprice.getText().isEmpty() || prostock.getText().isEmpty() ||
         probrand.getText().isEmpty()) {
         JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
@@ -356,14 +377,12 @@ public class addprod extends javax.swing.JFrame {
         return;
     }
 
-    // Validate category selection
     if (selectedCategory == null || selectedCategory.equals("Select Category")) {
         JOptionPane.showMessageDialog(null, "Please select a valid Category Type.",
             "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Validate price (must be a positive number)
     String priceText = proprice.getText();
     try {
         double price = Double.parseDouble(priceText);
@@ -378,42 +397,51 @@ public class addprod extends javax.swing.JFrame {
         return;
     }
 
-    // Validate stock (must be a positive integer)
     if (!prostock.getText().matches("\\d+")) {
         JOptionPane.showMessageDialog(null, "Invalid Stock Input.",
             "Error Registration", JOptionPane.ERROR_MESSAGE);
         return;
     }
-    
-   
 
-    // Determine product status based on stock
     int stock = Integer.parseInt(prostock.getText());
     String status = (stock == 0) ? "Not Available" : "Available";
 
-    // Build the SQL query
-    String query = "INSERT INTO product (p_name, p_category, p_brand, p_price, p_stock, p_status) " +
-                   "VALUES ('" + proname.getText() + "', '" + selectedCategory + "', '" + probrand.getText() + "', " +
-                   proprice.getText() + ", " + stock + ", '" + status + "')";
+   
+    String query = "INSERT INTO product (p_name, p_category, p_brand, p_price, p_stock, p_status) VALUES (?, ?, ?, ?, ?, ?)";
 
-    try {
-        // Execute the query
-        int result = db.insertData(query);
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+        pstmt.setString(1, proname.getText());
+        pstmt.setString(2, selectedCategory);
+        pstmt.setString(3, probrand.getText());
+        pstmt.setDouble(4, Double.parseDouble(proprice.getText()));
+        pstmt.setInt(5, stock);
+        pstmt.setString(6, status);
+
+        int result = pstmt.executeUpdate();
 
         if (result == 1) {
             JOptionPane.showMessageDialog(null, "Product added successfully.");
-           
+
+            // Log the product addition action
+            int currentUserId = getCurrentUserId(); // Get the user ID
+            logProductAdditionAction(currentUserId, proname.getText());
+
         } else {
             JOptionPane.showMessageDialog(null, "Error adding product. Please check your input or try again.",
                 "Error", JOptionPane.ERROR_MESSAGE);
         }
-    } catch (Exception ex) {
+    } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(),
             "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace(); // Print the stack trace for debugging
+        ex.printStackTrace();
     }
-        
-        
+    
+    
+    
+    
+ 
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered

@@ -10,6 +10,8 @@ import config.passwordHasher;
 import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
@@ -33,7 +35,22 @@ public class LOGIN extends javax.swing.JFrame {
         
         
     }
+    private void logLoginAction(int userId, String username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
     
+   dbConnect db = new dbConnect();
+try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        // Set parameters
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User logged in: " + username);  
+        pstmt.executeUpdate();
+        
+    } catch (SQLException e) {
+        System.err.println("Failed to log login action: " + e.getMessage());
+    }
+}
      public static String  stat;
      public static String ty;
     
@@ -582,41 +599,31 @@ public class LOGIN extends javax.swing.JFrame {
     }//GEN-LAST:event_login4MouseEntered
 
     private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
-       
-        if(prodinput(username.getText(),password.getText())){
-              if (!stat.equals("Active")){
-         
+if (prodinput(username.getText(), password.getText())) {
+        if (!stat.equals("Active")) {
             JOptionPane.showMessageDialog(null, "Account not Active");
+        } else {
+        
+            logLoginAction(SessionClass.getInstance().getU_id(), username.getText());
             
-        }
-              
-              
-              else{ 
-                       JOptionPane.showMessageDialog(null, "Login Successfully!");
-                       if(ty.equals("Admin")){
-                           
-                           admin.admindash adminDash = new admin.admindash();
+            JOptionPane.showMessageDialog(null, "Login Successfully!");
+            if (ty.equals("Admin")) {
+                admin.admindash adminDash = new admin.admindash();
                 adminDash.setVisible(true);
                 this.dispose();
-                       }
-                       
-                       else if(ty.equals("Customer")){
-                           customerdashboard use = new customerdashboard();
-                           use.setVisible(true);
-                           this.dispose();
-                       }
-                       
-                       else if (ty.equals("Employee")){
-                           employdash em = new employdash();
-                           em.setVisible(true);
-                           this.dispose();
-                       }
-              }
+            } else if (ty.equals("Customer")) {
+                customerdashboard use = new customerdashboard();
+                use.setVisible(true);
+                this.dispose();
+            } else if (ty.equals("Employee")) {
+                employdash em = new employdash();
+                em.setVisible(true);
+                this.dispose();
+            }
         }
-        else {
-            
-            JOptionPane.showMessageDialog(null,"Invalid Account!");
-        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Invalid Account!");
+    }
         
 //        if(username.getText().isEmpty() || password.getText().isEmpty() ){
 //
@@ -769,7 +776,7 @@ public class LOGIN extends javax.swing.JFrame {
     private javax.swing.JPanel login10;
     private javax.swing.JPanel login2;
     private javax.swing.JPanel login3;
-    private javax.swing.JPanel login4;
+    public javax.swing.JPanel login4;
     private javax.swing.JPanel login5;
     private javax.swing.JPanel login6;
     private javax.swing.JPanel login7;

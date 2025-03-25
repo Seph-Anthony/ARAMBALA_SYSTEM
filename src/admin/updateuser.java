@@ -14,6 +14,8 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -81,6 +83,29 @@ public class updateuser extends javax.swing.JFrame {
             }
         });
     }
+    
+    private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User Updated: " + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log product addition action: " + e.getMessage());
+    }
+}
+private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+    
+    
     
      public static String mail, usname;
     public boolean dupcheck(){
@@ -181,7 +206,7 @@ public class updateuser extends javax.swing.JFrame {
         jPanel1027 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jPanel260 = new javax.swing.JPanel();
-        jLabel272 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         email = new javax.swing.JTextField();
         jLabel72 = new javax.swing.JLabel();
         lname = new javax.swing.JTextField();
@@ -276,9 +301,9 @@ public class updateuser extends javax.swing.JFrame {
         jPanel260.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel260.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel272.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel272.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
-        jPanel260.add(jLabel272, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 160));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel260.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 190));
 
         jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 210));
 
@@ -543,95 +568,84 @@ public class updateuser extends javax.swing.JFrame {
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
         // TODO add your handling code here:
 
-        dbConnect db = new dbConnect();
+      
 
-        try{
-            SessionClass ses = SessionClass.getInstance();
-            
-            
-            
-            String query = "SELECT * FROM user WHERE u_id = '"+ses.getU_id()+"'" ;
-            ResultSet resultset = db.getData(query);
-                    if(resultset.next()){
-                         String oldp = resultset.getString("u_password");
-                       String oldhash = passwordHasher.hashPassword(oldpass.getText());
-                        
-                        if(oldp.equals(oldhash)){
-                            String npass = passwordHasher.hashPassword(newpass.getText());
-                            db.updateData("UPDATE user SET u_password = '"+npass+"'");
-                            
-                            JOptionPane.showMessageDialog(null, "Successfully Updated!");
-                            LOGIN log = new LOGIN();
-                            log.setVisible(true);
-                            this.dispose();
-                            
-                        }
-                        else{
-                            
-                            JOptionPane.showMessageDialog(null, "Old Password Is Incorrect");
-                        }
-                        
-                    }
-        }catch(SQLException | NoSuchAlgorithmException ex){
-            System.out.println(""+ex);
+
+     
+    dbConnect db = new dbConnect();
+
+    try {
+        SessionClass ses = SessionClass.getInstance();
+
+        String query = "SELECT u_password FROM user WHERE u_id = '" + ses.getU_id() + "'";
+        ResultSet resultset = db.getData(query);
+        if (resultset.next()) {
+            String storedPasswordHash = resultset.getString("u_password");
+            String enteredPasswordHash = passwordHasher.hashPassword(oldpass.getText());
+
+            if (storedPasswordHash.equals(enteredPasswordHash)) {
+               
+                String npass = passwordHasher.hashPassword(newpass.getText());
+                String selectedType = (String) ty.getSelectedItem();
+                String selectType = (String) status.getSelectedItem();
+
+                if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+                        email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty()) {
+
+                    JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (selectedType == null || selectedType.equals("Please Select a Type")) {
+                    JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (selectType == null || selectType.equals("Please Select a Type")) {
+                    JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                    JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    return;
+
+                } else if (oldpass.getText().length() < 8) {
+
+                    JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    oldpass.setText("");
+                    return;
+                } else if (!contact.getText().matches("\\d+")) {
+                    JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    return;
+                } else if (contact.getText().length() < 11 || contact.getText().length() > 15) {
+                    JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+                            "Error Registration", JOptionPane.ERROR_MESSAGE);
+                    contact.setText("");
+                    return;
+                } else if (updatecheck()) {
+                    System.out.println("Duplicated Exist!");
+                } else {
+                    // All validations passed, proceed with the full update.
+                    db.updateData("UPDATE user SET u_username ='" + usernamere.getText() + "',u_fname='" + fname.getText() + "',u_lname ='" + lname.getText() + "',u_email='" + email.getText() + "'"
+                            + ",u_contact='" + contact.getText() + "',u_type='" + ty.getSelectedItem() + "',u_password='" + npass + "',u_stat='" + status.getSelectedItem() + "' WHERE u_id ='" + uid.getText() + "' ");
+
+                    int currentUserId = getCurrentUserId();
+                    logProductAdditionAction(currentUserId, usernamere.getText());
+                    JOptionPane.showMessageDialog(null, "Submitted Successfully");
+                    LOGIN log = new LOGIN();
+                    log.setVisible(true);
+                    this.dispose();
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Old Password Is Incorrect");
+            }
         }
-        
-        String selectedType = (String) ty.getSelectedItem();
-        String selectType = (String)   status.getSelectedItem();
+    } catch (SQLException | NoSuchAlgorithmException ex) {
+        System.out.println("" + ex);
+    }
 
-        if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty() ) {
-
-            JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-        } else if (selectedType == null || selectedType.equals("Please Select a Type")) {
-            JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        else if (selectType == null || selectType.equals("Please Select a Type")) {
-            JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-        }else if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-
-        } else if (oldpass.getText().length() < 8) {
-
-            JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            oldpass.setText("");
-            return;
-        }
-
-        else if (!contact.getText().matches("\\d+")) {
-            JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        else if (contact.getText().length() < 11 || contact.getText().length() > 15) {
-            JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
-            contact.setText("");
-            return;
-        }
-        else if (updatecheck()){
-
-            System.out.println("Duplicated Exist!");
-
-        }
-
-
-        else {
-            db.updateData("UPDATE user SET u_username ='"+usernamere.getText()+"',u_fname='"+fname.getText()+"',u_lname ='"+lname.getText()+"',u_email='"+email.getText()+"'"
-                + ",u_contact='"+contact.getText()+"',u_type='"+ty.getSelectedItem()+"',u_password='"+oldpass.getText()+"',u_stat='"+status.getSelectedItem()+"' WHERE u_id ='"+uid.getText()+"' ");
-
-            JOptionPane.showMessageDialog(null, "Submitted Successfully");
-        }
     }//GEN-LAST:event_updateMouseClicked
 
     private void jLabel1040MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1040MouseClicked
@@ -688,10 +702,10 @@ public class updateuser extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1040;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel271;
-    private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

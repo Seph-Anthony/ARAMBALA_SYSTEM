@@ -182,12 +182,12 @@
                   <Properties>
                     <Property name="horizontalAlignment" type="int" value="0"/>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/image/greentaw.png"/>
+                      <Image iconType="3" name="/image/newuserprofile.png"/>
                     </Property>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="20" y="0" width="150" height="160"/>
+                      <AbsoluteConstraints x="10" y="10" width="170" height="160"/>
                     </Constraint>
                   </Constraints>
                 </Component>

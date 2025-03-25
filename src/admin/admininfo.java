@@ -40,7 +40,7 @@ public class admininfo extends javax.swing.JFrame {
         jPanel1026 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel260 = new javax.swing.JPanel();
-        jLabel272 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         jLabel72 = new javax.swing.JLabel();
         jLabel71 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -127,9 +127,9 @@ public class admininfo extends javax.swing.JFrame {
         jPanel260.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel260.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel272.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel272.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
-        jPanel260.add(jLabel272, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, 160));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel260.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 150, 160));
 
         jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 210));
 
@@ -411,9 +411,9 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel id;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
-    private javax.swing.JLabel jLabel272;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

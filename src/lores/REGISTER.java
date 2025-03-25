@@ -3,12 +3,15 @@ package lores;
 
 import lores.LOGIN;
 import admin.admindash;
+import config.SessionClass;
 import config.dbConnect;
 import config.passwordHasher;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -66,6 +69,24 @@ public class REGISTER extends javax.swing.JFrame {
     }
       Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
+    
+private void logRegistrationAction(String username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES ((SELECT u_id FROM user WHERE u_username = ?), ?, NOW())";
+    
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        
+        // Set parameters
+        pstmt.setString(1, username);
+        pstmt.setString(2, "User Registered: " + username);  
+        pstmt.executeUpdate();
+        
+    } catch (SQLException e) {
+        System.err.println("Failed to log registration action: " + e.getMessage());
+    }
+}
+    
    public static String mail, usname;
     public boolean dupcheck(){
         
@@ -3574,11 +3595,11 @@ try {
 
     if (db.insertData(query) == 1) {
         JOptionPane.showMessageDialog(null, "User Successfully Added");
-
-        // Redirect based on user type
+       logRegistrationAction(usernamere.getText());
+       
         if ("Admin".equals(selectedType)) {
-            admin.admindash adminDash = new admin.admindash();
-            adminDash.setVisible(true);
+             LOGIN loglog = new LOGIN();
+            loglog.setVisible(true);
         } else if ("Customer".equals(selectedType)) {
             LOGIN loglog = new LOGIN();
             loglog.setVisible(true);
