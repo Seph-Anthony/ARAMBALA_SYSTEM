@@ -660,7 +660,7 @@ public void PendingProd(){
         emuser.setForeground(new java.awt.Color(0, 102, 102));
         emuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emuser.setVerifyInputWhenFocusTarget(false);
-        jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 80, 30));
+        jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
 
         jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 130, 30));
 
@@ -715,20 +715,23 @@ public void PendingProd(){
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
         // TODO add your handling code here:
         
-        SessionClass ses = SessionClass.getInstance();
-         if(ses.getU_id() == 0 ){
-              JOptionPane.showMessageDialog(null,"No account, login first!");
-              LOGIN log = new LOGIN();
-              log.setVisible(true);
-              this.dispose();
-              
-          }
-         
-         else{
-       emuser.setText(""+ses.getUsername());
-        employeeinfo.setText(""+ses.getU_id());
-         }
+         SessionClass ses = SessionClass.getInstance();
+    
+    // More comprehensive check for logged in user
+    if(ses == null || ses.getU_id() == 0 || ses.getUsername() == null) {
+        JOptionPane.showMessageDialog(null,"No account, login first!");
+        LOGIN log = new LOGIN();
+        log.setVisible(true);
+        this.dispose();
+    } else {
+        emuser.setText(ses.getUsername());
+        employeeinfo.setText(String.valueOf(ses.getU_id()));
         
+        // Add debug output to verify session data
+        System.out.println("User ID: " + ses.getU_id());
+        System.out.println("Username: " + ses.getUsername());
+        System.out.println("Type: " + ses.getType());
+    }
         
     }//GEN-LAST:event_formWindowActivated
 

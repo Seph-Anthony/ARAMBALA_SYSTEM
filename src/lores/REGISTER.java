@@ -3407,11 +3407,12 @@ private void logRegistrationAction(String username) {
 
         jLabel7.setBackground(new java.awt.Color(204, 204, 204));
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Already have an account? Click Here");
-        tologin.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
+        tologin.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 260, 20));
 
-        jPanel261.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 600, -1, 40));
+        jPanel261.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 610, -1, 20));
 
         reset.setBackground(new java.awt.Color(0, 102, 102));
         reset.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));

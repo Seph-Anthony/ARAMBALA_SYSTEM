@@ -680,21 +680,24 @@ public void AllProcess() {
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
       // TODO add your handling code here:
-          SessionClass ses = SessionClass.getInstance();
-          
-          if(ses.getU_id() == 0 ){
-              JOptionPane.showMessageDialog(null,"No account, login first!");
-              LOGIN log = new LOGIN();
-              log.setVisible(true);
-              this.dispose();
-              
-          }
-          
-          else{
-       admindash.setText(""+ses.getUsername());
-       adinfo.setText(""+ses.getU_id());
-       
-          }  
+             
+         SessionClass ses = SessionClass.getInstance();
+    
+    // More comprehensive check for logged in user
+    if(ses == null || ses.getU_id() == 0 || ses.getUsername() == null) {
+        JOptionPane.showMessageDialog(null,"No account, login first!");
+        LOGIN log = new LOGIN();
+        log.setVisible(true);
+        this.dispose();
+    } else {
+        admindash.setText(ses.getUsername());
+        adinfo.setText(String.valueOf(ses.getU_id()));
+        
+        // Add debug output to verify session data
+        System.out.println("User ID: " + ses.getU_id());
+        System.out.println("Username: " + ses.getUsername());
+        System.out.println("Type: " + ses.getType());
+    } 
        
        
         

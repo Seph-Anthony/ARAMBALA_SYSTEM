@@ -92,13 +92,21 @@ public class updateinfor extends javax.swing.JFrame {
             }
         });
     }
+
   
-  private void initComponentss() {
-        
+
+        //Set default values, or leave them empty.
+   
+ 
+  
+    updateinfor() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+  
+public void initComponentss() {
         
         
        
-
         
     }
 public boolean dupcheck() {
@@ -226,22 +234,22 @@ public boolean dupcheck() {
                 contactFieldActionPerformed(evt);
             }
         });
-        jPanel6.add(contactField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 310, 30));
+        jPanel6.add(contactField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 70, 310, 30));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 102, 102));
         jLabel16.setText("ID:");
-        jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 10, -1, -1));
+        jPanel6.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 0, -1, -1));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 102, 102));
         jLabel17.setText("Email:");
-        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
+        jPanel6.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 100, -1, -1));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 102, 102));
         jLabel18.setText("Confirm Pass:");
-        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 310, -1, -1));
+        jPanel6.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
 
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
@@ -255,7 +263,7 @@ public boolean dupcheck() {
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 102, 102));
         jLabel19.setText("Contact:");
-        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
+        jPanel6.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 50, -1, -1));
 
         seepass.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         seepass.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
@@ -263,17 +271,17 @@ public boolean dupcheck() {
 
         seepass1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         seepass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
-        jPanel6.add(seepass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 40, 30));
+        jPanel6.add(seepass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 180, 40, 30));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 102, 102));
         jLabel21.setText("Enter Old Pass:");
-        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 190, -1, -1));
+        jPanel6.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 102, 102));
         jLabel22.setText("Enter New Pass:");
-        jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 250, -1, -1));
+        jPanel6.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, -1, -1));
 
         emailField.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         emailField.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -283,22 +291,22 @@ public boolean dupcheck() {
                 emailFieldActionPerformed(evt);
             }
         });
-        jPanel6.add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 150, 310, 30));
+        jPanel6.add(emailField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 120, 310, 30));
 
         idField.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         idField.setForeground(new java.awt.Color(0, 102, 102));
         idField.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         idField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         idField.setEnabled(false);
-        jPanel6.add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 30, 80, 30));
+        jPanel6.add(idField, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 80, 30));
 
         confirmpassField.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         confirmpassField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel6.add(confirmpassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 270, 30));
+        jPanel6.add(confirmpassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 270, 30));
 
         passwordField.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         passwordField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel6.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 210, 270, 30));
+        jPanel6.add(passwordField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 270, 30));
 
         newpassField.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         newpassField.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -307,15 +315,15 @@ public boolean dupcheck() {
                 newpassFieldActionPerformed(evt);
             }
         });
-        jPanel6.add(newpassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 270, 270, 30));
+        jPanel6.add(newpassField, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 240, 270, 30));
 
         seepass2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         seepass2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
-        jPanel6.add(seepass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 270, 40, 30));
+        jPanel6.add(seepass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 240, 40, 30));
 
         seepass3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         seepass3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
-        jPanel6.add(seepass3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 330, 40, 30));
+        jPanel6.add(seepass3, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 300, 40, 30));
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 430, 410));
 
@@ -356,7 +364,7 @@ public boolean dupcheck() {
         jLabel2.setText("UPDATE INFORMATION");
         updateclick.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 190, 30));
 
-        jPanel3.add(updateclick, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 550, 210, 50));
+        jPanel3.add(updateclick, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 550, 210, 50));
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 460, 610));
 

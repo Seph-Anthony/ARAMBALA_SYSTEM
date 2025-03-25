@@ -60,7 +60,7 @@ public class employeeinfo extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         passwordshow = new javax.swing.JLabel();
         updatePanel = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
@@ -94,6 +94,8 @@ public class employeeinfo extends javax.swing.JFrame {
         jPanel1041 = new javax.swing.JPanel();
         jLabel28 = new javax.swing.JLabel();
         usernameshow = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -193,6 +195,7 @@ public class employeeinfo extends javax.swing.JFrame {
         jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 170, 40));
 
         updatePanel.setBackground(new java.awt.Color(0, 102, 102));
+        updatePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         updatePanel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 updatePanelMouseClicked(evt);
@@ -200,13 +203,13 @@ public class employeeinfo extends javax.swing.JFrame {
         });
         updatePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Update Information");
-        updatePanel.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, -1));
+        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel10.setText("Update Information");
+        updatePanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, -1));
 
-        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 350, 210, 40));
+        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 210, 40));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 102, 102));
@@ -398,6 +401,23 @@ public class employeeinfo extends javax.swing.JFrame {
 
         jPanel2.add(jPanel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 170, 40));
 
+        jPanel4.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel4MouseClicked(evt);
+            }
+        });
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setText("Security Questions");
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, -1));
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 210, 40));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 780, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -474,6 +494,17 @@ public class employeeinfo extends javax.swing.JFrame {
         
     }//GEN-LAST:event_updatePanelMouseClicked
 
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+        // TODO add your handling code here:
+        
+         SessionClass ses = SessionClass.getInstance();
+    int userId = ses.getU_id(); // Get current user ID
+    
+    SecurityLog log = new SecurityLog(userId); // Pass the user ID
+    log.setVisible(true);
+    this.dispose();
+    }//GEN-LAST:event_jPanel4MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -514,6 +545,7 @@ public class employeeinfo extends javax.swing.JFrame {
     private javax.swing.JLabel emailshow;
     private javax.swing.JLabel fnameshow;
     private javax.swing.JLabel idshow;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
@@ -555,6 +587,7 @@ public class employeeinfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1041;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lnameshow;
     private javax.swing.JPanel panel;

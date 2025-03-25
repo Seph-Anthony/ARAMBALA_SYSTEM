@@ -208,6 +208,7 @@ try (Connection conn = db.getConnection();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -265,12 +266,12 @@ try (Connection conn = db.getConnection();
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.addAncestorListener(new javax.swing.event.AncestorListener() {
-            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
-            }
             public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
                 jPanel3AncestorAdded(evt);
             }
             public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
             }
         });
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -317,11 +318,12 @@ try (Connection conn = db.getConnection();
 
         jLabel7.setBackground(new java.awt.Color(204, 204, 204));
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("You don't have an Account? REGISTER Here");
-        toregister.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
+        toregister.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 270, 20));
 
-        jPanel5.add(toregister, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 510, 290, 40));
+        jPanel5.add(toregister, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 500, 290, 20));
 
         login4.setBackground(new java.awt.Color(0, 102, 102));
         login4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -530,6 +532,17 @@ try (Connection conn = db.getConnection();
         jLabel5.setToolTipText("");
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 80, 260, 70));
 
+        jLabel16.setFont(new java.awt.Font("Segoe UI Black", 2, 14)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 0, 0));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Forgot Password? Click Here");
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel16MouseClicked(evt);
+            }
+        });
+        jPanel5.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 540, 260, 20));
+
         jPanel1.add(jPanel5);
         jPanel5.setBounds(460, 10, 350, 580);
 
@@ -712,6 +725,14 @@ if (prodinput(username.getText(), password.getText())) {
         
     }//GEN-LAST:event_formWindowActivated
 
+    private void jLabel16MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel16MouseClicked
+        // TODO add your handling code here:
+        
+        emailinput em = new emailinput();
+        em.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel16MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -755,6 +776,7 @@ if (prodinput(username.getText(), password.getText())) {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
