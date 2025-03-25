@@ -307,7 +307,7 @@ private int getCurrentUserId() {
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel11.setText("UPDATE PRODUCT");
-        add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 200, 30));
+        add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 180, 30));
 
         jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 540, 220, 70));
 

@@ -470,7 +470,7 @@ Color logcolor = new Color(63,195,128);
                 jLabel11MouseClicked(evt);
             }
         });
-        add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 170, 20));
+        add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 80, 20));
 
         jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 170, 60));
 
