@@ -692,11 +692,10 @@ private int getCurrentUserId() {
     private javax.swing.JLabel jLabel1039;
     private javax.swing.JLabel jLabel1040;
     private javax.swing.JLabel jLabel12;
-<<<<<<< HEAD
+
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
-=======
->>>>>>> 484cfe712a0c3c3cb935434ded40c0074e7f41b3
+
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel271;
