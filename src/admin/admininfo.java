@@ -5,7 +5,11 @@
  */
 package admin;
 
+import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import lores.LOGIN;
 
@@ -20,7 +24,46 @@ public class admininfo extends javax.swing.JFrame {
      */
     public admininfo() {
         initComponents();
+        displayUserImage(imageinfoadmin);
     }
+    
+    
+    
+    
+    public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void displayUserImage(JLabel admiimage) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+    
+    if (imagePath != null && !imagePath.isEmpty()) {
+        try {
+            ImageIcon icon = new ImageIcon(imagePath);
+            // Resize if needed (using your existing ResizeImage method)
+            imageinfoadmin.setIcon(ResizeImage(imagePath, null, imageinfoadmin));
+        } catch (Exception e) {
+            // Set default image if there's an error
+            imageinfoadmin.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    } else {
+        // Set default image if no image path exists
+        imageinfoadmin.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -37,10 +80,8 @@ public class admininfo extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel1026 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
         jPanel260 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
+        imageinfoadmin = new javax.swing.JLabel();
         jLabel72 = new javax.swing.JLabel();
         jLabel71 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -112,26 +153,15 @@ public class admininfo extends javax.swing.JFrame {
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1026.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1026.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel1026.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel2.setText("Edit Profile");
-        jPanel1026.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 170, 20));
-
-        jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 170, 40));
-
         jPanel260.setBackground(new java.awt.Color(255, 255, 255));
         jPanel260.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel260.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel260.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 150, 160));
+        imageinfoadmin.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        imageinfoadmin.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel260.add(imageinfoadmin, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 220));
 
-        jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 170, 210));
+        jPanel2.add(jPanel260, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 220, 240));
 
         jLabel72.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel72.setText("Email:");
@@ -350,6 +380,8 @@ public class admininfo extends javax.swing.JFrame {
               email.setText(""+ses.getEmail());
               id.setText(""+ses.getU_id());
               password.setText(""+ses.getPass());
+            
+            
               
               
 //       userid.setText(""+ses.getUsername());
@@ -409,10 +441,9 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JPanel fad;
     private javax.swing.JLabel firstname1;
     private javax.swing.JLabel id;
+    public javax.swing.JLabel imageinfoadmin;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel270;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
@@ -423,7 +454,6 @@ public class admininfo extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel1026;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel13;

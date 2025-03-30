@@ -13,6 +13,7 @@ import config.passwordHasher;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -94,7 +95,21 @@ public class updateinfor extends javax.swing.JFrame {
     }
 
   
+ private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "Updated Information: " + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to Update Information: " + e.getMessage());
+    }
+}
         //Set default values, or leave them empty.
    
  

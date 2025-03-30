@@ -5,7 +5,11 @@
  */
 package USER;
 
+import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import lores.LOGIN;
 
@@ -20,7 +24,7 @@ public class customerinfo extends javax.swing.JFrame {
      */
     public customerinfo() {
         initComponents();
-        
+        displayUserImage(customerdash);
         updatePanel.addMouseListener(new java.awt.event.MouseAdapter() {
     public void mouseClicked(java.awt.event.MouseEvent evt) {
         updatePanelMouseClicked(evt);
@@ -28,6 +32,41 @@ public class customerinfo extends javax.swing.JFrame {
 });
         
     }
+    
+      public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void displayUserImage(JLabel admiimage) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+    
+    if (imagePath != null && !imagePath.isEmpty()) {
+        try {
+            ImageIcon icon = new ImageIcon(imagePath);
+            // Resize if needed (using your existing ResizeImage method)
+            customerdash.setIcon(ResizeImage(imagePath, null, customerdash));
+        } catch (Exception e) {
+            // Set default image if there's an error
+            customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    } else {
+        // Set default image if no image path exists
+        customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+    }
+}
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,15 +85,11 @@ public class customerinfo extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
+        customerdash = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jPanel1026 = new javax.swing.JPanel();
-        jLabel10 = new javax.swing.JLabel();
-        jPanel1027 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
         updatePanel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -126,11 +161,11 @@ public class customerinfo extends javax.swing.JFrame {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 160));
+        customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 150));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 90, 190, 170));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 220, 170));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
@@ -151,30 +186,6 @@ public class customerinfo extends javax.swing.JFrame {
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("Password");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 200, -1, -1));
-
-        jPanel1026.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1026.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel1026.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Edit Profile");
-        jPanel1026.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 20));
-
-        jPanel1027.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1027.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        jPanel1027.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Edit Profile");
-        jPanel1027.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
-
-        jPanel1026.add(jPanel1027, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 150, 40));
-
-        jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 170, 40));
 
         updatePanel.setBackground(new java.awt.Color(0, 102, 102));
         updatePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -432,14 +443,12 @@ this.dispose();
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel contactshow;
+    private javax.swing.JLabel customerdash;
     private javax.swing.JLabel emailshow;
     private javax.swing.JLabel fshow;
     private javax.swing.JLabel idshow;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel20;
@@ -453,8 +462,6 @@ this.dispose();
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
-    private javax.swing.JPanel jPanel1026;
-    private javax.swing.JPanel jPanel1027;
     private javax.swing.JPanel jPanel11;
     private javax.swing.JPanel jPanel12;
     private javax.swing.JPanel jPanel2;

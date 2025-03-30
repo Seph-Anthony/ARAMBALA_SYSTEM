@@ -6,6 +6,7 @@
 package USER;
 
 import admin.admindash;
+import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import config.dbConnect;
 import java.sql.ResultSet;
@@ -14,8 +15,11 @@ import lores.LOGIN;
 import lores.REGISTER;
 import net.proteanit.sql.DbUtils;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 
@@ -39,6 +43,7 @@ public class customerdashboard extends javax.swing.JFrame {
         AvailableProd();
         PendingProd();
         AllProd();
+        displayUserImage(customerdash);
           searchbutton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -53,6 +58,41 @@ public class customerdashboard extends javax.swing.JFrame {
         
         
     }
+    
+    public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void displayUserImage(JLabel admiimage) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+    
+    if (imagePath != null && !imagePath.isEmpty()) {
+        try {
+            ImageIcon icon = new ImageIcon(imagePath);
+            // Resize if needed (using your existing ResizeImage method)
+            customerdash.setIcon(ResizeImage(imagePath, null, customerdash));
+        } catch (Exception e) {
+            // Set default image if there's an error
+            customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    } else {
+        // Set default image if no image path exists
+        customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+    }
+}
     
     public void displayData(){
         try{
@@ -185,7 +225,7 @@ public void AllProd() {
         jPanel5 = new javax.swing.JPanel();
         cusdash = new javax.swing.JLabel();
         cusinfo1 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        customerdash = new javax.swing.JLabel();
         jPanel18 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
         jLabel32 = new javax.swing.JLabel();
@@ -370,9 +410,9 @@ public void AllProd() {
         cusinfo1.setText("id");
         jPanel5.add(cusinfo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 170, 70, 30));
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 160, 140));
+        customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 0, 160, 140));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, 240, 200));
 
@@ -569,7 +609,7 @@ public void AllProd() {
         });
         jPanel2.add(searchbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 10, 100, 40));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 770, 340));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 360, 770, 340));
 
         jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/group.png"))); // NOI18N
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, -1));
@@ -582,9 +622,7 @@ public void AllProd() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 692, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 11, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 703, Short.MAX_VALUE)
         );
 
         pack();
@@ -649,7 +687,7 @@ public void AllProd() {
         cusdash.setText(ses.getUsername());
         cusinfo1.setText(String.valueOf(ses.getU_id()));
         
-        // Add debug output to verify session data
+       
         System.out.println("User ID: " + ses.getU_id());
         System.out.println("Username: " + ses.getUsername());
         System.out.println("Type: " + ses.getType());
@@ -742,9 +780,9 @@ public void AllProd() {
     private javax.swing.JLabel cusinfo;
     private javax.swing.JLabel cusinfo1;
     private javax.swing.JLabel cusinfo2;
+    private javax.swing.JLabel customerdash;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel20;

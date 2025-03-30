@@ -133,6 +133,7 @@ try (Connection conn = db.getConnection();
              ses.setType(resultset.getString("u_type")); 
                ses.setStat(resultset.getString("u_stat"));
                ses.setPass(resultset.getString("u_password"));
+               ses.setU_image(resultset.getString("u_image"));
         
              return true;   
                     

@@ -5,13 +5,17 @@
  */
 package USER;
 
+import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import lores.LOGIN;
 import net.proteanit.sql.DbUtils;
@@ -31,6 +35,7 @@ public class employdash extends javax.swing.JFrame {
         CompleteProd();
         PendingProd();
         AllPProcess();
+        displayUserImage(customerdash);
         
           searchbutton.addActionListener(new ActionListener() {
             @Override
@@ -48,7 +53,40 @@ public class employdash extends javax.swing.JFrame {
  Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
 
+     public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
     
+    public void displayUserImage(JLabel admiimage) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+    
+    if (imagePath != null && !imagePath.isEmpty()) {
+        try {
+            ImageIcon icon = new ImageIcon(imagePath);
+            // Resize if needed (using your existing ResizeImage method)
+            customerdash.setIcon(ResizeImage(imagePath, null, customerdash));
+        } catch (Exception e) {
+            // Set default image if there's an error
+            customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    } else {
+        // Set default image if no image path exists
+        customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+    }
+}
     
     
      private void searchUser(String username) {
@@ -189,7 +227,7 @@ public void PendingProd(){
         jPanel21 = new javax.swing.JPanel();
         employeeinfo = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
+        customerdash = new javax.swing.JLabel();
         viewni2 = new javax.swing.JPanel();
         jLabel46 = new javax.swing.JLabel();
         jLabel47 = new javax.swing.JLabel();
@@ -499,11 +537,11 @@ public void PendingProd(){
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 160));
+        customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 140));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 160, 160));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 160));
 
         viewni2.setBackground(new java.awt.Color(255, 255, 255));
         viewni2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -874,13 +912,13 @@ public void PendingProd(){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel colorni;
     private javax.swing.JLabel complete;
+    private javax.swing.JLabel customerdash;
     private javax.swing.JLabel emdash;
     private javax.swing.JLabel emdash1;
     private javax.swing.JLabel employeeinfo;
     private javax.swing.JLabel emuser;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel24;

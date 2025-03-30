@@ -646,8 +646,12 @@ cusdash.setBackground(logcolor);
        up.ty.setSelectedItem(""+rs.getString("u_type"));
        up.oldpass.setText(""+rs.getString("u_password"));
       up.status.setSelectedItem(""+rs.getString("u_stat"));
-      
+      up.image.setIcon(up.ResizeImage(rs.getString("u_image"),null,up.image));
+      up.oldpath = rs.getString("u_image");
+      up.path = rs.getString("u_image");
+      up.destination=rs.getString("u_image");
       up.setVisible(true);
+      
       
         this.dispose();
        

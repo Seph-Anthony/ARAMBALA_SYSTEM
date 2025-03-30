@@ -8,10 +8,22 @@ package admin;
 
 import config.dbConnect;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -27,6 +39,66 @@ public class addprod extends javax.swing.JFrame {
         initComponents();
         
     }
+    
+    
+     public String destination = "";
+    
+    File selectedFile;
+    public String oldpath;
+    public String path;
+    
+    public int FileExistenceChecker(String path){
+        File file = new File(path);
+        String fileName = file.getName();
+        
+        Path filePath = Paths.get("src/userimages", fileName);
+        boolean fileExists = Files.exists(filePath);
+        
+        if (fileExists) {
+            return 1;
+        } else {
+            return 0;
+        }
+    
+    }
+    public static int getHeightFromWidth(String imagePath, int desiredWidth) {
+        try {
+            // Read the image file
+            File imageFile = new File(imagePath);
+            BufferedImage image = ImageIO.read(imageFile);
+            
+            // Get the original width and height of the image
+            int originalWidth = image.getWidth();
+            
+            int originalHeight = image.getHeight();
+            
+            // Calculate the new height based on the desired width and the aspect ratio
+            int newHeight = (int) ((double) desiredWidth / originalWidth * originalHeight);
+            
+            return newHeight;
+        } catch (IOException ex) {
+            System.out.println("No image found!");
+        }
+        
+        return -1;
+    }
+    
+    
+public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
     
     private void logProductAdditionAction(int userId, String productName) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
@@ -113,14 +185,16 @@ private int getCurrentUserId() {
         jLabel7 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         proname = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        remove = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jLabel1039 = new javax.swing.JLabel();
         prodcategory = new javax.swing.JComboBox<>();
+        select = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -241,11 +315,11 @@ private int getCurrentUserId() {
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dakoboxproduct.png"))); // NOI18N
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 170));
+        image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dakoboxproduct.png"))); // NOI18N
+        jPanel6.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 170));
 
-        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 170, 190));
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 190));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
@@ -267,17 +341,22 @@ private int getCurrentUserId() {
         jLabel5.setText("Product Category");
         jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, -1, -1));
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        remove.setBackground(new java.awt.Color(0, 102, 102));
+        remove.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        remove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeMouseClicked(evt);
+            }
+        });
+        remove.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Add Photo");
-        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 20));
+        jLabel9.setText("REMOVE");
+        remove.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 20));
 
-        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 170, 40));
+        jPanel5.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 90, 40));
 
         jLabel1039.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
@@ -292,6 +371,23 @@ private int getCurrentUserId() {
         prodcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food Bevarage", "Household Essentials", "Personal Wellness", "Suppliess Utilities" }));
         prodcategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel5.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 240, 50));
+
+        select.setBackground(new java.awt.Color(0, 102, 102));
+        select.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        select.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectMouseClicked(evt);
+            }
+        });
+        select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("SELECT");
+        select.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 20));
+
+        jPanel5.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 80, 40));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 760, 390));
 
@@ -407,7 +503,7 @@ private int getCurrentUserId() {
     String status = (stock == 0) ? "Not Available" : "Available";
 
    
-    String query = "INSERT INTO product (p_name, p_category, p_brand, p_price, p_stock, p_status) VALUES (?, ?, ?, ?, ?, ?)";
+    String query = "INSERT INTO product (p_name, p_category, p_brand, p_price, p_stock, p_status, p_image) VALUES (?, ?, ?, ?, ?, ?, ?)";
 
     try (Connection conn = db.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(query)) {
@@ -418,9 +514,19 @@ private int getCurrentUserId() {
         pstmt.setDouble(4, Double.parseDouble(proprice.getText()));
         pstmt.setInt(5, stock);
         pstmt.setString(6, status);
+        pstmt.setString(7, destination);
 
         int result = pstmt.executeUpdate();
 
+          try{
+    Files.copy(selectedFile.toPath(),new File(destination).toPath(),StandardCopyOption.REPLACE_EXISTING);
+    
+    
+    }catch(IOException ex){
+        
+        System.out.println("Image Insertion Error: "+ex);
+    }
+        
         if (result == 1) {
             JOptionPane.showMessageDialog(null, "Product added successfully.");
 
@@ -455,6 +561,50 @@ private int getCurrentUserId() {
         // TODO add your handling code here:
          add.setBackground(excolor);
     }//GEN-LAST:event_addMouseExited
+
+    private void selectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseClicked
+        // TODO add your handling code here:
+        
+        
+            
+        JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        selectedFile = fileChooser.getSelectedFile();
+                        destination = "src/userimages/" + selectedFile.getName();
+                        path  = selectedFile.getAbsolutePath();
+                        
+                        
+                        if(FileExistenceChecker(path) == 1){
+                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
+                            destination = "";
+                            path="";
+                        }else{
+                            image.setIcon(ResizeImage(path, null, image));
+                            JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
+                            select.setEnabled(false);
+                          
+                            remove.setEnabled(true);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("File Error!");
+                    }
+                }
+        
+    }//GEN-LAST:event_selectMouseClicked
+
+    private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
+        // TODO add your handling code here:
+        
+         JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
+        remove.setEnabled(false);
+        select.setEnabled(true);
+        image.setIcon(null);
+        destination ="";
+        path = "";
+        
+    }//GEN-LAST:event_removeMouseClicked
     
    
     
@@ -500,17 +650,18 @@ private int getCurrentUserId() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
+    private javax.swing.JLabel image;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel1039;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JPanel jPanel1;
@@ -519,11 +670,12 @@ private int getCurrentUserId() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JTextField probrand;
     private javax.swing.JComboBox<String> prodcategory;
     private javax.swing.JTextField proname;
     private javax.swing.JTextField proprice;
     private javax.swing.JTextField prostock;
+    public javax.swing.JPanel remove;
+    public javax.swing.JPanel select;
     // End of variables declaration//GEN-END:variables
 }

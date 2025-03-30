@@ -182,7 +182,9 @@ public security() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 607, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -239,24 +241,29 @@ public security() {
             sess.setLname(rs.getString("u_lname"));
             sess.setContact(rs.getString("u_contact"));
             
+            
+            newpass ne = new newpass();
+            ne.setVisible(true);
+            
+            
             // Redirect based on user type
-            switch(sess.getType().toLowerCase()) {
-                case "admin":
-                    new admindash().setVisible(true);
-                    break;
-                case "employee":
-                    new employdash().setVisible(true);
-                    break;
-                case "customer":
-                    new customerdashboard().setVisible(true);
-                    break;
-                default:
-                    JOptionPane.showMessageDialog(this,
-                        "Unknown user type",
-                        "Error",
-                        JOptionPane.ERROR_MESSAGE);
-                    return;
-            }
+//            switch(sess.getType().toLowerCase()) {
+//                case "admin":
+//                    new admindash().setVisible(true);
+//                    break;
+//                case "employee":
+//                    new employdash().setVisible(true);
+//                    break;
+//                case "customer":
+//                    new customerdashboard().setVisible(true);
+//                    break;
+//                default:
+//                    JOptionPane.showMessageDialog(this,
+//                        "Unknown user type",
+//                        "Error",
+//                        JOptionPane.ERROR_MESSAGE);
+//                    return;
+//            }
             
             this.dispose();
         } else {

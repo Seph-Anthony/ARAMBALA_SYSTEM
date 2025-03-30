@@ -585,7 +585,11 @@ public void AvailableProd(){
               up.pname.setText(""+rs.getString("p_name"));
               up.pstatus.setText(""+rs.getString("p_status"));
               up.pstock.setText(""+rs.getInt("p_stock"));
-
+up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
+      up.oldpath = rs.getString("p_image");
+      up.path = rs.getString("p_image");
+      up.destination=rs.getString("p_image");
+      
      
       up.setVisible(true);
       

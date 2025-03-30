@@ -7,6 +7,7 @@ package admin;
 
 import config.dbConnect;
 import USER.customerdashboard;
+import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
@@ -46,7 +47,7 @@ public class admindash extends javax.swing.JFrame {
         AllUsers();
         AllProd();
         AllProcess();
-      
+       displayUserImage(adminimage);
          // Add ActionListener to the search button
         SearchButton.addActionListener(new ActionListener() {
             @Override
@@ -62,10 +63,49 @@ public class admindash extends javax.swing.JFrame {
         
     }
     
+    
+    
+    
    
     
        Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
+        
+public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void displayUserImage(JLabel admiimage) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+    
+    if (imagePath != null && !imagePath.isEmpty()) {
+        try {
+            ImageIcon icon = new ImageIcon(imagePath);
+            // Resize if needed (using your existing ResizeImage method)
+            adminimage.setIcon(ResizeImage(imagePath, null, adminimage));
+        } catch (Exception e) {
+            // Set default image if there's an error
+            adminimage.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    } else {
+        // Set default image if no image path exists
+        adminimage.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+    }
+}
+    
     
  private void searchUser(String username) {
         try {
@@ -218,7 +258,6 @@ public void AllProcess() {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
-        jLabel14 = new javax.swing.JLabel();
         product = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
         process = new javax.swing.JPanel();
@@ -235,6 +274,8 @@ public void AllProcess() {
         records = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        adminimage = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -301,11 +342,6 @@ public void AllProcess() {
             }
         });
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel6.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 0, 160, 160));
-
         jPanel2.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, -1));
 
         product.setBackground(new java.awt.Color(255, 255, 255));
@@ -443,6 +479,21 @@ public void AllProcess() {
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/customergamay.png"))); // NOI18N
         jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 70, 60));
+
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel17.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel17MouseClicked(evt);
+            }
+        });
+        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        adminimage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        adminimage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel17.add(adminimage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 140));
+
+        jPanel2.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 160));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 200, 710));
 
@@ -692,8 +743,9 @@ public void AllProcess() {
     } else {
         admindash.setText(ses.getUsername());
         adinfo.setText(String.valueOf(ses.getU_id()));
-        
-        // Add debug output to verify session data
+        adminimage.setText(ses.getU_image());
+//        
+//         Add debug output to verify session data
         System.out.println("User ID: " + ses.getU_id());
         System.out.println("Username: " + ses.getUsername());
         System.out.println("Type: " + ses.getType());
@@ -841,6 +893,16 @@ public void AllProcess() {
         this.dispose();
     }//GEN-LAST:event_recordsMouseClicked
 
+    private void jPanel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel17MouseClicked
+        // TODO add your handling code here:
+        
+        
+        admininfo add = new admininfo();
+        add.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_jPanel17MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -905,13 +967,13 @@ public void AllProcess() {
     private javax.swing.JButton SearchButton;
     private javax.swing.JLabel adinfo;
     private javax.swing.JLabel admindash;
+    private javax.swing.JLabel adminimage;
     private javax.swing.JTable admintable;
     private javax.swing.JPanel customerni1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -938,6 +1000,7 @@ public void AllProcess() {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
+    private javax.swing.JPanel jPanel17;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel261;
     private javax.swing.JPanel jPanel3;

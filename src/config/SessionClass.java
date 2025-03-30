@@ -21,7 +21,7 @@ public class SessionClass {
          private String type;
           private String stat;
           private String pass;
-          
+          private String u_image;
           private int p_id;
            private String p_name;
             private String p_category;
@@ -119,6 +119,14 @@ public class SessionClass {
 
     public void setStat(String stat) {
         this.stat = stat;
+    }
+    
+    public String getU_image() {
+        return u_image;
+    }
+    
+    public void setU_image(String u_image) {
+        this.u_image = u_image;
     }
     
     

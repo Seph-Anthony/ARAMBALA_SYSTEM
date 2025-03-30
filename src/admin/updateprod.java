@@ -7,9 +7,21 @@ package admin;
 
 import config.dbConnect;
 import java.awt.Color;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -24,6 +36,88 @@ public class updateprod extends javax.swing.JFrame {
     public updateprod() {
         initComponents();
     }
+    
+       
+    public String destination = "";
+    
+    File selectedFile;
+    public String oldpath;
+    public String path;
+    
+    public int FileExistenceChecker(String path){
+        File file = new File(path);
+        String fileName = file.getName();
+        
+        Path filePath = Paths.get("src/userimages", fileName);
+        boolean fileExists = Files.exists(filePath);
+        
+        if (fileExists) {
+            return 1;
+        } else {
+            return 0;
+        }
+    
+    }
+    public static int getHeightFromWidth(String imagePath, int desiredWidth) {
+        try {
+            // Read the image file
+            File imageFile = new File(imagePath);
+            BufferedImage image = ImageIO.read(imageFile);
+            
+            // Get the original width and height of the image
+            int originalWidth = image.getWidth();
+            int originalHeight = image.getHeight();
+            
+            // Calculate the new height based on the desired width and the aspect ratio
+            int newHeight = (int) ((double) desiredWidth / originalWidth * originalHeight);
+            
+            return newHeight;
+        } catch (IOException ex) {
+            System.out.println("No image found!");
+        }
+        
+        return -1;
+    }
+    
+    
+public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    ImageIcon MyImage = null;
+        if(ImagePath !=null){
+            MyImage = new ImageIcon(ImagePath);
+        }else{
+            MyImage = new ImageIcon(pic);
+        }
+        
+    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
+
+    Image img = MyImage.getImage();
+    Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
+    ImageIcon image = new ImageIcon(newImg);
+    return image;
+}
+    
+    public void imageUpdater(String existingFilePath, String newFilePath){
+        File existingFile = new File(existingFilePath);
+        if (existingFile.exists()) {
+            String parentDirectory = existingFile.getParent();
+            File newFile = new File(newFilePath);
+            String newFileName = newFile.getName();
+            File updatedFile = new File(parentDirectory, newFileName);
+            existingFile.delete();
+            try {
+                Files.copy(newFile.toPath(), updatedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Image updated successfully.");
+            } catch (IOException e) {
+                System.out.println("Error occurred while updating the image: "+e);
+            }
+        } else {
+            try{
+                Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }catch(IOException e){
+                System.out.println("Error on update!");
+            }
+        }
+   }
     
         private void logProductAdditionAction(int userId, String productName) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
@@ -67,10 +161,6 @@ private int getCurrentUserId() {
         jPanel4 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         pname = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -86,6 +176,12 @@ private int getCurrentUserId() {
         pstock = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
         jLabel1039 = new javax.swing.JLabel();
+        jPanel6 = new javax.swing.JPanel();
+        image = new javax.swing.JLabel();
+        remove = new javax.swing.JPanel();
+        jLabel9 = new javax.swing.JLabel();
+        select = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
 
@@ -151,28 +247,6 @@ private int getCurrentUserId() {
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dakoboxproduct.png"))); // NOI18N
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 170));
-
-        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 170, 190));
-
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Add Photo");
-        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 20));
-
-        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 170, 40));
-
         pname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pname.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         pname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -181,22 +255,22 @@ private int getCurrentUserId() {
                 pnameActionPerformed(evt);
             }
         });
-        jPanel5.add(pname, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 190, 50));
+        jPanel5.add(pname, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 50, 190, 50));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("Product Name:");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 30, -1, -1));
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 30, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
         jLabel4.setText("Product Category:");
-        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 120, -1, -1));
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setText("Product Brand:");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, -1, -1));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, -1, -1));
 
         pbrand.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pbrand.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -206,12 +280,12 @@ private int getCurrentUserId() {
                 pbrandActionPerformed(evt);
             }
         });
-        jPanel5.add(pbrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 190, 50));
+        jPanel5.add(pbrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, 190, 50));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 102));
         jLabel6.setText("ID:");
-        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 30, -1, -1));
+        jPanel5.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, -1, -1));
 
         pid.setEditable(false);
         pid.setBackground(new java.awt.Color(255, 255, 255));
@@ -223,12 +297,12 @@ private int getCurrentUserId() {
                 pidActionPerformed(evt);
             }
         });
-        jPanel5.add(pid, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, 190, 50));
+        jPanel5.add(pid, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, 190, 50));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("Product Price:");
-        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, -1, -1));
+        jPanel5.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 120, -1, -1));
 
         pprice.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pprice.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -238,12 +312,12 @@ private int getCurrentUserId() {
                 ppriceActionPerformed(evt);
             }
         });
-        jPanel5.add(pprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 140, 190, 50));
+        jPanel5.add(pprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 190, 50));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
         jLabel10.setText("Product Status:");
-        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 300, -1, -1));
+        jPanel5.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 300, -1, -1));
 
         pstatus.setEditable(false);
         pstatus.setBackground(new java.awt.Color(255, 255, 255));
@@ -255,12 +329,12 @@ private int getCurrentUserId() {
                 pstatusActionPerformed(evt);
             }
         });
-        jPanel5.add(pstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 320, 190, 50));
+        jPanel5.add(pstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 320, 190, 50));
 
         pcat.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         pcat.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food and Bevarage", "Household Essentials", "Personal Care & Wellness", "Suppliess and Utilities" }));
         pcat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel5.add(pcat, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 190, 50));
+        jPanel5.add(pcat, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 140, 190, 50));
 
         pstock.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         pstock.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -270,12 +344,12 @@ private int getCurrentUserId() {
                 pstockActionPerformed(evt);
             }
         });
-        jPanel5.add(pstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 230, 190, 50));
+        jPanel5.add(pstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 230, 190, 50));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 102, 102));
         jLabel12.setText("Product Stock:");
-        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, -1, -1));
+        jPanel5.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 210, -1, -1));
 
         jLabel1039.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
@@ -285,6 +359,50 @@ private int getCurrentUserId() {
             }
         });
         jPanel5.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 50, 50));
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 102, 102), 2, true));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/dakoboxproduct.png"))); // NOI18N
+        jPanel6.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 170));
+
+        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 190));
+
+        remove.setBackground(new java.awt.Color(0, 102, 102));
+        remove.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        remove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeMouseClicked(evt);
+            }
+        });
+        remove.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("REMOVE");
+        remove.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 20));
+
+        jPanel5.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 90, 40));
+
+        select.setBackground(new java.awt.Color(0, 102, 102));
+        select.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        select.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectMouseClicked(evt);
+            }
+        });
+        select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("SELECT");
+        select.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 20));
+
+        jPanel5.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 80, 40));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 760, 390));
 
@@ -315,11 +433,11 @@ private int getCurrentUserId() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 780, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 624, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -347,82 +465,88 @@ private int getCurrentUserId() {
     }//GEN-LAST:event_pstatusActionPerformed
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
-
-       
-    dbConnect db = new dbConnect();
-
-    // Get the selected category from the JComboBox
+ dbConnect db = new dbConnect();
     String selectedCategory = (String) pcat.getSelectedItem();
 
     // Validate input fields
     if (pname.getText().isEmpty() || pprice.getText().isEmpty() || pstock.getText().isEmpty() ||
         pbrand.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "All fields are required",
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     // Validate category selection
     if (selectedCategory == null || selectedCategory.equals("Select Category")) {
-        JOptionPane.showMessageDialog(null, "Please select a valid Category Type.",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Please select a valid category",
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Validate price (must be a positive number)
-    String priceText = pprice.getText();
+    // Validate price
     try {
-        double price = Double.parseDouble(priceText);
+        double price = Double.parseDouble(pprice.getText());
         if (price < 0) {
-            JOptionPane.showMessageDialog(null, "Invalid Price: Price cannot be negative.",
-                "Error Registration", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Price cannot be negative",
+                "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
     } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Invalid Price: Please enter a valid number.",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Invalid price format",
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
-    // Validate stock (must be a positive integer)
+    // Validate stock
     if (!pstock.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(null, "Invalid Stock Input.",
-            "Error Registration", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Stock must be a whole number",
+            "Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
     
-   
-
-    // Determine product status based on stock
+    // Determine product status
     int stock = Integer.parseInt(pstock.getText());
     String status = (stock == 0) ? "Not Available" : "Available";
 
-    // Build the SQL query
-    String query = "UPDATE product SET " +
-    "p_name = '" + pname.getText() + "', " +
-    "p_category = '" + selectedCategory + "', " +
-    "p_brand = '" + pbrand.getText() + "', " +
-    "p_price = " + pprice.getText() + ", " +
-    "p_stock = " + stock + ", " +
-    "p_status = '" + status + "' " +
-    "WHERE p_id = '" + pid + "'";
+     String query = "UPDATE product SET " +
+        "p_name = '" + pname.getText() + "', " +
+        "p_category = '" + selectedCategory + "', " +
+        "p_brand = '" + pbrand.getText() + "', " +
+        "p_price = " + pprice.getText() + ", " +
+        "p_stock = " + stock + ", " +
+        "p_status = '" + status + "'";
+    
+    if (!destination.isEmpty()) {
+            query += ", p_image = '" + destination + "'";
+        }
+        
+        query += " WHERE p_id = '" + pid.getText() + "'";
+
+        db.updateData(query);
+
+        // Handle image file operations
+        if (!destination.isEmpty()) {
+            if (!oldpath.equals(path)) {
+                imageUpdater(oldpath, path);
+            }
+        } else {
+            File existingFile = new File(oldpath);
+            if (existingFile.exists()) {
+                existingFile.delete();
+            }
+        }
 
     try {
-        // Execute the query
-        int result = db.insertData(query);
-
-        if (result == 1) {
-            JOptionPane.showMessageDialog(null, "Product added successfully.");
-            int currentUserId = getCurrentUserId(); // Get the user ID
-            logProductAdditionAction(currentUserId, pname.getText());
-        } else {
-            JOptionPane.showMessageDialog(null, "Error adding product. Please check your input or try again.",
-                "Error", JOptionPane.ERROR_MESSAGE);
-        }
+        db.updateData(query);
+        JOptionPane.showMessageDialog(null, "Product updated successfully");
+        
+        // Return to admin dashboard
+        admindash ad = new admindash();
+        ad.setVisible(true);
+        this.dispose();
     } catch (Exception ex) {
-        JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(),
-            "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace(); // Print the stack trace for debugging
+        JOptionPane.showMessageDialog(null, "Database error: " + ex.getMessage());
+        ex.printStackTrace();
     }
      
 
@@ -451,6 +575,49 @@ private int getCurrentUserId() {
         ad.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel1039MouseClicked
+
+    private void selectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseClicked
+        // TODO add your handling code here:
+        
+                  
+        
+              
+        JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        selectedFile = fileChooser.getSelectedFile();
+                        destination = "src/userimages/" + selectedFile.getName();
+                        path  = selectedFile.getAbsolutePath();
+                        
+                        
+                        if(FileExistenceChecker(path) == 1){
+                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
+                            destination = "";
+                            path="";
+                        }else{
+                            image.setIcon(ResizeImage(path, null, image));
+                            JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
+                            select.setEnabled(false);
+                          
+                            remove.setEnabled(true);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("File Error!");
+                    }
+                }
+    }//GEN-LAST:event_selectMouseClicked
+
+    private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
+        // TODO add your handling code here:
+       // Show confirmation dialog
+      JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
+        remove.setEnabled(false);
+        select.setEnabled(true);
+        image.setIcon(null);
+        destination ="";
+        path = "";
+    }//GEN-LAST:event_removeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -489,18 +656,19 @@ private int getCurrentUserId() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel add;
+    public javax.swing.JLabel image;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel1039;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
@@ -508,7 +676,6 @@ private int getCurrentUserId() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JSpinner jSpinner1;
     public javax.swing.JTextField pbrand;
     public javax.swing.JComboBox<String> pcat;
@@ -517,5 +684,7 @@ private int getCurrentUserId() {
     public javax.swing.JTextField pprice;
     public javax.swing.JTextField pstatus;
     public javax.swing.JTextField pstock;
+    public javax.swing.JPanel remove;
+    public javax.swing.JPanel select;
     // End of variables declaration//GEN-END:variables
 }
