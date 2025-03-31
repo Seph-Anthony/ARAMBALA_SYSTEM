@@ -16,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.imageio.ImageIO;
@@ -38,6 +39,28 @@ public class employeeinfo extends javax.swing.JFrame {
         initComponents();
         displayUserImage(image);
     }
+    
+            private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User Changed Image:" + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log user addition action: " + e.getMessage());
+    }
+}
+         
+         private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
     
        
     public String destination = "";
@@ -753,9 +776,12 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
             pst.setString(1, destination);
             pst.setInt(2, userId);
-            
+            int currentUserId = getCurrentUserId();
             int rowsAffected = pst.executeUpdate();
             if (rowsAffected > 0) {
+                
+                 logProductAdditionAction(currentUserId, ses.getUsername());
+                
                 JOptionPane.showMessageDialog(this, "Image updated successfully!");
                 // Update the session with the new image path
                 ses.setU_image(destination);

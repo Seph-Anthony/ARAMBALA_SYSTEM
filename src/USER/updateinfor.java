@@ -95,6 +95,8 @@ public class updateinfor extends javax.swing.JFrame {
     }
 
   
+  
+  
  private void logProductAdditionAction(int userId, String Username) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
@@ -111,7 +113,11 @@ public class updateinfor extends javax.swing.JFrame {
     }
 }
         //Set default values, or leave them empty.
-   
+           private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
  
   
     updateinfor() {
@@ -472,7 +478,9 @@ try {
 
         // Update email and contact if needed
         db.updateData("UPDATE user SET u_email ='" + emailField.getText() + "', u_contact='" + contactField.getText() + "' WHERE u_id ='" + idField.getText() + "'");
-
+int currentUserId = getCurrentUserId();
+            logProductAdditionAction(currentUserId, ses.getUsername());
+        
         JOptionPane.showMessageDialog(null, "Profile and Password Successfully Updated");
         LOGIN log = new LOGIN();
         log.setVisible(true);

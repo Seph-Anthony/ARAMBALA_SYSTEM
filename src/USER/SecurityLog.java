@@ -7,6 +7,8 @@ package USER;
 
 import config.SessionClass;
 import config.dbConnect;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -27,6 +29,31 @@ private int currentUserId; //
         this.currentUserId = ses.getU_id();
     }
     
+ 
+       private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User Added Security:" + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log user addition action: " + e.getMessage());
+    }
+}
+         
+         private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+    
+      
+ 
     // Constructor with user ID
     public SecurityLog(int userId) {
         initComponents();
@@ -222,7 +249,7 @@ private int currentUserId; //
          String colorAnswer = (String)favcolor.getSelectedItem();
     String subjectAnswer = (String)favsub.getSelectedItem();
     String nicknameAnswer = childname.getText().trim();
-    
+      SessionClass sess = SessionClass.getInstance();
     // 2. Validate inputs
     if(nicknameAnswer.isEmpty()) {
         JOptionPane.showMessageDialog(this, 
@@ -256,6 +283,9 @@ try {
     db.updateData(sql);  // Void call
     
     // Assume success if no exception was thrown
+    int currentUserId = getCurrentUserId();
+            logProductAdditionAction(currentUserId, sess.getUsername());
+    
     JOptionPane.showMessageDialog(this, "Security questions saved!");
     
 } catch (SQLException ex) {
