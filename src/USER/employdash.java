@@ -531,7 +531,7 @@ public void PendingProd(){
         employeeinfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jPanel21.add(employeeinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, 30));
 
-        jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 120, 130, 30));
+        jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 130, 30));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -539,9 +539,9 @@ public void PendingProd(){
 
         customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 140));
+        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 130));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 160));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 170, 150));
 
         viewni2.setBackground(new java.awt.Color(255, 255, 255));
         viewni2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -587,7 +587,7 @@ public void PendingProd(){
 
         viewni2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
 
-        jPanel2.add(viewni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 30, 110, 120));
+        jPanel2.add(viewni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, 110, 120));
 
         viewni3.setBackground(new java.awt.Color(255, 255, 255));
         viewni3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -633,7 +633,7 @@ public void PendingProd(){
 
         viewni3.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
 
-        jPanel2.add(viewni3, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 30, 110, 120));
+        jPanel2.add(viewni3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 110, 120));
 
         viewni4.setBackground(new java.awt.Color(255, 255, 255));
         viewni4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -679,7 +679,7 @@ public void PendingProd(){
 
         viewni4.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
 
-        jPanel2.add(viewni4, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 30, 110, 120));
+        jPanel2.add(viewni4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 110, 120));
 
         emdash.setBackground(new java.awt.Color(63, 195, 128));
         emdash.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -687,7 +687,7 @@ public void PendingProd(){
         emdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emdash.setText("USER");
         emdash.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(emdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 90, 30));
+        jPanel2.add(emdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 90, 30));
 
         jPanel24.setBackground(new java.awt.Color(255, 255, 255));
         jPanel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -700,7 +700,7 @@ public void PendingProd(){
         emuser.setVerifyInputWhenFocusTarget(false);
         jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
 
-        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, 130, 30));
+        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 130, 30));
 
         emdash1.setBackground(new java.awt.Color(63, 195, 128));
         emdash1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
@@ -708,7 +708,7 @@ public void PendingProd(){
         emdash1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         emdash1.setText("USER ID");
         emdash1.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(emdash1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 90, 30));
+        jPanel2.add(emdash1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 90, 30));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 790, 190));
 

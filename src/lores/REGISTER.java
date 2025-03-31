@@ -41,11 +41,11 @@ public class REGISTER extends javax.swing.JFrame {
                 if (enterpass.getEchoChar() == '\0') {
                     // Hide the password
                     enterpass.setEchoChar('•'); // Default echo character for passwords
-                    seepass1.setText("Show Password");
+                    seepass1.setText("");
                 } else {
                     // Show the password
                     enterpass.setEchoChar('\0'); // Set echo char to null to show the password
-                    seepass1.setText("Hide Password");
+                    seepass1.setText("");
                 }
             }
         });
@@ -57,11 +57,11 @@ public class REGISTER extends javax.swing.JFrame {
                 if (confirmpass.getEchoChar() == '\0') {
                     // Hide the password
                     confirmpass.setEchoChar('•'); // Default echo character for passwords
-                    seepass2.setText("Show Password");
+                    seepass2.setText("");
                 } else {
                     // Show the password
                     confirmpass.setEchoChar('\0'); // Set echo char to null to show the password
-                    seepass2.setText("Hide Password");
+                    seepass2.setText("");
                 }
             }
         });
@@ -3480,7 +3480,7 @@ private void logRegistrationAction(String username) {
         seepass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
         jPanel261.add(seepass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, 40, 30));
 
-        jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 380, 660));
+        jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 370, 660));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

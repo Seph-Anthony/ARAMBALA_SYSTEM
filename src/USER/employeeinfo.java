@@ -7,8 +7,20 @@ package USER;
 
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
+import config.dbConnect;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import lores.LOGIN;
@@ -24,10 +36,53 @@ public class employeeinfo extends javax.swing.JFrame {
      */
     public employeeinfo() {
         initComponents();
-        displayUserImage(customerdash);
+        displayUserImage(image);
     }
     
-      public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+       
+    public String destination = "";
+    
+    File selectedFile;
+    public String oldpath;
+    public String path;
+    
+    public int FileExistenceChecker(String path){
+        File file = new File(path);
+        String fileName = file.getName();
+        
+        Path filePath = Paths.get("src/userimages", fileName);
+        boolean fileExists = Files.exists(filePath);
+        
+        if (fileExists) {
+            return 1;
+        } else {
+            return 0;
+        }
+    
+    }
+    public static int getHeightFromWidth(String imagePath, int desiredWidth) {
+        try {
+            // Read the image file
+            File imageFile = new File(imagePath);
+            BufferedImage image = ImageIO.read(imageFile);
+            
+            // Get the original width and height of the image
+            int originalWidth = image.getWidth();
+            int originalHeight = image.getHeight();
+            
+            // Calculate the new height based on the desired width and the aspect ratio
+            int newHeight = (int) ((double) desiredWidth / originalWidth * originalHeight);
+            
+            return newHeight;
+        } catch (IOException ex) {
+            System.out.println("No image found!");
+        }
+        
+        return -1;
+    }
+    
+    
+public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     ImageIcon MyImage = null;
         if(ImagePath !=null){
             MyImage = new ImageIcon(ImagePath);
@@ -43,22 +98,50 @@ public class employeeinfo extends javax.swing.JFrame {
     return image;
 }
     
-    public void displayUserImage(JLabel admiimage) {
+    public void imageUpdater(String existingFilePath, String newFilePath){
+        File existingFile = new File(existingFilePath);
+        if (existingFile.exists()) {
+            String parentDirectory = existingFile.getParent();
+            File newFile = new File(newFilePath);
+            String newFileName = newFile.getName();
+            File updatedFile = new File(parentDirectory, newFileName);
+            existingFile.delete();
+            try {
+                Files.copy(newFile.toPath(), updatedFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                System.out.println("Image updated successfully.");
+            } catch (IOException e) {
+                System.out.println("Error occurred while updating the image: "+e);
+            }
+        } else {
+            try{
+                Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            }catch(IOException e){
+                System.out.println("Error on update!");
+            }
+        }
+   }
+    
+   public void displayUserImage(JLabel admiimage) {
     SessionClass session = SessionClass.getInstance();
     String imagePath = session.getU_image();
     
     if (imagePath != null && !imagePath.isEmpty()) {
         try {
-            ImageIcon icon = new ImageIcon(imagePath);
-            // Resize if needed (using your existing ResizeImage method)
-            customerdash.setIcon(ResizeImage(imagePath, null, customerdash));
+            // Check if the file exists
+            File imageFile = new File(imagePath);
+            if (imageFile.exists()) {
+                image.setIcon(ResizeImage(imagePath, null, image));
+            } else {
+                // Set default image if file doesn't exist
+                image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+            }
         } catch (Exception e) {
             // Set default image if there's an error
-            customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+            image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
         }
     } else {
         // Set default image if no image path exists
-        customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
     }
 }
     
@@ -82,6 +165,7 @@ public class employeeinfo extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollBar1 = new javax.swing.JScrollBar();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         tologin = new javax.swing.JPanel();
@@ -131,7 +215,13 @@ public class employeeinfo extends javax.swing.JFrame {
         jPanel4 = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
-        customerdash = new javax.swing.JLabel();
+        image = new javax.swing.JLabel();
+        add = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        remove = new javax.swing.JPanel();
+        jLabel11 = new javax.swing.JLabel();
+        select = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -162,11 +252,11 @@ public class employeeinfo extends javax.swing.JFrame {
 
         jPanel3.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, 40));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setText("EMPLOYEE INFORMATION");
+        jLabel9.setText("USER INFORMATION");
         jLabel9.setToolTipText("");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 50, 520, 30));
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 30, 570, 50));
 
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/staffstandard.png"))); // NOI18N
         jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 170, -1));
@@ -180,22 +270,22 @@ public class employeeinfo extends javax.swing.JFrame {
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("Password");
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 210, -1, -1));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 240, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setText("First Name");
-        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 20, -1, -1));
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 70, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(0, 102, 102));
         jLabel6.setText("Last Name");
-        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 150, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("Contact");
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, -1, -1));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 150, -1, -1));
 
         jPanel1026.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1026.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -218,7 +308,7 @@ public class employeeinfo extends javax.swing.JFrame {
         passwordshow.setEnabled(false);
         jPanel1026.add(passwordshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
-        jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 230, 170, 40));
+        jPanel2.add(jPanel1026, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 260, 170, 40));
 
         updatePanel.setBackground(new java.awt.Color(0, 102, 102));
         updatePanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -235,12 +325,12 @@ public class employeeinfo extends javax.swing.JFrame {
         jLabel10.setText("Update Information");
         updatePanel.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, -1));
 
-        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 350, 210, 40));
+        jPanel2.add(updatePanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 390, 210, 40));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(0, 102, 102));
         jLabel15.setText("Email");
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 20, -1, -1));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
 
         jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
@@ -249,12 +339,12 @@ public class employeeinfo extends javax.swing.JFrame {
                 jLabel20MouseClicked(evt);
             }
         });
-        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 360, 50, 40));
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 50, 40));
 
         jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel18.setForeground(new java.awt.Color(0, 102, 102));
         jLabel18.setText("ID");
-        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, -1, -1));
+        jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, -1, -1));
 
         panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         panel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -263,7 +353,7 @@ public class employeeinfo extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 102, 102));
         jLabel4.setText("Username");
-        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, -1));
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 240, -1, -1));
 
         jPanel1030.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1030.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -286,7 +376,7 @@ public class employeeinfo extends javax.swing.JFrame {
         fnameshow.setEnabled(false);
         jPanel1030.add(fnameshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
-        jPanel2.add(jPanel1030, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 170, 40));
+        jPanel2.add(jPanel1030, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 90, 170, 40));
 
         jPanel1032.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1032.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -309,7 +399,7 @@ public class employeeinfo extends javax.swing.JFrame {
         lnameshow.setEnabled(false);
         jPanel1032.add(lnameshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
-        jPanel2.add(jPanel1032, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 140, 170, 40));
+        jPanel2.add(jPanel1032, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 170, 170, 40));
 
         jPanel1034.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1034.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -332,7 +422,7 @@ public class employeeinfo extends javax.swing.JFrame {
         idshow.setEnabled(false);
         jPanel1034.add(idshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 50, 40));
 
-        jPanel2.add(jPanel1034, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 30, 90, 40));
+        jPanel2.add(jPanel1034, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 20, 90, 40));
 
         jPanel1036.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1036.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -355,7 +445,7 @@ public class employeeinfo extends javax.swing.JFrame {
         emailshow.setEnabled(false);
         jPanel1036.add(emailshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
-        jPanel2.add(jPanel1036, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, 170, 40));
+        jPanel2.add(jPanel1036, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, 170, 40));
 
         jPanel1038.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1038.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -378,7 +468,7 @@ public class employeeinfo extends javax.swing.JFrame {
         contactshow.setEnabled(false);
         jPanel1038.add(contactshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
-        jPanel2.add(jPanel1038, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, 170, 40));
+        jPanel2.add(jPanel1038, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 170, 170, 40));
 
         jPanel1040.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1040.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -401,7 +491,7 @@ public class employeeinfo extends javax.swing.JFrame {
         usernameshow.setEnabled(false);
         jPanel1040.add(usernameshow, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 130, 40));
 
-        jPanel2.add(jPanel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 170, 40));
+        jPanel2.add(jPanel1040, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 260, 170, 40));
 
         jPanel4.setBackground(new java.awt.Color(0, 102, 102));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -418,19 +508,69 @@ public class employeeinfo extends javax.swing.JFrame {
         jLabel8.setText("Security Questions");
         jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 170, -1));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 300, 210, 40));
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 340, 210, 40));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 150));
+        image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel5.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 180));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 220, 170));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 220, 200));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 780, 400));
+        add.setBackground(new java.awt.Color(0, 102, 102));
+        add.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMouseClicked(evt);
+            }
+        });
+        add.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("UPDATE");
+        add.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 10, 70, -1));
+
+        jPanel2.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 100, 40));
+
+        remove.setBackground(new java.awt.Color(0, 102, 102));
+        remove.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        remove.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                removeMouseClicked(evt);
+            }
+        });
+        remove.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("REMOVE");
+        remove.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 10, 80, -1));
+
+        jPanel2.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 100, 40));
+
+        select.setBackground(new java.awt.Color(0, 102, 102));
+        select.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        select.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                selectMouseClicked(evt);
+            }
+        });
+        select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("SELECT");
+        select.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 100, 40));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 780, 440));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -517,6 +657,120 @@ public class employeeinfo extends javax.swing.JFrame {
     this.dispose();
     }//GEN-LAST:event_jPanel4MouseClicked
 
+    private void selectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseClicked
+        // TODO add your handling code here:
+        
+               
+        JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        selectedFile = fileChooser.getSelectedFile();
+                        destination = "src/userimages/" + selectedFile.getName();
+                        path  = selectedFile.getAbsolutePath();
+                        
+                        
+                        if(FileExistenceChecker(path) == 1){
+                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
+                            destination = "";
+                            path="";
+                        }else{
+                            image.setIcon(ResizeImage(path, null, image));
+                            JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
+                            select.setEnabled(false);
+                          
+                            remove.setEnabled(true);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("File Error!");
+                    }
+                }
+        
+    }//GEN-LAST:event_selectMouseClicked
+
+    private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
+        // TODO add your handling code here:
+        
+        
+       // TODO add your handling code here:
+    SessionClass ses = SessionClass.getInstance();
+    int userId = ses.getU_id();
+    
+    try {
+        // Update the database to remove the image path
+        dbConnect conn = new dbConnect();
+        String update = "UPDATE user SET u_image = NULL WHERE u_id = ?";
+        
+        try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
+            pst.setInt(1, userId);
+            
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected > 0) {
+                // Delete the image file
+                if (destination != null && !destination.isEmpty()) {
+                    Files.deleteIfExists(Paths.get(destination));
+                }
+                
+                JOptionPane.showMessageDialog(this, "Image removed successfully!");
+                // Update the session
+                ses.setU_image(null);
+                displayUserImage(image);
+                
+                remove.setEnabled(false);
+                select.setEnabled(true);
+                image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+                destination = "";
+                path = "";
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to remove image!");
+            }
+        }
+    } catch (IOException | SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error removing image: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_removeMouseClicked
+
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+        // TODO add your handling code here:
+        SessionClass ses = SessionClass.getInstance();
+    int userId = ses.getU_id(); // Get current user ID
+    
+    if (destination.isEmpty() || path.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please select an image first!");
+        return;
+    }
+    
+    
+           try {
+        // Copy the selected file to the destination folder
+        Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        
+        // Update the database with the image path
+        dbConnect conn = new dbConnect();
+        String update = "UPDATE user SET u_image = ? WHERE u_id = ?";
+        
+        try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
+            pst.setString(1, destination);
+            pst.setInt(2, userId);
+            
+            int rowsAffected = pst.executeUpdate();
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Image updated successfully!");
+                // Update the session with the new image path
+                ses.setU_image(destination);
+                displayUserImage(image);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to update image!");
+            }
+        }
+    } catch (IOException | SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error updating image: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+        
+    }//GEN-LAST:event_addMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -553,17 +807,21 @@ public class employeeinfo extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel add;
     private javax.swing.JLabel contactshow;
-    private javax.swing.JLabel customerdash;
     private javax.swing.JLabel emailshow;
     private javax.swing.JLabel fnameshow;
     private javax.swing.JLabel idshow;
+    private javax.swing.JLabel image;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
@@ -597,9 +855,12 @@ public class employeeinfo extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JLabel lnameshow;
     private javax.swing.JPanel panel;
     private javax.swing.JLabel passwordshow;
+    private javax.swing.JPanel remove;
+    private javax.swing.JPanel select;
     private javax.swing.JPanel tologin;
     private javax.swing.JPanel updatePanel;
     private javax.swing.JLabel usernameshow;

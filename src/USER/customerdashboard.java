@@ -696,7 +696,7 @@ public void AllProd() {
 
     private void product1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product1MouseClicked
         // TODO add your handling code here:
-        customerinfo cus = new customerinfo();
+      employeeinfo cus = new employeeinfo();
         cus.setVisible(true);
         this.dispose();
         

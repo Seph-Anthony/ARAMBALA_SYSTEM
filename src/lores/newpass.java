@@ -11,7 +11,11 @@ import config.SessionClass;
 import config.dbConnect;
 import config.passwordHasher;
 import java.awt.Color;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -26,7 +30,69 @@ public class newpass extends javax.swing.JFrame {
      */
     public newpass() {
         initComponents();
+        
+            seepass1.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (enterpass.getEchoChar() == '\0') {
+                    // Hide the password
+                    enterpass.setEchoChar('•'); // Default echo character for passwords
+                    seepass1.setText("");
+                } else {
+                    // Show the password
+                    enterpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass1.setText("");
+                }
+            }
+        });
+            
+            
+             seepass2.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                // Toggle password visibility
+                if (confirmpass.getEchoChar() == '\0') {
+                    // Hide the password
+                    confirmpass.setEchoChar('•'); // Default echo character for passwords
+                    seepass2.setText("");
+                } else {
+                    // Show the password
+                    confirmpass.setEchoChar('\0'); // Set echo char to null to show the password
+                    seepass2.setText("");
+                }
+            }
+        });
+        
     }
+    
+         private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "Changed Pass:" + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log user addition action: " + e.getMessage());
+    }
+}
+         
+         private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+//        public void getUsername(){
+//             
+//             config.SessionClass ses = config.SessionClass.getInstance();
+//            ses.getUsername();
+//         }
+//    
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
 
@@ -47,6 +113,8 @@ public class newpass extends javax.swing.JFrame {
         jLabel273 = new javax.swing.JLabel();
         confirmpass = new javax.swing.JPasswordField();
         jLabel4 = new javax.swing.JLabel();
+        seepass1 = new javax.swing.JLabel();
+        seepass2 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -91,6 +159,7 @@ public class newpass extends javax.swing.JFrame {
         jPanel2.add(jLabel74, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
 
         enterpass.setBackground(new java.awt.Color(240, 240, 240));
+        enterpass.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         enterpass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel2.add(enterpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 400, 50));
 
@@ -100,6 +169,7 @@ public class newpass extends javax.swing.JFrame {
         jPanel2.add(jLabel273, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, -1, -1));
 
         confirmpass.setBackground(new java.awt.Color(240, 240, 240));
+        confirmpass.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         confirmpass.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel2.add(confirmpass, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 400, 50));
 
@@ -108,7 +178,15 @@ public class newpass extends javax.swing.JFrame {
         jLabel4.setText("Make sure your password is strong but also simple enough for you to remember!");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 480, 280));
+        seepass1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(seepass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, 40, 30));
+
+        seepass2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        seepass2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
+        jPanel2.add(seepass2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 180, 40, 30));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 490, 280));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -388,8 +466,13 @@ public class newpass extends javax.swing.JFrame {
             pst.setInt(2, userId);
 
             int rowsAffected = pst.executeUpdate();
+int currentUserId = getCurrentUserId();
 
             if (rowsAffected > 0) {
+                
+                
+                
+                  logProductAdditionAction(currentUserId, sess.getUsername());
                 JOptionPane.showMessageDialog(null, "User Password Changed Successfully");
                 LOGIN log = new LOGIN();
                 log.setVisible(true);
@@ -582,5 +665,7 @@ public class newpass extends javax.swing.JFrame {
     private javax.swing.JPanel login9;
     private javax.swing.JPanel reset;
     private javax.swing.JPanel reset1;
+    private javax.swing.JLabel seepass1;
+    private javax.swing.JLabel seepass2;
     // End of variables declaration//GEN-END:variables
 }

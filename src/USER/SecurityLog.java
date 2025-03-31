@@ -53,7 +53,7 @@ private int currentUserId; //
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         childname = new javax.swing.JTextField();
-        jPanel6 = new javax.swing.JPanel();
+        BACK = new javax.swing.JPanel();
         jLabel8 = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
@@ -121,14 +121,14 @@ private int currentUserId; //
         childname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel1.add(childname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 280, 40));
 
-        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel6.addMouseListener(new java.awt.event.MouseAdapter() {
+        BACK.setBackground(new java.awt.Color(0, 102, 102));
+        BACK.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        BACK.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel6MouseClicked(evt);
+                BACKMouseClicked(evt);
             }
         });
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        BACK.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -139,7 +139,7 @@ private int currentUserId; //
                 jLabel8MouseClicked(evt);
             }
         });
-        jPanel6.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
+        BACK.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
 
         jPanel7.setBackground(new java.awt.Color(0, 102, 102));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -151,9 +151,9 @@ private int currentUserId; //
         jLabel10.setText("VERIFY");
         jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
 
-        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 140, 50));
+        BACK.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 140, 50));
 
-        jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 110, 50));
+        jPanel1.add(BACK, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 110, 50));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
@@ -204,12 +204,12 @@ private int currentUserId; //
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
+    private void BACKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BACKMouseClicked
         // TODO add your handling code here:
-        updateinfor up = new updateinfor();
+        employeeinfo up = new employeeinfo();
         up.setVisible(true);
     this.dispose();
-    }//GEN-LAST:event_jPanel6MouseClicked
+    }//GEN-LAST:event_BACKMouseClicked
 
     private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
         // TODO add your handling code here:
@@ -299,6 +299,7 @@ try {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel BACK;
     private javax.swing.JLabel add;
     private javax.swing.JPanel addsecuritypanelbutton;
     private javax.swing.JTextField childname;
@@ -317,7 +318,6 @@ try {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     // End of variables declaration//GEN-END:variables
