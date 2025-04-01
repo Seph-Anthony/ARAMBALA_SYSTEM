@@ -368,7 +368,7 @@ private int getCurrentUserId() {
         jPanel5.add(jLabel1039, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 340, 50, 50));
 
         prodcategory.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        prodcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food Bevarage", "Household Essentials", "Personal Wellness", "Suppliess Utilities" }));
+        prodcategory.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Category", "Food and Beverage", "Household Essentials", "Personal Wellness", "Supplies Utilities" }));
         prodcategory.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         jPanel5.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 240, 50));
 

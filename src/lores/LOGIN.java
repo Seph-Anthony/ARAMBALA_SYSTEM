@@ -92,7 +92,7 @@ try (Connection conn = db.getConnection();
 //    }
     
    public static boolean prodinput(String username, String password){
-        // ariiii ang problemaa AHHHH
+        
         
         dbConnect db = new dbConnect();
         

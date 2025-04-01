@@ -484,10 +484,10 @@
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="5">
                     <StringItem index="0" value="Select Category"/>
-                    <StringItem index="1" value="Food Bevarage"/>
+                    <StringItem index="1" value="Food and Beverage"/>
                     <StringItem index="2" value="Household Essentials"/>
                     <StringItem index="3" value="Personal Wellness"/>
-                    <StringItem index="4" value="Suppliess Utilities"/>
+                    <StringItem index="4" value="Supplies Utilities"/>
                   </StringArray>
                 </Property>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">

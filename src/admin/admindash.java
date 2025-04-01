@@ -364,11 +364,14 @@ public void AllProcess() {
         jLabel13.setText("Product");
         product.add(jLabel13);
 
-        jPanel2.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 180, -1));
+        jPanel2.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 180, -1));
 
         process.setBackground(new java.awt.Color(255, 255, 255));
         process.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         process.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                processMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 processMouseEntered(evt);
             }
@@ -381,10 +384,10 @@ public void AllProcess() {
         jLabel3.setBackground(new java.awt.Color(0, 102, 102));
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel3.setText("Process");
-        process.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 100, 20));
+        jLabel3.setText("Order");
+        process.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 20));
 
-        jPanel2.add(process, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 180, 40));
+        jPanel2.add(process, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 180, 40));
 
         customerni1.setBackground(new java.awt.Color(255, 255, 255));
         customerni1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -407,19 +410,19 @@ public void AllProcess() {
         jLabel7.setText("Users");
         customerni1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 90, 20));
 
-        jPanel2.add(customerni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 180, 40));
+        jPanel2.add(customerni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 200, 80, 70));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 80, 70));
 
         jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/checkgamay.png"))); // NOI18N
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 80, 70));
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 80, 70));
 
         jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/recordspic.png"))); // NOI18N
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 530, 80, 50));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, 80, 50));
 
         jPanel9.setBackground(new java.awt.Color(0, 102, 102));
         jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -474,11 +477,11 @@ public void AllProcess() {
         jLabel5.setText("Records");
         records.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 120, 20));
 
-        jPanel2.add(records, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 580, 180, 40));
+        jPanel2.add(records, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 180, 40));
 
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/customergamay.png"))); // NOI18N
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 70, 60));
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 70, 60));
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
         jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -491,6 +494,7 @@ public void AllProcess() {
 
         adminimage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminimage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        adminimage.setText("No Image Found");
         jPanel17.add(adminimage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 140));
 
         jPanel2.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 160));
@@ -902,6 +906,15 @@ public void AllProcess() {
         this.dispose();
         
     }//GEN-LAST:event_jPanel17MouseClicked
+
+    private void processMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processMouseClicked
+        // TODO add your handling code here:
+        
+        orderpage or = new orderpage();
+        or.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_processMouseClicked
 
     /**
      * @param args the command line arguments

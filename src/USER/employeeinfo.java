@@ -105,20 +105,33 @@ public class employeeinfo extends javax.swing.JFrame {
     }
     
     
-public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+public ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
+    // If both image sources are null, return default image
+    if (ImagePath == null && pic == null) {
+        return new ImageIcon(getClass().getResource("/image/default_user.png"));
+    }
+    
     ImageIcon MyImage = null;
-        if(ImagePath !=null){
-            MyImage = new ImageIcon(ImagePath);
-        }else{
-            MyImage = new ImageIcon(pic);
+    if (ImagePath != null) {
+        MyImage = new ImageIcon(ImagePath);
+    } else {
+        MyImage = new ImageIcon(pic);
+    }
+    
+    // Rest of your resizing logic...
+    int newHeight = label.getWidth(); // Default height if calculation fails
+    
+    try {
+        if (ImagePath != null) {
+            newHeight = getHeightFromWidth(ImagePath, label.getWidth());
         }
-        
-    int newHeight = getHeightFromWidth(ImagePath, label.getWidth());
-
+    } catch (Exception e) {
+        // If height calculation fails, use label width as height
+    }
+    
     Image img = MyImage.getImage();
     Image newImg = img.getScaledInstance(label.getWidth(), newHeight, Image.SCALE_SMOOTH);
-    ImageIcon image = new ImageIcon(newImg);
-    return image;
+    return new ImageIcon(newImg);
 }
     
     public void imageUpdater(String existingFilePath, String newFilePath){
@@ -143,27 +156,20 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
             }
         }
    }
-    
-   public void displayUserImage(JLabel admiimage) {
+public void displayUserImage(JLabel admiimage) {
     SessionClass session = SessionClass.getInstance();
     String imagePath = session.getU_image();
     
-    if (imagePath != null && !imagePath.isEmpty()) {
-        try {
-            // Check if the file exists
-            File imageFile = new File(imagePath);
-            if (imageFile.exists()) {
-                image.setIcon(ResizeImage(imagePath, null, image));
-            } else {
-                // Set default image if file doesn't exist
-                image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
-            }
-        } catch (Exception e) {
-            // Set default image if there's an error
-            image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
-        }
-    } else {
-        // Set default image if no image path exists
+    // Always show default image if no image is set
+    if (imagePath == null) {
+        image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        return;
+    }
+    
+    // Try to display the image (will fall back to default if fails)
+    try {
+        image.setIcon(ResizeImage(imagePath, null, image));
+    } catch (Exception e) {
         image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
     }
 }
@@ -646,6 +652,8 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
               
 //       userid.setText(""+ses.getUsername());
 //       userid.setText(""+ses.getU_id());
+
+
 //       
           }  
                                         
@@ -683,116 +691,105 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     private void selectMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseClicked
         // TODO add your handling code here:
         
-               
-        JFileChooser fileChooser = new JFileChooser();
-                int returnValue = fileChooser.showOpenDialog(null);
-                if (returnValue == JFileChooser.APPROVE_OPTION) {
-                    try {
-                        selectedFile = fileChooser.getSelectedFile();
-                        destination = "src/userimages/" + selectedFile.getName();
-                        path  = selectedFile.getAbsolutePath();
-                        
-                        
-                        if(FileExistenceChecker(path) == 1){
-                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
-                            destination = "";
-                            path="";
-                        }else{
-                            image.setIcon(ResizeImage(path, null, image));
-                            JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
-                            select.setEnabled(false);
-                          
-                            remove.setEnabled(true);
-                        }
-                    } catch (Exception ex) {
-                        System.out.println("File Error!");
-                    }
-                }
+         JFileChooser fileChooser = new JFileChooser();
+    int returnValue = fileChooser.showOpenDialog(null);
+    
+    if (returnValue == JFileChooser.APPROVE_OPTION) {
+        try {
+            selectedFile = fileChooser.getSelectedFile();
+            destination = "src/userimages/" + selectedFile.getName();
+            path = selectedFile.getAbsolutePath();
+            
+            // Directly set the image without validation
+            image.setIcon(ResizeImage(path, null, image));
+            
+            // Update button states
+            select.setEnabled(false);
+            remove.setEnabled(true);
+            
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error loading image: " + ex.getMessage());
+        }
+    }
         
     }//GEN-LAST:event_selectMouseClicked
 
     private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
-        // TODO add your handling code here:
-        
-        
+   JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
+        remove.setEnabled(false);
+        select.setEnabled(true);
+        image.setIcon(null);
+        destination ="";
+        path = "";
        // TODO add your handling code here:
-    SessionClass ses = SessionClass.getInstance();
-    int userId = ses.getU_id();
-    
-    try {
-        // Update the database to remove the image path
-        dbConnect conn = new dbConnect();
-        String update = "UPDATE user SET u_image = NULL WHERE u_id = ?";
-        
-        try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
-            pst.setInt(1, userId);
-            
-            int rowsAffected = pst.executeUpdate();
-            if (rowsAffected > 0) {
-                // Delete the image file
-                if (destination != null && !destination.isEmpty()) {
-                    Files.deleteIfExists(Paths.get(destination));
-                }
-                
-                JOptionPane.showMessageDialog(this, "Image removed successfully!");
-                // Update the session
-                ses.setU_image(null);
-                displayUserImage(image);
-                
-                remove.setEnabled(false);
-                select.setEnabled(true);
-                image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
-                destination = "";
-                path = "";
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to remove image!");
-            }
-        }
-    } catch (IOException | SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error removing image: " + ex.getMessage());
-        ex.printStackTrace();
-    }
+//    SessionClass ses = SessionClass.getInstance();
+//    int userId = ses.getU_id();
+//    
+//    try {
+//        // Update the database to remove the image path
+//        dbConnect conn = new dbConnect();
+//        String update = "UPDATE user SET u_image = NULL WHERE u_id = ?";
+//        
+//        try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
+//            pst.setInt(1, userId);
+//            
+//            int rowsAffected = pst.executeUpdate();
+//            if (rowsAffected > 0) {
+//                // Delete the image file
+//                if (destination != null && !destination.isEmpty()) {
+//                    Files.deleteIfExists(Paths.get(destination));
+//                }
+//                
+//                JOptionPane.showMessageDialog(this, "Image removed successfully!");
+//                // Update the session
+//                ses.setU_image(null);
+//                displayUserImage(image);
+//                
+//                remove.setEnabled(false);
+//                select.setEnabled(true);
+//                image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+//                destination = "";
+//                path = "";
+//            } else {
+//                JOptionPane.showMessageDialog(this, "Failed to remove image!");
+//            }
+//        }
+//    } catch (IOException | SQLException ex) {
+//        JOptionPane.showMessageDialog(this, "Error removing image: " + ex.getMessage());
+//        ex.printStackTrace();
+//    }
     }//GEN-LAST:event_removeMouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
         // TODO add your handling code here:
         SessionClass ses = SessionClass.getInstance();
-    int userId = ses.getU_id(); // Get current user ID
+    int userId = ses.getU_id();
     
-    if (destination.isEmpty() || path.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please select an image first!");
-        return;
-    }
-    
-    
-           try {
-        // Copy the selected file to the destination folder
-        Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+    try {
+        // Only attempt file operations if we have a file
+        if (selectedFile != null && destination != null) {
+            Files.createDirectories(Paths.get("src/userimages"));
+            Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+        }
         
-        // Update the database with the image path
+        // Update database (will store NULL if destination is null)
         dbConnect conn = new dbConnect();
         String update = "UPDATE user SET u_image = ? WHERE u_id = ?";
         
         try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
-            pst.setString(1, destination);
+            pst.setString(1, destination); // Can be null
             pst.setInt(2, userId);
-            int currentUserId = getCurrentUserId();
-            int rowsAffected = pst.executeUpdate();
-            if (rowsAffected > 0) {
-                
-                 logProductAdditionAction(currentUserId, ses.getUsername());
-                
-                JOptionPane.showMessageDialog(this, "Image updated successfully!");
-                // Update the session with the new image path
-                ses.setU_image(destination);
-                displayUserImage(image);
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update image!");
-            }
+            pst.executeUpdate();
         }
+        
+        // Update session
+        ses.setU_image(destination); // Can be null
+        displayUserImage(image); // Refresh display
+        
+        JOptionPane.showMessageDialog(this, "Image updated successfully");
+        
     } catch (IOException | SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error updating image: " + ex.getMessage());
-        ex.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
     }
         
     }//GEN-LAST:event_addMouseClicked
