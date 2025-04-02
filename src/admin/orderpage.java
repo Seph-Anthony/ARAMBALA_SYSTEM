@@ -50,7 +50,7 @@ public class orderpage extends javax.swing.JFrame {
     public void displayfood(){
     try{
         dbConnect dbc = new dbConnect();
-        ResultSet rs = dbc.getData("SELECT p_id, p_name AS 'Product Name', p_brand AS 'Brand', p_price AS 'Price', p_stock AS 'Stock', p_category, p_image FROM product WHERE p_status = 'Available'");
+        ResultSet rs = dbc.getData("SELECT p_id AS 'Product ID', p_name AS 'Product Name', p_brand AS 'Brand', p_price AS 'Price', p_stock AS 'Stock', p_category, p_image AS 'Image' FROM product WHERE p_status = 'Available'");
         food.setModel(DbUtils.resultSetToTableModel(rs));
         rs.close();
     } catch(SQLException ex) {
@@ -132,6 +132,14 @@ public class orderpage extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         ADDORDER3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel14 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jPanel13 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
@@ -329,6 +337,76 @@ public class orderpage extends javax.swing.JFrame {
         ADDORDER.add(ADDORDER3, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, 120, 40));
 
         jPanel8.add(ADDORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 560, 130, 40));
+
+        jPanel5.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel14.setText("Food and Beverage");
+        jLabel14.setFocusTraversalPolicyProvider(true);
+        jPanel5.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, -1));
+
+        jPanel8.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, 160, 40));
+
+        jPanel7.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel7MouseClicked(evt);
+            }
+        });
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel15.setText("Household Essentials");
+        jLabel15.setFocusTraversalPolicyProvider(true);
+        jPanel7.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
+
+        jPanel8.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 10, 170, 40));
+
+        jPanel9.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel9MouseClicked(evt);
+            }
+        });
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel16.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel16.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("Personal Wellness");
+        jLabel16.setFocusTraversalPolicyProvider(true);
+        jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
+
+        jPanel8.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 280, 170, 40));
+
+        jPanel3.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Supplies Utilities");
+        jLabel13.setFocusTraversalPolicyProvider(true);
+        jPanel3.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
+
+        jPanel8.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 280, 170, 40));
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 80, 950, 610));
 
@@ -529,6 +607,119 @@ public class orderpage extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_ADDORDERMouseClicked
 
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+        // TODO add your handling code here:
+        
+         try {
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT p_id AS 'Product ID', p_name AS 'Product Name', p_brand AS 'Brand', p_price AS 'Price', p_stock AS 'Stock', p_category, p_image AS 'Image' FROM product WHERE p_status = 'Available' AND p_category = 'Food and Beverage'");
+        
+        
+//        
+//Full texts
+//p_id
+//p_name
+//p_category
+//p_brand
+//p_price
+//p_stock
+//p_status
+//p_image
+
+        food.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+    } catch (SQLException ex) {
+        System.out.println("Errors: " + ex.getMessage());
+    }
+
+        
+        
+        
+    }//GEN-LAST:event_jPanel5MouseClicked
+
+    private void jPanel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel7MouseClicked
+        // TODO add your handling code here:
+        
+          
+         try {
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT p_id AS 'Product ID', p_name AS 'Product Name', p_brand AS 'Brand', p_price AS 'Price', p_stock AS 'Stock', p_category, p_image AS 'Image' FROM product WHERE p_status = 'Available' AND p_category = 'Household Essentials'");
+        
+        
+//        
+//Full texts
+//p_id
+//p_name
+//p_category
+//p_brand
+//p_price
+//p_stock
+//p_status
+//p_image
+
+        food.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+    } catch (SQLException ex) {
+        System.out.println("Errors: " + ex.getMessage());
+    }
+        
+    }//GEN-LAST:event_jPanel7MouseClicked
+
+    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+        // TODO add your handling code here:
+        
+        
+         try {
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT p_id AS 'Product ID', p_name AS 'Product Name', p_brand AS 'Brand', p_price AS 'Price', p_stock AS 'Stock', p_category, p_image AS 'Image' FROM product WHERE p_status = 'Available' AND p_category = 'Personal Wellness'");
+        
+        
+//        
+//Full texts
+//p_id
+//p_name
+//p_category
+//p_brand
+//p_price
+//p_stock
+//p_status
+//p_image
+
+        food.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+    } catch (SQLException ex) {
+        System.out.println("Errors: " + ex.getMessage());
+    }
+        
+    }//GEN-LAST:event_jPanel9MouseClicked
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        // TODO add your handling code here:
+        try {
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT p_id AS 'Product ID', p_name AS 'Product Name', p_brand AS 'Brand', p_price AS 'Price', p_stock AS 'Stock', p_category, p_image AS 'Image' FROM product WHERE p_status = 'Available' AND p_category = 'Supplies Utilities'");
+        
+        
+//        
+//Full texts
+//p_id
+//p_name
+//p_category
+//p_brand
+//p_price
+//p_stock
+//p_status
+//p_image
+
+        food.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+    } catch (SQLException ex) {
+        System.out.println("Errors: " + ex.getMessage());
+    }
+        
+        
+    }//GEN-LAST:event_jPanel3MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -575,6 +766,10 @@ public class orderpage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -589,9 +784,13 @@ public class orderpage extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;

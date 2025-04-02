@@ -92,17 +92,15 @@ private void searchUser(int userId) { // Changed to int userId
     }
 }
 public void displayData(){
-        try{
-            dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT log_id, user_id, act, log_date FROM logs");
-            recordtable.setModel(DbUtils.resultSetToTableModel(rs));
-             rs.close();
-        }catch(SQLException ex){
-            System.out.println("Errors: "+ex.getMessage());
-        
-        }
-        
+    try{
+        dbConnect dbc = new dbConnect();
+        ResultSet rs = dbc.getData("SELECT log_id AS 'Log ID', user_id AS 'User ID', act AS 'Activity', log_date AS 'Date' FROM logs ORDER BY log_id DESC"); // Modified query
+        recordtable.setModel(DbUtils.resultSetToTableModel(rs));
+        rs.close();
+    } catch(SQLException ex){
+        System.out.println("Errors: " + ex.getMessage());
     }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
