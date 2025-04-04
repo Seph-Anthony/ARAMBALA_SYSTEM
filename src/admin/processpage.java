@@ -136,6 +136,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jLabel18 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -151,6 +152,11 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         prodstock = new javax.swing.JTextField();
         prodcategory = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
@@ -161,10 +167,15 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel17 = new javax.swing.JLabel();
         orderproduct = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
+
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -200,22 +211,22 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
         jLabel10.setText("Product Name:");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 50, -1, 20));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, 20));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 102, 102));
         jLabel12.setText("Stock:");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 150, -1, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, -1, 20));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 102, 102));
         jLabel13.setText("Brand:");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 50, -1, 20));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, -1, 20));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 102, 102));
         jLabel14.setText("Category:");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, -1, 20));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, -1, 20));
 
         prodbrand.setEditable(false);
         prodbrand.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -225,17 +236,17 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 prodbrandActionPerformed(evt);
             }
         });
-        jPanel2.add(prodbrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, 160, 40));
+        jPanel2.add(prodbrand, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 70, 190, 40));
 
         prodname.setEditable(false);
         prodname.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         prodname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.add(prodname, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 160, 40));
+        jPanel2.add(prodname, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 190, 40));
 
         prodprice.setEditable(false);
         prodprice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         prodprice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 160, 40));
+        jPanel2.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 190, 40));
 
         prodid.setEditable(false);
         prodid.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -255,7 +266,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 prodstockActionPerformed(evt);
             }
         });
-        jPanel2.add(prodstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 160, 40));
+        jPanel2.add(prodstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 190, 40));
 
         prodcategory.setEditable(false);
         prodcategory.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -265,12 +276,27 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 prodcategoryActionPerformed(evt);
             }
         });
-        jPanel2.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 260, 160, 40));
+        jPanel2.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 190, 40));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 102, 102));
         jLabel16.setText("Price:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 150, -1, 20));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, 20));
+
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/abrand.png"))); // NOI18N
+        jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 60, 60));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/astock.png"))); // NOI18N
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 70, 60));
+
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/apricing.png"))); // NOI18N
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 60, 60));
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/aname.png"))); // NOI18N
+        jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 60, 70));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/finalcategory.png"))); // NOI18N
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 70, 60));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 700, 340));
 
@@ -314,7 +340,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 quantityActionPerformed(evt);
             }
         });
-        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 470, 150, 40));
+        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 500, 180, 40));
 
         cash.setBackground(new java.awt.Color(240, 240, 240));
         cash.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -325,17 +351,17 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 cashActionPerformed(evt);
             }
         });
-        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 470, 150, 40));
+        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 180, 40));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 102, 102));
         jLabel11.setText("Enter Quantity:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 450, -1, 20));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 480, -1, 20));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 102, 102));
         jLabel17.setText("Enter Cash:");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 450, -1, 20));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, -1, 20));
 
         orderproduct.setBackground(new java.awt.Color(0, 102, 102));
         orderproduct.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -352,7 +378,13 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel1.setText("ORDER");
         orderproduct.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
-        jPanel1.add(orderproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 530, 150, 40));
+        jPanel1.add(orderproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, 150, 40));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/aquantity.png"))); // NOI18N
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 450, 50, 50));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/acash.png"))); // NOI18N
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, 60, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -628,6 +660,14 @@ pstmt.executeUpdate();
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel17;
