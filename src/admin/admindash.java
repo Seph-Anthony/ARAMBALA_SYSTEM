@@ -7,6 +7,7 @@ package admin;
 
 import config.dbConnect;
 import USER.customerdashboard;
+import USER.employdash;
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import java.awt.Color;
@@ -63,7 +64,26 @@ public class admindash extends javax.swing.JFrame {
         
     }
     
-    
+        private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User Logout: " + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log user addition action: " + e.getMessage());
+    }
+}
+private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+} 
     
     
    
@@ -255,33 +275,37 @@ public void AllProcess() {
         jPanel261 = new javax.swing.JPanel();
         jToolBar1 = new javax.swing.JToolBar();
         jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         product = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
         process = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
         customerni1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel15 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         admindash = new javax.swing.JLabel();
         adinfo = new javax.swing.JLabel();
         records = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
         adminimage = new javax.swing.JLabel();
+        vieworder = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
+        jPanel9 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
         totalproduct = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
+        jLabel27 = new javax.swing.JLabel();
         jPanel11 = new javax.swing.JPanel();
         jTextField6 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
@@ -310,6 +334,10 @@ public void AllProcess() {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
+        jLabel25 = new javax.swing.JLabel();
+        jLabel26 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         jPanel261.setBackground(new java.awt.Color(204, 255, 255));
         jPanel261.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -318,6 +346,8 @@ public void AllProcess() {
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -331,7 +361,7 @@ public void AllProcess() {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
@@ -357,14 +387,19 @@ public void AllProcess() {
                 productMouseExited(evt);
             }
         });
+        product.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Product");
-        product.add(jLabel13);
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/box35.png"))); // NOI18N
+        product.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
 
-        jPanel2.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 180, -1));
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("Product");
+        product.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 150, 20));
+
+        jPanel2.add(product, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 180, 70));
 
         process.setBackground(new java.awt.Color(255, 255, 255));
         process.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -382,12 +417,17 @@ public void AllProcess() {
         process.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setBackground(new java.awt.Color(0, 102, 102));
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel3.setText("Order");
-        process.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 20));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("Order Process");
+        process.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 140, 20));
 
-        jPanel2.add(process, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 180, 40));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/list35.png"))); // NOI18N
+        process.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
+
+        jPanel2.add(process, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 400, 180, 70));
 
         customerni1.setBackground(new java.awt.Color(255, 255, 255));
         customerni1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -404,44 +444,17 @@ public void AllProcess() {
         });
         customerni1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("Users");
-        customerni1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 90, 20));
+        customerni1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 140, 20));
 
-        jPanel2.add(customerni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 510, 180, 40));
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/users35.png"))); // NOI18N
+        customerni1.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
 
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 80, 70));
-
-        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/checkgamay.png"))); // NOI18N
-        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 340, 80, 70));
-
-        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/recordspic.png"))); // NOI18N
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, 80, 50));
-
-        jPanel9.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel9MouseClicked(evt);
-            }
-        });
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/images-removebg-preview.png"))); // NOI18N
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-        });
-        jPanel9.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
-
-        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 650, 60, 60));
+        jPanel2.add(customerni1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 490, 180, 70));
 
         admindash.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         admindash.setForeground(new java.awt.Color(255, 255, 255));
@@ -471,17 +484,17 @@ public void AllProcess() {
         });
         records.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("Records");
-        records.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 120, 20));
+        records.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 140, 20));
 
-        jPanel2.add(records, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 600, 180, 40));
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/record35.png"))); // NOI18N
+        records.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
 
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/customergamay.png"))); // NOI18N
-        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 70, 60));
+        jPanel2.add(records, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 580, 180, 70));
 
         jPanel17.setBackground(new java.awt.Color(255, 255, 255));
         jPanel17.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -494,12 +507,57 @@ public void AllProcess() {
 
         adminimage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         adminimage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        adminimage.setText("No Image Found");
         jPanel17.add(adminimage, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 140));
 
         jPanel2.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 160));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 200, 710));
+        vieworder.setBackground(new java.awt.Color(255, 255, 255));
+        vieworder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        vieworder.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                vieworderMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                vieworderMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                vieworderMouseExited(evt);
+            }
+        });
+        vieworder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/vieworders35.png"))); // NOI18N
+        vieworder.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
+
+        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("View Orders");
+        vieworder.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 20));
+
+        jPanel2.add(vieworder, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 310, 180, 70));
+
+        jPanel9.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel9MouseClicked(evt);
+            }
+        });
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/images-removebg-preview.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel9.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
+
+        jPanel2.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 660, 60, 60));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 200, 730));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
@@ -528,11 +586,11 @@ public void AllProcess() {
 
         jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 80, -1));
 
-        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
-        jPanel7.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 80, 70));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
+        jPanel7.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 80, 70));
 
-        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 190, 120));
+        jPanel3.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, 190, 120));
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -557,7 +615,7 @@ public void AllProcess() {
 
         jPanel11.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 80, 30));
 
-        jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 90, 190, 120));
+        jPanel3.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 120, 190, 120));
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -614,7 +672,7 @@ public void AllProcess() {
 
         jPanel13.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 80, 80, -1));
 
-        jPanel3.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 90, 200, 120));
+        jPanel3.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 120, 200, 120));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -639,14 +697,14 @@ public void AllProcess() {
 
         jPanel4.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 380));
 
-        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 600, 400));
+        jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 320, 600, 400));
 
         jLabel19.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel19.setForeground(new java.awt.Color(0, 102, 102));
         jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel19.setText("Total Process");
         jLabel19.setVerifyInputWhenFocusTarget(false);
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 50, 170, 30));
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 170, 30));
 
         searchuser.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         searchuser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -661,11 +719,11 @@ public void AllProcess() {
                 searchuserActionPerformed(evt);
             }
         });
-        jPanel3.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 250, 30));
+        jPanel3.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 250, 30));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 240, 50, 50));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 270, 50, 50));
 
         SearchButton.setBackground(new java.awt.Color(255, 255, 255));
         SearchButton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -675,7 +733,7 @@ public void AllProcess() {
                 SearchButtonActionPerformed(evt);
             }
         });
-        jPanel3.add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, 100, 30));
+        jPanel3.add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 280, 100, 30));
 
         resetbutton.setBackground(new java.awt.Color(255, 255, 255));
         resetbutton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -690,44 +748,70 @@ public void AllProcess() {
                 resetbuttonActionPerformed(evt);
             }
         });
-        jPanel3.add(resetbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 250, 80, 30));
+        jPanel3.add(resetbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 280, 80, 30));
 
         jPanel8.setBackground(new java.awt.Color(0, 102, 102));
         jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, 200, 10));
+        jPanel3.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 200, 10));
 
         jPanel10.setBackground(new java.awt.Color(0, 102, 102));
         jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 190, 10));
+        jPanel3.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 110, 190, 10));
 
         jPanel16.setBackground(new java.awt.Color(0, 102, 102));
         jPanel16.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel3.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 190, 10));
+        jPanel3.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 190, 10));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 102, 102));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel21.setText("USERS");
         jLabel21.setVerifyInputWhenFocusTarget(false);
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 90, 30));
+        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 90, 30));
 
         jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel22.setForeground(new java.awt.Color(0, 102, 102));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel22.setText("Total Product");
         jLabel22.setVerifyInputWhenFocusTarget(false);
-        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 170, 30));
+        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 170, 30));
 
         jLabel23.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel23.setForeground(new java.awt.Color(0, 102, 102));
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Total Users");
         jLabel23.setVerifyInputWhenFocusTarget(false);
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 50, 170, 30));
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 170, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 620, 710));
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/closesmall.png"))); // NOI18N
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+        });
+        jPanel3.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, -1, 30));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 820, 720));
+        jLabel25.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel25.setText("ADMIN DASHBOARD");
+        jPanel3.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 20, 300, 30));
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel26.setText("_____________________________________________________________");
+        jPanel3.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 440, -1));
+
+        jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/businessman.png"))); // NOI18N
+        jLabel12.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel12MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 70));
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 620, 730));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 820, 740));
 
         pack();
         setLocationRelativeTo(null);
@@ -900,21 +984,113 @@ public void AllProcess() {
     private void jPanel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel17MouseClicked
         // TODO add your handling code here:
         
-        
-        admininfo add = new admininfo();
-        add.setVisible(true);
-        this.dispose();
+       
         
     }//GEN-LAST:event_jPanel17MouseClicked
 
     private void processMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processMouseClicked
+       orderpage order = new orderpage();
+       order.setVisible(true);
+       this.dispose();
+        
+// TODO add your handling code here:
+        
+            
+//     SessionClass session = SessionClass.getInstance();
+//        String userType = session.getType();
+//
+//        if (userType != null) {
+//            switch (userType.toLowerCase()) {
+//                case "Admin":
+//                    admindash adminDashboard = new admindash();
+//                    adminDashboard.setVisible(true);
+//                    break;
+//                case "Customer":
+//                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
+//                    customerDashboard.setVisible(true);
+//                    break;
+//                case "Employee":
+//                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
+//                    employeeDashboard.setVisible(true);
+//                    break;
+//                default:
+//                    // Handle cases where the user type is not recognized
+//                    System.out.println("Unknown user type: " + userType);
+//                    // Optionally, you can redirect to a default dashboard or show an error message
+//                    break;
+//            }
+//            this.dispose(); // Close the current form
+//        } else {
+//            // Handle the case where the session doesn't have user type information
+//            System.out.println("User type not found in session.");
+//            // Optionally, show an error message
+//        }
+//        
+
+
+
+    }//GEN-LAST:event_processMouseClicked
+
+    private void vieworderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vieworderMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vieworderMouseClicked
+
+    private void vieworderMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vieworderMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vieworderMouseEntered
+
+    private void vieworderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vieworderMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_vieworderMouseExited
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        // TODO add your handling code here:
+        config.SessionClass ses = config.SessionClass.getInstance();
+         
+        // Show a confirmation dialog
+        int choice = JOptionPane.showConfirmDialog(this,
+                "Do you really wish to logout the program?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION);
+int id = getCurrentUserId();
+        String username = ses.getUsername();
+        logProductAdditionAction(id, username);
+        
+        // Check if the user clicked "Yes"
+        if (choice == JOptionPane.YES_OPTION) {
+            // Perform logout actions here
+
+            // 1. Optionally, log the logout action (without relying on session for user info)
+            // You might need to get user info from somewhere else if you want to log.
+            // Example (if you have a currently displayed username):
+            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+
+            // 2. Dispose of the current form
+            this.dispose();
+
+            // 3. Optionally, exit the entire application
+            // System.exit(0);
+        }
+        
+        else {
+            
+            admindash ad = new admindash();
+            ad.setVisible(true);
+            this.dispose();
+            
+        }
+        
+        
+    }//GEN-LAST:event_logoutMouseClicked
+
+    private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         // TODO add your handling code here:
         
-        orderpage or = new orderpage();
-        or.setVisible(true);
+        admininfo info = new admininfo();
+        info.setVisible(true);
         this.dispose();
         
-    }//GEN-LAST:event_processMouseClicked
+    }//GEN-LAST:event_jLabel12MouseClicked
 
     /**
      * @param args the command line arguments
@@ -983,10 +1159,13 @@ public void AllProcess() {
     private javax.swing.JLabel adminimage;
     private javax.swing.JTable admintable;
     private javax.swing.JPanel customerni1;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -998,6 +1177,9 @@ public void AllProcess() {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1027,6 +1209,7 @@ public void AllProcess() {
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JLabel logout;
     private javax.swing.JPanel process;
     private javax.swing.JPanel product;
     private javax.swing.JPanel records;
@@ -1035,5 +1218,6 @@ public void AllProcess() {
     private javax.swing.JLabel totalprocess;
     private javax.swing.JLabel totalproduct;
     public javax.swing.JLabel totaluser1;
+    private javax.swing.JPanel vieworder;
     // End of variables declaration//GEN-END:variables
 }

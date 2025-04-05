@@ -5,6 +5,8 @@
  */
 package USER;
 
+import admin.admindash;
+import admin.prodpage;
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import config.dbConnect;
@@ -12,12 +14,15 @@ import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import lores.LOGIN;
+import lores.REGISTER;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -50,6 +55,29 @@ public class employdash extends javax.swing.JFrame {
         });
         
     }
+    
+         private void logProductAdditionAction(int userId, String Username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User Logout: " + Username);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log user addition action: " + e.getMessage());
+    }
+}
+private int getCurrentUserId() {
+  
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+} 
+    
+    
  Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
 
@@ -187,9 +215,9 @@ public void PendingProd(){
     private void initComponents() {
 
         jLabel272 = new javax.swing.JLabel();
+        jToggleButton1 = new javax.swing.JToggleButton();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableorder = new javax.swing.JTable();
@@ -199,61 +227,75 @@ public void PendingProd(){
         jLabel8 = new javax.swing.JLabel();
         resetbuton = new javax.swing.JButton();
         searchbutton = new javax.swing.JButton();
-        jLabel20 = new javax.swing.JLabel();
+        jPanel7 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        customerdash = new javax.swing.JLabel();
+        jPanel21 = new javax.swing.JPanel();
+        jPanel24 = new javax.swing.JPanel();
         jPanel15 = new javax.swing.JPanel();
         jLabel26 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
         product2 = new javax.swing.JPanel();
-        jLabel36 = new javax.swing.JLabel();
         jLabel37 = new javax.swing.JLabel();
         jLabel38 = new javax.swing.JLabel();
+        jLabel19 = new javax.swing.JLabel();
+        jPanel17 = new javax.swing.JPanel();
+        jLabel27 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        colorni = new javax.swing.JPanel();
+        jLabel40 = new javax.swing.JLabel();
+        jLabel42 = new javax.swing.JLabel();
+        emuser = new javax.swing.JLabel();
+        employeeinfo = new javax.swing.JLabel();
         jPanel16 = new javax.swing.JPanel();
         jLabel29 = new javax.swing.JLabel();
-        jLabel32 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         viewni = new javax.swing.JPanel();
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         jLabel35 = new javax.swing.JLabel();
-        jPanel17 = new javax.swing.JPanel();
-        jLabel27 = new javax.swing.JLabel();
-        jLabel43 = new javax.swing.JLabel();
-        colorni = new javax.swing.JPanel();
-        jLabel40 = new javax.swing.JLabel();
-        jLabel41 = new javax.swing.JLabel();
-        jLabel42 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
-        jPanel21 = new javax.swing.JPanel();
-        employeeinfo = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
-        customerdash = new javax.swing.JLabel();
-        viewni2 = new javax.swing.JPanel();
-        jLabel46 = new javax.swing.JLabel();
-        jLabel47 = new javax.swing.JLabel();
-        jLabel48 = new javax.swing.JLabel();
-        jPanel20 = new javax.swing.JPanel();
-        pending = new javax.swing.JLabel();
+        jPanel10 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jPanel8 = new javax.swing.JPanel();
+        jPanel9 = new javax.swing.JPanel();
+        tologin = new javax.swing.JPanel();
+        jLabel25 = new javax.swing.JLabel();
+        jPanel11 = new javax.swing.JPanel();
         viewni3 = new javax.swing.JPanel();
-        jLabel49 = new javax.swing.JLabel();
-        jLabel50 = new javax.swing.JLabel();
         jLabel51 = new javax.swing.JLabel();
         jPanel22 = new javax.swing.JPanel();
         complete = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        viewni2 = new javax.swing.JPanel();
+        jLabel48 = new javax.swing.JLabel();
+        jPanel20 = new javax.swing.JPanel();
+        pending = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         viewni4 = new javax.swing.JPanel();
-        jLabel52 = new javax.swing.JLabel();
-        jLabel53 = new javax.swing.JLabel();
         jLabel54 = new javax.swing.JLabel();
         jPanel23 = new javax.swing.JPanel();
         total = new javax.swing.JLabel();
-        emdash = new javax.swing.JLabel();
-        jPanel24 = new javax.swing.JPanel();
-        emuser = new javax.swing.JLabel();
-        emdash1 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel49 = new javax.swing.JLabel();
+        jPanel12 = new javax.swing.JPanel();
+        tologin1 = new javax.swing.JPanel();
+        jLabel28 = new javax.swing.JLabel();
+        jPanel13 = new javax.swing.JPanel();
+        jLabel52 = new javax.swing.JLabel();
+        jLabel46 = new javax.swing.JLabel();
+        jPanel14 = new javax.swing.JPanel();
+        tologin2 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jPanel18 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
 
         jLabel272.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel272.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/greentaw.png"))); // NOI18N
+
+        jToggleButton1.setText("jToggleButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -269,11 +311,6 @@ public void PendingProd(){
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel9.setText("EMPLOYEE DASHBOARD");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 490, 30));
-
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -288,7 +325,7 @@ public void PendingProd(){
         ));
         jScrollPane1.setViewportView(tableorder);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 740, 190));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 590, 270));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -306,7 +343,7 @@ public void PendingProd(){
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(0, 102, 102));
         jLabel7.setText("Users Order Overview:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 10, 180, 30));
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 0, 180, 30));
 
         searchorder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         searchorder.addActionListener(new java.awt.event.ActionListener() {
@@ -314,11 +351,11 @@ public void PendingProd(){
                 searchorderActionPerformed(evt);
             }
         });
-        jPanel3.add(searchorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 40, 290, 30));
+        jPanel3.add(searchorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 30, 290, 30));
 
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 20, 50, 50));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 20, 50, 50));
 
         resetbuton.setBackground(new java.awt.Color(0, 102, 102));
         resetbuton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
@@ -329,24 +366,38 @@ public void PendingProd(){
                 resetbutonMouseClicked(evt);
             }
         });
-        jPanel3.add(resetbuton, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 100, 40));
+        jPanel3.add(resetbuton, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 20, 100, 40));
 
         searchbutton.setBackground(new java.awt.Color(0, 102, 102));
         searchbutton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         searchbutton.setForeground(new java.awt.Color(255, 255, 255));
         searchbutton.setText("SEARCH");
-        jPanel3.add(searchbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 20, 100, 40));
+        jPanel3.add(searchbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 100, 40));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 390, 770, 270));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 620, 360));
 
-        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/backwardset.png"))); // NOI18N
-        jLabel20.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel20MouseClicked(evt);
-            }
-        });
-        jPanel1.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 0, 50, 40));
+        jPanel7.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
+        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 130));
+
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 150));
+
+        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 270, 130, -1));
+
+        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel7.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 130, -1));
 
         jPanel15.setBackground(new java.awt.Color(255, 255, 255));
         jPanel15.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -359,12 +410,7 @@ public void PendingProd(){
         jLabel26.setVerifyInputWhenFocusTarget(false);
         jPanel15.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
 
-        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/shopping-cartgamay.png"))); // NOI18N
-        jPanel15.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 60, 70));
-
         product2.setBackground(new java.awt.Color(255, 255, 255));
-        product2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         product2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 product2MouseClicked(evt);
@@ -378,27 +424,84 @@ public void PendingProd(){
         });
         product2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel36.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel36.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel36.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel36.setText("View");
-        product2.add(jLabel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(31, 6, -1, -1));
-
-        jLabel37.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel37.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel37.setForeground(new java.awt.Color(0, 102, 102));
         jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel37.setText("Process");
-        product2.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(15, 50, 80, -1));
+        jLabel37.setText("Details");
+        product2.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 80, -1));
 
-        jLabel38.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel38.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel38.setForeground(new java.awt.Color(0, 102, 102));
         jLabel38.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel38.setText("Details");
-        product2.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jLabel38.setText("View Process ");
+        product2.add(jLabel38, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
-        jPanel15.add(product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
+        jPanel15.add(product2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 50));
 
-        jPanel1.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 230, 210, 150));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/list35.png"))); // NOI18N
+        jPanel15.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 50, 50));
+
+        jPanel7.add(jPanel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 170, 110));
+
+        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel27.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel27.setText("Product");
+        jLabel27.setVerifyInputWhenFocusTarget(false);
+        jPanel17.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
+
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/box35.png"))); // NOI18N
+        jPanel17.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 50));
+
+        colorni.setBackground(new java.awt.Color(255, 255, 255));
+        colorni.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                colorniMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                colorniMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                colorniMouseExited(evt);
+            }
+        });
+        colorni.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel40.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel40.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel40.setText("View Product");
+        colorni.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        jLabel42.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel42.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel42.setText("Details");
+        colorni.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 30, -1, -1));
+
+        jPanel17.add(colorni, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 50));
+
+        jPanel7.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 500, 170, 110));
+
+        emuser.setBackground(new java.awt.Color(63, 195, 128));
+        emuser.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        emuser.setForeground(new java.awt.Color(255, 255, 255));
+        emuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        emuser.setText("USER");
+        emuser.setVerifyInputWhenFocusTarget(false);
+        jPanel7.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 160, 100, 30));
+
+        employeeinfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        employeeinfo.setForeground(new java.awt.Color(255, 255, 255));
+        employeeinfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        employeeinfo.setText("ID");
+        jPanel7.add(employeeinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 190, 90, 30));
 
         jPanel16.setBackground(new java.awt.Color(255, 255, 255));
         jPanel16.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -411,12 +514,11 @@ public void PendingProd(){
         jLabel29.setVerifyInputWhenFocusTarget(false);
         jPanel16.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
 
-        jLabel32.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel32.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/staffgamay.png"))); // NOI18N
-        jPanel16.add(jLabel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 70, 60));
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/information35.png"))); // NOI18N
+        jPanel16.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, 50, 50));
 
         viewni.setBackground(new java.awt.Color(255, 255, 255));
-        viewni.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         viewni.setFocusable(false);
         viewni.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -431,163 +533,83 @@ public void PendingProd(){
         });
         viewni.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel33.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel33.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel33.setForeground(new java.awt.Color(0, 102, 102));
         jLabel33.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel33.setText("View");
-        viewni.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
+        jLabel33.setText("View Employee");
+        viewni.add(jLabel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jLabel34.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel34.setForeground(new java.awt.Color(0, 102, 102));
         jLabel34.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel34.setText("Employee");
         viewni.add(jLabel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(4, 50, 100, -1));
 
-        jLabel35.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel35.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel35.setForeground(new java.awt.Color(0, 102, 102));
         jLabel35.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel35.setText("Details");
-        viewni.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        viewni.add(jLabel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, -1, -1));
 
-        jPanel16.add(viewni, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
+        jPanel16.add(viewni, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 150, 50));
 
-        jPanel1.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 210, 150));
+        jPanel7.add(jPanel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 170, 110));
 
-        jPanel17.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel17.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel17.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel27.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel27.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel27.setText("Product");
-        jLabel27.setVerifyInputWhenFocusTarget(false);
-        jPanel17.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 70, 160, 50));
-
-        jLabel43.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel43.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/boxproduct.png"))); // NOI18N
-        jPanel17.add(jLabel43, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 70, 60));
-
-        colorni.setBackground(new java.awt.Color(255, 255, 255));
-        colorni.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        colorni.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                colorniMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                colorniMouseExited(evt);
-            }
-        });
-        colorni.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel40.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel40.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel40.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel40.setText("View");
-        colorni.add(jLabel40, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
-
-        jLabel41.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel41.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel41.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel41.setText("Product");
-        colorni.add(jLabel41, new org.netbeans.lib.awtextra.AbsoluteConstraints(8, 50, 90, -1));
-
-        jLabel42.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel42.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel42.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel42.setText("Details");
-        colorni.add(jLabel42, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
-
-        jPanel17.add(colorni, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 20, 110, 120));
-
-        jPanel1.add(jPanel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 230, 210, 150));
-
-        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel13.setBackground(new java.awt.Color(63, 195, 128));
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel13.setText("Total Pending:");
-        jLabel13.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 220, 150, 30));
-
-        jLabel22.setBackground(new java.awt.Color(63, 195, 128));
-        jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("USER ID");
-        jLabel22.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, -40, 130, 30));
-
-        jPanel21.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel21.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel21.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        employeeinfo.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        employeeinfo.setForeground(new java.awt.Color(0, 102, 102));
-        employeeinfo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel21.add(employeeinfo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 90, 30));
-
-        jPanel2.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 140, 130, 30));
-
-        jPanel5.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 130));
-
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 170, 150));
-
-        viewni2.setBackground(new java.awt.Color(255, 255, 255));
-        viewni2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        viewni2.setFocusable(false);
-        viewni2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanel10.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                viewni2MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                viewni2MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                viewni2MouseExited(evt);
+                jPanel10MouseClicked(evt);
             }
         });
-        viewni2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel46.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel46.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel46.setText("Pending");
-        viewni2.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/images-removebg-preview.png"))); // NOI18N
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+        });
+        jPanel10.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
 
-        jLabel47.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel47.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel47.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel47.setText("Process");
-        viewni2.add(jLabel47, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 110, -1));
+        jPanel7.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 620, 60, 60));
 
-        jLabel48.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel48.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        viewni2.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 690));
 
-        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/box35.png"))); // NOI18N
+        jPanel1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
 
-        pending.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        pending.setForeground(new java.awt.Color(0, 102, 102));
-        pending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel20.add(pending, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/list35.png"))); // NOI18N
+        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 10, 80, 40));
 
-        viewni2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel8.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
+        jPanel8.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.add(viewni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 50, 110, 120));
+        jPanel9.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tologin.setBackground(new java.awt.Color(204, 204, 204));
+        tologin.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tologinMouseClicked(evt);
+            }
+        });
+        tologin.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel25.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel25.setText("Already have an account? Click Here");
+        tologin.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
+
+        jPanel9.add(tologin, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, 40));
+
+        jPanel11.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel9.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
+
+        jPanel8.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 130, 180, 10));
 
         viewni3.setBackground(new java.awt.Color(255, 255, 255));
         viewni3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -605,18 +627,6 @@ public void PendingProd(){
         });
         viewni3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel49.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel49.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel49.setText("Complete");
-        viewni3.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-
-        jLabel50.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel50.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel50.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel50.setText("Process");
-        viewni3.add(jLabel50, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 110, -1));
-
         jLabel51.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel51.setForeground(new java.awt.Color(0, 102, 102));
         jLabel51.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -629,11 +639,53 @@ public void PendingProd(){
         complete.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         complete.setForeground(new java.awt.Color(0, 102, 102));
         complete.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel22.add(complete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+        jPanel22.add(complete, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
 
-        viewni3.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
+        viewni3.add(jPanel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 30));
 
-        jPanel2.add(viewni3, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 50, 110, 120));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/completeorder.png"))); // NOI18N
+        viewni3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, 80));
+
+        jPanel8.add(viewni3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 180, 150));
+
+        viewni2.setBackground(new java.awt.Color(255, 255, 255));
+        viewni2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        viewni2.setFocusable(false);
+        viewni2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewni2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                viewni2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                viewni2MouseExited(evt);
+            }
+        });
+        viewni2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel48.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel48.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel48.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        viewni2.add(jLabel48, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, -1, -1));
+
+        jPanel20.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel20.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel20.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        pending.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        pending.setForeground(new java.awt.Color(0, 102, 102));
+        pending.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jPanel20.add(pending, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
+
+        viewni2.add(jPanel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 30));
+
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/pendingprocess.png"))); // NOI18N
+        viewni2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, 80));
+
+        jPanel8.add(viewni2, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, 180, 150));
 
         viewni4.setBackground(new java.awt.Color(255, 255, 255));
         viewni4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -651,18 +703,6 @@ public void PendingProd(){
         });
         viewni4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel52.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel52.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel52.setText("Total");
-        viewni4.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, -1, -1));
-
-        jLabel53.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel53.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel53.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel53.setText("Process");
-        viewni4.add(jLabel53, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 30, 110, -1));
-
         jLabel54.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel54.setForeground(new java.awt.Color(0, 102, 102));
         jLabel54.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -675,55 +715,110 @@ public void PendingProd(){
         total.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         total.setForeground(new java.awt.Color(0, 102, 102));
         total.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel23.add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 70, 30));
+        jPanel23.add(total, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 140, 30));
 
-        viewni4.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 90, 30));
+        viewni4.add(jPanel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 160, 30));
 
-        jPanel2.add(viewni4, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 110, 120));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/totalorder.png"))); // NOI18N
+        viewni4.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 120, 80));
 
-        emdash.setBackground(new java.awt.Color(63, 195, 128));
-        emdash.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        emdash.setForeground(new java.awt.Color(255, 255, 255));
-        emdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        emdash.setText("USER");
-        emdash.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(emdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 40, 90, 30));
+        jPanel8.add(viewni4, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 140, 180, 150));
 
-        jPanel24.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel24.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel24.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jLabel49.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel49.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel49.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel49.setText("Complete Process");
+        jPanel8.add(jLabel49, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, -1, -1));
 
-        emuser.setBackground(new java.awt.Color(63, 195, 128));
-        emuser.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        emuser.setForeground(new java.awt.Color(0, 102, 102));
-        emuser.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        emuser.setVerifyInputWhenFocusTarget(false);
-        jPanel24.add(emuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 100, 30));
+        jPanel12.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel12.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.add(jPanel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 130, 30));
+        tologin1.setBackground(new java.awt.Color(204, 204, 204));
+        tologin1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tologin1MouseClicked(evt);
+            }
+        });
+        tologin1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        emdash1.setBackground(new java.awt.Color(63, 195, 128));
-        emdash1.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        emdash1.setForeground(new java.awt.Color(255, 255, 255));
-        emdash1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        emdash1.setText("USER ID");
-        emdash1.setVerifyInputWhenFocusTarget(false);
-        jPanel2.add(emdash1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 110, 90, 30));
+        jLabel28.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel28.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setText("Already have an account? Click Here");
+        tologin1.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 790, 190));
+        jPanel12.add(tologin1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, 40));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/staffstandard.png"))); // NOI18N
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -20, -1, -1));
+        jPanel13.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel12.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
+
+        jPanel8.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 180, 10));
+
+        jLabel52.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel52.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel52.setText("Total Process");
+        jPanel8.add(jLabel52, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, -1));
+
+        jLabel46.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel46.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel46.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel46.setText("Pending Process");
+        jPanel8.add(jLabel46, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 100, -1, -1));
+
+        jPanel14.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        tologin2.setBackground(new java.awt.Color(204, 204, 204));
+        tologin2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tologin2MouseClicked(evt);
+            }
+        });
+        tologin2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel30.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel30.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("Already have an account? Click Here");
+        tologin2.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 270, 20));
+
+        jPanel14.add(tologin2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 570, -1, 40));
+
+        jPanel18.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel14.add(jPanel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, -1, -1));
+
+        jPanel8.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 180, 10));
+
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel1.setText("EMPLOYEE DASHBOARD");
+        jPanel8.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 300, 30));
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel9.setText("_____________________________________________________________");
+        jPanel8.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 40, 460, -1));
+
+        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/closesmall.png"))); // NOI18N
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+        });
+        jPanel8.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 0, 30, 30));
+
+        jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 640, 690));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 661, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -733,12 +828,6 @@ public void PendingProd(){
     private void searchorderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchorderActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_searchorderActionPerformed
-
-    private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-        LOGIN re = new LOGIN ();
-        re.setVisible(true);
-        this.dispose();
-    }//GEN-LAST:event_jLabel20MouseClicked
 
     private void viewniMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewniMouseEntered
         // TODO add your handling code here:
@@ -874,6 +963,82 @@ public void PendingProd(){
         
     }//GEN-LAST:event_resetbutonMouseClicked
 
+    private void colorniMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_colorniMouseClicked
+        // TODO add your handling code here:
+        
+        prodpage prod = new prodpage();
+        prod.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_colorniMouseClicked
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+        LOGIN re = new LOGIN ();
+        re.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
+        REGISTER re = new REGISTER ();
+        re.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jPanel10MouseClicked
+
+    private void tologinMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tologinMouseClicked
+        // TODO add your handling code here:
+
+        LOGIN log = new LOGIN();
+        log.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_tologinMouseClicked
+
+    private void tologin1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tologin1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tologin1MouseClicked
+
+    private void tologin2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tologin2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tologin2MouseClicked
+
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        // TODO add your handling code here:
+        config.SessionClass ses = config.SessionClass.getInstance();
+
+        // Show a confirmation dialog
+        int choice = JOptionPane.showConfirmDialog(this,
+            "Do you really wish to logout the program?",
+            "Logout Confirmation",
+            JOptionPane.YES_NO_OPTION);
+        int id = getCurrentUserId();
+        String username = ses.getUsername();
+        logProductAdditionAction(id, username);
+
+        // Check if the user clicked "Yes"
+        if (choice == JOptionPane.YES_OPTION) {
+            // Perform logout actions here
+
+            // 1. Optionally, log the logout action (without relying on session for user info)
+            // You might need to get user info from somewhere else if you want to log.
+            // Example (if you have a currently displayed username):
+            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+
+            // 2. Dispose of the current form
+            this.dispose();
+
+            // 3. Optionally, exit the entire application
+            // System.exit(0);
+        }
+
+        else {
+
+            admindash ad = new admindash();
+            ad.setVisible(true);
+            this.dispose();
+
+        }
+    }//GEN-LAST:event_logoutMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -913,47 +1078,51 @@ public void PendingProd(){
     private javax.swing.JPanel colorni;
     private javax.swing.JLabel complete;
     private javax.swing.JLabel customerdash;
-    private javax.swing.JLabel emdash;
-    private javax.swing.JLabel emdash1;
     private javax.swing.JLabel employeeinfo;
     private javax.swing.JLabel emuser;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel272;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
-    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
-    private javax.swing.JLabel jLabel36;
     private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel38;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel40;
-    private javax.swing.JLabel jLabel41;
     private javax.swing.JLabel jLabel42;
-    private javax.swing.JLabel jLabel43;
     private javax.swing.JLabel jLabel46;
-    private javax.swing.JLabel jLabel47;
     private javax.swing.JLabel jLabel48;
     private javax.swing.JLabel jLabel49;
-    private javax.swing.JLabel jLabel50;
     private javax.swing.JLabel jLabel51;
     private javax.swing.JLabel jLabel52;
-    private javax.swing.JLabel jLabel53;
     private javax.swing.JLabel jLabel54;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel10;
+    private javax.swing.JPanel jPanel11;
+    private javax.swing.JPanel jPanel12;
+    private javax.swing.JPanel jPanel13;
+    private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel15;
     private javax.swing.JPanel jPanel16;
     private javax.swing.JPanel jPanel17;
-    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel18;
     private javax.swing.JPanel jPanel20;
     private javax.swing.JPanel jPanel21;
     private javax.swing.JPanel jPanel22;
@@ -963,13 +1132,21 @@ public void PendingProd(){
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
+    private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JLabel logout;
     private javax.swing.JLabel pending;
     private javax.swing.JPanel product2;
     private javax.swing.JButton resetbuton;
     private javax.swing.JButton searchbutton;
     private javax.swing.JTextField searchorder;
     private javax.swing.JTable tableorder;
+    private javax.swing.JPanel tologin;
+    private javax.swing.JPanel tologin1;
+    private javax.swing.JPanel tologin2;
     private javax.swing.JLabel total;
     private javax.swing.JPanel viewni;
     private javax.swing.JPanel viewni2;

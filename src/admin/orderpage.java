@@ -5,6 +5,8 @@
  */
 package admin;
 
+import USER.customerdashboard;
+import USER.employdash;
 import config.dbConnect;
 import java.awt.Color;
 import java.sql.ResultSet;
@@ -12,6 +14,8 @@ import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.TableModel;
+
+import config.SessionClass;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -630,7 +634,7 @@ public class orderpage extends javax.swing.JFrame {
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/checkgamay.png"))); // NOI18N
-        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 30, 80, 80));
+        jPanel4.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 80, 80));
 
         jLabel2.setBackground(new java.awt.Color(204, 204, 204));
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
@@ -662,14 +666,97 @@ public class orderpage extends javax.swing.JFrame {
   
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // TODO add your handling code here:
+        
+         SessionClass session = SessionClass.getInstance();
+        String userType = session.getType();
+
+        if (userType != null) {
+           
+            if(userType.equals("Admin")){
+               
+                    admindash adminDashboard = new admindash();
+                    adminDashboard.setVisible(true);
+                    
+                    
+            }
+           if(userType.equals("Customer")){
+                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
+                    customerDashboard.setVisible(true);
+                    
+                    
+           }
+           
+           if(userType.equals("Employee")){
+               
+                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
+                    employeeDashboard.setVisible(true);
+                
+                    
+           }
+              
+                    // Handle cases where the user type is not recognized
+                
+                    // Optionally, you can redirect to a default dashboard or show an error message
+                 
+            
+            this.dispose(); 
+        } else {
+            // Handle the case where the session doesn't have user type information
+      JOptionPane.showMessageDialog(null,"No account login first");
+      this.dispose();
+            // Optionally, show an error message
+        }
+        
     }//GEN-LAST:event_jLabel9MouseClicked
 
     private void jPanel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel14MouseClicked
         // TODO add your handling code here:
-        admindash order = new admindash();
-       order.setVisible(true);
-        this.dispose();
+//        admindash order = new admindash();
+//       order.setVisible(true);
+//        this.dispose();
         
+     SessionClass session = SessionClass.getInstance();
+        String userType = session.getType();
+
+        if (userType != null) {
+           
+            if(userType.equals("Admin")){
+               
+                    admindash adminDashboard = new admindash();
+                    adminDashboard.setVisible(true);
+                    
+                    
+            }
+           if(userType.equals("Customer")){
+                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
+                    customerDashboard.setVisible(true);
+                    
+                    
+           }
+           
+           if(userType.equals("Employee")){
+               
+                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
+                    employeeDashboard.setVisible(true);
+                
+                    
+           }
+              
+                    // Handle cases where the user type is not recognized
+                
+                    // Optionally, you can redirect to a default dashboard or show an error message
+                 
+            
+            this.dispose(); 
+        } else {
+            // Handle the case where the session doesn't have user type information
+      JOptionPane.showMessageDialog(null,"No account login first");
+      this.dispose();
+            // Optionally, show an error message
+        }
+    
+
+
     }//GEN-LAST:event_jPanel14MouseClicked
 
     private void VIEWORDERMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWORDERMouseEntered

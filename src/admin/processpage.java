@@ -38,7 +38,46 @@ public class processpage extends javax.swing.JFrame {
         initComponents();
          
     }
+    private void logOrderAction(int userId, String username, String productName) {
+        String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+        dbConnect db = new dbConnect();
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            // Set parameters
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, "User added order for product: " + productName + " (" + username + ")");
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Failed to log order action: " + e.getMessage());
+        }
+    }
     
+//       private void logLoginAction(int userId, String username, String productname) {
+//    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+//    config.SessionClass ses = config.SessionClass.getInstance();
+//    ses.getP_name();
+//   dbConnect db = new dbConnect();
+//try (Connection conn = db.getConnection();
+//         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//        
+//        // Set parameters
+//        pstmt.setInt(1, userId);
+//        pstmt.setString(2, "User added order: "+username+""+ses.getP_name());  
+//        pstmt.executeUpdate();
+//        
+//    } catch (SQLException e) {
+//        System.err.println("Failed to log login action: " + e.getMessage());
+//    }
+//}
+       
+       private int getCurrentUserId() {
+    // Access the user ID from the SessionClass
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
    
             
  public String destination = "";
@@ -211,22 +250,22 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
         jLabel10.setText("Product Name:");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 50, -1, 20));
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 30, -1, 20));
 
         jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel12.setForeground(new java.awt.Color(0, 102, 102));
         jLabel12.setText("Stock:");
-        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, -1, 20));
+        jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, -1, 20));
 
         jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel13.setForeground(new java.awt.Color(0, 102, 102));
         jLabel13.setText("Brand:");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 50, -1, 20));
+        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, -1, 20));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 102, 102));
         jLabel14.setText("Category:");
-        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, -1, 20));
+        jPanel2.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 270, -1, 30));
 
         prodbrand.setEditable(false);
         prodbrand.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -246,7 +285,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         prodprice.setEditable(false);
         prodprice.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         prodprice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel2.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 170, 190, 40));
+        jPanel2.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 190, 190, 40));
 
         prodid.setEditable(false);
         prodid.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -266,7 +305,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 prodstockActionPerformed(evt);
             }
         });
-        jPanel2.add(prodstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 170, 190, 40));
+        jPanel2.add(prodstock, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 190, 190, 40));
 
         prodcategory.setEditable(false);
         prodcategory.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -276,29 +315,29 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 prodcategoryActionPerformed(evt);
             }
         });
-        jPanel2.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 280, 190, 40));
+        jPanel2.add(prodcategory, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 310, 190, 40));
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(0, 102, 102));
         jLabel16.setText("Price:");
-        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 150, -1, 20));
+        jPanel2.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 140, -1, 20));
 
         jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/abrand.png"))); // NOI18N
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 20, 60, 60));
 
         jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/astock.png"))); // NOI18N
-        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 110, 70, 60));
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 120, 70, 60));
 
         jLabel8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/apricing.png"))); // NOI18N
-        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 110, 60, 60));
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 120, 60, 60));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/aname.png"))); // NOI18N
         jPanel2.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 0, 60, 70));
 
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/finalcategory.png"))); // NOI18N
-        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 220, 70, 60));
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 70, 60));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 700, 340));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 700, 370));
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -340,7 +379,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 quantityActionPerformed(evt);
             }
         });
-        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 500, 180, 40));
+        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 540, 180, 40));
 
         cash.setBackground(new java.awt.Color(240, 240, 240));
         cash.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -351,17 +390,17 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 cashActionPerformed(evt);
             }
         });
-        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 500, 180, 40));
+        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 180, 40));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 102, 102));
         jLabel11.setText("Enter Quantity:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 480, -1, 20));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 500, -1, 20));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 102, 102));
         jLabel17.setText("Enter Cash:");
-        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 480, -1, 20));
+        jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 500, -1, 20));
 
         orderproduct.setBackground(new java.awt.Color(0, 102, 102));
         orderproduct.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -378,13 +417,13 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel1.setText("ORDER");
         orderproduct.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
-        jPanel1.add(orderproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, 150, 40));
+        jPanel1.add(orderproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 590, 150, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/aquantity.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 450, 50, 50));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 480, 50, 50));
 
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/acash.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 460, 60, 40));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 60, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -394,7 +433,9 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         pack();
@@ -461,6 +502,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         // Get current user from session
         SessionClass session = SessionClass.getInstance();
         int userId = session.getU_id();
+        String productname = prodname.getText().trim();
         
         if(userId == 0) {
             JOptionPane.showMessageDialog(this, "No user logged in!", "Session Error", JOptionPane.ERROR_MESSAGE);
@@ -527,6 +569,12 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 "Total: ₱" + String.format("%.2f", totalAmount) + "\n" +
                 "Change: ₱" + String.format("%.2f", change),
                 "Order Complete", JOptionPane.INFORMATION_MESSAGE);
+            
+            config.SessionClass ses = config.SessionClass.getInstance();
+            
+            String usernamee = session.getUsername();
+            int currentUserId = getCurrentUserId(); 
+            logOrderAction(currentUserId, usernamee, productname);
             
             // Return to order page
             orderpage order = new orderpage();
