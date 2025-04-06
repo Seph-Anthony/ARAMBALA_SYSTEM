@@ -8,6 +8,7 @@ package USER;
 import admin.admindash;
 import admin.orderpage;
 import static admin.updateuser.getHeightFromWidth;
+import admin.vieworder;
 import config.SessionClass;
 import config.dbConnect;
 import java.sql.ResultSet;
@@ -411,6 +412,11 @@ public void AllProd() {
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel9MouseClicked(evt);
+            }
+        });
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         update.setBackground(new java.awt.Color(255, 255, 255));
@@ -672,7 +678,7 @@ public void AllProd() {
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/diliabilabol.png"))); // NOI18N
-        jPanel21.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 160, 70));
+        jPanel21.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 160, 70));
 
         jPanel26.add(jPanel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 120, 180, 140));
 
@@ -706,7 +712,7 @@ public void AllProd() {
         jLabel31.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel31.setText("Not Available Products");
         jLabel31.setVerifyInputWhenFocusTarget(false);
-        jPanel26.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 250, 40));
+        jPanel26.add(jLabel31, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 80, 250, 30));
 
         jPanel25.setBackground(new java.awt.Color(255, 255, 255));
         jPanel25.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -979,6 +985,15 @@ public void AllProd() {
     private void tologin3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tologin3MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_tologin3MouseClicked
+
+    private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
+        // TODO add your handling code here:
+        
+        vieworder view = new vieworder();
+        view.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_jPanel9MouseClicked
 
     /**
      * @param args the command line arguments

@@ -8,6 +8,7 @@ package USER;
 import admin.admindash;
 import admin.prodpage;
 import static admin.updateuser.getHeightFromWidth;
+import admin.vieworder;
 import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
@@ -876,6 +877,9 @@ public void PendingProd(){
     private void product2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_product2MouseClicked
         // TODO add your handling code here:
         
+        vieworder view = new vieworder();
+        view.setVisible(true);
+        this.dispose();
         
     }//GEN-LAST:event_product2MouseClicked
 

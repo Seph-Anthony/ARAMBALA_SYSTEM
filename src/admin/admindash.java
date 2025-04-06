@@ -1033,14 +1033,25 @@ public void AllProcess() {
 
     private void vieworderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vieworderMouseClicked
         // TODO add your handling code here:
+        
+        vieworder view = new vieworder();
+        view.setVisible(true);
+        this.dispose();
+        
+        
     }//GEN-LAST:event_vieworderMouseClicked
 
     private void vieworderMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vieworderMouseEntered
         // TODO add your handling code here:
+        
+                vieworder.setBackground(logcolor);
     }//GEN-LAST:event_vieworderMouseEntered
 
     private void vieworderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_vieworderMouseExited
         // TODO add your handling code here:
+                vieworder.setBackground(excolor);
+        
+        
     }//GEN-LAST:event_vieworderMouseExited
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
