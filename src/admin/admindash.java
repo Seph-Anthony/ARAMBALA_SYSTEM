@@ -866,16 +866,78 @@ public void AllProcess() {
     }//GEN-LAST:event_customerni1MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
-        REGISTER re = new REGISTER ();
-        re.setVisible(true);
-        this.dispose();
+    config.SessionClass ses = config.SessionClass.getInstance();
+         
+        // Show a confirmation dialog
+        int choice = JOptionPane.showConfirmDialog(this,
+                "Do you really wish to logout the program?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION);
+int id = getCurrentUserId();
+        String username = ses.getUsername();
+        logProductAdditionAction(id, username);
+        
+        // Check if the user clicked "Yes"
+        if (choice == JOptionPane.YES_OPTION) {
+            // Perform logout actions here
+
+            // 1. Optionally, log the logout action (without relying on session for user info)
+            // You might need to get user info from somewhere else if you want to log.
+            // Example (if you have a currently displayed username):
+            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+
+            // 2. Dispose of the current form
+            this.dispose();
+
+            // 3. Optionally, exit the entire application
+            // System.exit(0);
+        }
+        
+        else {
+            
+            LOGIN ad = new LOGIN();
+            ad.setVisible(true);
+            this.dispose();
+            
+        }
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-        LOGIN re = new LOGIN ();
-        re.setVisible(true);
-        this.dispose();
+          config.SessionClass ses = config.SessionClass.getInstance();
+         
+        // Show a confirmation dialog
+        int choice = JOptionPane.showConfirmDialog(this,
+                "Do you really wish to logout the program?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION);
+int id = getCurrentUserId();
+        String username = ses.getUsername();
+        logProductAdditionAction(id, username);
+        
+        // Check if the user clicked "Yes"
+        if (choice == JOptionPane.YES_OPTION) {
+            // Perform logout actions here
+
+            // 1. Optionally, log the logout action (without relying on session for user info)
+            // You might need to get user info from somewhere else if you want to log.
+            // Example (if you have a currently displayed username):
+            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+
+            // 2. Dispose of the current form
+            this.dispose();
+
+            // 3. Optionally, exit the entire application
+            // System.exit(0);
+        }
+        
+        else {
+            
+            LOGIN ad = new LOGIN();
+            ad.setVisible(true);
+            this.dispose();
+            
+        }
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
@@ -1056,40 +1118,7 @@ public void AllProcess() {
 
     private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
         // TODO add your handling code here:
-        config.SessionClass ses = config.SessionClass.getInstance();
-         
-        // Show a confirmation dialog
-        int choice = JOptionPane.showConfirmDialog(this,
-                "Do you really wish to logout the program?",
-                "Logout Confirmation",
-                JOptionPane.YES_NO_OPTION);
-int id = getCurrentUserId();
-        String username = ses.getUsername();
-        logProductAdditionAction(id, username);
-        
-        // Check if the user clicked "Yes"
-        if (choice == JOptionPane.YES_OPTION) {
-            // Perform logout actions here
-
-            // 1. Optionally, log the logout action (without relying on session for user info)
-            // You might need to get user info from somewhere else if you want to log.
-            // Example (if you have a currently displayed username):
-            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
-
-            // 2. Dispose of the current form
-            this.dispose();
-
-            // 3. Optionally, exit the entire application
-            // System.exit(0);
-        }
-        
-        else {
-            
-            admindash ad = new admindash();
-            ad.setVisible(true);
-            this.dispose();
-            
-        }
+       
         
         
     }//GEN-LAST:event_logoutMouseClicked

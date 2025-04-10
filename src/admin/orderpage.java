@@ -362,6 +362,9 @@ public class orderpage extends javax.swing.JFrame {
         VIEWORDER.setBackground(new java.awt.Color(0, 102, 102));
         VIEWORDER.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         VIEWORDER.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                VIEWORDERMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 VIEWORDERMouseEntered(evt);
             }
@@ -1073,6 +1076,15 @@ public class orderpage extends javax.swing.JFrame {
               foodand.setBackground(excolorx);
         
     }//GEN-LAST:event_foodandMouseExited
+
+    private void VIEWORDERMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWORDERMouseClicked
+        // TODO add your handling code here:
+        
+        updateorder order = new updateorder();
+        order.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_VIEWORDERMouseClicked
 
     /**
      * @param args the command line arguments
