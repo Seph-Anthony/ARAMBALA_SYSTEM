@@ -17,6 +17,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 import lores.LOGIN;
 
 /**
@@ -42,8 +43,8 @@ public class updateorder extends javax.swing.JFrame {
            Color logcolor = new Color(63,195,128);
     Color excolor = new Color(255,255,255);
     
-    
-    private void loadMyOrders() {
+ 
+    public void loadMyOrders() {
     // Clear existing data in the table
     orderTableModel.setRowCount(0);
 
@@ -53,9 +54,9 @@ public class updateorder extends javax.swing.JFrame {
     System.out.println("Attempting to load orders for user ID: " + loggedInUserId);
 
     // Construct the SQL query to retrieve orders for the logged-in user
-    String sql = "SELECT p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date "
+    String sql = "SELECT s_id, p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date "
                  + "FROM process "
-                 + "WHERE u_id = ?";
+                 + "WHERE u_id = ? AND s_status = 'Pending'";
 
     try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
         pstmt.setInt(1, loggedInUserId);
@@ -67,16 +68,17 @@ public class updateorder extends javax.swing.JFrame {
         while (rs.next()) {
             rowCount++;
             // Debugging - showing retrieved data
-            System.out.println("Row " + rowCount + " found - Product ID: " + rs.getInt("p_id") + ", Quantity: " + rs.getInt("s_quantity"));
+            System.out.println("Row " + rowCount + " found - Order ID: " + rs.getInt("s_id") + ", Product ID: " + rs.getInt("p_id") + ", Quantity: " + rs.getInt("s_quantity"));
 
             Object[] rowData = {
-                rs.getInt("p_id"),
-                rs.getInt("s_quantity"),
-                rs.getDouble("s_totalam"),
-                rs.getDouble("s_cash"),
-                rs.getDouble("s_change"),
-                rs.getString("s_status"),
-                rs.getString("s_date")
+                rs.getInt("s_id"),        // Order ID (s_id) - First column
+                rs.getInt("p_id"),        // Product ID (p_id) - Second column
+                rs.getInt("s_quantity"),   // Quantity
+                rs.getDouble("s_totalam"), // Total Amount
+                rs.getDouble("s_cash"),    // Cash
+                rs.getDouble("s_change"),  // Change
+                rs.getString("s_status"),  // Status
+                rs.getString("s_date")     // Date
             };
             orderTableModel.addRow(rowData);
         }
@@ -138,6 +140,7 @@ public class updateorder extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jLabel1 = new javax.swing.JLabel();
+        jToolBar1 = new javax.swing.JToolBar();
         jPanel1 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -148,8 +151,10 @@ public class updateorder extends javax.swing.JFrame {
         adinfo = new javax.swing.JLabel();
         delete = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
         jLabel25 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
@@ -162,6 +167,8 @@ public class updateorder extends javax.swing.JFrame {
         ordertable = new javax.swing.JTable();
 
         jLabel1.setText("jLabel1");
+
+        jToolBar1.setRollover(true);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
@@ -221,6 +228,9 @@ public class updateorder extends javax.swing.JFrame {
         delete.setBackground(new java.awt.Color(255, 255, 255));
         delete.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         delete.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                deleteMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 deleteMouseEntered(evt);
             }
@@ -235,13 +245,20 @@ public class updateorder extends javax.swing.JFrame {
         jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel23.setText("Delete Order");
         jLabel23.setVerifyInputWhenFocusTarget(false);
-        delete.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
+        delete.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 140, 30));
 
-        jPanel3.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 360, 160, 50));
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cancelorder.png"))); // NOI18N
+        delete.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 50, 40));
+
+        jPanel3.add(delete, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 360, 160, 70));
 
         update.setBackground(new java.awt.Color(255, 255, 255));
         update.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         update.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                updateMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 updateMouseEntered(evt);
             }
@@ -256,9 +273,13 @@ public class updateorder extends javax.swing.JFrame {
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel25.setText("Update Order");
         jLabel25.setVerifyInputWhenFocusTarget(false);
-        update.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 140, 30));
+        update.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 140, 30));
 
-        jPanel3.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 160, 50));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/updateorder.png"))); // NOI18N
+        update.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 0, 50, 40));
+
+        jPanel3.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 160, 70));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 600));
 
@@ -316,19 +337,24 @@ public class updateorder extends javax.swing.JFrame {
 
         ordertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "User ID", "Product ID", "Total Amount", "Quantity", "Cash", "Change", "Date"
+                "ORDER ID", "PRODUCT ID", "QUANTITY", "PRICE", "CASH", "CHANGE", "STATUS", "DATE"
             }
         ));
+        ordertable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ordertableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(ordertable);
 
         jPanel9.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 400));
@@ -421,6 +447,139 @@ public class updateorder extends javax.swing.JFrame {
         
     }//GEN-LAST:event_deleteMouseExited
 
+    private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
+     // TODO add your handling code here:
+
+         // TODO add your handling code here:
+
+    int selectedRow = ordertable.getSelectedRow();
+
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(null, "PLEASE SELECT AN ITEM TO UPDATE");
+        return;
+    }
+
+    // Get the s_id (Order ID) of the selected row
+    int orderId = (int) orderTableModel.getValueAt(selectedRow, 0); // Assuming s_id is in the first column
+    int productId = (int) orderTableModel.getValueAt(selectedRow, 1); // Assuming p_id is in the second column
+
+    // Create an instance of your UpdateOrderFrame
+    updateprocess updateFrame = new updateprocess();
+
+    // Retrieve order details from the selected row in the table model
+    int orderQuantity = (int) orderTableModel.getValueAt(selectedRow, 2);
+    double totalAmount = (double) orderTableModel.getValueAt(selectedRow, 3);
+    double cash = (double) orderTableModel.getValueAt(selectedRow, 4);
+    double change = (double) orderTableModel.getValueAt(selectedRow, 5);
+    String status = (String) orderTableModel.getValueAt(selectedRow, 6);
+    String orderDate = (String) orderTableModel.getValueAt(selectedRow, 7);
+
+    // Retrieve product details from the database based on p_id
+    String productQuery = "SELECT p_price, p_stock, p_image FROM product WHERE p_id = " + productId;
+
+    try (ResultSet rs = dbConnection.getData(productQuery)) {
+        if (rs.next()) {
+            int productPrice = rs.getInt("p_price");
+            int productStock = rs.getInt("p_stock");
+            String productImagePath = rs.getString("p_image");
+
+            System.out.println("Product Image Path from Database (in updateorder): [" + productImagePath + "]"); // Existing line
+
+            // **ADD THIS CHECK:**
+            if (productImagePath == null) {
+                System.out.println("Product image path is NULL in the database for product ID: " + productId);
+            } else if (productImagePath.isEmpty()) {
+                System.out.println("Product image path is EMPTY in the database for product ID: " + productId);
+            }
+
+            // Set the values in the UpdateOrderFrame's text fields
+            updateFrame.orid.setText(String.valueOf(orderId));
+            updateFrame.prodprice.setText(String.valueOf(productPrice));
+            updateFrame.prodquan.setText(String.valueOf(productStock)); // Assuming prodquan should show current stock
+            updateFrame.orquantity.setText(String.valueOf(orderQuantity));
+            updateFrame.totalam.setText(String.valueOf(totalAmount));
+            updateFrame.ordate.setText(orderDate);
+            updateFrame.orstat.setText(status);
+            updateFrame.usercash.setText(String.valueOf(cash));
+            updateFrame.userchange.setText(String.valueOf(change));
+
+            // Display the product image
+            updateFrame.prodimage.setIcon(updateFrame.ResizeImage(productImagePath, null, updateFrame.prodimage));
+
+            // Make the UpdateOrderFrame visible
+            updateFrame.setVisible(true);
+this.dispose();
+        } else {
+            JOptionPane.showMessageDialog(null, "Product details not found for Order ID: " + orderId, "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error retrieving product details: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+    }//GEN-LAST:event_updateMouseClicked
+
+    private void ordertableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordertableMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_ordertableMouseClicked
+
+    private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
+        // TODO add your handling code here:
+        
+          int rowIndex = ordertable.getSelectedRow();
+    
+    if (rowIndex < 0) {
+        JOptionPane.showMessageDialog(null, "Please select a product to delete.");
+        return;
+    }
+    
+    // Get the product ID from the selected row
+    TableModel model = ordertable.getModel();
+    int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
+    
+    // Confirmation dialog
+    int confirm = JOptionPane.showConfirmDialog(
+        this,
+        "Are you sure you want to delete this product?",
+        "Confirm Delete",
+        JOptionPane.YES_NO_OPTION
+    );
+    
+    if (confirm == JOptionPane.YES_OPTION) {
+        try {
+            // Connect to the database
+            dbConnect dbc = new dbConnect();
+            
+            // Prepare the DELETE query
+            String query = "DELETE FROM process WHERE s_id = ?";
+            PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+            pstmt.setInt(1, productId);
+            
+            // Execute the query
+            int rowsDeleted = pstmt.executeUpdate();
+            
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "Order deleted successfully.");
+                
+                // Refresh the table to reflect the changes
+              loadMyOrders();
+                
+                // Update the counts
+                
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete the product.");
+            }
+            
+            // Close the statement
+            pstmt.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error deleting the product.");
+        }
+    }
+        
+    }//GEN-LAST:event_deleteMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -463,9 +622,11 @@ public class updateorder extends javax.swing.JFrame {
     private javax.swing.JPanel delete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -478,6 +639,7 @@ public class updateorder extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JToolBar jToolBar1;
     private javax.swing.JTable ordertable;
     private javax.swing.JLabel totalorders;
     private javax.swing.JPanel update;
