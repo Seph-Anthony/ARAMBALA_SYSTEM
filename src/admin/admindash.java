@@ -334,10 +334,10 @@ public void AllProcess() {
         jLabel21 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        logout = new javax.swing.JLabel();
         jLabel25 = new javax.swing.JLabel();
         jLabel26 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel28 = new javax.swing.JLabel();
 
         jPanel261.setBackground(new java.awt.Color(204, 255, 255));
         jPanel261.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -783,14 +783,6 @@ public void AllProcess() {
         jLabel23.setVerifyInputWhenFocusTarget(false);
         jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 80, 170, 30));
 
-        logout.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/closesmall.png"))); // NOI18N
-        logout.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                logoutMouseClicked(evt);
-            }
-        });
-        jPanel3.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 10, -1, 30));
-
         jLabel25.setFont(new java.awt.Font("SansSerif", 1, 24)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(0, 102, 102));
         jLabel25.setText("ADMIN DASHBOARD");
@@ -808,6 +800,15 @@ public void AllProcess() {
             }
         });
         jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 80, 70));
+
+        jLabel28.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel28.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/close (3)logout.png"))); // NOI18N
+        jLabel28.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel28MouseClicked(evt);
+            }
+        });
+        jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 40, 40));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 620, 730));
 
@@ -866,40 +867,45 @@ public void AllProcess() {
     }//GEN-LAST:event_customerni1MouseClicked
 
     private void jPanel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel9MouseClicked
-    config.SessionClass ses = config.SessionClass.getInstance();
-         
-        // Show a confirmation dialog
-        int choice = JOptionPane.showConfirmDialog(this,
-                "Do you really wish to logout the program?",
-                "Logout Confirmation",
-                JOptionPane.YES_NO_OPTION);
-int id = getCurrentUserId();
-        String username = ses.getUsername();
-        logProductAdditionAction(id, username);
-        
-        // Check if the user clicked "Yes"
-        if (choice == JOptionPane.YES_OPTION) {
-            // Perform logout actions here
+//    config.SessionClass ses = config.SessionClass.getInstance();
+//         
+//        // Show a confirmation dialog
+//        int choice = JOptionPane.showConfirmDialog(this,
+//                "Do you really wish to logout the program?",
+//                "Logout Confirmation",
+//                JOptionPane.YES_NO_OPTION);
+//int id = getCurrentUserId();
+//        String username = ses.getUsername();
+//        logProductAdditionAction(id, username);
+//        
+//        // Check if the user clicked "Yes"
+//        if (choice == JOptionPane.YES_OPTION) {
+//            // Perform logout actions here
+//
+//            // 1. Optionally, log the logout action (without relying on session for user info)
+//            // You might need to get user info from somewhere else if you want to log.
+//            // Example (if you have a currently displayed username):
+//            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+//
+//            // 2. Dispose of the current form
+//            this.dispose();
+//
+//            // 3. Optionally, exit the entire application
+//            // System.exit(0);
+//        }
+//        
+//        else {
+//            
+//            LOGIN ad = new LOGIN();
+//            ad.setVisible(true);
+//            this.dispose();
+//            
+//        }
 
-            // 1. Optionally, log the logout action (without relying on session for user info)
-            // You might need to get user info from somewhere else if you want to log.
-            // Example (if you have a currently displayed username):
-            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
-
-            // 2. Dispose of the current form
-            this.dispose();
-
-            // 3. Optionally, exit the entire application
-            // System.exit(0);
-        }
-        
-        else {
-            
             LOGIN ad = new LOGIN();
             ad.setVisible(true);
             this.dispose();
-            
-        }
+
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
@@ -1116,13 +1122,6 @@ int id = getCurrentUserId();
         
     }//GEN-LAST:event_vieworderMouseExited
 
-    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
-        // TODO add your handling code here:
-       
-        
-        
-    }//GEN-LAST:event_logoutMouseClicked
-
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
         // TODO add your handling code here:
         
@@ -1131,6 +1130,46 @@ int id = getCurrentUserId();
         this.dispose();
         
     }//GEN-LAST:event_jLabel12MouseClicked
+
+    private void jLabel28MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel28MouseClicked
+        // TODO add your handling code here:
+        
+          config.SessionClass ses = config.SessionClass.getInstance();
+         
+        // Show a confirmation dialog
+        int choice = JOptionPane.showConfirmDialog(this,
+                "Do you really wish to logout the program?",
+                "Logout Confirmation",
+                JOptionPane.YES_NO_OPTION);
+int id = getCurrentUserId();
+        String username = ses.getUsername();
+        logProductAdditionAction(id, username);
+        
+        // Check if the user clicked "Yes"
+        if (choice == JOptionPane.YES_OPTION) {
+            // Perform logout actions here
+
+            // 1. Optionally, log the logout action (without relying on session for user info)
+            // You might need to get user info from somewhere else if you want to log.
+            // Example (if you have a currently displayed username):
+            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+
+            // 2. Dispose of the current form
+            this.dispose();
+
+            // 3. Optionally, exit the entire application
+            // System.exit(0);
+        }
+        
+        else {
+            
+           admindash dash = new admindash();
+           dash.setVisible(true);
+           this.dispose();
+            
+        }
+        
+    }//GEN-LAST:event_jLabel28MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1220,6 +1259,7 @@ int id = getCurrentUserId();
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1249,7 +1289,6 @@ int id = getCurrentUserId();
     private javax.swing.JTextField jTextField6;
     private javax.swing.JTextField jTextField7;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JLabel logout;
     private javax.swing.JPanel process;
     private javax.swing.JPanel product;
     private javax.swing.JPanel records;

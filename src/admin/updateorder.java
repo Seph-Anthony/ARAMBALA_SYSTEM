@@ -56,7 +56,7 @@ public class updateorder extends javax.swing.JFrame {
     // Construct the SQL query to retrieve orders for the logged-in user
     String sql = "SELECT s_id, p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date "
                  + "FROM process "
-                 + "WHERE u_id = ? AND s_status = 'Pending'";
+                 + "WHERE u_id = ? ";
 
     try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
         pstmt.setInt(1, loggedInUserId);
@@ -335,6 +335,8 @@ public class updateorder extends javax.swing.JFrame {
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
         jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        ordertable.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        ordertable.setForeground(new java.awt.Color(0, 102, 102));
         ordertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null, null, null, null},
@@ -448,9 +450,9 @@ public class updateorder extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMouseExited
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-     // TODO add your handling code here:
+      // TODO add your handling code here:
 
-         // TODO add your handling code here:
+      // TODO add your handling code here:
 
     int selectedRow = ordertable.getSelectedRow();
 
@@ -459,19 +461,28 @@ public class updateorder extends javax.swing.JFrame {
         return;
     }
 
-    // Get the s_id (Order ID) of the selected row
+    // Get the status of the selected order from the table model
+    String status = (String) orderTableModel.getValueAt(selectedRow, 6); // Assuming status is in the seventh column
+
+    // Check if the order status is "Completed"
+    if ("Complete".equalsIgnoreCase(status)) {
+        JOptionPane.showMessageDialog(null, "Cannot update an order that is already Completed.", "Update Not Allowed", JOptionPane.WARNING_MESSAGE);
+        return; // Exit the method, preventing the update
+    }
+
+    // If the status is NOT "Completed", proceed with opening the update frame
+    // Get the s_id (Order ID) and product ID of the selected row
     int orderId = (int) orderTableModel.getValueAt(selectedRow, 0); // Assuming s_id is in the first column
     int productId = (int) orderTableModel.getValueAt(selectedRow, 1); // Assuming p_id is in the second column
 
     // Create an instance of your UpdateOrderFrame
     updateprocess updateFrame = new updateprocess();
 
-    // Retrieve order details from the selected row in the table model
+    // Retrieve other order details from the selected row in the table model
     int orderQuantity = (int) orderTableModel.getValueAt(selectedRow, 2);
     double totalAmount = (double) orderTableModel.getValueAt(selectedRow, 3);
     double cash = (double) orderTableModel.getValueAt(selectedRow, 4);
     double change = (double) orderTableModel.getValueAt(selectedRow, 5);
-    String status = (String) orderTableModel.getValueAt(selectedRow, 6);
     String orderDate = (String) orderTableModel.getValueAt(selectedRow, 7);
 
     // Retrieve product details from the database based on p_id
@@ -499,7 +510,7 @@ public class updateorder extends javax.swing.JFrame {
             updateFrame.orquantity.setText(String.valueOf(orderQuantity));
             updateFrame.totalam.setText(String.valueOf(totalAmount));
             updateFrame.ordate.setText(orderDate);
-            updateFrame.orstat.setText(status);
+            updateFrame.orstat.setText(status); // Set the status in the update frame as well
             updateFrame.usercash.setText(String.valueOf(cash));
             updateFrame.userchange.setText(String.valueOf(change));
 
@@ -508,7 +519,7 @@ public class updateorder extends javax.swing.JFrame {
 
             // Make the UpdateOrderFrame visible
             updateFrame.setVisible(true);
-this.dispose();
+            this.dispose();
         } else {
             JOptionPane.showMessageDialog(null, "Product details not found for Order ID: " + orderId, "Error", JOptionPane.ERROR_MESSAGE);
         }

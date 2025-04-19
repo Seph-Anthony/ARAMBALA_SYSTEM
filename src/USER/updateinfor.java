@@ -5,6 +5,7 @@
  */
 package USER;
 
+import admin.admindash;
 import static admin.updateuser.mail;
 import static admin.updateuser.usname;
 import config.SessionClass;
@@ -398,9 +399,45 @@ public boolean dupcheck() {
     }//GEN-LAST:event_contactFieldActionPerformed
 
     private void jLabel20MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel20MouseClicked
-        employdash em = new employdash();
-        em.setVisible(true);
-        this.dispose();
+              SessionClass session = SessionClass.getInstance();
+        String userType = session.getType();
+
+        if (userType != null) {
+           
+            if(userType.equals("Admin")){
+               
+                    admindash adminDashboard = new admindash();
+                    adminDashboard.setVisible(true);
+                    
+                    
+            }
+           if(userType.equals("Customer")){
+                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
+                    customerDashboard.setVisible(true);
+                    
+                    
+           }
+           
+           if(userType.equals("Employee")){
+               
+                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
+                    employeeDashboard.setVisible(true);
+                
+                    
+           }
+              
+                    // Handle cases where the user type is not recognized
+                
+                    // Optionally, you can redirect to a default dashboard or show an error message
+                 
+            
+            this.dispose(); 
+        } else {
+            // Handle the case where the session doesn't have user type information
+      JOptionPane.showMessageDialog(null,"No account login first");
+      this.dispose();
+            // Optionally, show an error message
+        }
     }//GEN-LAST:event_jLabel20MouseClicked
 
     private void updateclickMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateclickMouseClicked

@@ -34,23 +34,23 @@ public class logs extends javax.swing.JFrame {
         
         
      
-search.addActionListener(new ActionListener() {
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        String userIdText = text.getText().trim(); // Assuming "text" is your JTextField
+  search.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String userIdText = searchact.getText().trim();
 
-        if (!userIdText.isEmpty()) {
-            try {
-                int userId = Integer.parseInt(userIdText);
-                searchUser(userId); // Call your search function with the user ID
-            } catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(logs.this, "Please enter a valid User ID (number).", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                if (!userIdText.isEmpty()) {
+                    try {
+                        int userId = Integer.parseInt(userIdText);
+                        searchUser(userId); // Call your search function with the user ID
+                    } catch (NumberFormatException ex) {
+                        JOptionPane.showMessageDialog(logs.this, "Please enter a valid User ID (number).", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(logs.this, "Please enter a User ID.");
+                }
             }
-        } else {
-            JOptionPane.showMessageDialog(logs.this, "Please enter a User ID.");
-        }
-    }
-});
+        });
     }
     
      public void setUserId(int userId) {
@@ -68,29 +68,28 @@ search.addActionListener(new ActionListener() {
         //...
     }
     
-    
-private void searchUser(int userId) { // Changed to int userId
-    try {
-        dbConnect dbc = new dbConnect();
-        Connection conn = dbc.getConnection(); // Get Connection
+  private void searchUser(int userId) {
+        try {
+            dbConnect dbc = new dbConnect();
+            Connection conn = dbc.getConnection();
 
-        String query = "SELECT log_id, user_id, act, log_date FROM logs WHERE user_id = ?"; // Use PreparedStatement
+            String query = "SELECT log_id AS 'Log ID', user_id AS 'User ID', act AS 'Activity', log_date AS 'Date' FROM logs WHERE user_id = ?";
 
-        PreparedStatement pstmt = conn.prepareStatement(query);
-        pstmt.setInt(1, userId); // Set the parameter
+            PreparedStatement pstmt = conn.prepareStatement(query);
+            pstmt.setInt(1, userId);
 
-        ResultSet rs = pstmt.executeQuery();
-        recordtable.setModel(DbUtils.resultSetToTableModel(rs));
+            ResultSet rs = pstmt.executeQuery();
+            recordtable.setModel(DbUtils.resultSetToTableModel(rs));
 
-        rs.close();
-        pstmt.close(); //close PreparedStatement.
-        conn.close();//close connection.
+            rs.close();
+            pstmt.close();
+            conn.close();
 
-    } catch (SQLException ex) {
-        System.out.println("Error: " + ex.getMessage());
-        JOptionPane.showMessageDialog(this, "Error searching for user.");
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching for user.");
+        }
     }
-}
 public void displayData(){
     try{
         dbConnect dbc = new dbConnect();
@@ -124,7 +123,7 @@ public void displayData(){
         jLabel11 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        text = new javax.swing.JTextField();
+        searchact = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         reset = new javax.swing.JButton();
         search = new javax.swing.JButton();
@@ -216,14 +215,14 @@ public void displayData(){
 
         jPanel2.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 110));
 
-        text.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
-        text.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
-        text.addActionListener(new java.awt.event.ActionListener() {
+        searchact.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        searchact.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        searchact.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textActionPerformed(evt);
+                searchactActionPerformed(evt);
             }
         });
-        jPanel2.add(text, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 400, 30));
+        jPanel2.add(searchact, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 140, 400, 30));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
@@ -270,9 +269,9 @@ public void displayData(){
         // TODO add your handling code here:
     }//GEN-LAST:event_tologinMouseClicked
 
-    private void textActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textActionPerformed
+    private void searchactActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchactActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textActionPerformed
+    }//GEN-LAST:event_searchactActionPerformed
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
@@ -348,7 +347,7 @@ public void displayData(){
     private javax.swing.JTable recordtable;
     private javax.swing.JButton reset;
     private javax.swing.JButton search;
-    private javax.swing.JTextField text;
+    private javax.swing.JTextField searchact;
     private javax.swing.JPanel tologin;
     // End of variables declaration//GEN-END:variables
 }

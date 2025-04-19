@@ -34,6 +34,7 @@ private int currentUserId; //
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
     dbConnect db = new dbConnect();
+    
     try (Connection conn = db.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -131,7 +132,7 @@ private int currentUserId; //
         jPanel1.add(favcolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 280, 40));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
-        jLabel5.setText("What is our childhood nickname?");
+        jLabel5.setText("What is your childhood nickname?");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
@@ -160,7 +161,7 @@ private int currentUserId; //
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("BACK");
+        jLabel8.setText("Back");
         jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel8MouseClicked(evt);

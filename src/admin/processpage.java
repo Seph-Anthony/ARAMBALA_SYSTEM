@@ -55,6 +55,11 @@ public class processpage extends javax.swing.JFrame {
         }
     }
     
+    private String getCurrentUsername() {
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getUsername(); // Assuming getU_uname() returns the username from your SessionClass
+}
+    
 //       private void logLoginAction(int userId, String username, String productname) {
 //    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 //    config.SessionClass ses = config.SessionClass.getInstance();
@@ -160,6 +165,22 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
             }
         }
    }
+    
+     private void logOrderUpdateAction(int userId, String username) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User (" + username + ") Added Order ID");
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log order update action: " + e.getMessage());
+    }
+}
     
     
     
@@ -573,8 +594,10 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
             config.SessionClass ses = config.SessionClass.getInstance();
             
             String usernamee = session.getUsername();
-            int currentUserId = getCurrentUserId(); 
-            logOrderAction(currentUserId, usernamee, productname);
+            int currentUserId = getCurrentUserId();
+        String currentUsername = getCurrentUsername(); // Get the username
+        // Log the order update action BEFORE updating the database
+        logOrderUpdateAction(currentUserId, currentUsername);
             
             // Return to order page
             orderpage order = new orderpage();

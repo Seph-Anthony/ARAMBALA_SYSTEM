@@ -56,7 +56,7 @@ public class prodpage extends javax.swing.JFrame {
      private void searchUser(String username) {
         try {
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT p_id, p_name, p_category, p_brand, p_price, p_stock, p_status FROM product WHERE p_name = '" + username + "'");
+            ResultSet rs = dbc.getData("SELECT p_id, p_name, p_category, p_brand, p_price, p_stock, p_status FROM product WHERE p_category = '" + username + "'");
             protable.setModel(DbUtils.resultSetToTableModel(rs));
             rs.close();
         } catch (SQLException ex) {
@@ -98,7 +98,8 @@ public class prodpage extends javax.swing.JFrame {
 public void displayData(){
         try{
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT * FROM product");
+            ResultSet rs = dbc.getData("SELECT p_id AS 'Product ID', p_name AS 'Product Name', p_category AS 'Category', p_brand AS 'Brand', p_price AS 'Price',"
+                    + "p_stock AS 'Stock', p_status AS 'Status' FROM product");
             protable.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
         }catch(SQLException ex){
@@ -168,6 +169,7 @@ public void AvailableProd(){
         jSpinner1 = new javax.swing.JSpinner();
         jPasswordField1 = new javax.swing.JPasswordField();
         jTextField2 = new javax.swing.JTextField();
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
@@ -208,6 +210,7 @@ public void AvailableProd(){
         jLabel17 = new javax.swing.JLabel();
         resetbutton = new javax.swing.JButton();
         searchbutton = new javax.swing.JButton();
+        jLabel9 = new javax.swing.JLabel();
 
         jPasswordField1.setText("jPasswordField1");
 
@@ -480,6 +483,13 @@ public void AvailableProd(){
         searchbutton.setForeground(new java.awt.Color(255, 255, 255));
         searchbutton.setText("SEARCH");
         jPanel12.add(searchbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 80, 100, 40));
+
+        jLabel9.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("Search Product Category");
+        jPanel12.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 260, 20));
 
         jPanel1.add(jPanel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, 840, 350));
 
@@ -782,6 +792,7 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
     private javax.swing.JPanel DELETE;
     private javax.swing.JPanel EDIT;
     private javax.swing.JLabel available;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JPanel cusdash;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel16;
@@ -797,6 +808,7 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

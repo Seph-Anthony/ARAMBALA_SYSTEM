@@ -30,15 +30,14 @@ public class vieworder extends javax.swing.JFrame {
      */
 public vieworder() {
         initComponents();
-        displayPendingOrders(); // Call the method to display only pending orders
+        displayAllOrders(); // Call the method to display only pending orders
     }
 
-    public void displayPendingOrders() {
+  public void displayAllOrders() {
         try {
             dbConnect dbc = new dbConnect();
-            // Corrected the SQL query to filter by 's_status' and fixed the typo ('s_satus' to 's_status')
-            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash Given', s_change AS 'Change Amount', s_status AS 'Order Status', s_date AS 'Order Date' FROM process WHERE s_status = 'Pending'");
-            vieworder.setModel(DbUtils.resultSetToTableModel(rs)); // Assuming your JTable is named 'vieworderTable'
+            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash Given', s_change AS 'Change Amount', s_status AS 'Order Status', s_date AS 'Order Date' FROM process ORDER BY s_id DESC");
+            vieworder.setModel(DbUtils.resultSetToTableModel(rs)); // Assuming your JTable is named 'vieworder'
             rs.close();
         } catch (SQLException ex) {
             System.out.println("Errors: " + ex.getMessage());
@@ -199,11 +198,17 @@ Color logcolor = new Color(63,195,128);
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("UPDATE STATUS ");
         jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel4MouseEntered(evt);
             }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
         });
-        update.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 30));
+        update.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 30));
 
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 190, 50));
 
@@ -354,6 +359,15 @@ Color logcolor = new Color(63,195,128);
         int s_id_columnIndex = 0;
         int selected_s_id = (int) vieworder.getModel().getValueAt(rowindex, s_id_columnIndex);
 
+        // **Assuming the 'Order Status' is in the 7th column (index 6). Adjust if it's different.**
+        int s_status_table_columnIndex = 7;
+        String currentStatusInTable = (String) vieworder.getModel().getValueAt(rowindex, s_status_table_columnIndex);
+
+        if (!currentStatusInTable.equals("Pending")) {
+            JOptionPane.showMessageDialog(null, "Only Pending orders can be updated.");
+            return; // Exit the method if the order is not Pending
+        }
+
         dbConnect db = new dbConnect();
         Connection con = db.getConnection();
         ResultSet rs = null;
@@ -368,7 +382,7 @@ Color logcolor = new Color(63,195,128);
             if (rs.next()) {
                 currentStatusFromDB = rs.getString("s_status");
 
-                if (!currentStatusFromDB.equals("Complete")) {
+                if (currentStatusFromDB.equals("Pending")) {
                     // Update the status in the database to "Complete"
                     String updateQuery = "UPDATE process SET s_status = 'Complete' WHERE s_id = ?";
                     PreparedStatement updatePstmt = con.prepareStatement(updateQuery);
@@ -378,19 +392,18 @@ Color logcolor = new Color(63,195,128);
                     if (rowsAffected > 0) {
                         ses.setS_status("Complete"); // Update the session as well
                         // Optionally, update the table model to reflect the change immediately
-                        // Assuming 's_status' is in a specific column (e.g., index 6)
-                        // **IMPORTANT: Adjust this index if s_status is in a different column.**
-                        int s_status_columnIndex = 7;
-                        if (s_status_columnIndex < vieworder.getColumnCount()) {
-                            vieworder.getModel().setValueAt("Complete", rowindex, s_status_columnIndex);
+                        if (s_status_table_columnIndex < vieworder.getColumnCount()) {
+                            vieworder.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
                         }
                         JOptionPane.showMessageDialog(null, "Order status updated to Complete.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Failed to update order status.");
                     }
                     updatePstmt.close();
-                } else {
+                } else if (currentStatusFromDB.equals("Complete")) {
                     JOptionPane.showMessageDialog(null, "Order status is already Complete.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Order status is not Pending and cannot be updated.");
                 }
             } else {
                 JOptionPane.showMessageDialog(null, "Could not find order with ID: " + selected_s_id);
@@ -414,7 +427,7 @@ Color logcolor = new Color(63,195,128);
     private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
         // TODO add your handling code here:
         
-    
+        update.setBackground(logcolor);
         
     }//GEN-LAST:event_jLabel4MouseEntered
 
@@ -451,9 +464,94 @@ Color logcolor = new Color(63,195,128);
     private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
         // TODO add your handling code here:
         
-        displayPendingOrders();
+        displayAllOrders();
         
     }//GEN-LAST:event_resetMouseClicked
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        // TODO add your handling code here:
+            update.setBackground(excolor);
+    }//GEN-LAST:event_jLabel4MouseExited
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+             int rowindex = vieworder.getSelectedRow();
+        SessionClass ses = SessionClass.getInstance();
+
+        if (rowindex < 0) {
+            JOptionPane.showMessageDialog(null, "PLEASE SELECT An ORDER");
+            return; // Exit the method if no row is selected
+        }
+
+        // Assuming the s_id (order ID) is in the first column (index 0) of your vieworder table
+        // **IMPORTANT: Adjust this index if s_id is in a different column.**
+        int s_id_columnIndex = 0;
+        int selected_s_id = (int) vieworder.getModel().getValueAt(rowindex, s_id_columnIndex);
+
+        // **Assuming the 'Order Status' is in the 7th column (index 6). Adjust if it's different.**
+        int s_status_table_columnIndex = 7;
+        String currentStatusInTable = (String) vieworder.getModel().getValueAt(rowindex, s_status_table_columnIndex);
+
+        if (!currentStatusInTable.equals("Pending")) {
+            JOptionPane.showMessageDialog(null, "Only Pending orders can be updated.");
+            return; // Exit the method if the order is not Pending
+        }
+
+        dbConnect db = new dbConnect();
+        Connection con = db.getConnection();
+        ResultSet rs = null;
+        String currentStatusFromDB = null;
+
+        try {
+            String query = "SELECT s_status FROM process WHERE s_id = ?";
+            PreparedStatement pstmt = con.prepareStatement(query);
+            pstmt.setInt(1, selected_s_id);
+            rs = pstmt.executeQuery();
+
+            if (rs.next()) {
+                currentStatusFromDB = rs.getString("s_status");
+
+                if (currentStatusFromDB.equals("Pending")) {
+                    // Update the status in the database to "Complete"
+                    String updateQuery = "UPDATE process SET s_status = 'Complete' WHERE s_id = ?";
+                    PreparedStatement updatePstmt = con.prepareStatement(updateQuery);
+                    updatePstmt.setInt(1, selected_s_id);
+                    int rowsAffected = updatePstmt.executeUpdate();
+
+                    if (rowsAffected > 0) {
+                        ses.setS_status("Complete"); // Update the session as well
+                        // Optionally, update the table model to reflect the change immediately
+                        if (s_status_table_columnIndex < vieworder.getColumnCount()) {
+                            vieworder.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
+                        }
+                        JOptionPane.showMessageDialog(null, "Order status updated to Complete.");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Failed to update order status.");
+                    }
+                    updatePstmt.close();
+                } else if (currentStatusFromDB.equals("Complete")) {
+                    JOptionPane.showMessageDialog(null, "Order status is already Complete.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Order status is not Pending and cannot be updated.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Could not find order with ID: " + selected_s_id);
+            }
+
+            pstmt.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            try {
+                if (rs != null) rs.close();
+                if (con != null) con.close();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+        
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments

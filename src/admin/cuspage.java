@@ -134,7 +134,8 @@ public void ActiveUser(){
 public void showdata(){
         try{
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT * FROM user");
+            ResultSet rs = dbc.getData("SELECT u_id AS 'ID', u_username AS 'Username', u_fname AS 'First Name', u_lname AS 'Last Name', u_email AS 'Email', u_contact AS 'Contact',"
+                    + "u_type AS 'Type', u_stat AS 'Status' FROM user");
             usertable.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
         }catch(SQLException ex){
@@ -208,6 +209,7 @@ public void showdata(){
         jLabel17 = new javax.swing.JLabel();
         searchpanel = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
 
         jScrollPane2.setViewportView(jTree1);
 
@@ -546,6 +548,13 @@ public void showdata(){
         });
         jPanel8.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 100, 40));
 
+        jLabel11.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("Search Username");
+        jPanel8.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 60, 250, 20));
+
         jPanel5.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 300, 800, 350));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 820, 660));
@@ -844,6 +853,7 @@ cusdash.setBackground(logcolor);
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;

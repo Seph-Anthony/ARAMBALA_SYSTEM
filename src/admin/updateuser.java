@@ -53,11 +53,11 @@ public class updateuser extends javax.swing.JFrame {
                 if (confirmpass.getEchoChar() == '\0') {
                     // Hide the password
                     confirmpass.setEchoChar('•'); // Default echo character for passwords
-                    seepass3.setText("Show Password");
+                    seepass3.setText("");
                 } else {
                     // Show the password
                     confirmpass.setEchoChar('\0'); // Set echo char to null to show the password
-                    seepass3.setText("Hide Password");
+                    seepass3.setText("");
                 }
             }
         });
@@ -69,11 +69,11 @@ public class updateuser extends javax.swing.JFrame {
                 if (newpass.getEchoChar() == '\0') {
                     // Hide the password
                     newpass.setEchoChar('•'); // Default echo character for passwords
-                    seepass2.setText("Show Password");
+                    seepass2.setText("");
                 } else {
                     // Show the password
                     newpass.setEchoChar('\0'); // Set echo char to null to show the password
-                    seepass2.setText("Hide Password");
+                    seepass2.setText("");
                 }
             }
         });
@@ -86,17 +86,17 @@ public class updateuser extends javax.swing.JFrame {
                 if (oldpass.getEchoChar() == '\0') {
                     // Hide the password
                     oldpass.setEchoChar('•'); // Default echo character for passwords
-                    seepass1.setText("Show Password");
+                    seepass1.setText("");
                 } else {
                     // Show the password
                     oldpass.setEchoChar('\0'); // Set echo char to null to show the password
-                    seepass1.setText("Hide Password");
+                    seepass1.setText("");
                 }
             }
         });
     }
     
-      
+     
     public String destination = "";
     
     File selectedFile;
@@ -277,7 +277,7 @@ private int getCurrentUserId() {
     }
     
     Color logcolor = new Color(63,195,128);
-    Color excolor = new Color(255,255,255);
+    Color excolor = new Color(0,102,102);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -456,7 +456,7 @@ private int getCurrentUserId() {
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 160, 90, 20));
 
         status.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active" }));
+        status.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Active", "Pending" }));
         status.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 statusActionPerformed(evt);
@@ -578,11 +578,17 @@ private int getCurrentUserId() {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 830, 440));
 
         update.setBackground(new java.awt.Color(0, 102, 102));
-        update.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        update.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         update.setEnabled(false);
         update.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 updateMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updateMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updateMouseExited(evt);
             }
         });
         update.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -607,9 +613,20 @@ private int getCurrentUserId() {
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel7.setText("UPDATE");
-        update.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 40));
+        jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel7MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel7MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel7MouseExited(evt);
+            }
+        });
+        update.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 110, 30));
 
-        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, 170, 60));
+        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, 170, 50));
 
         jLabel1039.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/undostan.png"))); // NOI18N
         jLabel1039.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -862,6 +879,173 @@ private int getCurrentUserId() {
         path = "";
         
     }//GEN-LAST:event_removeMouseClicked
+
+    private void updateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseEntered
+        // TODO add your handling code here:
+        update.setBackground(logcolor);
+        
+    }//GEN-LAST:event_updateMouseEntered
+
+    private void updateMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseExited
+        // TODO add your handling code here:
+        update.setBackground(excolor);
+    }//GEN-LAST:event_updateMouseExited
+
+    private void jLabel7MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseEntered
+        // TODO add your handling code here:
+        
+        update.setBackground(logcolor);
+        
+    }//GEN-LAST:event_jLabel7MouseEntered
+
+    private void jLabel7MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseExited
+        // TODO add your handling code here:
+        
+        update.setBackground(excolor);
+        
+    }//GEN-LAST:event_jLabel7MouseExited
+
+    private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
+        // TODO add your handling code here:
+        
+                     
+
+ dbConnect db = new dbConnect();
+    SessionClass ses = SessionClass.getInstance();
+
+    try {
+           // Debug: Print the user ID being queried
+        System.out.println("Attempting to verify password for user ID: " + uid.getText());
+        
+        // Verify old password
+        String query = "SELECT u_password FROM user WHERE u_id = '" + uid.getText() + "'";
+        ResultSet resultset = db.getData(query);
+        
+        if (resultset.next()) {
+            String storedPasswordHash = resultset.getString("u_password");
+            String enteredPassword = oldpass.getText().trim(); // Trim whitespace
+            String enteredPasswordHash = passwordHasher.hashPassword(enteredPassword);
+            
+            // Debug output
+            System.out.println("Stored hash: " + storedPasswordHash);
+            System.out.println("Entered pass: " + enteredPassword);
+            System.out.println("Entered hash: " + enteredPasswordHash);
+            
+            if (!storedPasswordHash.equals(enteredPasswordHash)) {
+                JOptionPane.showMessageDialog(null, "Old Password Is Incorrect");
+                return;
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "User not found");
+            return;
+        }
+
+
+        // Validate new password confirmation
+        if (!newpass.getText().equals(confirmpass.getText())) {
+            JOptionPane.showMessageDialog(null, "New password and confirmation do not match",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Validate other fields
+        if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+            email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty()) {
+            
+            JOptionPane.showMessageDialog(null, "All fields are required",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        String selectedType = (String) ty.getSelectedItem();
+        if (selectedType == null || selectedType.equals("Please Select a Type")) {
+            JOptionPane.showMessageDialog(null, "Please select a valid user type",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+            JOptionPane.showMessageDialog(null, "Please enter a valid email address",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (oldpass.getText().length() < 8) {
+            JOptionPane.showMessageDialog(null, "Password must be at least 8 characters",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            oldpass.setText("");
+            return;
+        }
+
+        if (!contact.getText().matches("\\d+") || contact.getText().length() < 11 || contact.getText().length() > 15) {
+            JOptionPane.showMessageDialog(null, "Contact must be 11-15 digits",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            contact.setText("");
+            return;
+        }
+
+        if (updatecheck()) {
+            JOptionPane.showMessageDialog(null, "Username or email already exists",
+                "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        // Hash new password
+        String npass = passwordHasher.hashPassword(newpass.getText());
+
+        // Build the update query
+        String updateQuery = "UPDATE user SET " +
+            "u_username = '" + usernamere.getText() + "', " +
+            "u_fname = '" + fname.getText() + "', " +
+            "u_lname = '" + lname.getText() + "', " +
+            "u_email = '" + email.getText() + "', " +
+            "u_contact = '" + contact.getText() + "', " +
+            "u_type = '" + selectedType + "', " +
+            "u_password = '" + npass + "', " +
+            "u_stat = '" + status.getSelectedItem() + "'";
+            
+        if (!destination.isEmpty()) {
+            updateQuery += ", u_image = '" + destination + "'";
+        }
+        
+        updateQuery += " WHERE u_id = '" + uid.getText() + "'";
+
+        db.updateData(updateQuery);
+
+        // Handle image file operations
+        if (!destination.isEmpty()) {
+            if (!oldpath.equals(path)) {
+                imageUpdater(oldpath, path);
+            }
+        } else {
+            File existingFile = new File(oldpath);
+            if (existingFile.exists()) {
+                existingFile.delete();
+            }
+        }
+        
+        // Log the action
+        int currentUserId = getCurrentUserId();
+        logProductAdditionAction(currentUserId, usernamere.getText());
+        
+        JOptionPane.showMessageDialog(null, "Update Successful");
+        
+        SessionClass.getInstance().setU_image(destination);
+        
+        LOGIN log = new LOGIN();
+        log.setVisible(true);
+        this.dispose();
+        
+    } catch (SQLException | NoSuchAlgorithmException ex) {
+        System.out.println("Error: " + ex);
+        JOptionPane.showMessageDialog(null, "An error occurred during update",
+            "Error", JOptionPane.ERROR_MESSAGE);
+    }
+        
+        
+        
+
+    }//GEN-LAST:event_jLabel7MouseClicked
 
     /**
      * @param args the command line arguments

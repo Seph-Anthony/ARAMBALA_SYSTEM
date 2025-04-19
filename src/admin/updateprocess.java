@@ -9,6 +9,9 @@ import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
 import java.awt.Image;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -52,6 +55,34 @@ public ImageIcon ResizeImage(String imgPath, byte[] bytes, JLabel lbl) {
         return new ImageIcon(getClass().getResource("/image/default_product.png")); // Fallback
     }
 }
+
+
+ private void logOrderUpdateAction(int userId, String username, String orderId) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User (" + username + ") updated Order ID: " + orderId);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log order update action: " + e.getMessage());
+    }
+}
+
+private int getCurrentUserId() {
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+
+private String getCurrentUsername() {
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getUsername();
+}
+
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -378,9 +409,7 @@ public ImageIcon ResizeImage(String imgPath, byte[] bytes, JLabel lbl) {
     }//GEN-LAST:event_formWindowActivated
 
     private void UPDATEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UPDATEMouseClicked
-        // TODO add your handling code here:
-        
-          // TODO add your handling code here:
+         // TODO add your handling code here:
 
     // Retrieve values from the text fields
     String newQuantityStr = newquantity.getText();
@@ -390,12 +419,16 @@ public ImageIcon ResizeImage(String imgPath, byte[] bytes, JLabel lbl) {
     String orderIdStr = orid.getText();
     String productPriceStr = prodprice.getText();
     String currentStockStr = prodquan.getText(); // Assuming prodquan holds current product stock
+    String oldQuantityStr = orquantity.getText(); // Get the original quantity
+    String oldCashStr = usercash.getText();       // Get the original cash
 
     int orderId;
     int newQuantity;
     double newCash;
     double productPrice;
     int currentStock;
+    int oldQuantity;
+    double oldCash;
 
     // Perform Input Validations
     if (newQuantityStr.trim().isEmpty() || newCashStr.trim().isEmpty()) {
@@ -450,6 +483,22 @@ public ImageIcon ResizeImage(String imgPath, byte[] bytes, JLabel lbl) {
         return;
     }
 
+    try {
+        oldQuantity = Integer.parseInt(oldQuantityStr);
+    } catch (NumberFormatException e) {
+        // Handle the case where the old quantity might not be a valid number (shouldn't happen based on how it's populated)
+        System.err.println("Error parsing old quantity: " + e.getMessage());
+        return;
+    }
+
+    try {
+        oldCash = Double.parseDouble(oldCashStr);
+    } catch (NumberFormatException e) {
+        // Handle the case where the old cash might not be a valid number
+        System.err.println("Error parsing old cash: " + e.getMessage());
+        return;
+    }
+
     // Calculate the new total amount
     double newTotalAmount = newQuantity * productPrice;
 
@@ -471,19 +520,24 @@ public ImageIcon ResizeImage(String imgPath, byte[] bytes, JLabel lbl) {
 
     dbConnect db = new dbConnect();
     try {
+           int currentUserId = getCurrentUserId();
+        String currentUsername = getCurrentUsername(); // Get the username
+        // Log the order update action BEFORE updating the database
+        logOrderUpdateAction(currentUserId, currentUsername, orderIdStr);
         db.updateData(updateQuery);
         JOptionPane.showMessageDialog(null, "Order updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
         // Optionally, refresh the order table in the previous frame
         if (getParent() instanceof admin.updateorder) {
-            ((admin.updateorder) getParent()).loadMyOrders(); // Assuming loadOrderData() refreshes the table
+            ((admin.updateorder) getParent()).loadMyOrders(); // Assuming loadMyOrders() refreshes the table
         }
-        // Close the update panel
+       updateorder or = new updateorder();
+       or.setVisible(true);
+        this.dispose(); // Close the current updateprocess frame
     } catch (Exception ex) {
         JOptionPane.showMessageDialog(null, "Error updating order: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
-        
     }//GEN-LAST:event_UPDATEMouseClicked
 
     /**
