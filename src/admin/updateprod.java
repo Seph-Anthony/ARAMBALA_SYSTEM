@@ -5,6 +5,7 @@
  */
 package admin;
 
+import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
 import java.awt.Image;
@@ -119,7 +120,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         }
    }
     
-        private void logProductAdditionAction(int userId, String productName) {
+    private void logProductAdditionAction(int userId, String productName, String username) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
     dbConnect db = new dbConnect();
@@ -127,7 +128,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
         pstmt.setInt(1, userId);
-        pstmt.setString(2, "Product Updated: " + productName);
+        pstmt.setString(2, ""+username+" Product Updated: " + productName);
         pstmt.executeUpdate();
 
     } catch (SQLException e) {
@@ -178,8 +179,6 @@ private int getCurrentUserId() {
         jLabel1039 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         image = new javax.swing.JLabel();
-        remove = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         select = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         add = new javax.swing.JPanel();
@@ -370,23 +369,6 @@ private int getCurrentUserId() {
 
         jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 180, 190));
 
-        remove.setBackground(new java.awt.Color(0, 102, 102));
-        remove.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        remove.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                removeMouseClicked(evt);
-            }
-        });
-        remove.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("REMOVE");
-        remove.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 70, 20));
-
-        jPanel5.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 250, 90, 40));
-
         select.setBackground(new java.awt.Color(0, 102, 102));
         select.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         select.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -402,7 +384,7 @@ private int getCurrentUserId() {
         jLabel14.setText("SELECT");
         select.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 60, 20));
 
-        jPanel5.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 80, 40));
+        jPanel5.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 250, 80, 40));
 
         jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 760, 390));
 
@@ -466,6 +448,7 @@ private int getCurrentUserId() {
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
  dbConnect db = new dbConnect();
+ SessionClass ses = SessionClass.getInstance();
     String selectedCategory = (String) pcat.getSelectedItem();
 
     // Validate input fields
@@ -540,6 +523,10 @@ private int getCurrentUserId() {
         db.updateData(query);
         JOptionPane.showMessageDialog(null, "Product updated successfully");
         
+         int currentUserId = getCurrentUserId(); // Get the user ID
+        String user = ses.getUsername();
+        String productName = pid.getText(); // Get the product name from the text field
+        logProductAdditionAction(currentUserId, productName, user);
         // Return to admin dashboard
         admindash ad = new admindash();
         ad.setVisible(true);
@@ -600,24 +587,13 @@ private int getCurrentUserId() {
                             JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
                             select.setEnabled(false);
                           
-                            remove.setEnabled(true);
+                       
                         }
                     } catch (Exception ex) {
                         System.out.println("File Error!");
                     }
                 }
     }//GEN-LAST:event_selectMouseClicked
-
-    private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
-        // TODO add your handling code here:
-       // Show confirmation dialog
-      JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
-        remove.setEnabled(false);
-        select.setEnabled(true);
-        image.setIcon(null);
-        destination ="";
-        path = "";
-    }//GEN-LAST:event_removeMouseClicked
 
     /**
      * @param args the command line arguments
@@ -669,7 +645,6 @@ private int getCurrentUserId() {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
@@ -684,7 +659,6 @@ private int getCurrentUserId() {
     public javax.swing.JTextField pprice;
     public javax.swing.JTextField pstatus;
     public javax.swing.JTextField pstock;
-    public javax.swing.JPanel remove;
     public javax.swing.JPanel select;
     // End of variables declaration//GEN-END:variables
 }

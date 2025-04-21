@@ -5,8 +5,10 @@
  */
 package USER;
 
+import admin.admindash;
 import config.SessionClass;
 import config.dbConnect;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -28,6 +30,9 @@ private int currentUserId; //
         SessionClass ses = SessionClass.getInstance();
         this.currentUserId = ses.getU_id();
     }
+ 
+      Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
     
  
        private void logProductAdditionAction(int userId, String Username) {
@@ -70,7 +75,7 @@ private int currentUserId; //
     private void initComponents() {
 
         jLabel1 = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
+        backbutton = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -82,7 +87,7 @@ private int currentUserId; //
         jLabel7 = new javax.swing.JLabel();
         childname = new javax.swing.JTextField();
         BACK = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
+        back = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
@@ -95,8 +100,8 @@ private int currentUserId; //
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        backbutton.setBackground(new java.awt.Color(255, 255, 255));
+        backbutton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -117,37 +122,37 @@ private int currentUserId; //
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/insurance-policy.png"))); // NOI18N
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 70, 60));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 360, 80));
+        backbutton.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 360, 80));
 
         favsub.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         favsub.setForeground(new java.awt.Color(0, 102, 102));
         favsub.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "English", "Math", "Science", "History", " " }));
         favsub.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(favsub, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 280, 40));
+        backbutton.add(favsub, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 280, 40));
 
         favcolor.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         favcolor.setForeground(new java.awt.Color(0, 102, 102));
         favcolor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Brown", "Yellow", "Red", "Green", "Orange", "Black", "White", " " }));
         favcolor.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(favcolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 280, 40));
+        backbutton.add(favcolor, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 180, 280, 40));
 
         jLabel5.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel5.setText("What is your childhood nickname?");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+        backbutton.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
 
         jLabel6.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel6.setText("What is your favorite color?");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
+        backbutton.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 160, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         jLabel7.setText("What is your favorite subject?");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
+        backbutton.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 260, -1, -1));
 
         childname.setBackground(new java.awt.Color(240, 240, 240));
         childname.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         childname.setForeground(new java.awt.Color(0, 102, 102));
         childname.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(childname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 280, 40));
+        backbutton.add(childname, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 280, 40));
 
         BACK.setBackground(new java.awt.Color(0, 102, 102));
         BACK.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -155,19 +160,31 @@ private int currentUserId; //
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BACKMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                BACKMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                BACKMouseExited(evt);
+            }
         });
         BACK.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("Back");
-        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+        back.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        back.setForeground(new java.awt.Color(255, 255, 255));
+        back.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        back.setText("Back");
+        back.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel8MouseClicked(evt);
+                backMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                backMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                backMouseExited(evt);
             }
         });
-        BACK.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
+        BACK.add(back, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
 
         jPanel7.setBackground(new java.awt.Color(0, 102, 102));
         jPanel7.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -181,18 +198,24 @@ private int currentUserId; //
 
         BACK.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 140, 50));
 
-        jPanel1.add(BACK, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 110, 50));
+        backbutton.add(BACK, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 460, 110, 50));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setText("Make sure to input the proper details that you will remember!");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 390, 10));
+        backbutton.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 390, 10));
 
         addsecuritypanelbutton.setBackground(new java.awt.Color(0, 102, 102));
         addsecuritypanelbutton.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         addsecuritypanelbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addsecuritypanelbuttonMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addsecuritypanelbuttonMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addsecuritypanelbuttonMouseExited(evt);
             }
         });
         addsecuritypanelbutton.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -201,6 +224,17 @@ private int currentUserId; //
         add.setForeground(new java.awt.Color(255, 255, 255));
         add.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         add.setText("Add");
+        add.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addMouseExited(evt);
+            }
+        });
         addsecuritypanelbutton.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, 30));
 
         jPanel9.setBackground(new java.awt.Color(0, 102, 102));
@@ -215,17 +249,17 @@ private int currentUserId; //
 
         addsecuritypanelbutton.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 140, 50));
 
-        jPanel1.add(addsecuritypanelbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 140, 50));
+        backbutton.add(addsecuritypanelbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 460, 140, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
+            .addComponent(backbutton, javax.swing.GroupLayout.DEFAULT_SIZE, 429, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(backbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 579, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -234,16 +268,54 @@ private int currentUserId; //
 
     private void BACKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BACKMouseClicked
         // TODO add your handling code here:
+        SessionClass ses = SessionClass.getInstance();
+        String usertype = ses.getType();
+        
+        if(usertype.equals("Admin")){
+            
+            admindash ad = new admindash();
+           ad.setVisible(true);
+           this.dispose();
+            
+        }
+        else{
+            
+            
+        
+        
+        
         employeeinfo up = new employeeinfo();
         up.setVisible(true);
     this.dispose();
+    
+        }
     }//GEN-LAST:event_BACKMouseClicked
 
-    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+    private void backMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseClicked
         // TODO add your handling code here:
+         SessionClass ses = SessionClass.getInstance();
+        String usertype = ses.getType();
+        
+        if(usertype.equals("Admin")){
+            
+            admindash ad = new admindash();
+           ad.setVisible(true);
+           this.dispose();
+            
+        }
+        else{
+            
+            
         
         
-    }//GEN-LAST:event_jLabel8MouseClicked
+        
+        employeeinfo up = new employeeinfo();
+        up.setVisible(true);
+    this.dispose();
+    
+        }
+        
+    }//GEN-LAST:event_backMouseClicked
 
     private void addsecuritypanelbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addsecuritypanelbuttonMouseClicked
         // TODO add your handling code here:
@@ -294,6 +366,104 @@ try {
 }
     }//GEN-LAST:event_addsecuritypanelbuttonMouseClicked
 
+    private void backMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseEntered
+        // TODO add your handling code here:
+        
+        BACK.setBackground(logcolor);
+    }//GEN-LAST:event_backMouseEntered
+
+    private void backMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backMouseExited
+        // TODO add your handling code here:
+        
+         BACK.setBackground(excolor);
+    }//GEN-LAST:event_backMouseExited
+
+    private void BACKMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BACKMouseEntered
+        // TODO add your handling code here:
+        BACK.setBackground(logcolor);
+    }//GEN-LAST:event_BACKMouseEntered
+
+    private void BACKMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BACKMouseExited
+        // TODO add your handling code here:
+        
+        BACK.setBackground(excolor);
+    }//GEN-LAST:event_BACKMouseExited
+
+    private void addsecuritypanelbuttonMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addsecuritypanelbuttonMouseEntered
+        // TODO add your handling code here:
+          addsecuritypanelbutton.setBackground(logcolor);
+        
+    }//GEN-LAST:event_addsecuritypanelbuttonMouseEntered
+
+    private void addsecuritypanelbuttonMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addsecuritypanelbuttonMouseExited
+        // TODO add your handling code here:
+        
+        addsecuritypanelbutton.setBackground(excolor);
+    }//GEN-LAST:event_addsecuritypanelbuttonMouseExited
+
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+        // TODO add your handling code here:
+        
+         addsecuritypanelbutton.setBackground(logcolor);
+    }//GEN-LAST:event_addMouseEntered
+
+    private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
+        // TODO add your handling code here:
+        
+         addsecuritypanelbutton.setBackground(excolor);
+    }//GEN-LAST:event_addMouseExited
+
+    private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
+        // TODO add your handling code here:
+        
+          String colorAnswer = (String)favcolor.getSelectedItem();
+    String subjectAnswer = (String)favsub.getSelectedItem();
+    String nicknameAnswer = childname.getText().trim();
+      SessionClass sess = SessionClass.getInstance();
+    // 2. Validate inputs
+    if(nicknameAnswer.isEmpty()) {
+        JOptionPane.showMessageDialog(this, 
+            "Please enter your childhood nickname", 
+            "Missing Information", 
+            JOptionPane.WARNING_MESSAGE);
+        childname.requestFocus();
+        return;
+    }
+    
+    // 3. Prepare SQL update
+    String sql = "UPDATE user SET " +
+                 "u_ans1 = '" + colorAnswer + "', " +
+                 "u_ans2 = '" + subjectAnswer + "', " +
+                 "u_ans3 = '" + nicknameAnswer + "' " +
+                 "WHERE u_id = " + currentUserId;
+    
+    // 4. Execute update
+   
+        dbConnect db = new dbConnect();
+
+// First verify the user exists
+try {
+    ResultSet rs = db.getData("SELECT u_id FROM user WHERE u_id = " + currentUserId);
+    if (!rs.next()) {
+        JOptionPane.showMessageDialog(this, "User not found!");
+        return;
+    }
+    
+    // Then perform the update
+    db.updateData(sql);  // Void call
+    
+    // Assume success if no exception was thrown
+    int currentUserId = getCurrentUserId();
+            logProductAdditionAction(currentUserId, sess.getUsername());
+    
+    JOptionPane.showMessageDialog(this, "Security questions saved!");
+    
+} catch (SQLException ex) {
+    JOptionPane.showMessageDialog(this, "Error: " + ex.getMessage());
+}
+        
+    }//GEN-LAST:event_addMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -333,6 +503,8 @@ try {
     private javax.swing.JPanel BACK;
     private javax.swing.JLabel add;
     private javax.swing.JPanel addsecuritypanelbutton;
+    private javax.swing.JLabel back;
+    private javax.swing.JPanel backbutton;
     private javax.swing.JTextField childname;
     private javax.swing.JComboBox<String> favcolor;
     private javax.swing.JComboBox<String> favsub;
@@ -345,9 +517,7 @@ try {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;

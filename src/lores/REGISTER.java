@@ -741,7 +741,7 @@ private void logRegistrationAction(String username) {
         jLabel2.setToolTipText("");
         jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 430, 60));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 670));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 400, 680));
 
         jLabel269.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/user 30_1.png"))); // NOI18N
         jPanel1.add(jLabel269, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 0, 40, 60));
@@ -3480,15 +3480,13 @@ private void logRegistrationAction(String username) {
         seepass1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/eyegamay.png"))); // NOI18N
         jPanel261.add(seepass1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 440, 40, 30));
 
-        jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 370, 660));
+        jPanel1.add(jPanel261, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 0, 360, 660));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 831, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

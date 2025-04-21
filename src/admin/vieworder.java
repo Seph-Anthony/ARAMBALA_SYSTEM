@@ -10,6 +10,8 @@ import USER.employdash;
 import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -31,6 +33,61 @@ public class vieworder extends javax.swing.JFrame {
 public vieworder() {
         initComponents();
         displayAllOrders(); // Call the method to display only pending orders
+        
+          SearchButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username =searchuser.getText().trim();
+                if (!username.isEmpty()) {
+                    searchUser(username);
+                } else {
+                    JOptionPane.showMessageDialog(vieworder.this, "Please enter a username.");
+                }
+            }
+        });
+        
+    }
+
+
+
+ private void logOrderUpdateAction(int userId, String username, int orderId) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "User (" + username + ") updated Order ID: " + orderId);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log order update action: " + e.getMessage());
+    }
+}
+
+private int getCurrentUserId() {
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+
+private String getCurrentUsername() {
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getUsername();
+}
+
+
+
+ private void searchUser(String username) {
+        try {
+            dbConnect dbc = new dbConnect();
+            ResultSet rs = dbc.getData("SELECT s_id AS 'Order Id', u_id AS 'User Id', p_id AS 'Product Id', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash', s_change AS 'Change', s_status AS 'Status', s_date AS 'Date' FROM process WHERE u_id = '" + username + "'");
+            vieworder.setModel(DbUtils.resultSetToTableModel(rs));
+            rs.close();
+        } catch (SQLException ex) {
+            System.out.println("Error: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error searching for user.");
+        }
     }
 
   public void displayAllOrders() {
@@ -72,6 +129,9 @@ Color logcolor = new Color(63,195,128);
         jLabel4 = new javax.swing.JLabel();
         reset = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
+        searchuser = new javax.swing.JTextField();
+        SearchButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -96,9 +156,9 @@ Color logcolor = new Color(63,195,128);
         ));
         jScrollPane1.setViewportView(vieworder);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 680, 390));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 680, 380));
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 270, 700, 410));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 700, 400));
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -170,7 +230,7 @@ Color logcolor = new Color(63,195,128);
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 720, 100));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 720, 100));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
@@ -210,7 +270,7 @@ Color logcolor = new Color(63,195,128);
         });
         update.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 30));
 
-        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 190, 190, 50));
+        jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 190, 50));
 
         reset.setBackground(new java.awt.Color(0, 102, 102));
         reset.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -232,13 +292,51 @@ Color logcolor = new Color(63,195,128);
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel5.setText("RESET");
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel5MouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 jLabel5MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel5MouseExited(evt);
             }
         });
         reset.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
 
-        jPanel1.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 190, 110, 50));
+        jPanel1.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 110, 50));
+
+        jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("ORDERS");
+        jLabel21.setVerifyInputWhenFocusTarget(false);
+        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 140, 30));
+
+        searchuser.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
+        searchuser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        searchuser.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        searchuser.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                searchuserMouseReleased(evt);
+            }
+        });
+        searchuser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                searchuserActionPerformed(evt);
+            }
+        });
+        jPanel1.add(searchuser, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 240, 250, 30));
+
+        SearchButton.setBackground(new java.awt.Color(255, 255, 255));
+        SearchButton.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        SearchButton.setText("SEARCH");
+        SearchButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                SearchButtonActionPerformed(evt);
+            }
+        });
+        jPanel1.add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 100, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -348,7 +446,7 @@ Color logcolor = new Color(63,195,128);
         // TODO add your handling code here:
         int rowindex = vieworder.getSelectedRow();
         SessionClass ses = SessionClass.getInstance();
-
+        int orderIdStr = ses.getS_id();
         if (rowindex < 0) {
             JOptionPane.showMessageDialog(null, "PLEASE SELECT An ORDER");
             return; // Exit the method if no row is selected
@@ -395,6 +493,10 @@ Color logcolor = new Color(63,195,128);
                         if (s_status_table_columnIndex < vieworder.getColumnCount()) {
                             vieworder.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
                         }
+                         int currentUserId = getCurrentUserId();
+        String currentUsername = getCurrentUsername(); // Get the username
+        // Log the order update action BEFORE updating the database
+        logOrderUpdateAction(currentUserId, currentUsername, orderIdStr);
                         JOptionPane.showMessageDialog(null, "Order status updated to Complete.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Failed to update order status.");
@@ -446,6 +548,9 @@ Color logcolor = new Color(63,195,128);
 
     private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
         // TODO add your handling code here:
+        
+        reset.setBackground(logcolor);
+        
     }//GEN-LAST:event_jLabel5MouseEntered
 
     private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
@@ -553,6 +658,33 @@ Color logcolor = new Color(63,195,128);
         
     }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
+        // TODO add your handling code here:
+        
+        reset.setBackground(excolor);
+        
+    }//GEN-LAST:event_jLabel5MouseExited
+
+    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
+        // TODO add your handling code here:
+        
+           displayAllOrders();
+        
+    }//GEN-LAST:event_jLabel5MouseClicked
+
+    private void searchuserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchuserMouseReleased
+        // TODO add your handling code here:
+
+    }//GEN-LAST:event_searchuserMouseReleased
+
+    private void searchuserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchuserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_searchuserActionPerformed
+
+    private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_SearchButtonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -589,8 +721,10 @@ Color logcolor = new Color(63,195,128);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton SearchButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -604,6 +738,7 @@ Color logcolor = new Color(63,195,128);
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel reset;
+    private javax.swing.JTextField searchuser;
     private javax.swing.JPanel update;
     private javax.swing.JTable vieworder;
     // End of variables declaration//GEN-END:variables

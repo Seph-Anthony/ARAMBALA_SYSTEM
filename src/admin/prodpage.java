@@ -53,6 +53,29 @@ public class prodpage extends javax.swing.JFrame {
         
     }
     
+    
+         private void logProductAdditionAction(int userId, String prodid) {
+    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+    dbConnect db = new dbConnect();
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, " "+prodid+" Deleted Product");
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log product addition action: " + e.getMessage());
+    }
+}
+         
+         private int getCurrentUserId() {
+    // Access the user ID from the SessionClass
+    config.SessionClass ses = config.SessionClass.getInstance();
+    return ses.getU_id();
+}
+    
      private void searchUser(String username) {
         try {
             dbConnect dbc = new dbConnect();
@@ -666,6 +689,7 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
     private void DELETEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseClicked
       
         // Inside the DELETEMouseClicked method
+SessionClass ses =  SessionClass.getInstance();
 
     int rowIndex = protable.getSelectedRow();
     
@@ -691,6 +715,11 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
             // Connect to the database
             dbConnect dbc = new dbConnect();
             
+            
+              int currentUserId = getCurrentUserId();
+        String prod = ses.getUsername();
+        logProductAdditionAction(currentUserId, prod);
+            
             // Prepare the DELETE query
             String query = "DELETE FROM product WHERE p_id = ?";
             PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
@@ -702,6 +731,8 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
             if (rowsDeleted > 0) {
                 JOptionPane.showMessageDialog(this, "Product deleted successfully.");
                 
+                
+              
                 // Refresh the table to reflect the changes
                 displayData();
                 

@@ -338,6 +338,7 @@ public void AllProcess() {
         jLabel26 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
+        jLabel29 = new javax.swing.JLabel();
 
         jPanel261.setBackground(new java.awt.Color(204, 255, 255));
         jPanel261.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -810,6 +811,13 @@ public void AllProcess() {
         });
         jPanel3.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 0, 40, 40));
 
+        jLabel29.setBackground(new java.awt.Color(204, 204, 204));
+        jLabel29.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel29.setText("Search Username");
+        jPanel3.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 260, 250, 20));
+
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 10, 620, 730));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -10, 820, 740));
@@ -910,40 +918,46 @@ public void AllProcess() {
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
         // TODO add your handling code here:
-          config.SessionClass ses = config.SessionClass.getInstance();
-         
-        // Show a confirmation dialog
-        int choice = JOptionPane.showConfirmDialog(this,
-                "Do you really wish to logout the program?",
-                "Logout Confirmation",
-                JOptionPane.YES_NO_OPTION);
-int id = getCurrentUserId();
-        String username = ses.getUsername();
-        logProductAdditionAction(id, username);
-        
-        // Check if the user clicked "Yes"
-        if (choice == JOptionPane.YES_OPTION) {
-            // Perform logout actions here
+//          config.SessionClass ses = config.SessionClass.getInstance();
+//         
+//        // Show a confirmation dialog
+//        int choice = JOptionPane.showConfirmDialog(this,
+//                "Do you really wish to logout the program?",
+//                "Logout Confirmation",
+//                JOptionPane.YES_NO_OPTION);
+//int id = getCurrentUserId();
+//        String username = ses.getUsername();
+//        logProductAdditionAction(id, username);
+//        
+//        // Check if the user clicked "Yes"
+//        if (choice == JOptionPane.YES_OPTION) {
+//            // Perform logout actions here
+//
+//            // 1. Optionally, log the logout action (without relying on session for user info)
+//            // You might need to get user info from somewhere else if you want to log.
+//            // Example (if you have a currently displayed username):
+//            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
+//
+//            // 2. Dispose of the current form
+//            this.dispose();
+//
+//            // 3. Optionally, exit the entire application
+//            // System.exit(0);
+//        }
+//        
+//        else {
+//            
+//            LOGIN ad = new LOGIN();
+//            ad.setVisible(true);
+//            this.dispose();
+//            
+//        }
 
-            // 1. Optionally, log the logout action (without relying on session for user info)
-            // You might need to get user info from somewhere else if you want to log.
-            // Example (if you have a currently displayed username):
-            // logLogoutAction(getCurrentLoggedInUserId(), currentUsernameLabel.getText());
 
-            // 2. Dispose of the current form
-            this.dispose();
-
-            // 3. Optionally, exit the entire application
-            // System.exit(0);
-        }
-        
-        else {
-            
             LOGIN ad = new LOGIN();
             ad.setVisible(true);
             this.dispose();
-            
-        }
+
     }//GEN-LAST:event_jLabel6MouseClicked
 
     private void jPanel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseClicked
@@ -1260,6 +1274,7 @@ int id = getCurrentUserId();
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
