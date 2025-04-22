@@ -101,22 +101,21 @@ private int getCurrentUserId() {
     return image;
 }
     
-    public void displayUserImage(JLabel admiimage) {
+       public void displayUserImage(JLabel adminImageLabel) {
     SessionClass session = SessionClass.getInstance();
     String imagePath = session.getU_image();
-    
-    if (imagePath != null && !imagePath.isEmpty()) {
-        try {
-            ImageIcon icon = new ImageIcon(imagePath);
-            // Resize if needed (using your existing ResizeImage method)
-            customerdash.setIcon(ResizeImage(imagePath, null, customerdash));
-        } catch (Exception e) {
-            // Set default image if there's an error
-            customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+
+    if (adminImageLabel != null) { // Ensure the JLabel is not null
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                ImageIcon icon = new ImageIcon(imagePath);
+                adminImageLabel.setIcon(ResizeImage(imagePath, null, adminImageLabel));
+            } catch (Exception e) {
+                adminImageLabel.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+            }
+        } else {
+            adminImageLabel.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
         }
-    } else {
-        // Set default image if no image path exists
-        customerdash.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
     }
 }
     
@@ -345,15 +344,15 @@ public void AllProd() {
 
         customerdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         customerdash.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 150, 140));
+        jPanel5.add(customerdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 150, 170));
 
-        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, -1));
+        jPanel7.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 170));
 
         cusinfo1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         cusinfo1.setForeground(new java.awt.Color(255, 255, 255));
         cusinfo1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cusinfo1.setText("ID");
-        jPanel7.add(cusinfo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 70, 30));
+        jPanel7.add(cusinfo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, 70, 30));
 
         cusdash.setBackground(new java.awt.Color(63, 195, 128));
         cusdash.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -361,7 +360,7 @@ public void AllProd() {
         cusdash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cusdash.setText("Customer");
         cusdash.setVerifyInputWhenFocusTarget(false);
-        jPanel7.add(cusdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 170, 30));
+        jPanel7.add(cusdash, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 170, 30));
 
         jPanel18.setBackground(new java.awt.Color(255, 255, 255));
         jPanel18.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));

@@ -27,6 +27,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.UIManager;
 
 /**
  *
@@ -211,7 +212,7 @@ private int getCurrentUserId() {
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -224,7 +225,7 @@ private int getCurrentUserId() {
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 314, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 316, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
@@ -393,6 +394,17 @@ private int getCurrentUserId() {
         jLabel10.setForeground(new java.awt.Color(255, 255, 255));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel10.setText("ADD PRODUCT");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel10MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel10MouseExited(evt);
+            }
+        });
         add.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 160, 30));
 
         jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 520, 200, 70));
@@ -452,6 +464,14 @@ private int getCurrentUserId() {
 
     if (selectedFile == null) {
         // ... (image should not be empty message) ...
+    JOptionPane.showMessageDialog(
+    null,
+    "Please select an image to represent the product.",
+    "Image Required",
+    JOptionPane.WARNING_MESSAGE, // Use warning as it's a missing step
+    UIManager.getIcon("OptionPane.warningIcon")
+);
+        
         return;
     }
 
@@ -559,6 +579,102 @@ private int getCurrentUserId() {
                 }
         
     }//GEN-LAST:event_selectMouseClicked
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        // TODO add your handling code here:
+         dbConnect db = new dbConnect();
+    SessionClass ses = SessionClass.getInstance();
+    String selectedCategory = (String) prodcategory.getSelectedItem();
+
+    // ... (other validation checks) ...
+
+    if (selectedFile == null) {
+        // ... (image should not be empty message) ...
+    JOptionPane.showMessageDialog(
+    null,
+    "Please select an image to represent the product.",
+    "Image Required",
+    JOptionPane.WARNING_MESSAGE, // Use warning as it's a missing step
+    UIManager.getIcon("OptionPane.warningIcon")
+);
+        
+        return;
+    }
+
+    String productImagesFolder = "src/productimages"; // Relative path
+    String destination = null;
+
+    if (selectedFile != null) {
+        String originalFileName = selectedFile.getName();
+        String fileExtension = "";
+        int dotIndex = originalFileName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+            fileExtension = originalFileName.substring(dotIndex);
+        }
+        String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+        destination = productImagesFolder + "/" + uniqueFileName;
+
+        // Ensure directory exists
+        File destDir = new File(productImagesFolder);
+        if (!destDir.exists()) {
+            if (!destDir.mkdirs()) { // Create directories if they don't exist
+                JOptionPane.showMessageDialog(null, "Error creating image directory.", "Image Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+        }
+
+        try {
+            Path sourcePath = selectedFile.toPath();
+            Path destinationPath = Paths.get(destination);
+            Files.copy(sourcePath, destinationPath, StandardCopyOption.REPLACE_EXISTING);
+        } catch (IOException ex) {
+            System.out.println("Image Insertion Error: " + ex);
+            JOptionPane.showMessageDialog(null, "Error saving image: " + ex.getMessage(), "Image Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    }
+
+    String query = "INSERT INTO product (p_name, p_category, p_brand, p_price, p_stock, p_status, p_image) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+        pstmt.setString(1, proname.getText());
+        pstmt.setString(2, selectedCategory);
+        pstmt.setString(3, probrand.getText());
+        pstmt.setDouble(4, Double.parseDouble(proprice.getText()));
+        pstmt.setInt(5, Integer.parseInt(prostock.getText()));
+        pstmt.setString(6, (Integer.parseInt(prostock.getText()) == 0) ? "Not Available" : "Available");
+        pstmt.setString(7, destination);
+
+        int result = pstmt.executeUpdate();
+
+        if (result == 1) {
+            JOptionPane.showMessageDialog(null, "Product added successfully.");
+            // ... (logging) ...
+        } else {
+            JOptionPane.showMessageDialog(null, "Error adding product. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
+ 
+        
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void jLabel10MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseEntered
+        // TODO add your handling code here:
+        add.setBackground(logcolor);
+        
+        
+    }//GEN-LAST:event_jLabel10MouseEntered
+
+    private void jLabel10MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseExited
+        // TODO add your handling code here:
+        
+        add.setBackground(excolor);
+    }//GEN-LAST:event_jLabel10MouseExited
     
    
     

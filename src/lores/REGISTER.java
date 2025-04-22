@@ -3518,105 +3518,106 @@ private void logRegistrationAction(String username) {
 
     private void registerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseClicked
   dbConnect db = new dbConnect();
+    String defaultImagePath = "src/userimages/default_user.png"; // Define your default image path
 
-// Validate all fields
-if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-    email.getText().isEmpty() || contact.getText().isEmpty() || enterpass.getText().isEmpty() || confirmpass.getText().isEmpty()) {
-    JOptionPane.showMessageDialog(null, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-
-// Validate user type selection
-String selectedType = (String) ty.getSelectedItem();
-if (selectedType == null || selectedType.equals("Please Select a Type")) {
-    JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
-        "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-
-// Validate email format
-if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-    JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
-        "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-
-// Validate password length
-if (enterpass.getText().length() < 8) {
-    JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
-        "Error", JOptionPane.ERROR_MESSAGE);
-    enterpass.setText("");
-    return;
-}
-
-// Validate password and confirm password match
-if (!enterpass.getText().equals(confirmpass.getText())) {
-    JOptionPane.showMessageDialog(null, "Password and Confirm Password do not match.",
-        "Error", JOptionPane.ERROR_MESSAGE);
-    enterpass.setText("");
-    confirmpass.setText("");
-    return;
-}
-
-// Validate contact number
-if (!contact.getText().matches("\\d+")) {
-    JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-        "Error", JOptionPane.ERROR_MESSAGE);
-    return;
-}
-if (contact.getText().length() < 11 || contact.getText().length() > 15) {
-    JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
-        "Error", JOptionPane.ERROR_MESSAGE);
-    contact.setText("");
-    return;
-}
-
-// Check for duplicate entries (assuming dupcheck() is defined elsewhere)
-if (dupcheck()) {
-    System.out.println("Duplicated Exist!");
-    return;
-}
-
-// Hash the password
-try {
-    String passwords = passwordHasher.hashPassword(enterpass.getText());
-
-    // Set status based on user type
-    String status = "Pending";
-    if ("Admin".equals(selectedType)) {
-        status = "Pending";
+    // Validate all fields
+    if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+        email.getText().isEmpty() || contact.getText().isEmpty() || enterpass.getText().isEmpty() || confirmpass.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
     }
 
-    // Insert new user into the database
-    String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat) " +
-                   "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "', " +
-                   "'" + email.getText() + "', '" + contact.getText() + "', '" + selectedType + "', '" + passwords + "', '" + status + "')";
+    // Validate user type selection
+    String selectedType = (String) ty.getSelectedItem();
+    if (selectedType == null || selectedType.equals("Please Select a Type")) {
+        JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-    if (db.insertData(query) == 1) {
-        JOptionPane.showMessageDialog(null, "User Successfully Added");
-       logRegistrationAction(usernamere.getText());
-       
+    // Validate email format
+    if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    // Validate password length
+    if (enterpass.getText().length() < 8) {
+        JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        enterpass.setText("");
+        return;
+    }
+
+    // Validate password and confirm password match
+    if (!enterpass.getText().equals(confirmpass.getText())) {
+        JOptionPane.showMessageDialog(null, "Password and Confirm Password do not match.",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        enterpass.setText("");
+        confirmpass.setText("");
+        return;
+    }
+
+    // Validate contact number
+    if (!contact.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (contact.getText().length() < 11 || contact.getText().length() > 15) {
+        JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+            "Error", JOptionPane.ERROR_MESSAGE);
+        contact.setText("");
+        return;
+    }
+
+    // Check for duplicate entries (assuming dupcheck() is defined elsewhere)
+    if (dupcheck()) {
+        System.out.println("Duplicated Exist!");
+        return;
+    }
+
+    // Hash the password
+    try {
+        String passwords = passwordHasher.hashPassword(enterpass.getText());
+
+        // Set status based on user type
+        String status = "Pending";
         if ("Admin".equals(selectedType)) {
-             LOGIN loglog = new LOGIN();
-            loglog.setVisible(true);
-        } else if ("Customer".equals(selectedType)) {
-            LOGIN loglog = new LOGIN();
-            loglog.setVisible(true);
-        } else if ("Employee".equals(selectedType)) {
-            LOGIN log = new LOGIN();
-            log.setVisible(true);
+            status = "Pending";
+        }
+
+        // Insert new user into the database, including the default image path
+        String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat, u_image) " +
+                       "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "', " +
+                       "'" + email.getText() + "', '" + contact.getText() + "', '" + selectedType + "', '" + passwords + "', '" + status + "', '" + defaultImagePath + "')";
+
+        if (db.insertData(query) == 1) {
+            JOptionPane.showMessageDialog(null, "User Successfully Added");
+            logRegistrationAction(usernamere.getText());
+
+            if ("Admin".equals(selectedType)) {
+                LOGIN loglog = new LOGIN();
+                loglog.setVisible(true);
+            } else if ("Customer".equals(selectedType)) {
+                LOGIN loglog = new LOGIN();
+                loglog.setVisible(true);
+            } else if ("Employee".equals(selectedType)) {
+                LOGIN log = new LOGIN();
+                log.setVisible(true);
+            } else {
+                JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+            this.dispose(); // Close the current window
         } else {
             JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        this.dispose(); // Close the current window
-    } else {
-        JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+    } catch (NoSuchAlgorithmException ex) {
+        System.out.println("Error: " + ex);
+        JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
     }
-} catch (NoSuchAlgorithmException ex) {
-    System.out.println("Error: " + ex);
-    JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-}
         
     }//GEN-LAST:event_registerMouseClicked
     

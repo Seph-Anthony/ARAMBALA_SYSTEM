@@ -11,6 +11,7 @@ import config.SessionClass;
 import config.dbConnect;
 import config.passwordHasher;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -26,6 +27,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.UUID;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -44,8 +46,35 @@ public class updateuser extends javax.swing.JFrame {
      */
     public updateuser() {
         initComponents();
-        
-        
+        displayUserImage(image);
+        remove.setEnabled(false);
+remove.setCursor(Cursor.getDefaultCursor());
+
+select.addMouseListener(new MouseAdapter() {
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        JFileChooser fileChooser = new JFileChooser();
+        int returnValue = fileChooser.showOpenDialog(null);
+        if (returnValue == JFileChooser.APPROVE_OPTION) {
+            selectedFile = fileChooser.getSelectedFile();
+            path = "src/userimages/" + selectedFile.getName();
+            displayUserImage(image, path);
+
+            // Visually enable the remove panel (adapt based on your setup)
+            // Example: removeLabel.setEnabled(true);
+            //          remove.setBackground(originalRemoveColor);
+            remove.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+
+            // Visually indicate selectPanel is now inactive (optional)
+            // Example: selectPanel.setBackground(Color.LIGHT_GRAY);
+            select.setCursor(Cursor.getDefaultCursor());
+            // You might also want to prevent further clicks on selectPanel here
+            select.removeMouseListener(this); // Remove this MouseListener
+        }
+    }
+});
+
+
           seepass3.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -95,7 +124,23 @@ public class updateuser extends javax.swing.JFrame {
             }
         });
     }
-    
+  public void displayUserImage(JLabel admiimage) {
+        SessionClass session = SessionClass.getInstance();
+        String imagePath = session.getU_image();
+        displayUserImage(admiimage, imagePath);
+    }
+
+    public void displayUserImage(JLabel label, String imagePath) {
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                label.setIcon(ResizeImage(imagePath, null, label));
+            } catch (Exception e) {
+                label.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+            }
+        } else {
+            label.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    }
      
     public String destination = "";
     
@@ -177,27 +222,27 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
             }
         }
    }
-    
-    private void logProductAdditionAction(int userId, String Username) {
-    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+     private void logUserUpdateAction(int userId, String oldUsername, String newUsername) {
+        String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
-    dbConnect db = new dbConnect();
-    try (Connection conn = db.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        dbConnect db = new dbConnect();
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        pstmt.setInt(1, userId);
-        pstmt.setString(2, "User Updated: " + Username);
-        pstmt.executeUpdate();
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, "User Updated: " + oldUsername + " to " + newUsername);
+            pstmt.executeUpdate();
 
-    } catch (SQLException e) {
-        System.err.println("Failed to log user update action: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Failed to log user update action: " + e.getMessage());
+        }
     }
-}
-private int getCurrentUserId() {
-  
-    config.SessionClass ses = config.SessionClass.getInstance();
-    return ses.getU_id();
-}
+
+    private int getCurrentUserId() {
+
+        config.SessionClass ses = config.SessionClass.getInstance();
+        return ses.getU_id();
+    }
     
     
     
@@ -532,6 +577,12 @@ private int getCurrentUserId() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 removeMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                removeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                removeMouseExited(evt);
+            }
         });
         remove.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -544,15 +595,32 @@ private int getCurrentUserId() {
         jLabel71.setForeground(new java.awt.Color(255, 255, 255));
         jLabel71.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel71.setText("REMOVE");
-        remove.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 70, -1));
+        jLabel71.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel71MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel71MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel71MouseExited(evt);
+            }
+        });
+        remove.add(jLabel71, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 11, 70, 30));
 
-        jPanel2.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 90, 40));
+        jPanel2.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 90, 50));
 
         select.setBackground(new java.awt.Color(0, 102, 102));
         select.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         select.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                selectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                selectMouseExited(evt);
             }
         });
         select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -566,9 +634,20 @@ private int getCurrentUserId() {
         jLabel77.setForeground(new java.awt.Color(255, 255, 255));
         jLabel77.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel77.setText("SELECT");
-        select.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 70, 30));
+        jLabel77.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel77MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel77MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel77MouseExited(evt);
+            }
+        });
+        select.add(jLabel77, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 6, 70, 40));
 
-        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 90, 40));
+        jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 90, 50));
 
         jLabel73.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel73.setForeground(new java.awt.Color(0, 102, 102));
@@ -609,10 +688,10 @@ private int getCurrentUserId() {
 
         update.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, 170, 60));
 
-        jLabel7.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
         jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("UPDATE");
+        jLabel7.setText("Update User");
         jLabel7.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel7MouseClicked(evt);
@@ -624,7 +703,7 @@ private int getCurrentUserId() {
                 jLabel7MouseExited(evt);
             }
         });
-        update.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 110, 30));
+        update.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, 30));
 
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 570, 170, 50));
 
@@ -689,31 +768,33 @@ private int getCurrentUserId() {
     }//GEN-LAST:event_jLabel12MouseClicked
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-        // TODO add your handling code here:
+     dbConnect db = new dbConnect();
+SessionClass ses = SessionClass.getInstance();
+String originalUsername = "";
+String updatedImagePathInDB = "";
+int userIdToUpdate = -1;
+String currentImagePathInDB = "";
 
-      
+try {
+    userIdToUpdate = Integer.parseInt(uid.getText());
+} catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(null, "Invalid User ID.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
 
- dbConnect db = new dbConnect();
-    SessionClass ses = SessionClass.getInstance();
+try {
+    String query = "SELECT u_password, u_username, u_image FROM user WHERE u_id = ?";
+    try (PreparedStatement pstmt = db.getConnection().prepareStatement(query)) {
+        pstmt.setInt(1, userIdToUpdate);
+        ResultSet resultset = pstmt.executeQuery();
 
-    try {
-           // Debug: Print the user ID being queried
-        System.out.println("Attempting to verify password for user ID: " + uid.getText());
-        
-        // Verify old password
-        String query = "SELECT u_password FROM user WHERE u_id = '" + uid.getText() + "'";
-        ResultSet resultset = db.getData(query);
-        
         if (resultset.next()) {
             String storedPasswordHash = resultset.getString("u_password");
-            String enteredPassword = oldpass.getText().trim(); // Trim whitespace
+            originalUsername = resultset.getString("u_username");
+            currentImagePathInDB = resultset.getString("u_image");
+            String enteredPassword = oldpass.getText().trim();
             String enteredPasswordHash = passwordHasher.hashPassword(enteredPassword);
-            
-            // Debug output
-            System.out.println("Stored hash: " + storedPasswordHash);
-            System.out.println("Entered pass: " + enteredPassword);
-            System.out.println("Entered hash: " + enteredPasswordHash);
-            
+
             if (!storedPasswordHash.equals(enteredPasswordHash)) {
                 JOptionPane.showMessageDialog(null, "Old Password Is Incorrect");
                 return;
@@ -722,114 +803,153 @@ private int getCurrentUserId() {
             JOptionPane.showMessageDialog(null, "User not found");
             return;
         }
+    }
 
+    if (!newpass.getText().equals(confirmpass.getText())) {
+        JOptionPane.showMessageDialog(null, "New password and confirmation do not match", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+        email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields are required", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    String selectedType = (String) ty.getSelectedItem();
+    if (selectedType == null || selectedType.equals("Please Select a Type")) {
+        JOptionPane.showMessageDialog(null, "Please select a valid user type", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid email address", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (oldpass.getText().length() < 8) {
+        JOptionPane.showMessageDialog(null, "Password must be at least 8 characters", "Error", JOptionPane.ERROR_MESSAGE);
+        oldpass.setText("");
+        return;
+    }
+    if (!contact.getText().matches("\\d+") || contact.getText().length() < 11 || contact.getText().length() > 15) {
+        JOptionPane.showMessageDialog(null, "Contact must be 11-15 digits", "Error", JOptionPane.ERROR_MESSAGE);
+        contact.setText("");
+        return;
+    }
+    if (updatecheck()) {
+        JOptionPane.showMessageDialog(null, "Username or email already exists", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Validate new password confirmation
-        if (!newpass.getText().equals(confirmpass.getText())) {
-            JOptionPane.showMessageDialog(null, "New password and confirmation do not match",
-                "Error", JOptionPane.ERROR_MESSAGE);
+    String npass = passwordHasher.hashPassword(newpass.getText());
+
+    String updateQuery = "UPDATE user SET " +
+                         "u_username = ?, " +
+                         "u_fname = ?, " +
+                         "u_lname = ?, " +
+                         "u_email = ?, " +
+                         "u_contact = ?, " +
+                         "u_type = ?, " +
+                         "u_password = ?, " +
+                         "u_stat = ?";
+
+    String newImagePath = currentImagePathInDB;
+
+    if (selectedFile != null) {
+        String userImagesFolder = "src/userimages";
+        String originalFileName = selectedFile.getName();
+        String fileExtension = "";
+        int dotIndex = originalFileName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+            fileExtension = originalFileName.substring(dotIndex);
+        }
+        String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+        newImagePath = userImagesFolder + "/" + uniqueFileName;
+
+        File destDir = new File(userImagesFolder);
+        if (!destDir.exists()) {
+            destDir.mkdirs();
+        }
+
+        try {
+            Files.copy(selectedFile.toPath(), new File(newImagePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            updateQuery += ", u_image = ?";
+            updatedImagePathInDB = newImagePath;
+        } catch (IOException ex) {
+            System.out.println("Image Update Error: " + ex);
+            JOptionPane.showMessageDialog(null, "Error updating image", "Image Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+    } else if (path.equals("src/userimages/default_user.png")) {
+        updateQuery += ", u_image = ?";
+        newImagePath = path;
+        updatedImagePathInDB = path;
+    } else if (!path.isEmpty()) {
+        updateQuery += ", u_image = ?";
+        newImagePath = path;
+        updatedImagePathInDB = path;
+    } else {
+        updateQuery += ", u_image = ?";
+        newImagePath = currentImagePathInDB;
+        updatedImagePathInDB = currentImagePathInDB;
+    }
 
-        // Validate other fields
-        if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty()) {
-            
-            JOptionPane.showMessageDialog(null, "All fields are required",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+    updateQuery += " WHERE u_id = ?";
+
+    try (PreparedStatement pstmt = db.getConnection().prepareStatement(updateQuery)) {
+        pstmt.setString(1, usernamere.getText());
+        pstmt.setString(2, fname.getText());
+        pstmt.setString(3, lname.getText());
+        pstmt.setString(4, email.getText());
+        pstmt.setString(5, contact.getText());
+        pstmt.setString(6, selectedType);
+        pstmt.setString(7, npass);
+        pstmt.setString(8, status.getSelectedItem().toString());
+        pstmt.setString(9, newImagePath);
+        pstmt.setInt(10, userIdToUpdate);
+
+        pstmt.executeUpdate();
+    }
+
+    // Handle image file operations
+    if (selectedFile != null) {
+        if (oldpath != null && !oldpath.isEmpty() && !oldpath.equals(path)) {
+            imageUpdater(oldpath, path);
         }
-
-        String selectedType = (String) ty.getSelectedItem();
-        if (selectedType == null || selectedType.equals("Please Select a Type")) {
-            JOptionPane.showMessageDialog(null, "Please select a valid user type",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid email address",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (oldpass.getText().length() < 8) {
-            JOptionPane.showMessageDialog(null, "Password must be at least 8 characters",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            oldpass.setText("");
-            return;
-        }
-
-        if (!contact.getText().matches("\\d+") || contact.getText().length() < 11 || contact.getText().length() > 15) {
-            JOptionPane.showMessageDialog(null, "Contact must be 11-15 digits",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            contact.setText("");
-            return;
-        }
-
-        if (updatecheck()) {
-            JOptionPane.showMessageDialog(null, "Username or email already exists",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Hash new password
-        String npass = passwordHasher.hashPassword(newpass.getText());
-
-        // Build the update query
-        String updateQuery = "UPDATE user SET " +
-            "u_username = '" + usernamere.getText() + "', " +
-            "u_fname = '" + fname.getText() + "', " +
-            "u_lname = '" + lname.getText() + "', " +
-            "u_email = '" + email.getText() + "', " +
-            "u_contact = '" + contact.getText() + "', " +
-            "u_type = '" + selectedType + "', " +
-            "u_password = '" + npass + "', " +
-            "u_stat = '" + status.getSelectedItem() + "'";
-            
-        if (!destination.isEmpty()) {
-            updateQuery += ", u_image = '" + destination + "'";
-        }
-        
-        updateQuery += " WHERE u_id = '" + uid.getText() + "'";
-
-        db.updateData(updateQuery);
-
-        // Handle image file operations
-        if (!destination.isEmpty()) {
-            if (!oldpath.equals(path)) {
-                imageUpdater(oldpath, path);
-            }
-        } else {
+    } else {
+        if (oldpath != null && !oldpath.isEmpty() && !oldpath.equals("src/userimages/default_user.png") && !oldpath.equals(path)) {
             File existingFile = new File(oldpath);
             if (existingFile.exists()) {
                 existingFile.delete();
             }
         }
-        
-        // Log the action
-        int currentUserId = getCurrentUserId();
-        logProductAdditionAction(currentUserId, usernamere.getText());
-        
-        JOptionPane.showMessageDialog(null, "Update Successful");
-        
-        SessionClass.getInstance().setU_image(destination);
-        
-        LOGIN log = new LOGIN();
-        log.setVisible(true);
-        this.dispose();
-        
-    } catch (SQLException | NoSuchAlgorithmException ex) {
-        System.out.println("Error: " + ex);
-        JOptionPane.showMessageDialog(null, "An error occurred during update",
-            "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    int currentUserId = getCurrentUserId();
+    logUserUpdateAction(currentUserId, originalUsername, usernamere.getText());
+
+    JOptionPane.showMessageDialog(null, "Update Successful");
+
+    // Check if the updated user is the logged-in admin
+    if (userIdToUpdate == currentUserId) {
+        ses.setU_image(newImagePath); // Update the SessionClass immediately
+        // Optionally, refresh the admin's dashboard UI here if it's visible
+    }
+
+    // Refresh the UI of the updateuser panel
+    displayUserImage(image, newImagePath);
+
+    admindash ad = new admindash();
+    ad.setVisible(true);
+    this.dispose();
+
+} catch (SQLException | NoSuchAlgorithmException ex) {
+    System.out.println("Error: " + ex);
+    JOptionPane.showMessageDialog(null, "An error occurred during update", "Error", JOptionPane.ERROR_MESSAGE);
+}
     }//GEN-LAST:event_updateMouseClicked
 
     private void jLabel1040MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1040MouseClicked
         // TODO add your handling code here:
 
-        admindash ad = new admindash();
+        cuspage ad = new cuspage();
         ad.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jLabel1040MouseClicked
@@ -871,12 +991,33 @@ private int getCurrentUserId() {
 
     private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
         // TODO add your handling code here:
-          JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
+  SessionClass ses = SessionClass.getInstance();
+    int userId = ses.getU_id();
+    String defaultImagePath = "src/userimages/default_user.png"; // Define your default image path
+
+    dbConnect conn = new dbConnect();
+    String update = "UPDATE user SET u_image = ? WHERE u_id = ?";
+
+    try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
+        pst.setString(1, defaultImagePath); // Set u_image to the default image path
+        pst.setInt(2, userId);
+        pst.executeUpdate();
+
+        // Update session
+        ses.setU_image(defaultImagePath);
+
+        // Update UI
+        JOptionPane.showMessageDialog(this, "Image Reset to Default");
         remove.setEnabled(false);
         select.setEnabled(true);
-        image.setIcon(null);
-        destination ="";
-        path = "";
+        image.setIcon(new ImageIcon(defaultImagePath)); // Directly set the default image
+        destination = defaultImagePath;
+        path = defaultImagePath;
+        displayUserImage(image); // Refresh the image display
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error updating database: " + ex.getMessage());
+        ex.printStackTrace();
+    }
         
     }//GEN-LAST:event_removeMouseClicked
 
@@ -907,30 +1048,33 @@ private int getCurrentUserId() {
 
     private void jLabel7MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel7MouseClicked
         // TODO add your handling code here:
-        
-                     
+     dbConnect db = new dbConnect();
+SessionClass ses = SessionClass.getInstance();
+String originalUsername = "";
+String updatedImagePathInDB = "";
+int userIdToUpdate = -1;
+String currentImagePathInDB = "";
 
- dbConnect db = new dbConnect();
-    SessionClass ses = SessionClass.getInstance();
+try {
+    userIdToUpdate = Integer.parseInt(uid.getText());
+} catch (NumberFormatException e) {
+    JOptionPane.showMessageDialog(null, "Invalid User ID.", "Error", JOptionPane.ERROR_MESSAGE);
+    return;
+}
 
-    try {
-           // Debug: Print the user ID being queried
-        System.out.println("Attempting to verify password for user ID: " + uid.getText());
-        
-        // Verify old password
-        String query = "SELECT u_password FROM user WHERE u_id = '" + uid.getText() + "'";
-        ResultSet resultset = db.getData(query);
-        
+try {
+    String query = "SELECT u_password, u_username, u_image FROM user WHERE u_id = ?";
+    try (PreparedStatement pstmt = db.getConnection().prepareStatement(query)) {
+        pstmt.setInt(1, userIdToUpdate);
+        ResultSet resultset = pstmt.executeQuery();
+
         if (resultset.next()) {
             String storedPasswordHash = resultset.getString("u_password");
-            String enteredPassword = oldpass.getText().trim(); // Trim whitespace
+            originalUsername = resultset.getString("u_username");
+            currentImagePathInDB = resultset.getString("u_image");
+            String enteredPassword = oldpass.getText().trim();
             String enteredPasswordHash = passwordHasher.hashPassword(enteredPassword);
-            
-            // Debug output
-            System.out.println("Stored hash: " + storedPasswordHash);
-            System.out.println("Entered pass: " + enteredPassword);
-            System.out.println("Entered hash: " + enteredPasswordHash);
-            
+
             if (!storedPasswordHash.equals(enteredPasswordHash)) {
                 JOptionPane.showMessageDialog(null, "Old Password Is Incorrect");
                 return;
@@ -939,113 +1083,259 @@ private int getCurrentUserId() {
             JOptionPane.showMessageDialog(null, "User not found");
             return;
         }
+    }
 
+    if (!newpass.getText().equals(confirmpass.getText())) {
+        JOptionPane.showMessageDialog(null, "New password and confirmation do not match", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+        email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(null, "All fields are required", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    String selectedType = (String) ty.getSelectedItem();
+    if (selectedType == null || selectedType.equals("Please Select a Type")) {
+        JOptionPane.showMessageDialog(null, "Please select a valid user type", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+        JOptionPane.showMessageDialog(null, "Please enter a valid email address", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    if (oldpass.getText().length() < 8) {
+        JOptionPane.showMessageDialog(null, "Password must be at least 8 characters", "Error", JOptionPane.ERROR_MESSAGE);
+        oldpass.setText("");
+        return;
+    }
+    if (!contact.getText().matches("\\d+") || contact.getText().length() < 11 || contact.getText().length() > 15) {
+        JOptionPane.showMessageDialog(null, "Contact must be 11-15 digits", "Error", JOptionPane.ERROR_MESSAGE);
+        contact.setText("");
+        return;
+    }
+    if (updatecheck()) {
+        JOptionPane.showMessageDialog(null, "Username or email already exists", "Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
 
-        // Validate new password confirmation
-        if (!newpass.getText().equals(confirmpass.getText())) {
-            JOptionPane.showMessageDialog(null, "New password and confirmation do not match",
-                "Error", JOptionPane.ERROR_MESSAGE);
+    String npass = passwordHasher.hashPassword(newpass.getText());
+
+    String updateQuery = "UPDATE user SET " +
+                         "u_username = ?, " +
+                         "u_fname = ?, " +
+                         "u_lname = ?, " +
+                         "u_email = ?, " +
+                         "u_contact = ?, " +
+                         "u_type = ?, " +
+                         "u_password = ?, " +
+                         "u_stat = ?";
+
+    String newImagePath = currentImagePathInDB;
+
+    if (selectedFile != null) {
+        String userImagesFolder = "src/userimages";
+        String originalFileName = selectedFile.getName();
+        String fileExtension = "";
+        int dotIndex = originalFileName.lastIndexOf('.');
+        if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+            fileExtension = originalFileName.substring(dotIndex);
+        }
+        String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+        newImagePath = userImagesFolder + "/" + uniqueFileName;
+
+        File destDir = new File(userImagesFolder);
+        if (!destDir.exists()) {
+            destDir.mkdirs();
+        }
+
+        try {
+            Files.copy(selectedFile.toPath(), new File(newImagePath).toPath(), StandardCopyOption.REPLACE_EXISTING);
+            updateQuery += ", u_image = ?";
+            updatedImagePathInDB = newImagePath;
+        } catch (IOException ex) {
+            System.out.println("Image Update Error: " + ex);
+            JOptionPane.showMessageDialog(null, "Error updating image", "Image Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
+    } else if (path.equals("src/userimages/default_user.png")) {
+        updateQuery += ", u_image = ?";
+        newImagePath = path;
+        updatedImagePathInDB = path;
+    } else if (!path.isEmpty()) {
+        updateQuery += ", u_image = ?";
+        newImagePath = path;
+        updatedImagePathInDB = path;
+    } else {
+        updateQuery += ", u_image = ?";
+        newImagePath = currentImagePathInDB;
+        updatedImagePathInDB = currentImagePathInDB;
+    }
 
-        // Validate other fields
-        if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            email.getText().isEmpty() || contact.getText().isEmpty() || oldpass.getText().isEmpty()) {
-            
-            JOptionPane.showMessageDialog(null, "All fields are required",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
+    updateQuery += " WHERE u_id = ?";
+
+    try (PreparedStatement pstmt = db.getConnection().prepareStatement(updateQuery)) {
+        pstmt.setString(1, usernamere.getText());
+        pstmt.setString(2, fname.getText());
+        pstmt.setString(3, lname.getText());
+        pstmt.setString(4, email.getText());
+        pstmt.setString(5, contact.getText());
+        pstmt.setString(6, selectedType);
+        pstmt.setString(7, npass);
+        pstmt.setString(8, status.getSelectedItem().toString());
+        pstmt.setString(9, newImagePath);
+        pstmt.setInt(10, userIdToUpdate);
+
+        pstmt.executeUpdate();
+    }
+
+    // Handle image file operations
+    if (selectedFile != null) {
+        if (oldpath != null && !oldpath.isEmpty() && !oldpath.equals(path)) {
+            imageUpdater(oldpath, path);
         }
-
-        String selectedType = (String) ty.getSelectedItem();
-        if (selectedType == null || selectedType.equals("Please Select a Type")) {
-            JOptionPane.showMessageDialog(null, "Please select a valid user type",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-            JOptionPane.showMessageDialog(null, "Please enter a valid email address",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        if (oldpass.getText().length() < 8) {
-            JOptionPane.showMessageDialog(null, "Password must be at least 8 characters",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            oldpass.setText("");
-            return;
-        }
-
-        if (!contact.getText().matches("\\d+") || contact.getText().length() < 11 || contact.getText().length() > 15) {
-            JOptionPane.showMessageDialog(null, "Contact must be 11-15 digits",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            contact.setText("");
-            return;
-        }
-
-        if (updatecheck()) {
-            JOptionPane.showMessageDialog(null, "Username or email already exists",
-                "Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Hash new password
-        String npass = passwordHasher.hashPassword(newpass.getText());
-
-        // Build the update query
-        String updateQuery = "UPDATE user SET " +
-            "u_username = '" + usernamere.getText() + "', " +
-            "u_fname = '" + fname.getText() + "', " +
-            "u_lname = '" + lname.getText() + "', " +
-            "u_email = '" + email.getText() + "', " +
-            "u_contact = '" + contact.getText() + "', " +
-            "u_type = '" + selectedType + "', " +
-            "u_password = '" + npass + "', " +
-            "u_stat = '" + status.getSelectedItem() + "'";
-            
-        if (!destination.isEmpty()) {
-            updateQuery += ", u_image = '" + destination + "'";
-        }
-        
-        updateQuery += " WHERE u_id = '" + uid.getText() + "'";
-
-        db.updateData(updateQuery);
-
-        // Handle image file operations
-        if (!destination.isEmpty()) {
-            if (!oldpath.equals(path)) {
-                imageUpdater(oldpath, path);
-            }
-        } else {
+    } else {
+        if (oldpath != null && !oldpath.isEmpty() && !oldpath.equals("src/userimages/default_user.png") && !oldpath.equals(path)) {
             File existingFile = new File(oldpath);
             if (existingFile.exists()) {
                 existingFile.delete();
             }
         }
-        
-        // Log the action
-        int currentUserId = getCurrentUserId();
-        logProductAdditionAction(currentUserId, usernamere.getText());
-        
-        JOptionPane.showMessageDialog(null, "Update Successful");
-        
-        SessionClass.getInstance().setU_image(destination);
-        
-        LOGIN log = new LOGIN();
-        log.setVisible(true);
-        this.dispose();
-        
-    } catch (SQLException | NoSuchAlgorithmException ex) {
-        System.out.println("Error: " + ex);
-        JOptionPane.showMessageDialog(null, "An error occurred during update",
-            "Error", JOptionPane.ERROR_MESSAGE);
     }
-        
-        
-        
+
+    int currentUserId = getCurrentUserId();
+    logUserUpdateAction(currentUserId, originalUsername, usernamere.getText());
+
+    JOptionPane.showMessageDialog(null, "Update Successful");
+
+    // Check if the updated user is the logged-in admin
+    if (userIdToUpdate == currentUserId) {
+        ses.setU_image(newImagePath); // Update the SessionClass immediately
+        // Optionally, refresh the admin's dashboard UI here if it's visible
+    }
+
+    // Refresh the UI of the updateuser panel
+    displayUserImage(image, newImagePath);
+
+    admindash ad = new admindash();
+    ad.setVisible(true);
+    this.dispose();
+
+} catch (SQLException | NoSuchAlgorithmException ex) {
+    System.out.println("Error: " + ex);
+    JOptionPane.showMessageDialog(null, "An error occurred during update", "Error", JOptionPane.ERROR_MESSAGE);
+}
 
     }//GEN-LAST:event_jLabel7MouseClicked
+
+    private void removeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseEntered
+        // TODO add your handling code here:
+        
+        remove.setBackground(logcolor);
+    }//GEN-LAST:event_removeMouseEntered
+
+    private void selectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseEntered
+        // TODO add your handling code here:
+        select.setBackground(logcolor);
+        
+    }//GEN-LAST:event_selectMouseEntered
+
+    private void selectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseExited
+        // TODO add your handling code here:
+           select.setBackground(excolor);
+    }//GEN-LAST:event_selectMouseExited
+
+    private void jLabel77MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel77MouseClicked
+        // TODO add your handling code here:
+         JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        selectedFile = fileChooser.getSelectedFile();
+                        destination = "src/userimages/" + selectedFile.getName();
+                        path  = selectedFile.getAbsolutePath();
+                        
+                        
+                        if(FileExistenceChecker(path) == 1){
+                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
+                            destination = "";
+                            path="";
+                        }else{
+                            image.setIcon(ResizeImage(path, null, image));
+                            JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
+                            select.setEnabled(false);
+                          
+                            remove.setEnabled(true);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("File Error!");
+                    }
+                }
+        
+    }//GEN-LAST:event_jLabel77MouseClicked
+
+    private void jLabel77MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel77MouseEntered
+        // TODO add your handling code here:
+        
+           select.setBackground(logcolor);
+    }//GEN-LAST:event_jLabel77MouseEntered
+
+    private void jLabel77MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel77MouseExited
+        // TODO add your handling code here:
+        
+           select.setBackground(excolor);
+    }//GEN-LAST:event_jLabel77MouseExited
+
+    private void removeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseExited
+        // TODO add your handling code here:
+        
+         remove.setBackground(excolor);
+    }//GEN-LAST:event_removeMouseExited
+
+    private void jLabel71MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel71MouseClicked
+        // TODO add your handling code here:
+         SessionClass ses = SessionClass.getInstance();
+    int userId = ses.getU_id();
+    String defaultImagePath = "src/userimages/default_user.png"; // Define your default image path
+
+    dbConnect conn = new dbConnect();
+    String update = "UPDATE user SET u_image = ? WHERE u_id = ?";
+
+    try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
+        pst.setString(1, defaultImagePath); // Set u_image to the default image path
+        pst.setInt(2, userId);
+        pst.executeUpdate();
+
+        // Update session
+        ses.setU_image(defaultImagePath);
+
+        // Update UI
+        JOptionPane.showMessageDialog(this, "Image Reset to Default");
+        remove.setEnabled(false);
+        select.setEnabled(true);
+        image.setIcon(new ImageIcon(defaultImagePath)); // Directly set the default image
+        destination = defaultImagePath;
+        path = defaultImagePath;
+        displayUserImage(image); // Refresh the image display
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error updating database: " + ex.getMessage());
+        ex.printStackTrace();
+    }
+       
+        
+        
+    }//GEN-LAST:event_jLabel71MouseClicked
+
+    private void jLabel71MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel71MouseEntered
+        // TODO add your handling code here:
+        
+         remove.setBackground(logcolor);
+    }//GEN-LAST:event_jLabel71MouseEntered
+
+    private void jLabel71MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel71MouseExited
+        // TODO add your handling code here:
+        
+         remove.setBackground(excolor);
+    }//GEN-LAST:event_jLabel71MouseExited
 
     /**
      * @param args the command line arguments

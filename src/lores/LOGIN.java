@@ -47,8 +47,8 @@ try (Connection conn = db.getConnection();
         System.err.println("Failed to log login action: " + e.getMessage());
     }
 }
-     public static String  stat;
-     public static String ty;
+//     public static String  stat;
+//     public static String ty;
     
 //     public static boolean logcheck(String username, String password ){
 //        
@@ -91,69 +91,51 @@ try (Connection conn = db.getConnection();
 //        }
 //    }
     
-   public static boolean prodinput(String username, String password){
-        
-        
-        dbConnect db = new dbConnect();
-        
-        
-        
-        
-        
-        try{
-         String que = "SELECT * FROM user WHERE u_username='"+username+"'";  
-            ResultSet resultset = db.getData(que);
-            if(resultset.next()){
-                
-            
-             
-                String hashedPass = resultset.getString("u_password");
-                String rehashedPass = passwordHasher.hashPassword(password);
-                
-               
-                
-                
-                if(hashedPass.equals(rehashedPass)){
-                      
-              stat = resultset.getString("u_stat");
-              ty = resultset.getString("u_type");
-              SessionClass ses = SessionClass.getInstance();
-                
-              
-             ses.setU_id(resultset.getInt("u_id"));
-               ses.setUsername(resultset.getString("u_username"));
-            ses.setFname(resultset.getString("u_fname"));
-            ses.setLname(resultset.getString("u_lname"));
-           ses.setEmail(resultset.getString("u_email"));
-            ses.setContact(resultset.getString("u_contact"));
-             ses.setType(resultset.getString("u_type")); 
-               ses.setStat(resultset.getString("u_stat"));
-               ses.setPass(resultset.getString("u_password"));
-               ses.setU_image(resultset.getString("u_image"));
-        
-             return true;   
-                    
-                }
-                else{
-                    return false;
-                }
-                
-        
-            }
-            
-            else {
-                
+  public static boolean prodinput(String username, String password) {
+
+    dbConnect db = new dbConnect();
+
+    try {
+        String que = "SELECT * FROM user WHERE u_username='" + username + "'";
+        ResultSet resultset = db.getData(que);
+        if (resultset.next()) {
+
+            String hashedPass = resultset.getString("u_password");
+            String rehashedPass = passwordHasher.hashPassword(password);
+
+            if (hashedPass.equals(rehashedPass)) {
+
+                String stat = resultset.getString("u_stat");
+                String ty = resultset.getString("u_type");
+                SessionClass ses = SessionClass.getInstance();
+
+                ses.setU_id(resultset.getInt("u_id"));
+                ses.setUsername(resultset.getString("u_username"));
+                ses.setFname(resultset.getString("u_fname"));
+                ses.setLname(resultset.getString("u_lname"));
+                ses.setEmail(resultset.getString("u_email"));
+                ses.setContact(resultset.getString("u_contact"));
+                ses.setType(ty);
+                ses.setStat(stat);
+                ses.setPass(resultset.getString("u_password"));
+                ses.setU_image(resultset.getString("u_image"));
+
+                return true;
+
+            } else {
                 return false;
             }
-            
-            
-        }catch(SQLException | NoSuchAlgorithmException ex){
-         
+
+        } else {
+
             return false;
         }
 
-    }
+    } catch (SQLException | NoSuchAlgorithmException ex) {
 
+        return false;
+    }
+}
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
 
@@ -609,85 +591,32 @@ try (Connection conn = db.getConnection();
     }//GEN-LAST:event_login4MouseEntered
 
     private void login4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login4MouseClicked
-if (prodinput(username.getText(), password.getText())) {
-        if (!stat.equals("Active")) {
+ if (prodinput(username.getText(), password.getText())) {
+        SessionClass session = SessionClass.getInstance();
+        String userStat = session.getStat();
+        String userType = session.getType();
+
+        if (!userStat.equals("Active")) {
             JOptionPane.showMessageDialog(null, "Account not Active");
         } else {
-        
-            logLoginAction(SessionClass.getInstance().getU_id(), username.getText());
-            
+            logLoginAction(session.getU_id(), username.getText());
             JOptionPane.showMessageDialog(null, "Login Successfully!");
-            if (ty.equals("Admin")) {
+
+            if (userType.equals("Admin")) {
                 admin.admindash adminDash = new admin.admindash();
                 adminDash.setVisible(true);
-                this.dispose();
-            } else if (ty.equals("Customer")) {
+            } else if (userType.equals("Customer")) {
                 customerdashboard use = new customerdashboard();
                 use.setVisible(true);
-                this.dispose();
-            } else if (ty.equals("Employee")) {
+            } else if (userType.equals("Employee")) {
                 employdash em = new employdash();
                 em.setVisible(true);
-                this.dispose();
             }
+            this.dispose();
         }
     } else {
         JOptionPane.showMessageDialog(null, "Invalid Account!");
     }
-        
-//        if(username.getText().isEmpty() || password.getText().isEmpty() ){
-//
-//            JOptionPane.showMessageDialog(null,"Invalid Registration","Error Registration",JOptionPane.ERROR_MESSAGE);
-//            username.getText();
-//            password.getText();
-//        }
-//
-//        else if(password.getText().length()<8){
-//
-//            JOptionPane.showMessageDialog(null,"Password must be atleast 8 characters long","Error Password",JOptionPane.ERROR_MESSAGE);
-//
-//        }
-//
-//        else if (!(username.getText().isEmpty() || password.getText().isEmpty())){
-//
-//            
-//            REGISTER re = new REGISTER();
-//            re.setVisible(true);
-//            this.dispose();
-//
-//        }
-//        
-//        else if (dupcheck()){
-//            
-//           
-//            
-//        }
-        
-
-        //   if(usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-            //   email.getText().isEmpty() || contact.getText().isEmpty() || pass.getText().isEmpty() ||
-            //   conpass.getText().isEmpty()) {
-            //
-            //    JOptionPane.showMessageDialog(null, "Invalid Registration: All fields are required.",
-                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-            //}
-        //else if (pass.getText().length() < 8) {
-            //    JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
-                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-            //}
-        //else if (!contact.getText().matches("\\d+")) { // Ensures only numbers in contact
-            //    JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-            //}
-        //else if (!pass.getText().equals(conpass.getText())) {
-            //    JOptionPane.showMessageDialog(null, "Passwords do not match.",
-                //                                  "Error Registration", JOptionPane.ERROR_MESSAGE);
-            //}
-        //else {
-            //    JOptionPane.showMessageDialog(null, "Registration Successful!",
-                //                                  "Success", JOptionPane.INFORMATION_MESSAGE);
-            //}
-
     }//GEN-LAST:event_login4MouseClicked
 
     private void login6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_login6MouseClicked

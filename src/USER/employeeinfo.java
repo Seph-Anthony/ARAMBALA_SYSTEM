@@ -546,9 +546,9 @@ public void displayUserImage(JLabel admiimage) {
 
         image.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         image.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/newuserprofile.png"))); // NOI18N
-        jPanel5.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 200, 180));
+        jPanel5.add(image, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 230, 210));
 
-        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 80, 220, 200));
+        jPanel2.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, 250, 210));
 
         add.setBackground(new java.awt.Color(0, 102, 102));
         add.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -752,49 +752,33 @@ public void displayUserImage(JLabel admiimage) {
     }//GEN-LAST:event_selectMouseClicked
 
     private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
-   JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
+      SessionClass ses = SessionClass.getInstance();
+    int userId = ses.getU_id();
+    String defaultImagePath = "src/userimages/default_user.png"; // Define your default image path
+
+    dbConnect conn = new dbConnect();
+    String update = "UPDATE user SET u_image = ? WHERE u_id = ?";
+
+    try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
+        pst.setString(1, defaultImagePath); // Set u_image to the default image path
+        pst.setInt(2, userId);
+        pst.executeUpdate();
+
+        // Update session
+        ses.setU_image(defaultImagePath);
+
+        // Update UI
+        JOptionPane.showMessageDialog(this, "Image Reset to Default");
         remove.setEnabled(false);
         select.setEnabled(true);
-        image.setIcon(null);
-        destination ="";
-        path = "";
-       // TODO add your handling code here:
-//    SessionClass ses = SessionClass.getInstance();
-//    int userId = ses.getU_id();
-//    
-//    try {
-//        // Update the database to remove the image path
-//        dbConnect conn = new dbConnect();
-//        String update = "UPDATE user SET u_image = NULL WHERE u_id = ?";
-//        
-//        try (PreparedStatement pst = conn.getConnection().prepareStatement(update)) {
-//            pst.setInt(1, userId);
-//            
-//            int rowsAffected = pst.executeUpdate();
-//            if (rowsAffected > 0) {
-//                // Delete the image file
-//                if (destination != null && !destination.isEmpty()) {
-//                    Files.deleteIfExists(Paths.get(destination));
-//                }
-//                
-//                JOptionPane.showMessageDialog(this, "Image removed successfully!");
-//                // Update the session
-//                ses.setU_image(null);
-//                displayUserImage(image);
-//                
-//                remove.setEnabled(false);
-//                select.setEnabled(true);
-//                image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
-//                destination = "";
-//                path = "";
-//            } else {
-//                JOptionPane.showMessageDialog(this, "Failed to remove image!");
-//            }
-//        }
-//    } catch (IOException | SQLException ex) {
-//        JOptionPane.showMessageDialog(this, "Error removing image: " + ex.getMessage());
-//        ex.printStackTrace();
-//    }
+        image.setIcon(new ImageIcon(defaultImagePath)); // Directly set the default image
+        destination = defaultImagePath;
+        path = defaultImagePath;
+        displayUserImage(image); // Refresh the image display
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error updating database: " + ex.getMessage());
+        ex.printStackTrace();
+    }
     }//GEN-LAST:event_removeMouseClicked
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked

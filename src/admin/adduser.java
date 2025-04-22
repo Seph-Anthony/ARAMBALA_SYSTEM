@@ -38,12 +38,15 @@ import lores.LOGIN;
  */
 public class adduser extends javax.swing.JFrame {
 
+    
+    
+    
     /**
      * Creates new form updateuser
      */
     public adduser() {
         initComponents();
-        
+         displayUserImage(image); 
            see1.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
@@ -77,6 +80,24 @@ public class adduser extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void displayUserImage(JLabel admiimage) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+    
+    // Always show default image if no image is set
+    if (imagePath == null) {
+        image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        return;
+    }
+    
+    // Try to display the image (will fall back to default if fails)
+    try {
+        image.setIcon(ResizeImage(imagePath, null, image));
+    } catch (Exception e) {
+        image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+    }
+}
     
     Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
@@ -141,26 +162,27 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     return image;
 }
     
-     private void logProductAdditionAction(int userId, String Username) {
-    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+   private void logUserCreationAction(int userId, String username, String userType) {
+        String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
-    dbConnect db = new dbConnect();
-    try (Connection conn = db.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        dbConnect db = new dbConnect();
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        pstmt.setInt(1, userId);
-        pstmt.setString(2, "User Added: " + Username);
-        pstmt.executeUpdate();
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, "" + username + " (Type: " + userType + ") User Created");
+            pstmt.executeUpdate();
 
-    } catch (SQLException e) {
-        System.err.println("Failed to log user addition action: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Failed to log user creation action: " + e.getMessage());
+        }
     }
-}
-private int getCurrentUserId() {
-  
-    config.SessionClass ses = config.SessionClass.getInstance();
-    return ses.getU_id();
-}
+
+    private int getCurrentUserId() {
+        // Access the user ID from the SessionClass
+        config.SessionClass ses = config.SessionClass.getInstance();
+        return ses.getU_id();
+    }
      public static String mail, usname;
     public boolean dupcheck(){
         
@@ -509,6 +531,17 @@ private int getCurrentUserId() {
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setText("SELECT");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel4MouseExited(evt);
+            }
+        });
         select.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
 
         jPanel2.add(select, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 100, 40));
@@ -537,6 +570,17 @@ private int getCurrentUserId() {
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("REMOVE");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel2MouseExited(evt);
+            }
+        });
         remove.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(7, 10, 80, -1));
 
         jPanel2.add(remove, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 330, 100, 40));
@@ -544,10 +588,16 @@ private int getCurrentUserId() {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 820, 430));
 
         add.setBackground(new java.awt.Color(0, 102, 102));
-        add.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        add.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         add.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addMouseExited(evt);
             }
         });
         add.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -573,16 +623,22 @@ private int getCurrentUserId() {
 
         add.add(jPanel1030, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 560, 170, 60));
 
-        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(255, 255, 255));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("Add");
+        jLabel11.setText("Add User");
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel11MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel11MouseExited(evt);
+            }
         });
-        add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 80, 20));
+        add.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 20, 150, 20));
 
         jPanel1.add(add, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 560, 170, 60));
 
@@ -619,122 +675,145 @@ private int getCurrentUserId() {
 
     private void addMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseClicked
         // TODO add your handling code here:
-    SessionClass ses = SessionClass.getInstance();
-     dbConnect db = new dbConnect();
-try {
-    // Validate all fields
-    if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
-        email.getText().isEmpty() || contact.getText().isEmpty() || newpass.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+       
+        SessionClass ses = SessionClass.getInstance();
+        dbConnect db = new dbConnect();
+        try {
+            // Validate all fields
+            if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+                email.getText().isEmpty() || contact.getText().isEmpty() || newpass.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    // Validate user type selection
-    String selectedType = (String) ty.getSelectedItem();
-    if (selectedType == null || selectedType.equals("Please Select a Type")) {
-        JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
-            "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            // Validate user type selection
+            String selectedType = (String) ty.getSelectedItem();
+            if (selectedType == null || selectedType.equals("Please Select a Type")) {
+                JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    // Validate status selection
-    String selectType = (String) status.getSelectedItem();
-    if (selectType == null || selectType.equals("Please Select a Type")) {
-        JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
-            "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            // Validate status selection
+            String selectType = (String) status.getSelectedItem();
+            if (selectType == null || selectType.equals("Please Select a Type")) {
+                JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    // Validate email format
-    if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
-        JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
-            "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
+            // Validate email format
+            if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
 
-    // Validate password length
-    if (newpass.getText().length() < 8) {
-        JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
-            "Error", JOptionPane.ERROR_MESSAGE);
-        newpass.setText("");
-        return;
-    }
+            // Validate password length
+            if (newpass.getText().length() < 8) {
+                JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                newpass.setText("");
+                return;
+            }
 
-    // Validate contact number
-    if (!contact.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
-            "Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-    if (contact.getText().length() < 11 || contact.getText().length() > 15) {
-        JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
-            "Error", JOptionPane.ERROR_MESSAGE);
-        contact.setText("");
-        return;
-    }
+            // Validate contact number
+            if (!contact.getText().matches("\\d+")) {
+                JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (contact.getText().length() < 11 || contact.getText().length() > 15) {
+                JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                contact.setText("");
+                return;
+            }
 
-    // Check for duplicate entries (assuming dupcheck() is defined elsewhere)
-    if (dupcheck()) {
-        System.out.println("Duplicated Exist!");
-        return;
-    }
-    
-    String fans= "N/A";
+            // Check for duplicate entries (assuming dupcheck() is defined elsewhere)
+            if (dupcheck()) {
+                System.out.println("Duplicated Exist!");
+                return;
+            }
+
+            String fans = "N/A";
             String sans = "N/A";
-                    String tans = "N/A";
-String userImagesFolder = "src/userimages"; // Assuming this is correct
-    String originalFileName = selectedFile.getName();
+            String tans = "N/A";
+            String userImagesFolder = "src/userimages"; // Assuming this is correct
+            String originalFileName = (selectedFile != null) ? selectedFile.getName() : "";
+            String destination = "";
 
-    // Generate a unique file name
-    String fileExtension = "";
-    int dotIndex = originalFileName.lastIndexOf('.');
-    if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
-        fileExtension = originalFileName.substring(dotIndex); // Get the extension
-    }
-//    String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
-//    String destination = userImagesFolder + "/" + uniqueFileName;
+            // Generate a unique file name if an image is selected
+            if (selectedFile != null) {
+                String fileExtension = "";
+                int dotIndex = originalFileName.lastIndexOf('.');
+                if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+                    fileExtension = originalFileName.substring(dotIndex); // Get the extension
+                }
+                String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+                destination = userImagesFolder + "/" + uniqueFileName;
 
-    // Hash the new password
-    String hashedPassword = passwordHasher.hashPassword(newpass.getText());
+                try {
+                    Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    System.out.println("Image Insertion Error: " + ex);
+                }
+            }
 
-    // Insert new user into the database
-    String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat, u_ans1, u_ans2, u_ans3, u_image) " +
-                   "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "', " +
-                   "'" + email.getText() + "', '" + contact.getText() + "', '" + selectedType + "', '" + hashedPassword + "', '" + selectType + "', '"+fans+"','"+sans+"','"+tans+"','"+destination+"')";
+            // Hash the new password
+            String hashedPassword = passwordHasher.hashPassword(newpass.getText());
 
-    try{
-    Files.copy(selectedFile.toPath(),new File(destination).toPath(),StandardCopyOption.REPLACE_EXISTING);
-    
-    
-    }catch(IOException ex){
-        
-        System.out.println("Image Insertion Error: "+ex);
-    }
-    if (db.insertData(query) == 1) {
-        JOptionPane.showMessageDialog(null, "User Successfully Added");
-        
-        
-        
-   // Log the product addition action
-            int currentUserId = getCurrentUserId(); // Get the user ID
-            logProductAdditionAction(currentUserId, usernamere.getText());
-        // Redirect based on user type or status
-        if ("Admin".equals(selectedType) || "Customer".equals(selectedType) || "Employee".equals(selectedType) ||
-            "Active".equals(selectType) || "Pending".equals(selectType)) {
-            admin.admindash adminDash = new admin.admindash();
-            adminDash.setVisible(true);
-        } else {
-            JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+            // Insert new user into the database
+            String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat, u_ans1, u_ans2, u_ans3, u_image) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (Connection conn = db.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+                pstmt.setString(1, usernamere.getText());
+                pstmt.setString(2, fname.getText());
+                pstmt.setString(3, lname.getText());
+                pstmt.setString(4, email.getText());
+                pstmt.setString(5, contact.getText());
+                pstmt.setString(6, selectedType);
+                pstmt.setString(7, hashedPassword);
+                pstmt.setString(8, selectType);
+                pstmt.setString(9, fans);
+                pstmt.setString(10, sans);
+                pstmt.setString(11, tans);
+                pstmt.setString(12, destination); // Store the image path
+
+                int result = pstmt.executeUpdate();
+
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "User Successfully Added");
+
+                    // Log the user creation action
+                    int currentUserId = getCurrentUserId(); // Get the user ID
+                    String username = usernamere.getText();
+                    logUserCreationAction(currentUserId, username, selectedType); // Call the new logging method
+
+                   
+                    if ("Admin".equals(selectedType) || "Customer".equals(selectedType) || "Employee".equals(selectedType) ||
+                        "Active".equals(selectType) || "Pending".equals(selectType)) {
+                        admin.admindash adminDash = new admin.admindash();
+                        adminDash.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    this.dispose(); // Close the current window
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Error: " + ex);
+            JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-
-        this.dispose(); // Close the current window
-    } else {
-        JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-} catch (NoSuchAlgorithmException ex) {
-    System.out.println("Error: " + ex);
-    JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
-}
     }//GEN-LAST:event_addMouseClicked
 
     private void statusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_statusActionPerformed
@@ -759,6 +838,146 @@ String userImagesFolder = "src/userimages"; // Assuming this is correct
 
     private void jLabel11MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseClicked
         // TODO add your handling code here:
+        
+          SessionClass ses = SessionClass.getInstance();
+        dbConnect db = new dbConnect();
+        try {
+            // Validate all fields
+            if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
+                email.getText().isEmpty() || contact.getText().isEmpty() || newpass.getText().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "All fields are required.", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Validate user type selection
+            String selectedType = (String) ty.getSelectedItem();
+            if (selectedType == null || selectedType.equals("Please Select a Type")) {
+                JOptionPane.showMessageDialog(null, "Please select a valid user type (Admin, Customer, or Employee).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Validate status selection
+            String selectType = (String) status.getSelectedItem();
+            if (selectType == null || selectType.equals("Please Select a Type")) {
+                JOptionPane.showMessageDialog(null, "Please select a valid status type (Active or Pending).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Validate email format
+            if (!email.getText().matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$")) {
+                JOptionPane.showMessageDialog(null, "Please enter a valid email address (e.g., example@gmail.com).",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            // Validate password length
+            if (newpass.getText().length() < 8) {
+                JOptionPane.showMessageDialog(null, "Password must be at least 8 characters long.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                newpass.setText("");
+                return;
+            }
+
+            // Validate contact number
+            if (!contact.getText().matches("\\d+")) {
+                JOptionPane.showMessageDialog(null, "Contact number must contain only digits.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (contact.getText().length() < 11 || contact.getText().length() > 15) {
+                JOptionPane.showMessageDialog(null, "Contact number must be between 11 and 15 digits.",
+                    "Error", JOptionPane.ERROR_MESSAGE);
+                contact.setText("");
+                return;
+            }
+
+            // Check for duplicate entries (assuming dupcheck() is defined elsewhere)
+            if (dupcheck()) {
+                System.out.println("Duplicated Exist!");
+                return;
+            }
+
+            String fans = "N/A";
+            String sans = "N/A";
+            String tans = "N/A";
+            String userImagesFolder = "src/userimages"; // Assuming this is correct
+            String originalFileName = (selectedFile != null) ? selectedFile.getName() : "";
+            String destination = "";
+
+            // Generate a unique file name if an image is selected
+            if (selectedFile != null) {
+                String fileExtension = "";
+                int dotIndex = originalFileName.lastIndexOf('.');
+                if (dotIndex > 0 && dotIndex < originalFileName.length() - 1) {
+                    fileExtension = originalFileName.substring(dotIndex); // Get the extension
+                }
+                String uniqueFileName = UUID.randomUUID().toString() + fileExtension;
+                destination = userImagesFolder + "/" + uniqueFileName;
+
+                try {
+                    Files.copy(selectedFile.toPath(), new File(destination).toPath(), StandardCopyOption.REPLACE_EXISTING);
+                } catch (IOException ex) {
+                    System.out.println("Image Insertion Error: " + ex);
+                }
+            }
+
+            // Hash the new password
+            String hashedPassword = passwordHasher.hashPassword(newpass.getText());
+
+            // Insert new user into the database
+            String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat, u_ans1, u_ans2, u_ans3, u_image) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+            try (Connection conn = db.getConnection();
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+
+                pstmt.setString(1, usernamere.getText());
+                pstmt.setString(2, fname.getText());
+                pstmt.setString(3, lname.getText());
+                pstmt.setString(4, email.getText());
+                pstmt.setString(5, contact.getText());
+                pstmt.setString(6, selectedType);
+                pstmt.setString(7, hashedPassword);
+                pstmt.setString(8, selectType);
+                pstmt.setString(9, fans);
+                pstmt.setString(10, sans);
+                pstmt.setString(11, tans);
+                pstmt.setString(12, destination); // Store the image path
+
+                int result = pstmt.executeUpdate();
+
+                if (result == 1) {
+                    JOptionPane.showMessageDialog(null, "User Successfully Added");
+
+                    // Log the user creation action
+                    int currentUserId = getCurrentUserId(); // Get the user ID
+                    String username = usernamere.getText();
+                    logUserCreationAction(currentUserId, username, selectedType); // Call the new logging method
+
+                   
+                    if ("Admin".equals(selectedType) || "Customer".equals(selectedType) || "Employee".equals(selectedType) ||
+                        "Active".equals(selectType) || "Pending".equals(selectType)) {
+                        admin.admindash adminDash = new admin.admindash();
+                        adminDash.setVisible(true);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                    }
+
+                    this.dispose(); // Close the current window
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error during registration. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (SQLException ex) {
+                JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                ex.printStackTrace();
+            }
+        } catch (NoSuchAlgorithmException ex) {
+            System.out.println("Error: " + ex);
+            JOptionPane.showMessageDialog(null, "An error occurred. Please try again.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void uidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uidActionPerformed
@@ -815,13 +1034,14 @@ String userImagesFolder = "src/userimages"; // Assuming this is correct
     private void removeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseClicked
         // TODO add your handling code here:
         
-         JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
-        remove.setEnabled(false);
-        select.setEnabled(true);
-        image.setIcon(null);
-        destination ="";
-        path = "";
-        
+    
+    JOptionPane.showMessageDialog(this,"Image Cleared");
+    remove.setEnabled(false);
+    select.setEnabled(true);
+    image.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png"))); // Set to default in UI
+    destination =""; // Reset local path variables
+    path = "";
+
         
     }//GEN-LAST:event_removeMouseClicked
 
@@ -847,6 +1067,90 @@ String userImagesFolder = "src/userimages"; // Assuming this is correct
         
         remove.setBackground(excolor);
     }//GEN-LAST:event_removeMouseExited
+
+    private void jLabel11MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseEntered
+        // TODO add your handling code here:
+        
+          add.setBackground(logcolor);
+    }//GEN-LAST:event_jLabel11MouseEntered
+
+    private void jLabel11MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel11MouseExited
+        // TODO add your handling code here:
+          add.setBackground(excolor);
+    }//GEN-LAST:event_jLabel11MouseExited
+
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+        // TODO add your handling code here:
+        add.setBackground(logcolor);
+    }//GEN-LAST:event_addMouseEntered
+
+    private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
+        // TODO add your handling code here:
+          add.setBackground(excolor);
+    }//GEN-LAST:event_addMouseExited
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        
+           JOptionPane.showMessageDialog(this,"Image Deleted Successfully");
+        remove.setEnabled(false);
+        select.setEnabled(true);
+        image.setIcon(null);
+        destination ="";
+        path = "";
+    }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jLabel2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseEntered
+        // TODO add your handling code here:
+        remove.setBackground(logcolor);
+    }//GEN-LAST:event_jLabel2MouseEntered
+
+    private void jLabel2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseExited
+        // TODO add your handling code here:
+         remove.setBackground(excolor);
+    }//GEN-LAST:event_jLabel2MouseExited
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        
+          JFileChooser fileChooser = new JFileChooser();
+                int returnValue = fileChooser.showOpenDialog(null);
+                if (returnValue == JFileChooser.APPROVE_OPTION) {
+                    try {
+                        selectedFile = fileChooser.getSelectedFile();
+                        destination = "src/userimages/" + selectedFile.getName();
+                        path  = selectedFile.getAbsolutePath();
+                        
+                        
+                        if(FileExistenceChecker(path) == 1){
+                          JOptionPane.showMessageDialog(null, "File Already Exist, Rename or Choose another!");
+                            destination = "";
+                            path="";
+                        }else{
+                            image.setIcon(ResizeImage(path, null, image));
+                            JOptionPane.showMessageDialog(this,"Image Uploaded Successfully");
+                            select.setEnabled(false);
+                          
+                            remove.setEnabled(true);
+                        }
+                    } catch (Exception ex) {
+                        System.out.println("File Error!");
+                    }
+                }
+        
+        
+    }//GEN-LAST:event_jLabel4MouseClicked
+
+    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
+        // TODO add your handling code here:
+        
+        select.setBackground(logcolor);
+    }//GEN-LAST:event_jLabel4MouseEntered
+
+    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
+        // TODO add your handling code here:
+        select.setBackground(excolor);
+    }//GEN-LAST:event_jLabel4MouseExited
 
     /**
      * @param args the command line arguments

@@ -44,11 +44,12 @@ public class admindash extends javax.swing.JFrame {
      */
     public admindash() {
         initComponents();
+        displayUserImage(adminimage);
         displayData();
         AllUsers();
         AllProd();
         AllProcess();
-       displayUserImage(adminimage);
+       
          // Add ActionListener to the search button
         SearchButton.addActionListener(new ActionListener() {
             @Override
@@ -63,7 +64,23 @@ public class admindash extends javax.swing.JFrame {
         });
         
     }
-    
+    public void displayUserImage(JLabel adminImageLabel) {
+    SessionClass session = SessionClass.getInstance();
+    String imagePath = session.getU_image();
+
+    if (adminImageLabel != null) { // Ensure the JLabel is not null
+        if (imagePath != null && !imagePath.isEmpty()) {
+            try {
+                ImageIcon icon = new ImageIcon(imagePath);
+                adminImageLabel.setIcon(ResizeImage(imagePath, null, adminImageLabel));
+            } catch (Exception e) {
+                adminImageLabel.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+            }
+        } else {
+            adminImageLabel.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
+        }
+    }
+}
         private void logProductAdditionAction(int userId, String Username) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
@@ -107,24 +124,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     return image;
 }
     
-    public void displayUserImage(JLabel admiimage) {
-    SessionClass session = SessionClass.getInstance();
-    String imagePath = session.getU_image();
-    
-    if (imagePath != null && !imagePath.isEmpty()) {
-        try {
-            ImageIcon icon = new ImageIcon(imagePath);
-            // Resize if needed (using your existing ResizeImage method)
-            adminimage.setIcon(ResizeImage(imagePath, null, adminimage));
-        } catch (Exception e) {
-            // Set default image if there's an error
-            adminimage.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
-        }
-    } else {
-        // Set default image if no image path exists
-        adminimage.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
-    }
-}
+
     
     
  private void searchUser(String username) {

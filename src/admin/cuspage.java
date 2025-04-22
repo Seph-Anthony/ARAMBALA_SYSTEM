@@ -6,6 +6,7 @@
 package admin;
 
 import USER.updateinfor;
+import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
 import java.sql.PreparedStatement;
@@ -53,6 +54,27 @@ public class cuspage extends javax.swing.JFrame {
         });
     }
     
+     private void logUserDeletionAction(int loggedInUserId, String loggedInUsername, String deletedUsername) {
+        String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+
+        dbConnect db = new dbConnect();
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, loggedInUserId);
+            pstmt.setString(2, loggedInUsername + " deleted a user: " + deletedUsername);
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            System.err.println("Failed to log user deletion action: " + e.getMessage());
+        }
+    }
+
+    private int getCurrentUserId() {
+        // Access the user ID from the SessionClass
+        config.SessionClass ses = config.SessionClass.getInstance();
+        return ses.getU_id();
+    }
        
  private void searchUser(String username) {
         try {
@@ -693,58 +715,66 @@ cusdash.setBackground(logcolor);
         // TODO add your handling code here:
         
         int rowIndex = usertable.getSelectedRow();
-    
-    if (rowIndex < 0) {
-        JOptionPane.showMessageDialog(null, "Please select a product to delete.");
-        return;
-    }
-    
-    // Get the product ID from the selected row
-    TableModel model = usertable.getModel();
-    int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
-    
-    // Confirmation dialog
-    int confirm = JOptionPane.showConfirmDialog(
-        this,
-        "Are you sure you want to delete this product?",
-        "Confirm Delete",
-        JOptionPane.YES_NO_OPTION
-    );
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        try {
-            // Connect to the database
-            dbConnect dbc = new dbConnect();
-            
-            // Prepare the DELETE query
-            String query = "DELETE FROM user WHERE u_id = ?";
-            PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
-            pstmt.setInt(1, productId);
-            
-            // Execute the query
-            int rowsDeleted = pstmt.executeUpdate();
-            
-            if (rowsDeleted > 0) {
-                JOptionPane.showMessageDialog(this, "User deleted successfully.");
-                
-                // Refresh the table to reflect the changes
-                showdata();
-                
-                // Update the counts
-                AllUsers();
-                PendingUser();
-                ActiveUser();
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete the User.");
-            }
-            
-            // Close the statement
-            pstmt.close();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error deleting the product.");
+
+        if (rowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a user to delete.");
+            return;
         }
-    }
+
+        // Get the user ID and username from the selected row
+        TableModel model = usertable.getModel();
+        int userIdToDelete = (int) model.getValueAt(rowIndex, 0); // Assuming u_id is in the first column
+        String usernameToDelete = (String) model.getValueAt(rowIndex, 1); // Assuming u_username is in the second column
+
+        // Confirmation dialog
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete this user?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // Connect to the database
+                dbConnect dbc = new dbConnect();
+
+                // Prepare the DELETE query
+                String query = "DELETE FROM user WHERE u_id = ?";
+                PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+                pstmt.setInt(1, userIdToDelete);
+
+                // Execute the query
+                int rowsDeleted = pstmt.executeUpdate();
+
+                if (rowsDeleted > 0) {
+                    JOptionPane.showMessageDialog(this, "User deleted successfully.");
+
+                    // Log the user deletion action
+                    SessionClass ses = SessionClass.getInstance();
+                    int currentUserId = getCurrentUserId();
+                    String currentUsername = ses.getUsername();
+                    logUserDeletionAction(currentUserId, currentUsername, usernameToDelete);
+
+                    // Refresh the table to reflect the changes
+                    showdata();
+
+                    // Update the counts
+                    AllUsers();
+                    PendingUser();
+                    ActiveUser();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to delete the User.");
+                }
+
+                // Close the statement
+                pstmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Error deleting the user.");
+            }
+        }
+    
     
         
         

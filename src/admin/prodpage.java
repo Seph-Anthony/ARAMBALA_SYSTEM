@@ -54,27 +54,29 @@ public class prodpage extends javax.swing.JFrame {
     }
     
     
-         private void logProductAdditionAction(int userId, String prodid) {
-    String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+    
+    
+ private void logProductDeletionAction(int userId, String username, String productName) {
+        String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
-    dbConnect db = new dbConnect();
-    try (Connection conn = db.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        dbConnect db = new dbConnect();
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-        pstmt.setInt(1, userId);
-        pstmt.setString(2, " "+prodid+" Deleted Product");
-        pstmt.executeUpdate();
+            pstmt.setInt(1, userId);
+            pstmt.setString(2, username + " deleted a product: " + productName);
+            pstmt.executeUpdate();
 
-    } catch (SQLException e) {
-        System.err.println("Failed to log product addition action: " + e.getMessage());
+        } catch (SQLException e) {
+            System.err.println("Failed to log product deletion action: " + e.getMessage());
+        }
     }
-}
-         
-         private int getCurrentUserId() {
-    // Access the user ID from the SessionClass
-    config.SessionClass ses = config.SessionClass.getInstance();
-    return ses.getU_id();
-}
+
+    private int getCurrentUserId() {
+        // Access the user ID from the SessionClass
+        config.SessionClass ses = config.SessionClass.getInstance();
+        return ses.getU_id();
+    }
     
      private void searchUser(String username) {
         try {
@@ -689,68 +691,69 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
     private void DELETEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseClicked
       
         // Inside the DELETEMouseClicked method
-SessionClass ses =  SessionClass.getInstance();
+ SessionClass ses =  SessionClass.getInstance();
 
-    int rowIndex = protable.getSelectedRow();
-    
-    if (rowIndex < 0) {
-        JOptionPane.showMessageDialog(null, "Please select a product to delete.");
-        return;
-    }
-    
-    // Get the product ID from the selected row
-    TableModel model = protable.getModel();
-    int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
-    
-    // Confirmation dialog
-    int confirm = JOptionPane.showConfirmDialog(
-        this,
-        "Are you sure you want to delete this product?",
-        "Confirm Delete",
-        JOptionPane.YES_NO_OPTION
-    );
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        try {
-            // Connect to the database
-            dbConnect dbc = new dbConnect();
-            
-            
-              int currentUserId = getCurrentUserId();
-        String prod = ses.getUsername();
-        logProductAdditionAction(currentUserId, prod);
-            
-            // Prepare the DELETE query
-            String query = "DELETE FROM product WHERE p_id = ?";
-            PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
-            pstmt.setInt(1, productId);
-            
-            // Execute the query
-            int rowsDeleted = pstmt.executeUpdate();
-            
-            if (rowsDeleted > 0) {
-                JOptionPane.showMessageDialog(this, "Product deleted successfully.");
-                
-                
-              
-                // Refresh the table to reflect the changes
-                displayData();
-                
-                // Update the counts
-                AllProd();
-                AvailableProd();
-                NotAvail();
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete the product.");
-            }
-            
-            // Close the statement
-            pstmt.close();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error deleting the product.");
+        int rowIndex = protable.getSelectedRow();
+
+        if (rowIndex < 0) {
+            JOptionPane.showMessageDialog(null, "Please select a product to delete.");
+            return;
         }
-    }
+
+        // Get the product ID and name from the selected row
+        TableModel model = protable.getModel();
+        int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
+        String productName = (String) model.getValueAt(rowIndex, 1); // Assuming p_name is in the second column
+
+        // Confirmation dialog
+        int confirm = JOptionPane.showConfirmDialog(
+            this,
+            "Are you sure you want to delete this product?",
+            "Confirm Delete",
+            JOptionPane.YES_NO_OPTION
+        );
+
+        if (confirm == JOptionPane.YES_OPTION) {
+            try {
+                // Connect to the database
+                dbConnect dbc = new dbConnect();
+
+
+                int currentUserId = getCurrentUserId();
+                String username = ses.getUsername();
+
+                // Prepare the DELETE query
+                String query = "DELETE FROM product WHERE p_id = ?";
+                PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+                pstmt.setInt(1, productId);
+
+                // Execute the query
+                int rowsDeleted = pstmt.executeUpdate();
+
+                if (rowsDeleted > 0) {
+                    JOptionPane.showMessageDialog(this, "Product deleted successfully.");
+
+                    // Log the product deletion action
+                    logProductDeletionAction(currentUserId, username, productName);
+
+                    // Refresh the table to reflect the changes
+                    displayData();
+
+                    // Update the counts
+                    AllProd();
+                    AvailableProd();
+                    NotAvail();
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to delete the product.");
+                }
+
+                // Close the statement
+                pstmt.close();
+            } catch (SQLException ex) {
+                System.out.println("Error: " + ex.getMessage());
+                JOptionPane.showMessageDialog(this, "Error deleting the product.");
+            }
+        }
         
     }//GEN-LAST:event_DELETEMouseClicked
 
