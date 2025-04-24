@@ -20,6 +20,7 @@ import net.proteanit.sql.DbUtils;
 import java.lang.String;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.JTable;
 
 /**
  *
@@ -47,6 +48,15 @@ public vieworder() {
         });
         
     }
+
+ // Make sure vieworder is accessible here
+
+    public vieworder(JTable vieworder) {
+        this.viewprocess = vieworder;
+        vieworder = new JTable(); // Initialize the JTable
+vieworder orderDataTransfer = new vieworder(vieworder); // Create OrderDataTransfer instance
+    }
+
 
 
 
@@ -82,7 +92,7 @@ private String getCurrentUsername() {
         try {
             dbConnect dbc = new dbConnect();
             ResultSet rs = dbc.getData("SELECT s_id AS 'Order Id', u_id AS 'User Id', p_id AS 'Product Id', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash', s_change AS 'Change', s_status AS 'Status', s_date AS 'Date' FROM process WHERE u_id = '" + username + "'");
-            vieworder.setModel(DbUtils.resultSetToTableModel(rs));
+            viewprocess.setModel(DbUtils.resultSetToTableModel(rs));
             rs.close();
         } catch (SQLException ex) {
             System.out.println("Error: " + ex.getMessage());
@@ -93,8 +103,9 @@ private String getCurrentUsername() {
   public void displayAllOrders() {
         try {
             dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash Given', s_change AS 'Change Amount', s_status AS 'Order Status', s_date AS 'Order Date' FROM process ORDER BY s_id DESC");
-            vieworder.setModel(DbUtils.resultSetToTableModel(rs)); // Assuming your JTable is named 'vieworder'
+//            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash Given', s_change AS 'Change Amount', s_status AS 'Order Status', s_date AS 'Order Date' FROM process ");
+            ResultSet rs = dbc.getData("SELECT * FROM process");
+            viewprocess.setModel(DbUtils.resultSetToTableModel(rs)); // Assuming your JTable is named 'vieworder'
             rs.close();
         } catch (SQLException ex) {
             System.out.println("Errors: " + ex.getMessage());
@@ -116,7 +127,7 @@ Color logcolor = new Color(63,195,128);
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        vieworder = new javax.swing.JTable();
+        viewprocess = new javax.swing.JTable();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
@@ -127,11 +138,13 @@ Color logcolor = new Color(63,195,128);
         jLabel2 = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        reset = new javax.swing.JPanel();
+        print = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         searchuser = new javax.swing.JTextField();
         SearchButton = new javax.swing.JButton();
+        reset1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -146,7 +159,7 @@ Color logcolor = new Color(63,195,128);
         jPanel2.setForeground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        vieworder.setModel(new javax.swing.table.DefaultTableModel(
+        viewprocess.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -154,7 +167,7 @@ Color logcolor = new Color(63,195,128);
 
             }
         ));
-        jScrollPane1.setViewportView(vieworder);
+        jScrollPane1.setViewportView(viewprocess);
 
         jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 680, 380));
 
@@ -272,25 +285,25 @@ Color logcolor = new Color(63,195,128);
 
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 190, 50));
 
-        reset.setBackground(new java.awt.Color(0, 102, 102));
-        reset.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        reset.addMouseListener(new java.awt.event.MouseAdapter() {
+        print.setBackground(new java.awt.Color(0, 102, 102));
+        print.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
+        print.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                resetMouseClicked(evt);
+                printMouseClicked(evt);
             }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
-                resetMouseEntered(evt);
+                printMouseEntered(evt);
             }
             public void mouseExited(java.awt.event.MouseEvent evt) {
-                resetMouseExited(evt);
+                printMouseExited(evt);
             }
         });
-        reset.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        print.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("RESET");
+        jLabel5.setText("RECEIPT");
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel5MouseClicked(evt);
@@ -302,9 +315,9 @@ Color logcolor = new Color(63,195,128);
                 jLabel5MouseExited(evt);
             }
         });
-        reset.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
+        print.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 20));
 
-        jPanel1.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 110, 50));
+        jPanel1.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 110, 40));
 
         jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(0, 102, 102));
@@ -336,7 +349,41 @@ Color logcolor = new Color(63,195,128);
                 SearchButtonActionPerformed(evt);
             }
         });
-        jPanel1.add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 240, 100, 30));
+        jPanel1.add(SearchButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 230, 100, 40));
+
+        reset1.setBackground(new java.awt.Color(0, 102, 102));
+        reset1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        reset1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                reset1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                reset1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                reset1MouseExited(evt);
+            }
+        });
+        reset1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("RESET");
+        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel6MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel6MouseExited(evt);
+            }
+        });
+        reset1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
+
+        jPanel1.add(reset1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 110, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -444,7 +491,7 @@ Color logcolor = new Color(63,195,128);
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
         // TODO add your handling code here:
-        int rowindex = vieworder.getSelectedRow();
+        int rowindex = viewprocess.getSelectedRow();
         SessionClass ses = SessionClass.getInstance();
         int orderIdStr = ses.getS_id();
         if (rowindex < 0) {
@@ -455,11 +502,11 @@ Color logcolor = new Color(63,195,128);
         // Assuming the s_id (order ID) is in the first column (index 0) of your vieworder table
         // **IMPORTANT: Adjust this index if s_id is in a different column.**
         int s_id_columnIndex = 0;
-        int selected_s_id = (int) vieworder.getModel().getValueAt(rowindex, s_id_columnIndex);
+        int selected_s_id = (int) viewprocess.getModel().getValueAt(rowindex, s_id_columnIndex);
 
         // **Assuming the 'Order Status' is in the 7th column (index 6). Adjust if it's different.**
         int s_status_table_columnIndex = 7;
-        String currentStatusInTable = (String) vieworder.getModel().getValueAt(rowindex, s_status_table_columnIndex);
+        String currentStatusInTable = (String) viewprocess.getModel().getValueAt(rowindex, s_status_table_columnIndex);
 
         if (!currentStatusInTable.equals("Pending")) {
             JOptionPane.showMessageDialog(null, "Only Pending orders can be updated.");
@@ -490,8 +537,8 @@ Color logcolor = new Color(63,195,128);
                     if (rowsAffected > 0) {
                         ses.setS_status("Complete"); // Update the session as well
                         // Optionally, update the table model to reflect the change immediately
-                        if (s_status_table_columnIndex < vieworder.getColumnCount()) {
-                            vieworder.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
+                        if (s_status_table_columnIndex < viewprocess.getColumnCount()) {
+                            viewprocess.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
                         }
                          int currentUserId = getCurrentUserId();
         String currentUsername = getCurrentUsername(); // Get the username
@@ -549,30 +596,105 @@ Color logcolor = new Color(63,195,128);
     private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
         // TODO add your handling code here:
         
-        reset.setBackground(logcolor);
+        print.setBackground(logcolor);
         
     }//GEN-LAST:event_jLabel5MouseEntered
 
-    private void resetMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseEntered
+    private void printMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseEntered
         // TODO add your handling code here:
-         reset.setBackground(logcolor);
+         print.setBackground(logcolor);
         
-    }//GEN-LAST:event_resetMouseEntered
+    }//GEN-LAST:event_printMouseEntered
 
-    private void resetMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseExited
-        // TODO add your handling code here:
-        
-          reset.setBackground(excolor);
-        
-    }//GEN-LAST:event_resetMouseExited
-
-    private void resetMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_resetMouseClicked
+    private void printMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseExited
         // TODO add your handling code here:
         
-        displayAllOrders();
+          print.setBackground(excolor);
         
-    }//GEN-LAST:event_resetMouseClicked
+    }//GEN-LAST:event_printMouseExited
 
+    private void printMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseClicked
+   
+     int row = viewprocess.getSelectedRow();
+
+        if (row < 0) {
+            JOptionPane.showMessageDialog(null, "Please select an order!");
+            return;
+        }
+
+        try  { // Use try-with-resources to auto-close connections
+            dbConnect db = new dbConnect();
+            TableModel tbl = viewprocess.getModel();
+
+            // 1.  Get the order ID (s_id) from the selected row.  s_id is at index 0
+            int orderId = (int) tbl.getValueAt(row, 0);
+            System.out.println("Selected row: " + row);
+            System.out.println("Selected orderId (s_id) from orderDisplayTable: " + orderId);
+
+            // 2. Query the "process" table to get the order details
+            String query = "SELECT u_id, s_id, s_date, s_quantity FROM process WHERE s_id = ?";
+            try (Connection conn = db.getConnection(); // Get connection from dbConnect
+                 PreparedStatement pstmt = conn.prepareStatement(query)) {
+                pstmt.setInt(1, orderId);
+                try (ResultSet processRs = pstmt.executeQuery()) {
+                    if (processRs.next()) {
+                        int customerId = processRs.getInt("u_id");
+                        int orderIdForLabel = processRs.getInt("s_id");
+                        String orderDate = processRs.getString("s_date");
+                        int quantity = processRs.getInt("s_quantity");
+                        System.out.println("Retrieved customerId (u_id) from process: " + customerId);
+                        System.out.println("Retrieved orderIdForLabel (s_id) from process: " + orderIdForLabel);
+                        System.out.println("Retrieved orderDate (s_date) from process: " + orderDate);
+                        System.out.println("Retrieved quantity (s_quantity) from process: " + quantity);
+
+                        // 3. Query the "user" table to get the customer's details
+                        String userQuery = "SELECT * FROM user WHERE u_id = ?";
+                        try (PreparedStatement userStmt = conn.prepareStatement(userQuery)) {
+                            userStmt.setInt(1, customerId);
+                            try (ResultSet userRs = userStmt.executeQuery()) {
+                                if (userRs.next()) {
+                                    orderprint order = new orderprint();
+
+                                    // Populate the orderprint frame with customer data from the "user" table
+                                    order.cusid.setText(String.valueOf(userRs.getInt("u_id")));
+                                    order.fname.setText(userRs.getString("u_fname"));
+                                    order.lname.setText(userRs.getString("u_lname"));
+                                    order.cuscontact.setText(userRs.getString("u_contact"));
+                                    order.cusemail.setText(userRs.getString("u_email"));
+                                    order.cususername.setText(userRs.getString("u_username"));
+                                    order.custype.setText(userRs.getString("u_type"));
+                                    order.cusstatus.setText(userRs.getString("u_stat"));
+
+                                    // Populate the JLabels
+                                    order.orid.setText(String.valueOf(orderIdForLabel));
+                                    order.ordate.setText(orderDate);
+
+                                    order.setVisible(true);
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Error: Customer data not found!");
+                                    return;
+                                }
+                            }
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Error: Order data not found!");
+                        return;
+                    }
+                }
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    
+    
+    }//GEN-LAST:event_printMouseClicked
+
+
+    
+             
+    
+    
     private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
         // TODO add your handling code here:
             update.setBackground(excolor);
@@ -580,7 +702,7 @@ Color logcolor = new Color(63,195,128);
 
     private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
         // TODO add your handling code here:
-             int rowindex = vieworder.getSelectedRow();
+             int rowindex = viewprocess.getSelectedRow();
         SessionClass ses = SessionClass.getInstance();
 
         if (rowindex < 0) {
@@ -591,11 +713,11 @@ Color logcolor = new Color(63,195,128);
         // Assuming the s_id (order ID) is in the first column (index 0) of your vieworder table
         // **IMPORTANT: Adjust this index if s_id is in a different column.**
         int s_id_columnIndex = 0;
-        int selected_s_id = (int) vieworder.getModel().getValueAt(rowindex, s_id_columnIndex);
+        int selected_s_id = (int) viewprocess.getModel().getValueAt(rowindex, s_id_columnIndex);
 
         // **Assuming the 'Order Status' is in the 7th column (index 6). Adjust if it's different.**
         int s_status_table_columnIndex = 7;
-        String currentStatusInTable = (String) vieworder.getModel().getValueAt(rowindex, s_status_table_columnIndex);
+        String currentStatusInTable = (String) viewprocess.getModel().getValueAt(rowindex, s_status_table_columnIndex);
 
         if (!currentStatusInTable.equals("Pending")) {
             JOptionPane.showMessageDialog(null, "Only Pending orders can be updated.");
@@ -626,8 +748,8 @@ Color logcolor = new Color(63,195,128);
                     if (rowsAffected > 0) {
                         ses.setS_status("Complete"); // Update the session as well
                         // Optionally, update the table model to reflect the change immediately
-                        if (s_status_table_columnIndex < vieworder.getColumnCount()) {
-                            vieworder.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
+                        if (s_status_table_columnIndex < viewprocess.getColumnCount()) {
+                            viewprocess.getModel().setValueAt("Complete", rowindex, s_status_table_columnIndex);
                         }
                         JOptionPane.showMessageDialog(null, "Order status updated to Complete.");
                     } else {
@@ -661,7 +783,7 @@ Color logcolor = new Color(63,195,128);
     private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
         // TODO add your handling code here:
         
-        reset.setBackground(excolor);
+        print.setBackground(excolor);
         
     }//GEN-LAST:event_jLabel5MouseExited
 
@@ -684,6 +806,30 @@ Color logcolor = new Color(63,195,128);
     private void SearchButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_SearchButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_SearchButtonActionPerformed
+
+    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseClicked
+
+    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseEntered
+
+    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel6MouseExited
+
+    private void reset1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reset1MouseClicked
+
+    private void reset1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reset1MouseEntered
+
+    private void reset1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_reset1MouseExited
 
     /**
      * @param args the command line arguments
@@ -728,6 +874,7 @@ Color logcolor = new Color(63,195,128);
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;
@@ -737,9 +884,10 @@ Color logcolor = new Color(63,195,128);
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JPanel reset;
+    private javax.swing.JPanel print;
+    private javax.swing.JPanel reset1;
     private javax.swing.JTextField searchuser;
     private javax.swing.JPanel update;
-    private javax.swing.JTable vieworder;
+    private javax.swing.JTable viewprocess;
     // End of variables declaration//GEN-END:variables
 }

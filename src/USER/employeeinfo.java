@@ -9,6 +9,7 @@ import admin.admindash;
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import config.dbConnect;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -40,6 +41,9 @@ public class employeeinfo extends javax.swing.JFrame {
         initComponents();
         displayUserImage(image);
     }
+    
+     Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
     
             private void logProductAdditionAction(int userId, String Username) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
@@ -556,6 +560,12 @@ public void displayUserImage(JLabel admiimage) {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addMouseExited(evt);
+            }
         });
         add.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -573,6 +583,12 @@ public void displayUserImage(JLabel admiimage) {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 removeMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                removeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                removeMouseExited(evt);
+            }
         });
         remove.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -589,6 +605,12 @@ public void displayUserImage(JLabel admiimage) {
         select.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                selectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                selectMouseExited(evt);
             }
         });
         select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -814,6 +836,36 @@ public void displayUserImage(JLabel admiimage) {
     }
         
     }//GEN-LAST:event_addMouseClicked
+
+    private void removeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseEntered
+        // TODO add your handling code here:
+        remove.setBackground(logcolor);
+    }//GEN-LAST:event_removeMouseEntered
+
+    private void removeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_removeMouseExited
+        // TODO add your handling code here:
+        remove.setBackground(excolor);
+    }//GEN-LAST:event_removeMouseExited
+
+    private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered
+        // TODO add your handling code here:
+        add.setBackground(logcolor);
+    }//GEN-LAST:event_addMouseEntered
+
+    private void addMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseExited
+        // TODO add your handling code here:
+        add.setBackground(excolor);
+    }//GEN-LAST:event_addMouseExited
+
+    private void selectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseEntered
+        // TODO add your handling code here:
+        select.setBackground(logcolor);
+    }//GEN-LAST:event_selectMouseEntered
+
+    private void selectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseExited
+        // TODO add your handling code here:
+        select.setBackground(excolor);
+    }//GEN-LAST:event_selectMouseExited
 
     /**
      * @param args the command line arguments
