@@ -104,8 +104,6 @@ public class orderprint extends javax.swing.JFrame {
         jLabel27 = new javax.swing.JLabel();
         prodid = new javax.swing.JLabel();
         jLabel28 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jList1 = new javax.swing.JList<>();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -343,15 +341,6 @@ public class orderprint extends javax.swing.JFrame {
         jLabel28.setText("Product ID:");
         jPanel7.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 510, -1, 20));
 
-        jList1.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
-        });
-        jScrollPane1.setViewportView(jList1);
-
-        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 540, 170, 90));
-
         jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 440, 650));
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
@@ -371,13 +360,15 @@ public class orderprint extends javax.swing.JFrame {
         jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 30));
 
         jPanel1.add(jPanel5);
-        jPanel5.setBounds(0, 0, 500, 750);
+        jPanel5.setBounds(0, 0, 520, 750);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 498, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -544,7 +535,6 @@ public class orderprint extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JList<String> jList1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
@@ -556,7 +546,6 @@ public class orderprint extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
-    private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel lname;
     public javax.swing.JLabel ordate;
     public javax.swing.JLabel orderquan;
