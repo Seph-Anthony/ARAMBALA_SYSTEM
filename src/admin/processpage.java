@@ -264,13 +264,11 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jPanel17 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         quantity = new javax.swing.JTextField();
-        cash = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        orderproduct = new javax.swing.JPanel();
+        addditem = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -409,8 +407,8 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("ADD ORDER");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 410, -1));
+        jLabel9.setText("VIEW PRODUCT");
+        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 440, -1));
 
         jPanel17.setBackground(new java.awt.Color(0, 102, 102));
         jPanel17.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -442,56 +440,41 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
                 quantityActionPerformed(evt);
             }
         });
-        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 540, 180, 40));
-
-        cash.setBackground(new java.awt.Color(240, 240, 240));
-        cash.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        cash.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        cash.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        cash.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cashActionPerformed(evt);
-            }
-        });
-        jPanel1.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 540, 180, 40));
+        jPanel1.add(quantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 520, 180, 40));
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(0, 102, 102));
         jLabel11.setText("Enter Quantity:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 500, -1, 20));
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 480, -1, 20));
 
         jLabel17.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel17.setText("Enter Cash:");
         jPanel1.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 500, -1, 20));
 
-        orderproduct.setBackground(new java.awt.Color(0, 102, 102));
-        orderproduct.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        orderproduct.addMouseListener(new java.awt.event.MouseAdapter() {
+        addditem.setBackground(new java.awt.Color(0, 102, 102));
+        addditem.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        addditem.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                orderproductMouseClicked(evt);
+                addditemMouseClicked(evt);
             }
         });
-        orderproduct.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        addditem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ORDER");
+        jLabel1.setText("ORDER ITEM");
         jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel1MouseClicked(evt);
             }
         });
-        orderproduct.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
+        addditem.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
-        jPanel1.add(orderproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 590, 150, 40));
+        jPanel1.add(addditem, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 520, 150, 40));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/aquantity.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 480, 50, 50));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/acash.png"))); // NOI18N
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 490, 60, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 470, 50, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -512,6 +495,11 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
 
     private void jLabel15MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel15MouseClicked
         // TODO add your handling code here:
+        
+        orderpage order = new orderpage();
+        order.setVisible(true);
+        this.dispose();
+        
     }//GEN-LAST:event_jLabel15MouseClicked
 
     private void jPanel17MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel17MouseClicked
@@ -539,197 +527,95 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         // TODO add your handling code here:
     }//GEN-LAST:event_prodcategoryActionPerformed
 
-    private void quantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityActionPerformed
-        // TODO add your handling code here:
-                                             
-    try {
-        if(!quantity.getText().trim().isEmpty() && !prodprice.getText().trim().isEmpty()) {
-            int qty = Integer.parseInt(quantity.getText().trim());
-            double price = Double.parseDouble(prodprice.getText().trim());
-            double total = qty * price;
-            
-            // You can display this in a label or message
-            JOptionPane.showMessageDialog(this, 
-                "Total Amount: ₱" + String.format("%.2f", total), 
-                "Order Summary", JOptionPane.INFORMATION_MESSAGE);
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);
+    private void addditemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addditemMouseClicked
+String quantityText = quantity.getText();
+
+    if (quantityText.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter the quantity.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return; // Stop further processing if quantity is empty
     }
 
-        
-    }//GEN-LAST:event_quantityActionPerformed
-
-    private void cashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cashActionPerformed
-
-    private void orderproductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderproductMouseClicked
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    ResultSet rs = null;
-
+    int quantityToAdd;
     try {
-        // Get current user session
+        quantityToAdd = Integer.parseInt(quantityText);
+        if (quantityToAdd <= 0) {
+            JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop further processing if quantity is not positive
+        }
+
+        // Assuming you have a way to access the current order ID.
+        // This might be stored in your SessionClass or passed between frames.
         SessionClass session = SessionClass.getInstance();
-        int userId = session.getU_id();
-        String username = session.getUsername();
+        int currentOrderId = session.getOrder_id(); // Get the current order ID from the session
 
-        if (userId == 0) {
-            JOptionPane.showMessageDialog(this, "No user logged in!", "Session Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // Retrieve product details from the displayed fields
+        int productId = Integer.parseInt(prodid.getText());
+        double productPrice = Double.parseDouble(prodprice.getText());
 
-        // Check if the order_id already exists in the session (if it doesn't, generate a new one)
-        int orderId = session.getOrder_id();
-        if (orderId == 0) {
-            // Generate a new order_id if not already assigned
-            orderId = generateNewOrderId(userId, conn); // Pass userId and connectio
-            session.setOrder_id(orderId); // Save it in the session
-        }
+        // Calculate the total amount for this order item
+        double totalAmount = quantityToAdd * productPrice;
 
-        // Validate all required fields
-        if (prodid.getText().trim().isEmpty() || quantity.getText().trim().isEmpty() || cash.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields!", "Missing Information", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Parse inputs
-        int productId = Integer.parseInt(prodid.getText().trim());
-        int orderQuantity = Integer.parseInt(quantity.getText().trim());
-        double cashAmount = Double.parseDouble(cash.getText().trim());
-        double productPrice = Double.parseDouble(prodprice.getText().trim());
-        int availableStock = Integer.parseInt(prodstock.getText().trim());
-
-        // Validate quantity and stock
-        if (orderQuantity <= 0) {
-            JOptionPane.showMessageDialog(this, "Quantity must be greater than 0", "Invalid Quantity", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-        if (orderQuantity > availableStock) {
-            JOptionPane.showMessageDialog(this, "Not enough stock available!\nAvailable: " + availableStock, "Stock Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Calculate total and change
-        double totalAmount = orderQuantity * productPrice;
-        double change = cashAmount - totalAmount;
-
-        if (cashAmount < totalAmount) {
-            JOptionPane.showMessageDialog(this,
-                    "Insufficient cash!\nTotal: ₱" + String.format("%.2f", totalAmount)
-                    + "\nCash: ₱" + String.format("%.2f", cashAmount),
-                    "Payment Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-
-        // Database operations
+        // Create an instance of your dbConnect class
         dbConnect db = new dbConnect();
-        conn = db.getConnection();
-        conn.setAutoCommit(false); // Start transaction
 
-        // 1. Check if product stock still enough
-        pstmt = conn.prepareStatement("SELECT p_stock FROM product WHERE p_id = ?");
-        pstmt.setInt(1, productId);
-        rs = pstmt.executeQuery();
+        // Construct the SQL INSERT statement for order_items
+        String insertOrderItemSQL = "INSERT INTO order_items (order_id, product_id, quantity, price, item_total) VALUES ("
+                + currentOrderId + ", "
+                + productId + ", "
+                + quantityToAdd + ", "
+                + productPrice + ", "
+                + totalAmount + ")";
 
-        if (!rs.next() || rs.getInt("p_stock") < orderQuantity) {
-            throw new SQLException("Product stock is insufficient or product not found.");
-        }
-        rs.close();
-        pstmt.close();
+        // Execute the INSERT statement
+        int result = db.insertData(insertOrderItemSQL);
 
-        // 2. Insert into orders FIRST
-        String insertOrderSql = "INSERT INTO orders (u_id, order_date, order_status, cash, order_change) VALUES (?, NOW(), 'Pending', ?, ?)";
-        pstmt = conn.prepareStatement(insertOrderSql, Statement.RETURN_GENERATED_KEYS);
-        pstmt.setInt(1, userId);
-        pstmt.setDouble(2, cashAmount);
-        pstmt.setDouble(3, change);
-        pstmt.executeUpdate();
+        if (result == 1) {
+            JOptionPane.showMessageDialog(this, "Item added to order successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        ResultSet generatedKeys = pstmt.getGeneratedKeys();
-        if (generatedKeys.next()) {
-            orderId = generatedKeys.getInt(1); // Use generated order_id if inserted
-            session.setOrder_id(orderId); // Store it in the session
+            // Navigate back to the orderpage frame
+            // Assuming you have an instance of orderpage or a way to create one
+            orderpage orderPage = new orderpage(); // Create a new instance of OrderPage
+            orderPage.setVisible(true);
+            this.dispose(); // Close the current "View Product" frame
         } else {
-            throw new SQLException("Failed to retrieve generated order ID.");
+            JOptionPane.showMessageDialog(this, "Failed to add item to order.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        generatedKeys.close();
-        pstmt.close();
 
-        // 3. Insert into order_items
-        String insertOrderItemSql = "INSERT INTO order_items (order_id, product_id, quantity, price, item_total) VALUES (?, ?, ?, ?, ?)";
-        pstmt = conn.prepareStatement(insertOrderItemSql);
-        pstmt.setInt(1, orderId);
-        pstmt.setInt(2, productId);
-        pstmt.setInt(3, orderQuantity);
-        pstmt.setDouble(4, productPrice);
-        pstmt.setDouble(5, totalAmount);
-        pstmt.executeUpdate();
-        pstmt.close();
-
-        // 4. Update product stock
-        String updateStockSql = "UPDATE product SET p_stock = p_stock - ? WHERE p_id = ?";
-        pstmt = conn.prepareStatement(updateStockSql);
-        pstmt.setInt(1, orderQuantity);
-        pstmt.setInt(2, productId);
-        pstmt.executeUpdate();
-        pstmt.close();
-
-        // 5. Insert into logs
-        String insertLogSql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
-        pstmt = conn.prepareStatement(insertLogSql);
-        pstmt.setInt(1, userId);
-        pstmt.setString(2, "Order placed. Order ID: " + orderId + " by User: " + username);
-        pstmt.executeUpdate();
-        pstmt.close();
-
-        conn.commit(); // Commit all changes
-
-        // Success
-        JOptionPane.showMessageDialog(this,
-                "Order placed successfully!\n"
-                + "Product: " + prodname.getText() + "\n"
-                + "Quantity: " + orderQuantity + "\n"
-                + "Total: ₱" + String.format("%.2f", totalAmount) + "\n"
-                + "Cash: ₱" + String.format("%.2f", cashAmount) + "\n"
-                + "Change: ₱" + String.format("%.2f", change),
-                "Order Complete", JOptionPane.INFORMATION_MESSAGE);
-
-        // Open order page
-        orderpage orderPage = new orderpage();
-        orderPage.setVisible(true);
-        this.dispose();
-
-    } catch (SQLException ex) {
-        if (conn != null) {
-            try {
-                conn.rollback();
-            } catch (SQLException rollbackEx) {
-                System.err.println("Rollback failed: " + rollbackEx.getMessage());
-            }
-        }
-        JOptionPane.showMessageDialog(this, "Error processing order: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    } catch (NumberFormatException ex) {
-        JOptionPane.showMessageDialog(this, "Please enter valid numbers!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, "Unexpected error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    } finally {
+        // Close the database connection
         try {
-            if (rs != null) rs.close();
-            if (pstmt != null) pstmt.close();
-            if (conn != null) conn.close();
+            db.getConnection().close();
         } catch (SQLException ex) {
-            System.err.println("Error closing resources: " + ex.getMessage());
+            System.err.println("Error closing database connection: " + ex.getMessage());
         }
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid quantity. Please enter a valid number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
     }
-    }//GEN-LAST:event_orderproductMouseClicked
+    }//GEN-LAST:event_addditemMouseClicked
 
     private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void quantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityActionPerformed
+        // TODO add your handling code here:
+
+        try {
+            if(!quantity.getText().trim().isEmpty() && !prodprice.getText().trim().isEmpty()) {
+                int qty = Integer.parseInt(quantity.getText().trim());
+                double price = Double.parseDouble(prodprice.getText().trim());
+                double total = qty * price;
+
+                // You can display this in a label or message
+                JOptionPane.showMessageDialog(this,
+                    "Total Amount: ₱" + String.format("%.2f", total),
+                    "Order Summary", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid quantity", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    }//GEN-LAST:event_quantityActionPerformed
 
     /**
      * @param args the command line arguments
@@ -767,7 +653,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField cash;
+    private javax.swing.JPanel addditem;
     public javax.swing.JLabel image;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -782,7 +668,6 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
@@ -794,7 +679,6 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
-    private javax.swing.JPanel orderproduct;
     public javax.swing.JTextField prodbrand;
     public javax.swing.JTextField prodcategory;
     public javax.swing.JTextField prodid;

@@ -95,45 +95,32 @@ private String getCurrentUsername() {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         prodimage = new javax.swing.JLabel();
-        orstat = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        orid = new javax.swing.JTextField();
+        orderitemid = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         prodprice = new javax.swing.JTextField();
         totalam = new javax.swing.JTextField();
-        orquantity = new javax.swing.JTextField();
+        previousquantity = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        usercash = new javax.swing.JTextField();
-        jLabel7 = new javax.swing.JLabel();
-        userchange = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        ordate = new javax.swing.JTextField();
         prodquan = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        jLabel22 = new javax.swing.JLabel();
         jLabel23 = new javax.swing.JLabel();
-        jLabel24 = new javax.swing.JLabel();
-        newcash = new javax.swing.JTextField();
+        prodid = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
         newquantity = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         UPDATE = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -148,12 +135,6 @@ private String getCurrentUsername() {
 
         jPanel2.setBackground(new java.awt.Color(0, 102, 102));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("UPDATE ORDER");
-        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 410, -1));
 
         jPanel10.setBackground(new java.awt.Color(0, 102, 102));
         jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -174,6 +155,12 @@ private String getCurrentUsername() {
 
         jPanel2.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 60, 60));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("UPDATE ORDER");
+        jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 20, 440, -1));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 730, 110));
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
@@ -186,38 +173,27 @@ private String getCurrentUsername() {
 
         jPanel3.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 200, 170));
 
-        orstat.setEditable(false);
-        orstat.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        orstat.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        orstat.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(orstat, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 40, 140, 30));
-
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel1.setText("ORDER STATUS:");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, -1, -1));
-
-        orid.setEditable(false);
-        orid.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        orid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        orid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(orid, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 140, 30));
+        orderitemid.setEditable(false);
+        orderitemid.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        orderitemid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        orderitemid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel3.add(orderitemid, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 140, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel2.setText("ORDER ID:");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, -1, -1));
+        jLabel2.setText("ORDER ITEM ID");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, -1, -1));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 102, 102));
         jLabel3.setText("PRODUCT PRICE:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, -1, -1));
+        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 210, -1, -1));
 
         prodprice.setEditable(false);
         prodprice.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         prodprice.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         prodprice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 300, 140, 30));
+        jPanel3.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 140, 30));
 
         totalam.setEditable(false);
         totalam.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
@@ -228,108 +204,69 @@ private String getCurrentUsername() {
                 totalamActionPerformed(evt);
             }
         });
-        jPanel3.add(totalam, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 140, 30));
+        jPanel3.add(totalam, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 230, 140, 30));
 
-        orquantity.setEditable(false);
-        orquantity.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        orquantity.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        orquantity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(orquantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 110, 140, 30));
+        previousquantity.setEditable(false);
+        previousquantity.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        previousquantity.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        previousquantity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel3.add(previousquantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 140, 30));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel5.setText("ORDER QUANTITY:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
-
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel6.setText("CASH:");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, -1, -1));
-
-        usercash.setEditable(false);
-        usercash.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        usercash.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        usercash.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(usercash, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 110, 140, 30));
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel7.setText("CHANGE:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 240, -1, -1));
-
-        userchange.setEditable(false);
-        userchange.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        userchange.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        userchange.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(userchange, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 260, 140, 30));
+        jLabel5.setText("YOUR PREVIOUS QUANTITY");
+        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 70, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setText("TOTAL AMOUNT:");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 240, -1, -1));
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel11.setText("ORDER DATE:");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 340, -1, -1));
-
-        ordate.setEditable(false);
-        ordate.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        ordate.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        ordate.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(ordate, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 360, 140, 30));
+        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 210, -1, -1));
 
         prodquan.setEditable(false);
         prodquan.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         prodquan.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         prodquan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel3.add(prodquan, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 380, 140, 30));
+        jPanel3.add(prodquan, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 90, 140, 30));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 102, 102));
         jLabel14.setText("PRODUCT QUANTITY:");
-        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 360, -1, -1));
+        jPanel3.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 70, -1, -1));
 
         jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/totalamount.png"))); // NOI18N
-        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 260, 30, 30));
-
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/changegamay.png"))); // NOI18N
-        jPanel3.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 260, 40, -1));
+        jPanel3.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 230, 30, 30));
 
         jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/stockgamay.png"))); // NOI18N
-        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 30, 30));
+        jPanel3.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 30, 30));
 
         jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/productpricegamay.png"))); // NOI18N
-        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 300, 30, 30));
-
-        jLabel21.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/cashgamay.png"))); // NOI18N
-        jPanel3.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 110, 40, -1));
-
-        jLabel22.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/ordate.png"))); // NOI18N
-        jPanel3.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 360, 40, -1));
+        jPanel3.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 230, 30, 30));
 
         jLabel23.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/quantity gamay.png"))); // NOI18N
-        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 40, -1));
+        jPanel3.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 40, -1));
 
-        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/orderstatusgamay.png"))); // NOI18N
-        jPanel3.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 40, 40, -1));
+        prodid.setEditable(false);
+        prodid.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        prodid.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        prodid.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel3.add(prodid, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 140, 30));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 730, 430));
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel6.setText("PRODUCT ID");
+        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 270, -1, -1));
 
-        newcash.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        newcash.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        newcash.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(newcash, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 570, 140, 40));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 110, 730, 390));
 
         newquantity.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         newquantity.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         newquantity.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel1.add(newquantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, 140, 40));
+        jPanel1.add(newquantity, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, 140, 40));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(0, 102, 102));
         jLabel10.setText("ENTER NEW QUANTITY");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 550, -1, -1));
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 520, -1, -1));
 
         UPDATE.setBackground(new java.awt.Color(0, 102, 102));
         UPDATE.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -354,16 +291,8 @@ private String getCurrentUsername() {
 
         jPanel1.add(UPDATE, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 610, 130, 50));
 
-        jLabel13.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setText("ENTER NEW CASH");
-        jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 550, -1, -1));
-
-        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/acash.png"))); // NOI18N
-        jPanel1.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 570, 60, 40));
-
         jLabel18.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/aquantity.png"))); // NOI18N
-        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 560, 50, 50));
+        jPanel1.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 530, 50, 50));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -414,137 +343,137 @@ private String getCurrentUsername() {
     }//GEN-LAST:event_formWindowActivated
 
     private void UPDATEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UPDATEMouseClicked
-      // Retrieve values from the text fields
-    String newQuantityStr = newquantity.getText();
-    String newCashStr = newcash.getText();
-
-    // Retrieve other necessary values (Order ID, Product Price, Current Stock, Old Quantity, Old Cash)
-    String orderIdStr = orid.getText();
-    String productPriceStr = prodprice.getText();
-    String currentStockStr = prodquan.getText(); // Assuming prodquan holds current product stock
-    String oldQuantityStr = orquantity.getText(); // Get the original quantity
-    String oldCashStr = usercash.getText();       // Get the original cash
-
-    int orderId;
-    int newQuantity;
-    double newCash;
-    double productPrice;
-    int currentStock;
-    int oldQuantity;
-    double oldCash;
-
-    // Perform Input Validations
-    if (newQuantityStr.trim().isEmpty() || newCashStr.trim().isEmpty()) {
-        JOptionPane.showMessageDialog(null, "Please enter both new quantity and new cash.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        newQuantity = Integer.parseInt(newQuantityStr);
-        if (newQuantity <= 0) {
-            JOptionPane.showMessageDialog(null, "New quantity must be a positive whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Invalid quantity format. Please enter a whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        newCash = Double.parseDouble(newCashStr);
-        if (newCash < 0) {
-            JOptionPane.showMessageDialog(null, "New cash cannot be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Invalid cash format. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        orderId = Integer.parseInt(orderIdStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Error: Invalid Order ID.", "Database Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        productPrice = Double.parseDouble(productPriceStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Error: Invalid Product Price.", "Data Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        currentStock = Integer.parseInt(currentStockStr);
-        if (newQuantity > currentStock) {
-            JOptionPane.showMessageDialog(null, "New quantity exceeds the current stock (" + currentStock + ").", "Stock Error", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Error: Invalid Current Stock format.", "Data Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        oldQuantity = Integer.parseInt(oldQuantityStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Error parsing old quantity: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    try {
-        oldCash = Double.parseDouble(oldCashStr);
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "Error parsing old cash: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Calculate the new total amount
-    double newTotalAmount = newQuantity * productPrice;
-
-    // Calculate the change
-    double change = newCash - newTotalAmount;
-
-    if (change < 0) {
-        JOptionPane.showMessageDialog(null, "Insufficient cash. Please enter an amount equal to or greater than the total.", "Payment Error", JOptionPane.ERROR_MESSAGE);
-        return;
-    }
-
-    // Construct the update query.  Join orders and order_items.
-    String updateQuery = "UPDATE orders o "
-            + "JOIN order_items oi ON o.order_id = oi.order_id " // Join based on order_id
-            + "SET oi.quantity = ?, "             // Update order_items quantity
-            + "o.cash = ?, "                   // Update orders cash
-            + "o.order_change = ? "             // Update orders change
-            + "WHERE o.order_id = ?";            //  Where the order_id matches
-
-    dbConnect db = new dbConnect();
-    try (Connection conn = db.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
-
-        pstmt.setInt(1, newQuantity);
-        pstmt.setDouble(2, newCash);
-        pstmt.setDouble(3, change);
-        pstmt.setInt(4, orderId);
-
-        int currentUserId = getCurrentUserId();
-        String currentUsername = getCurrentUsername();
-        logOrderUpdateAction(currentUserId, currentUsername, String.valueOf(orderId));
-        pstmt.executeUpdate();
-        JOptionPane.showMessageDialog(null, "Order updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-
-        // Optionally, refresh the order table
-        if (getParent() instanceof admin.updateorder) {
-            ((admin.updateorder) getParent()).loadMyOrders();
-        }
-        updateorder or = new updateorder();
-        or.setVisible(true);
-        this.dispose();
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error updating order: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
+//      // Retrieve values from the text fields
+//    String newQuantityStr = newquantity.getText();
+//    String newCashStr = newcash.getText();
+//
+//    // Retrieve other necessary values (Order ID, Product Price, Current Stock, Old Quantity, Old Cash)
+//    String orderIdStr = orderitemid.getText();
+//    String productPriceStr = prodprice.getText();
+//    String currentStockStr = prodquan.getText(); // Assuming prodquan holds current product stock
+//    String oldQuantityStr = previousquantity.getText(); // Get the original quantity
+//    String oldCashStr = usercash.getText();       // Get the original cash
+//
+//    int orderId;
+//    int newQuantity;
+//    double newCash;
+//    double productPrice;
+//    int currentStock;
+//    int oldQuantity;
+//    double oldCash;
+//
+//    // Perform Input Validations
+//    if (newQuantityStr.trim().isEmpty() || newCashStr.trim().isEmpty()) {
+//        JOptionPane.showMessageDialog(null, "Please enter both new quantity and new cash.", "Input Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        newQuantity = Integer.parseInt(newQuantityStr);
+//        if (newQuantity <= 0) {
+//            JOptionPane.showMessageDialog(null, "New quantity must be a positive whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Invalid quantity format. Please enter a whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        newCash = Double.parseDouble(newCashStr);
+//        if (newCash < 0) {
+//            JOptionPane.showMessageDialog(null, "New cash cannot be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Invalid cash format. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        orderId = Integer.parseInt(orderIdStr);
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Error: Invalid Order ID.", "Database Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        productPrice = Double.parseDouble(productPriceStr);
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Error: Invalid Product Price.", "Data Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        currentStock = Integer.parseInt(currentStockStr);
+//        if (newQuantity > currentStock) {
+//            JOptionPane.showMessageDialog(null, "New quantity exceeds the current stock (" + currentStock + ").", "Stock Error", JOptionPane.ERROR_MESSAGE);
+//            return;
+//        }
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Error: Invalid Current Stock format.", "Data Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        oldQuantity = Integer.parseInt(oldQuantityStr);
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Error parsing old quantity: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    try {
+//        oldCash = Double.parseDouble(oldCashStr);
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "Error parsing old cash: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    // Calculate the new total amount
+//    double newTotalAmount = newQuantity * productPrice;
+//
+//    // Calculate the change
+//    double change = newCash - newTotalAmount;
+//
+//    if (change < 0) {
+//        JOptionPane.showMessageDialog(null, "Insufficient cash. Please enter an amount equal to or greater than the total.", "Payment Error", JOptionPane.ERROR_MESSAGE);
+//        return;
+//    }
+//
+//    // Construct the update query.  Join orders and order_items.
+//    String updateQuery = "UPDATE orders o "
+//            + "JOIN order_items oi ON o.order_id = oi.order_id " // Join based on order_id
+//            + "SET oi.quantity = ?, "             // Update order_items quantity
+//            + "o.cash = ?, "                   // Update orders cash
+//            + "o.order_change = ? "             // Update orders change
+//            + "WHERE o.order_id = ?";            //  Where the order_id matches
+//
+//    dbConnect db = new dbConnect();
+//    try (Connection conn = db.getConnection();
+//         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+//
+//        pstmt.setInt(1, newQuantity);
+//        pstmt.setDouble(2, newCash);
+//        pstmt.setDouble(3, change);
+//        pstmt.setInt(4, orderId);
+//
+//        int currentUserId = getCurrentUserId();
+//        String currentUsername = getCurrentUsername();
+//        logOrderUpdateAction(currentUserId, currentUsername, String.valueOf(orderId));
+//        pstmt.executeUpdate();
+//        JOptionPane.showMessageDialog(null, "Order updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+//
+//        // Optionally, refresh the order table
+//        if (getParent() instanceof admin.updateorder) {
+//            ((admin.updateorder) getParent()).loadMyOrders();
+//        }
+//        updateorder or = new updateorder();
+//        or.setVisible(true);
+//        this.dispose();
+//    } catch (SQLException ex) {
+//        JOptionPane.showMessageDialog(null, "Error updating order: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+//        ex.printStackTrace();
+//    }
     }//GEN-LAST:event_UPDATEMouseClicked
 
     private void totalamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalamActionPerformed
@@ -588,28 +517,19 @@ private String getCurrentUsername() {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel UPDATE;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
-    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
@@ -617,17 +537,13 @@ private String getCurrentUsername() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JTextField newcash;
     private javax.swing.JTextField newquantity;
-    public javax.swing.JTextField ordate;
-    public javax.swing.JTextField orid;
-    public javax.swing.JTextField orquantity;
-    public javax.swing.JTextField orstat;
+    public javax.swing.JTextField orderitemid;
+    public javax.swing.JTextField previousquantity;
+    public javax.swing.JTextField prodid;
     public javax.swing.JLabel prodimage;
     public javax.swing.JTextField prodprice;
     public javax.swing.JTextField prodquan;
     public javax.swing.JTextField totalam;
-    public javax.swing.JTextField usercash;
-    public javax.swing.JTextField userchange;
     // End of variables declaration//GEN-END:variables
 }

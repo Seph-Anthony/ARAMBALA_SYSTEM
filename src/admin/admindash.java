@@ -1071,45 +1071,60 @@ public void AllProcess() {
     }//GEN-LAST:event_jPanel17MouseClicked
 
     private void processMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_processMouseClicked
-       orderpage order = new orderpage();
-       order.setVisible(true);
-       this.dispose();
-        
-// TODO add your handling code here:
-        
-            
-//     SessionClass session = SessionClass.getInstance();
-//        String userType = session.getType();
-//
-//        if (userType != null) {
-//            switch (userType.toLowerCase()) {
-//                case "Admin":
-//                    admindash adminDashboard = new admindash();
-//                    adminDashboard.setVisible(true);
-//                    break;
-//                case "Customer":
-//                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
-//                    customerDashboard.setVisible(true);
-//                    break;
-//                case "Employee":
-//                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
-//                    employeeDashboard.setVisible(true);
-//                    break;
-//                default:
-//                    // Handle cases where the user type is not recognized
-//                    System.out.println("Unknown user type: " + userType);
-//                    // Optionally, you can redirect to a default dashboard or show an error message
-//                    break;
-//            }
-//            this.dispose(); // Close the current form
-//        } else {
-//            // Handle the case where the session doesn't have user type information
-//            System.out.println("User type not found in session.");
-//            // Optionally, show an error message
-//        }
-//        
+ dbConnect db = new dbConnect();
+    int newOrderId = 0;
+    SessionClass session = SessionClass.getInstance();
+    int currentOrderId = session.getOrder_id();
 
+    try {
+        // Discard existing ordered items for the previous order (if any)
+        if (currentOrderId != 0) {
+            String deletePreviousItemsSQL = "DELETE FROM order_items WHERE order_id = " + currentOrderId;
+            int deletedRows = db.insertData(deletePreviousItemsSQL);
+            System.out.println(deletedRows + " ordered items discarded for previous Order ID: " + currentOrderId);
+        }
 
+        // Create a new order in the orders table
+        int userId = session.getU_id();
+        String insertOrderSQL = "INSERT INTO orders (u_id, order_date, order_status, cash, order_change) VALUES ("
+                + userId + ", NOW(), 'Pending', 0.00, 0.00)";
+        int orderInsertResult = db.insertData(insertOrderSQL);
+
+        if (orderInsertResult == 1) {
+            // Retrieve the newly generated order ID
+            ResultSet generatedKeys = db.getData("SELECT LAST_INSERT_ID()");
+            if (generatedKeys.next()) {
+                newOrderId = generatedKeys.getInt(1);
+                // Set the new order ID in the session
+                session.setOrder_id(newOrderId);
+                System.out.println("New Order ID created: " + newOrderId);
+
+             orderpage orderPage = new orderpage();
+orderPage.setCurrentOrderId(newOrderId);
+orderPage.loadOrderedItems(newOrderId, orderPage.orderitem);
+orderPage.setVisible(true);
+this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to retrieve new order ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+            generatedKeys.close();
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to create a new order.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        System.err.println("Error creating new order: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error during order creation.", "Database Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (db.getConnection() != null) {
+                db.getConnection().close();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error closing database connection: " + ex.getMessage());
+        }
+    }
 
     }//GEN-LAST:event_processMouseClicked
 
