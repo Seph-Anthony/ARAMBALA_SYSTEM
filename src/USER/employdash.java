@@ -19,6 +19,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -118,94 +119,92 @@ private int getCurrentUserId() {
     
     
      private void searchUser(String username) {
-        try {
-            dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT s_id, u_id, p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date FROM process WHERE u_id = '" + username + "'");
-            tableorder.setModel(DbUtils.resultSetToTableModel(rs));
-            rs.close();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error searching for order.");
-        }
-    }
-    
-    
-    
-        
-public void displayData(){
-        try{
-            dbConnect dbc = new dbConnect();
-            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Order Quantity', s_totalam AS 'Total Amount',"
-                    + "s_cash AS 'Cash', s_change AS 'Change', s_status AS 'Status', s_date AS 'Date' FROM process");
-            tableorder.setModel(DbUtils.resultSetToTableModel(rs));
-             rs.close();
-        }catch(SQLException ex){
-            System.out.println("Errors: "+ex.getMessage());
-        
-        }
-        
-    }
-
-
-public void CompleteProd(){
-    
-    try{
-             dbConnect dbc = new dbConnect();
-             ResultSet rs= dbc.getData("select count(*) as acctt FROM process WHERE s_status = 'Complete' ");
-             
-             if(rs.next()){
-              
-                 int activeuserr = rs.getInt("acctt");
-                 complete.setText(""+activeuserr );
-                 
-             }
-        
-    }catch(SQLException e){
-        System.out.println("Error: "+ e.getMessage());
-    }
-    
-}
-public void AllPProcess() {
     try {
-        // Connect to the database
         dbConnect dbc = new dbConnect();
-        
-        // Query to get the total number of users
-        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalusers FROM process");
-        
-        if (rs.next()) {
-            // Retrieve the total count from the query result
-            int totalUsers = rs.getInt("totalusers");
-            
-            // Assuming you have a JLabel named lblTotalUsers to display the count
-            total.setText(" " + totalUsers);
+        // Use try-with-resources to auto-close resources
+        try (Connection conn = dbc.getConnection();  // Get connection
+             PreparedStatement pstmt = conn.prepareStatement("SELECT order_id, u_id, order_date, order_status, cash, order_change FROM orders WHERE u_id = ?")) { // Corrected query to use order_id
+            pstmt.setString(1, username); // Use prepared statement to prevent SQL injection
+            ResultSet rs = pstmt.executeQuery();
+            tableorder.setModel(DbUtils.resultSetToTableModel(rs));
         }
-        
-        // Close the ResultSet
-        rs.close();
-        
     } catch (SQLException ex) {
         System.out.println("Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error searching for order: " + ex.getMessage(), "Search Error", JOptionPane.ERROR_MESSAGE); //Include the error message
     }
 }
-public void PendingProd(){
-    
-    try{
-             dbConnect dbc = new dbConnect();
-             ResultSet rs= dbc.getData("select count(*) as acctt FROM process WHERE s_status = 'Pending' ");
-             
-             if(rs.next()){
-              
-                 int activeuserr = rs.getInt("acctt");
-                 pending.setText(""+activeuserr );
-                 
-             }
-        
-    }catch(SQLException e){
-        System.out.println("Error: "+ e.getMessage());
+
+public void displayData() {
+    try {
+        dbConnect dbc = new dbConnect();
+        // Use try-with-resources
+        try (Connection conn = dbc.getConnection(); //get connection
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT order_id AS 'Order ID', u_id AS 'User ID', order_date AS 'Order Date', order_status AS 'Order Status', cash AS 'Cash', order_change AS 'Change' FROM orders ORDER BY order_id DESC")) {
+            tableorder.setModel(DbUtils.resultSetToTableModel(rs));
+        }
+    } catch (SQLException ex) {
+        System.out.println("Errors: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error displaying data: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE); //show error message
     }
-    
 }
+
+public void CompleteProd() {
+    try {
+        dbConnect dbc = new dbConnect();
+        // Use try-with-resources
+        try (Connection conn = dbc.getConnection(); //get connection
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS acctt FROM orders WHERE order_status = 'Complete'")) { // Corrected status to order_status
+
+            if (rs.next()) {
+                int activeuserr = rs.getInt("acctt");
+                complete.setText(String.valueOf(activeuserr)); // Use String.valueOf()
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Error counting completed orders: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE); //show error
+    }
+}
+
+public void AllPProcess() {
+    try {
+        dbConnect dbc = new dbConnect();
+        // Use try-with-resources
+        try (Connection conn = dbc.getConnection(); //get connection
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS totalorders FROM orders")) { //changed to orders
+
+            if (rs.next()) {
+                int totalOrders = rs.getInt("totalorders"); // Changed variable name to reflect table
+                total.setText(String.valueOf(totalOrders)); // Use String.valueOf()
+            }
+        }
+    } catch (SQLException ex) {
+        System.out.println("Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error counting all orders: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE); //show error
+    }
+}
+
+public void PendingProd() {
+    try {
+        dbConnect dbc = new dbConnect();
+        // Use try-with-resources
+        try (Connection conn = dbc.getConnection(); //get connection
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS acctt FROM orders WHERE order_status = 'Pending'")) { // Corrected status to order_status
+            if (rs.next()) {
+                int activeuserr = rs.getInt("acctt");
+                pending.setText(String.valueOf(activeuserr)); // Use String.valueOf()
+            }
+        }
+    } catch (SQLException e) {
+        System.out.println("Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Error counting pending orders: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE); //show error
+    }
+}
+
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

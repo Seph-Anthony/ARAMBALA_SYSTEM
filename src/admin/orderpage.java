@@ -16,6 +16,10 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import config.SessionClass;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -23,7 +27,11 @@ import net.proteanit.sql.DbUtils;
  * @author Admin
  */
 public class orderpage extends javax.swing.JFrame {
-
+ private int p_id;
+private int order_id;
+     private Integer currentOrderId = null;
+    
+    
     /**
      * Creates new form orderpage
      */
@@ -34,13 +42,39 @@ public class orderpage extends javax.swing.JFrame {
         Allsupplies();
         Allhousehold();
         Allbeverage();
+         
+        
 //        displaypersonal();
 //        displayhouse();
 //        displaysupplies();
     }
     Color logcolorx = new Color(63,195,128);
     Color excolorx = new Color(255,255,255);
+private int generateNewOrderId() {
+    int newId = 1; // Default value
+    dbConnect db = new dbConnect(); // Use your existing dbConnect class
+    ResultSet rs = null;
     
+    try {
+        String sql = "SELECT MAX(order_id) FROM orders"; // Make sure 'orders' is your actual table name
+        rs = db.getData(sql);
+        
+        if (rs.next()) {
+            newId = rs.getInt(1) + 1; // Get max ID and add 1
+        }
+    } catch (SQLException e) {
+        System.out.println("Error generating new Order ID: " + e.getMessage());
+    } finally {
+        try { 
+            if (rs != null) rs.close(); 
+        } catch (SQLException e) {
+            System.out.println("Error closing ResultSet: " + e.getMessage());
+        }
+    }
+    
+    return newId;
+}
+   
     public void showdata(){
         try{
             dbConnect dbc = new dbConnect();
@@ -261,7 +295,7 @@ public class orderpage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
+        backbutton = new javax.swing.JLabel();
         foodand = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
@@ -289,6 +323,11 @@ public class orderpage extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -510,14 +549,14 @@ public class orderpage extends javax.swing.JFrame {
         });
         jPanel14.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/images-removebg-preview.png"))); // NOI18N
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
+        backbutton.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        backbutton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/images-removebg-preview.png"))); // NOI18N
+        backbutton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
+                backbuttonMouseClicked(evt);
             }
         });
-        jPanel14.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
+        jPanel14.add(backbutton, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
 
         jPanel12.add(jPanel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 620, 60, 60));
 
@@ -667,50 +706,35 @@ public class orderpage extends javax.swing.JFrame {
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
   
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
-        
-         SessionClass session = SessionClass.getInstance();
-        String userType = session.getType();
+    private void backbuttonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backbuttonMouseClicked
+        SessionClass session = SessionClass.getInstance();
+    String userType = session.getType();
 
-        if (userType != null) {
-           
-            if(userType.equals("Admin")){
-               
-                    admindash adminDashboard = new admindash();
-                    adminDashboard.setVisible(true);
-                    
-                    
-            }
-           if(userType.equals("Customer")){
-                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
-                    customerDashboard.setVisible(true);
-                    
-                    
-           }
-           
-           if(userType.equals("Employee")){
-               
-                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
-                    employeeDashboard.setVisible(true);
-                
-                    
-           }
-              
-                    // Handle cases where the user type is not recognized
-                
-                    // Optionally, you can redirect to a default dashboard or show an error message
-                 
-            
-            this.dispose(); 
-        } else {
-            // Handle the case where the session doesn't have user type information
-      JOptionPane.showMessageDialog(null,"No account login first");
-      this.dispose();
-            // Optionally, show an error message
+    if (userType != null) {
+        session.setOrder_id(0); 
+        System.out.println("Order ID reset.");
+        
+        switch (userType) {
+            case "Admin":
+                new admindash().setVisible(true);
+                break;
+            case "Customer":
+                new customerdashboard().setVisible(true);
+                break;
+            case "Employee":
+                new employdash().setVisible(true);
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Unrecognized user type");
         }
         
-    }//GEN-LAST:event_jLabel9MouseClicked
+        this.dispose();
+    } else {
+        JOptionPane.showMessageDialog(null, "No account login first");
+        this.dispose();
+    }
+        
+    }//GEN-LAST:event_backbuttonMouseClicked
 
     private void jPanel14MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel14MouseClicked
         // TODO add your handling code here:
@@ -724,13 +748,18 @@ public class orderpage extends javax.swing.JFrame {
         if (userType != null) {
            
             if(userType.equals("Admin")){
-               
+                   session.setOrder_id(0); // Reset order_id
+    System.out.println("Order ID reset.");
+
                     admindash adminDashboard = new admindash();
                     adminDashboard.setVisible(true);
                     
                     
             }
            if(userType.equals("Customer")){
+                   session.setOrder_id(0); // Reset order_id
+    System.out.println("Order ID reset.");
+
                     customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
                     customerDashboard.setVisible(true);
                     
@@ -738,7 +767,9 @@ public class orderpage extends javax.swing.JFrame {
            }
            
            if(userType.equals("Employee")){
-               
+                   session.setOrder_id(0); // Reset order_id
+    System.out.println("Order ID reset.");
+
                     employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
                     employeeDashboard.setVisible(true);
                 
@@ -807,88 +838,114 @@ public class orderpage extends javax.swing.JFrame {
     }//GEN-LAST:event_ADDORDERMouseExited
 
     private void ADDORDERMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDORDERMouseClicked
-        // TODO add your handling code here:
-        
-         int rowfood =food.getSelectedRow();
-      
-         
-                  
-        if(rowfood<0){
-            JOptionPane.showMessageDialog(null,"PLEASE SELECT AN ITEM");
-            
-        } else{
-            
-            try{
-                dbConnect db = new dbConnect();
-                TableModel fod = food.getModel();
-                ResultSet rs = db.getData("SELECT * FROM product WHERE p_id = '"+fod.getValueAt(rowfood, 0)+"'");
-                
-                if(rs.next()){
-                processpage pro = new processpage();
-                
-                pro.prodid.setText(""+rs.getInt("p_id"));
-                pro.prodname.setText(""+rs.getString("p_name"));
-                pro.prodprice.setText(""+rs.getFloat("p_price"));
-                pro.prodbrand.setText(""+rs.getString("p_brand"));
-                pro.prodstock.setText(""+rs.getInt("p_stock"));
-                pro.prodcategory.setText(""+rs.getString("p_category"));
-               pro.image.setIcon(pro.ResizeImage(rs.getString("p_image"),null,pro.image));
-               pro.oldpath = rs.getString("p_image");
-      pro.path = rs.getString("p_image");
-      pro.destination=rs.getString("p_image");
-             
-               
-                pro.setVisible(true);
-                
-                this.dispose();
-                }   
-            }catch(SQLException ex){
-                
-                System.out.println(""+ex);
-            }
-            
+   Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        int selectedRow = food.getSelectedRow();
+
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(null, "PLEASE SELECT AN ITEM");
+            return;
         }
-        
-//         int rowindex = usertable.getSelectedRow();
-//        
-//        if(rowindex<0){
-//            JOptionPane.showMessageDialog(null,"PLEASE SELECT AN ITEM");
-//            
-//        } else{
-//            
-//        
-//        try{
-//        dbConnect db = new dbConnect();
-//         TableModel tbl =  usertable.getModel();
-//       ResultSet rs = db.getData("SELECT * FROM  user WHERE u_id = '"+tbl.getValueAt(rowindex, 0)+"'");
-//      if(rs.next()){
-//            updateuser up = new updateuser();
-//          
-//            up.uid.setText(""+rs.getInt("u_id"));
-//            up.usernamere.setText(""+rs.getString("u_username"));
-//       up.fname.setText(""+rs.getString("u_fname"));
-//       up.lname.setText(""+rs.getString("u_lname"));
-//       up.email.setText(""+rs.getString("u_email"));
-//       up.contact.setText(""+rs.getString("u_contact"));
-//       up.ty.setSelectedItem(""+rs.getString("u_type"));
-//       up.oldpass.setText(""+rs.getString("u_password"));
-//      up.status.setSelectedItem(""+rs.getString("u_stat"));
-//      up.image.setIcon(up.ResizeImage(rs.getString("u_image"),null,up.image));
-//      up.oldpath = rs.getString("u_image");
-//      up.path = rs.getString("u_image");
-//      up.destination=rs.getString("u_image");
-//      up.setVisible(true);
-//      
-//      
-//        this.dispose();
-//       
-//      }
-//        }
-//        
-//        catch(SQLException ex){
-//            System.out.println(""+ex);
-//        } 
-//        }
+
+        // Debug log to check if session is null
+        SessionClass session = SessionClass.getInstance();
+        if (session == null) {
+            System.err.println("Session is null!");
+            JOptionPane.showMessageDialog(null, "Session is null, cannot proceed with the order.");
+            return;
+        }
+
+        // Ensure we have a valid order_id
+        int order_id = session.getOrder_id(); // Get the order ID from session
+        System.out.println("Current Order ID: " + order_id); // Debug log
+
+        // Only generate a new Order ID if it's not already set (order_id == 0)
+        if (order_id == 0) {
+            order_id = generateNewOrderId(); // Generate new order ID
+            session.setOrder_id(order_id); // Save the new order ID in session
+            System.out.println("New Order ID created: " + order_id);
+        } else {
+            System.out.println("Using existing Order ID: " + order_id); // Debug log
+        }
+
+        // Get the product ID from the selected row
+        TableModel model = food.getModel();
+        String productId = String.valueOf(model.getValueAt(selectedRow, 0)); // Get the product ID from the selected row
+        System.out.println("Selected Product ID: " + productId); // Debug log
+
+        dbConnect db = new dbConnect();
+        conn = db.getConnection();
+
+        String query = "SELECT * FROM product WHERE p_id = ?";
+        pstmt = conn.prepareStatement(query);
+        pstmt.setString(1, productId);
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            int p_id = rs.getInt("p_id"); // Get the product ID from the result set
+            String p_name = rs.getString("p_name");
+            float p_price = rs.getFloat("p_price");
+            String p_brand = rs.getString("p_brand");
+            int p_stock = rs.getInt("p_stock");
+            String p_category = rs.getString("p_category");
+            String imagePath = rs.getString("p_image");
+
+            // Debug log for product details
+            System.out.println("Product Details: " + p_id + ", " + p_name + ", " + p_price + ", " + p_brand + ", " + p_stock + ", " + p_category + ", " + imagePath);
+
+            // Check if product data is valid
+            if (p_name == null || p_brand == null || imagePath == null) {
+                System.err.println("Error: Product details are incomplete or missing.");
+                JOptionPane.showMessageDialog(this, "Product details are incomplete. Cannot proceed.");
+                return;
+            }
+
+            // Now pass the p_id and order_id to processpage constructor
+            processpage pro = new processpage(p_id, order_id); // Pass both p_id and order_id to the constructor of processpage
+
+            // Populate the fields with product data
+            pro.prodid.setText(String.valueOf(p_id));
+            pro.prodname.setText(p_name);
+            pro.prodprice.setText(String.valueOf(p_price));
+            pro.prodbrand.setText(p_brand);
+            pro.prodstock.setText(String.valueOf(p_stock));
+            pro.prodcategory.setText(p_category);
+
+            // Handle the image
+            if (imagePath != null && !imagePath.isEmpty()) {
+                pro.image.setIcon(pro.ResizeImage(imagePath, null, pro.image));
+                pro.oldpath = imagePath;
+                pro.path = imagePath;
+                pro.destination = imagePath;
+            } else {
+                System.out.println("No image found!");
+            }
+
+            // Show the processpage
+            pro.setVisible(true);
+            this.dispose(); // Close the current window (orderpage)
+        } else {
+            System.err.println("Error: Product not found.");
+            JOptionPane.showMessageDialog(this, "Error: Product not found in database.");
+        }
+    } catch (SQLException ex) {
+        System.err.println("SQL Error: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error retrieving product details: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+    } catch (NullPointerException ex) {
+        System.err.println("NullPointerException: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "NullPointerException: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
+        } catch (SQLException ex) {
+            System.err.println("Error closing resources: " + ex.getMessage());
+        }
+    }
     }//GEN-LAST:event_ADDORDERMouseClicked
 
     private void foodandMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_foodandMouseClicked
@@ -1086,6 +1143,18 @@ public class orderpage extends javax.swing.JFrame {
         
     }//GEN-LAST:event_VIEWORDERMouseClicked
 
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+        // TODO add your handling code here:
+        
+        SessionClass session = SessionClass.getInstance();
+if (session.getOrder_id() == 0) { 
+    // Generate a new Order ID
+    int newOrderId = generateNewOrderId(); // <- you need to create this method
+    session.setOrder_id(newOrderId);
+    System.out.println("New Order ID created: " + newOrderId);
+}
+    }//GEN-LAST:event_formWindowOpened
+
     /**
      * @param args the command line arguments
      */
@@ -1126,8 +1195,9 @@ public class orderpage extends javax.swing.JFrame {
     private javax.swing.JPanel ADDORDER1;
     private javax.swing.JPanel ADDORDER3;
     private javax.swing.JPanel VIEWORDER;
+    private javax.swing.JLabel backbutton;
     private javax.swing.JLabel beverage;
-    private javax.swing.JTable food;
+    public javax.swing.JTable food;
     private javax.swing.JPanel foodand;
     private javax.swing.JLabel household;
     private javax.swing.JPanel householdni;
@@ -1154,7 +1224,6 @@ public class orderpage extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;

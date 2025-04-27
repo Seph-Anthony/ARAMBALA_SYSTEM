@@ -10,6 +10,7 @@ import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
 import java.awt.Image;
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -30,21 +31,17 @@ public class updateorder extends javax.swing.JFrame {
     /**
      * Creates new form updateorder
      */
-    public updateorder() {
-        initComponents();
+  public updateorder() {
+    initComponents();
     dbConnection = new dbConnect();
-        orderTableModel = (DefaultTableModel) ordertable.getModel();
-        loadMyOrders();
-        displayUserImage(adminimage);
+    orderTableModel = (DefaultTableModel) ordertable.getModel();
+    loadMyOrders(); // Call loadMyOrders to populate the table
+    displayUserImage(adminimage);
+    displayUserImage(adminimage);
+}
 
-        displayUserImage(adminimage);
-    }
-    
-           Color logcolor = new Color(63,195,128);
-    Color excolor = new Color(255,255,255);
-    
- 
-    public void loadMyOrders() {
+
+   public void loadMyOrders() {
     // Clear existing data in the table
     orderTableModel.setRowCount(0);
 
@@ -53,45 +50,63 @@ public class updateorder extends javax.swing.JFrame {
     int loggedInUserId = session.getU_id();
     System.out.println("Attempting to load orders for user ID: " + loggedInUserId);
 
-    // Construct the SQL query to retrieve orders for the logged-in user
-    String sql = "SELECT s_id, p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date "
-                 + "FROM process "
-                 + "WHERE u_id = ? ";
+    // Get the logged-in user's role (assuming you have a method to get the role)
+    String loggedInUserRole = session.getType();
+    System.out.println("Logged in user role: " + loggedInUserRole);
 
-    try (PreparedStatement pstmt = dbConnection.getConnection().prepareStatement(sql)) {
-        pstmt.setInt(1, loggedInUserId);
-        ResultSet rs = pstmt.executeQuery();
-        System.out.println("Query executed successfully.");
+    // Construct the SQL query based on the user's role
+    String sql;
+    if ("Admin".equalsIgnoreCase(loggedInUserRole)) { // Changed to "Admin"
+        // Admin: Show all orders
+        sql = "SELECT order_id, u_id, order_date, order_status, cash, order_change FROM orders ORDER BY order_id DESC";
+    } else if ("Employee".equalsIgnoreCase(loggedInUserRole)) { // Changed to "Employee"
+        // Employee: Show all orders
+        sql = "SELECT order_id, u_id, order_date, order_status, cash, order_change FROM orders ORDER BY order_id DESC";
+    } else {
+        // Default: show only the user's orders
+        sql = "SELECT order_id, u_id, order_date, order_status, cash, order_change FROM orders WHERE u_id = ? ORDER BY order_id DESC";
+    }
 
-        // Populate the table model with the retrieved data
-        int rowCount = 0;
-        while (rs.next()) {
-            rowCount++;
-            // Debugging - showing retrieved data
-            System.out.println("Row " + rowCount + " found - Order ID: " + rs.getInt("s_id") + ", Product ID: " + rs.getInt("p_id") + ", Quantity: " + rs.getInt("s_quantity"));
+    try {
+        Connection conn = dbConnection.getConnection();
+        if (conn != null) {
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                if (!"Admin".equalsIgnoreCase(loggedInUserRole) && !"Employee".equalsIgnoreCase(loggedInUserRole)) { // Changed to "Admin" and "Employee"
+                    pstmt.setInt(1, loggedInUserId);
+                }
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    System.out.println("Query executed successfully.");
 
-            Object[] rowData = {
-                rs.getInt("s_id"),        // Order ID (s_id) - First column
-                rs.getInt("p_id"),        // Product ID (p_id) - Second column
-                rs.getInt("s_quantity"),   // Quantity
-                rs.getDouble("s_totalam"), // Total Amount
-                rs.getDouble("s_cash"),    // Cash
-                rs.getDouble("s_change"),  // Change
-                rs.getString("s_status"),  // Status
-                rs.getString("s_date")     // Date
-            };
-            orderTableModel.addRow(rowData);
+                    // Populate the table model with the retrieved data
+                    int rowCount = 0;
+                    while (rs.next()) {
+                        rowCount++;
+                        System.out.println("Row " + rowCount + " found - Order ID: " + rs.getInt("order_id") + ", User ID: " + rs.getInt("u_id"));
+
+                        Object[] rowData = {
+                                rs.getInt("order_id"),
+                                rs.getInt("u_id"),
+                                rs.getString("order_date"),
+                                rs.getString("order_status"),
+                                rs.getDouble("cash"),
+                                rs.getDouble("order_change")
+                        };
+                        orderTableModel.addRow(rowData);
+                    }
+                    System.out.println("Total rows added to table model: " + rowCount);
+                    totalorders.setText(String.valueOf(orderTableModel.getRowCount()));
+                }
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to connect to the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
         }
-        System.out.println("Total rows added to table model: " + rowCount);
-
-        // Optionally, update the total order count label
-        totalorders.setText(String.valueOf(orderTableModel.getRowCount()));
-
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(this, "Error loading orders: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
 }
+
+
 
     
 
@@ -128,6 +143,9 @@ public class updateorder extends javax.swing.JFrame {
         adminimage.setIcon(new ImageIcon(getClass().getResource("/image/default_user.png")));
     }
 }
+       
+           Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(255,255,255);
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -339,19 +357,18 @@ public class updateorder extends javax.swing.JFrame {
         ordertable.setForeground(new java.awt.Color(0, 102, 102));
         ordertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "ORDER ID", "PRODUCT ID", "QUANTITY", "PRICE", "CASH", "CHANGE", "STATUS", "DATE"
+                "Order ID", "User ID", "Order Date", "Order Status", "Cash", "Change"
             }
         ));
+        ordertable.setToolTipText("");
         ordertable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ordertableMouseClicked(evt);
@@ -450,80 +467,107 @@ public class updateorder extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteMouseExited
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-      // TODO add your handling code here:
-
-      // TODO add your handling code here:
-
+   // Get the selected row
     int selectedRow = ordertable.getSelectedRow();
 
+    // Check if a row is selected
     if (selectedRow < 0) {
-        JOptionPane.showMessageDialog(null, "PLEASE SELECT AN ITEM TO UPDATE");
+        JOptionPane.showMessageDialog(null, "Please select an order to update.");
         return;
     }
 
-    // Get the status of the selected order from the table model
-    String status = (String) orderTableModel.getValueAt(selectedRow, 6); // Assuming status is in the seventh column
+    // Get the table model
+    TableModel orderTableModel = ordertable.getModel();
 
-    // Check if the order status is "Completed"
+    // Get the column indices.  These MUST match your table structure EXACTLY.
+    final int ORDER_ID_COLUMN = 0;
+    final int USER_ID_COLUMN = 1;
+    final int ORDER_DATE_COLUMN = 2;
+    final int ORDER_STATUS_COLUMN = 3;
+    final int CASH_COLUMN = 4;
+    final int CHANGE_COLUMN = 5;
+    // There is no PRODUCT_ID_COLUMN in the table shown.
+    // There is no ORDER_QUANTITY_COLUMN in the table shown.
+
+    // Get the status of the selected order from the table model
+    String status = (String) orderTableModel.getValueAt(selectedRow, ORDER_STATUS_COLUMN);
+
+    // Check if the order status is "Completed" (case-insensitive)
     if ("Complete".equalsIgnoreCase(status)) {
         JOptionPane.showMessageDialog(null, "Cannot update an order that is already Completed.", "Update Not Allowed", JOptionPane.WARNING_MESSAGE);
         return; // Exit the method, preventing the update
     }
 
-    // If the status is NOT "Completed", proceed with opening the update frame
-    // Get the s_id (Order ID) and product ID of the selected row
-    int orderId = (int) orderTableModel.getValueAt(selectedRow, 0); // Assuming s_id is in the first column
-    int productId = (int) orderTableModel.getValueAt(selectedRow, 1); // Assuming p_id is in the second column
+    // Get the order ID.
+    int orderId = (int) orderTableModel.getValueAt(selectedRow, ORDER_ID_COLUMN);
 
+
+    // Retrieve order details from the selected row.  Adjusted to match table.
+    double cash = (double) orderTableModel.getValueAt(selectedRow, CASH_COLUMN);
+    double change = (double) orderTableModel.getValueAt(selectedRow, CHANGE_COLUMN);
+    String orderDate = (String) orderTableModel.getValueAt(selectedRow, ORDER_DATE_COLUMN);
+    int userId = (int) orderTableModel.getValueAt(selectedRow, USER_ID_COLUMN);
+   
     // Create an instance of your UpdateOrderFrame
     updateprocess updateFrame = new updateprocess();
 
-    // Retrieve other order details from the selected row in the table model
-    int orderQuantity = (int) orderTableModel.getValueAt(selectedRow, 2);
-    double totalAmount = (double) orderTableModel.getValueAt(selectedRow, 3);
-    double cash = (double) orderTableModel.getValueAt(selectedRow, 4);
-    double change = (double) orderTableModel.getValueAt(selectedRow, 5);
-    String orderDate = (String) orderTableModel.getValueAt(selectedRow, 7);
+    // Set the values in the UpdateOrderFrame's text fields.  Adjusted to match table.
+    updateFrame.orid.setText(String.valueOf(orderId));
+    updateFrame.ordate.setText(orderDate);
+    updateFrame.orstat.setText(status);
+    updateFrame.usercash.setText(String.valueOf(cash));
+    updateFrame.userchange.setText(String.valueOf(change));
+    //The update frame needs product details. You will need to query the database using orderId
+    //to get the product details.
 
-    // Retrieve product details from the database based on p_id
-    String productQuery = "SELECT p_price, p_stock, p_image FROM product WHERE p_id = " + productId;
+    // Retrieve product details from the database based on orderId.  You'll need to join tables.
+    String productQuery = "SELECT p.p_price, p.p_stock, p.p_image, oi.quantity " +
+            "FROM product p " +
+            "JOIN order_items oi ON p.p_id = oi.product_id " +
+            "WHERE oi.order_id = ?";
 
-    try (ResultSet rs = dbConnection.getData(productQuery)) {
-        if (rs.next()) {
-            int productPrice = rs.getInt("p_price");
-            int productStock = rs.getInt("p_stock");
-            String productImagePath = rs.getString("p_image");
+    try (Connection dbConnection = new dbConnect().getConnection();
+         PreparedStatement pstmt = dbConnection.prepareStatement(productQuery)) {
+        pstmt.setInt(1, orderId);
+        try (ResultSet rs = pstmt.executeQuery()) {
+            if (rs.next()) {
+                int productPrice = rs.getInt("p_price");
+                int productStock = rs.getInt("p_stock");
+                String productImagePath = rs.getString("p_image");
+                int orderQuantity = rs.getInt("quantity");
 
-            System.out.println("Product Image Path from Database (in updateorder): [" + productImagePath + "]"); // Existing line
+                System.out.println("Product Image Path from Database (in updateorder): [" + productImagePath + "]");
 
-            // **ADD THIS CHECK:**
-            if (productImagePath == null) {
-                System.out.println("Product image path is NULL in the database for product ID: " + productId);
-            } else if (productImagePath.isEmpty()) {
-                System.out.println("Product image path is EMPTY in the database for product ID: " + productId);
+                // Handle null or empty image paths
+                if (productImagePath == null || productImagePath.isEmpty()) {
+                    System.out.println("Product image path is NULL or EMPTY in the database for order ID: " + orderId);
+                    updateFrame.prodimage.setIcon(null);
+                } else {
+                    try {
+                        updateFrame.prodimage.setIcon(updateFrame.ResizeImage(productImagePath, null, updateFrame.prodimage));
+                    } catch (Exception e) {
+                        JOptionPane.showMessageDialog(null, "Error loading image: " + e.getMessage(), "Image Error", JOptionPane.ERROR_MESSAGE);
+                        e.printStackTrace();
+                    }
+                }
+                // Set the values in the UpdateOrderFrame
+                updateFrame.prodprice.setText(String.valueOf(productPrice));
+                updateFrame.prodquan.setText(String.valueOf(productStock));
+                updateFrame.orquantity.setText(String.valueOf(orderQuantity));
+
+                // Calculate and set initial total amount in updateFrame
+                double initialTotalAmount = orderQuantity * productPrice;
+                updateFrame.totalam.setText(String.valueOf(initialTotalAmount));
+
+
+                // Make the UpdateOrderFrame visible
+                updateFrame.setVisible(true);
+                this.dispose();
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Product details not found for Order ID: " + orderId, "Error", JOptionPane.ERROR_MESSAGE);
             }
-
-            // Set the values in the UpdateOrderFrame's text fields
-            updateFrame.orid.setText(String.valueOf(orderId));
-            updateFrame.prodprice.setText(String.valueOf(productPrice));
-            updateFrame.prodquan.setText(String.valueOf(productStock)); // Assuming prodquan should show current stock
-            updateFrame.orquantity.setText(String.valueOf(orderQuantity));
-            updateFrame.totalam.setText(String.valueOf(totalAmount));
-            updateFrame.ordate.setText(orderDate);
-            updateFrame.orstat.setText(status); // Set the status in the update frame as well
-            updateFrame.usercash.setText(String.valueOf(cash));
-            updateFrame.userchange.setText(String.valueOf(change));
-
-            // Display the product image
-            updateFrame.prodimage.setIcon(updateFrame.ResizeImage(productImagePath, null, updateFrame.prodimage));
-
-            // Make the UpdateOrderFrame visible
-            updateFrame.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(null, "Product details not found for Order ID: " + orderId, "Error", JOptionPane.ERROR_MESSAGE);
         }
-
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error retrieving product details: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
@@ -562,7 +606,7 @@ public class updateorder extends javax.swing.JFrame {
             dbConnect dbc = new dbConnect();
             
             // Prepare the DELETE query
-            String query = "DELETE FROM process WHERE s_id = ?";
+            String query = "DELETE FROM orders WHERE s_id = ?";
             PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
             pstmt.setInt(1, productId);
             

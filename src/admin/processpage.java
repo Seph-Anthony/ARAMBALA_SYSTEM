@@ -20,6 +20,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -31,13 +32,54 @@ import javax.swing.JOptionPane;
  */
 public class processpage extends javax.swing.JFrame {
 
-    /**
-     * Creates new form processpage
-     */
-    public processpage() {
-        initComponents();
-         
+ private int p_id;
+private int order_id = 0;
+
+public processpage(int p_id, int order_id) {
+    initComponents();
+    this.p_id = p_id;
+    this.order_id = order_id;
+
+    System.out.println("Selected Product ID: " + p_id);
+    System.out.println("Current Order ID: " + order_id);
+}
+
+public int generateNewOrderId(int userId, Connection conn) {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    int orderId = 0;
+
+    try {
+        // Query to get the latest order_id for the given user_id
+        String sql = "SELECT order_id FROM orders WHERE u_id = ? ORDER BY order_id DESC LIMIT 1";
+        pstmt = conn.prepareStatement(sql);
+        pstmt.setInt(1, userId);  // Using userId to check the user's order history
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            // If the user has previous orders, return the most recent order_id
+            orderId = rs.getInt("order_id");
+            System.out.println("Existing Order ID found: " + orderId);
+        } else {
+            // If the user has no previous orders, create a new order_id (start from 1 or adjust logic)
+            orderId = 1;  // You can choose to auto-increment based on your logic
+            System.out.println("No previous orders found. Creating new Order ID: " + orderId);
+        }
+    } catch (SQLException ex) {
+        System.err.println("Error while generating new order ID: " + ex.getMessage());
+    } finally {
+        try {
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+        } catch (SQLException ex) {
+            System.err.println("Error closing resources: " + ex.getMessage());
+        }
     }
+
+    return orderId;
+}
+
+
     private void logOrderAction(int userId, String username, String productName) {
         String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 
@@ -436,6 +478,11 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("ORDER");
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
         orderproduct.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
         jPanel1.add(orderproduct, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 590, 150, 40));
@@ -518,206 +565,206 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
     }//GEN-LAST:event_cashActionPerformed
 
     private void orderproductMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderproductMouseClicked
-        // TODO add your handling code here:
-         try {
-        // Get current user from session
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        // Get current user session
         SessionClass session = SessionClass.getInstance();
         int userId = session.getU_id();
-        String productname = prodname.getText().trim();
-        
-        if(userId == 0) {
+        String username = session.getUsername();
+
+        if (userId == 0) {
             JOptionPane.showMessageDialog(this, "No user logged in!", "Session Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Validate all fields
-        if(prodid.getText().trim().isEmpty() || quantity.getText().trim().isEmpty() || 
-           cash.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill all fields!", "Error", JOptionPane.ERROR_MESSAGE);
+        // Check if the order_id already exists in the session (if it doesn't, generate a new one)
+        int orderId = session.getOrder_id();
+        if (orderId == 0) {
+            // Generate a new order_id if not already assigned
+            orderId = generateNewOrderId(userId, conn); // Pass userId and connectio
+            session.setOrder_id(orderId); // Save it in the session
+        }
+
+        // Validate all required fields
+        if (prodid.getText().trim().isEmpty() || quantity.getText().trim().isEmpty() || cash.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill all fields!", "Missing Information", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Parse input values
-        int productId, orderQuantity, availableStock;
-        double productPrice, cashAmount;
-        
-        try {
-            productId = Integer.parseInt(prodid.getText().trim());
-            orderQuantity = Integer.parseInt(quantity.getText().trim());
-            cashAmount = Double.parseDouble(cash.getText().trim());
-            productPrice = Double.parseDouble(prodprice.getText().trim());
-            availableStock = Integer.parseInt(prodstock.getText().trim());
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(this, "Please enter valid numbers!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
-            return;
-        }
+        // Parse inputs
+        int productId = Integer.parseInt(prodid.getText().trim());
+        int orderQuantity = Integer.parseInt(quantity.getText().trim());
+        double cashAmount = Double.parseDouble(cash.getText().trim());
+        double productPrice = Double.parseDouble(prodprice.getText().trim());
+        int availableStock = Integer.parseInt(prodstock.getText().trim());
 
-        // Validate quantity
-        if(orderQuantity <= 0) {
+        // Validate quantity and stock
+        if (orderQuantity <= 0) {
             JOptionPane.showMessageDialog(this, "Quantity must be greater than 0", "Invalid Quantity", JOptionPane.ERROR_MESSAGE);
             return;
         }
-
-        if(orderQuantity > availableStock) {
-            JOptionPane.showMessageDialog(this, 
-                "Not enough stock available!\nAvailable: " + availableStock, 
-                "Stock Error", JOptionPane.ERROR_MESSAGE);
+        if (orderQuantity > availableStock) {
+            JOptionPane.showMessageDialog(this, "Not enough stock available!\nAvailable: " + availableStock, "Stock Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Calculate totals
+        // Calculate total and change
         double totalAmount = orderQuantity * productPrice;
         double change = cashAmount - totalAmount;
 
-        // Validate cash
-        if(cashAmount < totalAmount) {
-            JOptionPane.showMessageDialog(this, 
-                "Insufficient cash!\nTotal: ₱" + String.format("%.2f", totalAmount) + 
-                "\nCash: ₱" + String.format("%.2f", cashAmount), 
-                "Payment Error", JOptionPane.ERROR_MESSAGE);
+        if (cashAmount < totalAmount) {
+            JOptionPane.showMessageDialog(this,
+                    "Insufficient cash!\nTotal: ₱" + String.format("%.2f", totalAmount)
+                    + "\nCash: ₱" + String.format("%.2f", cashAmount),
+                    "Payment Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Process the order
+        // Database operations
         dbConnect db = new dbConnect();
-        boolean success = processOrder(db, userId, productId, orderQuantity, totalAmount, cashAmount, change);
-
-        if(success) {
-            JOptionPane.showMessageDialog(this, 
-                "Order placed successfully!\n" +
-                "Product: " + prodname.getText() + "\n" +
-                "Quantity: " + orderQuantity + "\n" +
-                "Total: ₱" + String.format("%.2f", totalAmount) + "\n" +
-                "Change: ₱" + String.format("%.2f", change),
-                "Order Complete", JOptionPane.INFORMATION_MESSAGE);
-            
-            config.SessionClass ses = config.SessionClass.getInstance();
-            
-            String usernamee = session.getUsername();
-            int currentUserId = getCurrentUserId();
-        String currentUsername = getCurrentUsername(); // Get the username
-        // Log the order update action BEFORE updating the database
-        logOrderUpdateAction(currentUserId, currentUsername);
-            
-            // Return to order page
-            orderpage order = new orderpage();
-            order.setVisible(true);
-            this.dispose();
-        } else {
-            JOptionPane.showMessageDialog(this, 
-                "Failed to process order. Please try again.", 
-                "Order Failed", JOptionPane.ERROR_MESSAGE);
-        }
-        
-    } catch (Exception ex) {
-        JOptionPane.showMessageDialog(this, 
-            "Error processing order: " + ex.getMessage(), 
-            "Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
-}
-
-// Helper method to process the order
-private boolean processOrder(dbConnect db, int userId, int productId, int quantity, 
-                           double totalAmount, double cash, double change) {
-    Connection conn = null;
-    PreparedStatement pstmt = null;
-    
-    try {
         conn = db.getConnection();
         conn.setAutoCommit(false); // Start transaction
-        
-        // 1. Check current stock
+
+        // 1. Check if product stock still enough
         pstmt = conn.prepareStatement("SELECT p_stock FROM product WHERE p_id = ?");
         pstmt.setInt(1, productId);
-        ResultSet rs = pstmt.executeQuery();
-        
-        if(!rs.next()) {
-            throw new SQLException("Product not found");
-        }
-        
-        int currentStock = rs.getInt("p_stock");
-        if(currentStock < quantity) {
-            throw new SQLException("Insufficient stock");
-        }
-        
-        // 2. Insert order record
-      String orderSql = "INSERT INTO process (u_id, p_id, s_quantity, s_totalam, s_cash, s_change, s_status, s_date) " +
-                 "VALUES (?, ?, ?, ?, ?, ?, 'Pending', NOW())";  // Added NOW() for current timestamp
+        rs = pstmt.executeQuery();
 
-pstmt = conn.prepareStatement(orderSql);
-pstmt.setInt(1, userId);
-pstmt.setInt(2, productId);
-pstmt.setInt(3, quantity);
-pstmt.setDouble(4, totalAmount);
-pstmt.setDouble(5, cash);
-pstmt.setDouble(6, change);
-pstmt.executeUpdate();
-        
-        // 3. Update product stock
-        pstmt = conn.prepareStatement("UPDATE product SET p_stock = p_stock - ? WHERE p_id = ?");
-        pstmt.setInt(1, quantity);
+        if (!rs.next() || rs.getInt("p_stock") < orderQuantity) {
+            throw new SQLException("Product stock is insufficient or product not found.");
+        }
+        rs.close();
+        pstmt.close();
+
+        // 2. Insert into orders FIRST
+        String insertOrderSql = "INSERT INTO orders (u_id, order_date, order_status, cash, order_change) VALUES (?, NOW(), 'Pending', ?, ?)";
+        pstmt = conn.prepareStatement(insertOrderSql, Statement.RETURN_GENERATED_KEYS);
+        pstmt.setInt(1, userId);
+        pstmt.setDouble(2, cashAmount);
+        pstmt.setDouble(3, change);
+        pstmt.executeUpdate();
+
+        ResultSet generatedKeys = pstmt.getGeneratedKeys();
+        if (generatedKeys.next()) {
+            orderId = generatedKeys.getInt(1); // Use generated order_id if inserted
+            session.setOrder_id(orderId); // Store it in the session
+        } else {
+            throw new SQLException("Failed to retrieve generated order ID.");
+        }
+        generatedKeys.close();
+        pstmt.close();
+
+        // 3. Insert into order_items
+        String insertOrderItemSql = "INSERT INTO order_items (order_id, product_id, quantity, price, item_total) VALUES (?, ?, ?, ?, ?)";
+        pstmt = conn.prepareStatement(insertOrderItemSql);
+        pstmt.setInt(1, orderId);
+        pstmt.setInt(2, productId);
+        pstmt.setInt(3, orderQuantity);
+        pstmt.setDouble(4, productPrice);
+        pstmt.setDouble(5, totalAmount);
+        pstmt.executeUpdate();
+        pstmt.close();
+
+        // 4. Update product stock
+        String updateStockSql = "UPDATE product SET p_stock = p_stock - ? WHERE p_id = ?";
+        pstmt = conn.prepareStatement(updateStockSql);
+        pstmt.setInt(1, orderQuantity);
         pstmt.setInt(2, productId);
         pstmt.executeUpdate();
-        
-        conn.commit(); // Commit transaction
-        return true;
-        
+        pstmt.close();
+
+        // 5. Insert into logs
+        String insertLogSql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+        pstmt = conn.prepareStatement(insertLogSql);
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, "Order placed. Order ID: " + orderId + " by User: " + username);
+        pstmt.executeUpdate();
+        pstmt.close();
+
+        conn.commit(); // Commit all changes
+
+        // Success
+        JOptionPane.showMessageDialog(this,
+                "Order placed successfully!\n"
+                + "Product: " + prodname.getText() + "\n"
+                + "Quantity: " + orderQuantity + "\n"
+                + "Total: ₱" + String.format("%.2f", totalAmount) + "\n"
+                + "Cash: ₱" + String.format("%.2f", cashAmount) + "\n"
+                + "Change: ₱" + String.format("%.2f", change),
+                "Order Complete", JOptionPane.INFORMATION_MESSAGE);
+
+        // Open order page
+        orderpage orderPage = new orderpage();
+        orderPage.setVisible(true);
+        this.dispose();
+
     } catch (SQLException ex) {
-        if(conn != null) {
+        if (conn != null) {
             try {
                 conn.rollback();
-            } catch (SQLException e) {
-                System.out.println("Rollback failed: " + e.getMessage());
+            } catch (SQLException rollbackEx) {
+                System.err.println("Rollback failed: " + rollbackEx.getMessage());
             }
         }
-        System.out.println("Order processing failed: " + ex.getMessage());
-        return false;
+        JOptionPane.showMessageDialog(this, "Error processing order: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } catch (NumberFormatException ex) {
+        JOptionPane.showMessageDialog(this, "Please enter valid numbers!", "Invalid Input", JOptionPane.ERROR_MESSAGE);
+    } catch (Exception ex) {
+        JOptionPane.showMessageDialog(this, "Unexpected error: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
     } finally {
         try {
-            if(pstmt != null) pstmt.close();
-            if(conn != null) conn.close();
+            if (rs != null) rs.close();
+            if (pstmt != null) pstmt.close();
+            if (conn != null) conn.close();
         } catch (SQLException ex) {
-            System.out.println("Error closing resources: " + ex.getMessage());
+            System.err.println("Error closing resources: " + ex.getMessage());
         }
     }
-        //right the code here for ordering
     }//GEN-LAST:event_orderproductMouseClicked
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel1MouseClicked
 
     /**
      * @param args the command line arguments
      */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new processpage().setVisible(true);
-            }
-        });
-    }
+//    public static void main(String args[]) {
+//        /* Set the Nimbus look and feel */
+//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+//         */
+//        try {
+//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+//                if ("Nimbus".equals(info.getName())) {
+//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+//                    break;
+//                }
+//            }
+//        } catch (ClassNotFoundException ex) {
+//            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (InstantiationException ex) {
+//            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (IllegalAccessException ex) {
+//            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+//            java.util.logging.Logger.getLogger(processpage.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+//        }
+//        //</editor-fold>
+//
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new processpage().setVisible(int p_id, int order_id);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField cash;

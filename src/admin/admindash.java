@@ -206,7 +206,7 @@ public void AllProcess() {
         dbConnect dbc = new dbConnect();
         
         // Query to get the total number of users
-        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalpro FROM process");
+        ResultSet rs = dbc.getData("SELECT COUNT(*) AS totalpro FROM orders");
         
         if (rs.next()) {
             // Retrieve the total count from the query result

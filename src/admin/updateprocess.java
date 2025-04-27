@@ -223,6 +223,11 @@ private String getCurrentUsername() {
         totalam.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         totalam.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         totalam.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        totalam.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                totalamActionPerformed(evt);
+            }
+        });
         jPanel3.add(totalam, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 260, 140, 30));
 
         orquantity.setEditable(false);
@@ -409,13 +414,11 @@ private String getCurrentUsername() {
     }//GEN-LAST:event_formWindowActivated
 
     private void UPDATEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UPDATEMouseClicked
-         // TODO add your handling code here:
-
-    // Retrieve values from the text fields
+      // Retrieve values from the text fields
     String newQuantityStr = newquantity.getText();
     String newCashStr = newcash.getText();
 
-    // Retrieve other necessary values (Order ID, Product Price, Current Stock)
+    // Retrieve other necessary values (Order ID, Product Price, Current Stock, Old Quantity, Old Cash)
     String orderIdStr = orid.getText();
     String productPriceStr = prodprice.getText();
     String currentStockStr = prodquan.getText(); // Assuming prodquan holds current product stock
@@ -486,16 +489,14 @@ private String getCurrentUsername() {
     try {
         oldQuantity = Integer.parseInt(oldQuantityStr);
     } catch (NumberFormatException e) {
-        // Handle the case where the old quantity might not be a valid number (shouldn't happen based on how it's populated)
-        System.err.println("Error parsing old quantity: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error parsing old quantity: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
     try {
         oldCash = Double.parseDouble(oldCashStr);
     } catch (NumberFormatException e) {
-        // Handle the case where the old cash might not be a valid number
-        System.err.println("Error parsing old cash: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error parsing old cash: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
         return;
     }
 
@@ -510,35 +511,45 @@ private String getCurrentUsername() {
         return;
     }
 
-    // Construct the update query
-    String updateQuery = "UPDATE `process` SET " +
-                         "`s_quantity` = " + newQuantity + ", " +
-                         "`s_totalam` = " + newTotalAmount + ", " +
-                         "`s_cash` = " + newCash + ", " +
-                         "`s_change` = " + change + " " +
-                         "WHERE `s_id` = " + orderId; // Assuming 's_id' is the Order ID column
+    // Construct the update query.  Join orders and order_items.
+    String updateQuery = "UPDATE orders o "
+            + "JOIN order_items oi ON o.order_id = oi.order_id " // Join based on order_id
+            + "SET oi.quantity = ?, "             // Update order_items quantity
+            + "o.cash = ?, "                   // Update orders cash
+            + "o.order_change = ? "             // Update orders change
+            + "WHERE o.order_id = ?";            //  Where the order_id matches
 
     dbConnect db = new dbConnect();
-    try {
-           int currentUserId = getCurrentUserId();
-        String currentUsername = getCurrentUsername(); // Get the username
-        // Log the order update action BEFORE updating the database
-        logOrderUpdateAction(currentUserId, currentUsername, orderIdStr);
-        db.updateData(updateQuery);
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+
+        pstmt.setInt(1, newQuantity);
+        pstmt.setDouble(2, newCash);
+        pstmt.setDouble(3, change);
+        pstmt.setInt(4, orderId);
+
+        int currentUserId = getCurrentUserId();
+        String currentUsername = getCurrentUsername();
+        logOrderUpdateAction(currentUserId, currentUsername, String.valueOf(orderId));
+        pstmt.executeUpdate();
         JOptionPane.showMessageDialog(null, "Order updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-        // Optionally, refresh the order table in the previous frame
+        // Optionally, refresh the order table
         if (getParent() instanceof admin.updateorder) {
-            ((admin.updateorder) getParent()).loadMyOrders(); // Assuming loadMyOrders() refreshes the table
+            ((admin.updateorder) getParent()).loadMyOrders();
         }
-       updateorder or = new updateorder();
-       or.setVisible(true);
-        this.dispose(); // Close the current updateprocess frame
-    } catch (Exception ex) {
+        updateorder or = new updateorder();
+        or.setVisible(true);
+        this.dispose();
+    } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "Error updating order: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
     }//GEN-LAST:event_UPDATEMouseClicked
+
+    private void totalamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalamActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_totalamActionPerformed
 
     /**
      * @param args the command line arguments
