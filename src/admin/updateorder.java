@@ -34,14 +34,90 @@ public class updateorder extends javax.swing.JFrame {
      * Creates new form updateorder
      */
 public updateorder() {
+ 
     initComponents();
     dbConnection = new dbConnect(); // Initialize your database connection
     orderItemsTableModel = (DefaultTableModel) ordertable.getModel(); // Get the table model for the order items table
     loadMyOrderItems(ordertable, orderItemsTableModel); // Load the order items
     displayUserImage(adminimage);
     displayUserImage(adminimage);
+    
 }
 
+
+// public void displayTotalOrderAmount() {
+//    dbConnect dbc = new dbConnect();
+//    double totalAmount = 0.0;
+//
+//    SessionClass session = SessionClass.getInstance(); // Assuming order_id is in the session
+//    int currentOrderId = session.getOrder_id(); // Get the current order ID
+//
+//    try {
+//        String query = "SELECT SUM(item_total) AS total FROM order_items WHERE order_id = " + currentOrderId;
+//        ResultSet rs = dbc.getData(query);
+//
+//        if (rs.next()) {
+//            totalAmount = rs.getDouble("total");
+//        }
+//        rs.close();
+//
+//   totalam.setText(String.format("%.2f", totalAmount)); // Assuming 'totalAmountField' is your JTextField
+//
+//    } catch (SQLException ex) {
+//        System.out.println("Error calculating total order amount: " + ex.getMessage());
+//        ex.printStackTrace();
+//    } finally {
+//        try {
+//            if (dbc.getConnection() != null) {
+//                dbc.getConnection().close();
+//            }
+//        } catch (SQLException ex) {
+//            System.err.println("Error closing database connection: " + ex.getMessage());
+//        }
+//    }
+//}
+    
+    
+    public void loadOrderItems() {
+    dbConnect dbc = new dbConnect();
+    DefaultTableModel model = (DefaultTableModel) ordertable.getModel(); // Assuming 'ordertable' is your JTable
+    model.setRowCount(0); // Clear existing rows
+
+    SessionClass session = SessionClass.getInstance(); // Assuming order_id is in the session
+    int currentOrderId = session.getOrder_id(); // Get the current order ID
+
+    try {
+        String query = "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total " +
+                       "FROM order_items oi " +
+                       "JOIN product p ON oi.product_id = p.p_id " +
+                       "WHERE oi.order_id = " + currentOrderId;
+
+        ResultSet rs = dbc.getData(query);
+
+        while (rs.next()) {
+            int orderItemId = rs.getInt("order_item_id");
+            String productName = rs.getString("p_name");
+            int quantity = rs.getInt("quantity");
+            double price = rs.getDouble("price");
+            double itemTotal = rs.getDouble("item_total");
+            model.addRow(new Object[]{orderItemId, productName, quantity, price, itemTotal});
+        }
+        rs.close();
+
+    } catch (SQLException ex) {
+        System.out.println("Error loading ordered items: " + ex.getMessage());
+        JOptionPane.showMessageDialog(this, "Error loading ordered items.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (dbc.getConnection() != null) {
+                dbc.getConnection().close();
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error closing database connection: " + ex.getMessage());
+        }
+    }
+}
 
  public void loadMyOrderItems(JTable orderItemsTable, DefaultTableModel orderItemsTableModel) {
     // Clear existing data in the table
@@ -488,7 +564,7 @@ public updateorder() {
 
     try (Connection conn = dbConnection.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(
-                 "SELECT oi.order_item_id, oi.product_id, p.p_name, oi.quantity, oi.price, oi.item_total " + // Added oi.item_total
+                 "SELECT oi.order_item_id, oi.product_id, p.p_name, oi.quantity, oi.price, oi.item_total, p.p_stock, p.p_image " + // Added oi.item_total
                  "FROM order_items oi " +
                  "JOIN product p ON oi.product_id = p.p_id " +
                  "WHERE oi.order_item_id = ?")) {
@@ -509,8 +585,15 @@ public updateorder() {
         updateForm.prodid.setText(String.valueOf(rs.getInt("product_id")));
         updateForm.prodprice.setText(String.valueOf(rs.getDouble("price")));
         updateForm.previousquantity.setText(String.valueOf(rs.getInt("quantity")));
-        updateForm.prodquan.setText(String.valueOf(rs.getInt("quantity"))); // Set product quantity
-        updateForm.totalam.setText(String.valueOf(rs.getDouble("item_total"))); // Set total amount
+        updateForm.prodquan.setText(String.valueOf(rs.getInt("p_stock"))); // Set product quantity
+        updateForm.totalam.setText(String.valueOf(rs.getDouble("item_total")));
+updateForm.prodimage.setIcon(updateForm.ResizeImage(rs.getString("p_image"),null,updateForm.prodimage));
+      updateForm.oldpath = rs.getString("p_image");
+      updateForm.path = rs.getString("p_image");
+      updateForm.destination=rs.getString("p_image");        
+
+
+// Set total amount
         // Optionally display the product name
         // updateForm.productNameLabel.setText(rs.getString("p_name"));
 
@@ -622,7 +705,7 @@ public updateorder() {
     private javax.swing.JLabel adinfo;
     private javax.swing.JLabel admindash;
     private javax.swing.JLabel adminimage;
-    private javax.swing.JPanel delete;
+    public javax.swing.JPanel delete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
@@ -645,6 +728,6 @@ public updateorder() {
     private javax.swing.JToolBar jToolBar1;
     public javax.swing.JTable ordertable;
     private javax.swing.JLabel totalorders;
-    private javax.swing.JPanel update;
+    public javax.swing.JPanel update;
     // End of variables declaration//GEN-END:variables
 }

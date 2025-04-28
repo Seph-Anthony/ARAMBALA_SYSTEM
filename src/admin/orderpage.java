@@ -92,7 +92,7 @@ private int order_id;
     }
 }
     
-private void displayOrderTotal() {
+public void displayOrderTotal() {
     dbConnect db = new dbConnect();
     double total = 0.0;
     SessionClass session = SessionClass.getInstance();
@@ -456,10 +456,13 @@ private int generateNewOrderId() {
 
         orderitem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-
+                "Product Name", "Quantity", "Price", "Total Amount"
             }
         ));
         jScrollPane1.setViewportView(orderitem);
@@ -476,7 +479,7 @@ private int generateNewOrderId() {
         jLabel27.setForeground(new java.awt.Color(0, 102, 102));
         jLabel27.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel27.setText("Total Amount");
-        jPanel10.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 350, 110, -1));
+        jPanel10.add(jLabel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 350, 110, -1));
 
         jLabel28.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel28.setForeground(new java.awt.Color(0, 102, 102));
@@ -507,19 +510,19 @@ private int generateNewOrderId() {
                 entercashActionPerformed(evt);
             }
         });
-        jPanel10.add(entercash, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 370, 120, 40));
+        jPanel10.add(entercash, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 370, 120, 40));
 
         totalamount.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         totalamount.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalamount.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         totalamount.setEnabled(false);
-        jPanel10.add(totalamount, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 370, 110, 40));
+        jPanel10.add(totalamount, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 370, 110, 40));
 
         jLabel29.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel29.setForeground(new java.awt.Color(0, 102, 102));
         jLabel29.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel29.setText("Enter cash");
-        jPanel10.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 350, 120, -1));
+        jPanel10.add(jLabel29, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 350, 120, -1));
 
         jPanel8.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 220, 920, 490));
 
@@ -1094,7 +1097,6 @@ private int generateNewOrderId() {
             return;
         }
 
-        // Debug log to check if session is null
         SessionClass session = SessionClass.getInstance();
         if (session == null) {
             System.err.println("Session is null!");
@@ -1102,23 +1104,20 @@ private int generateNewOrderId() {
             return;
         }
 
-        // Ensure we have a valid order_id
-        int order_id = session.getOrder_id(); // Get the order ID from session
-        System.out.println("Current Order ID: " + order_id); // Debug log
+        int order_id = session.getOrder_id();
+        System.out.println("Current Order ID: " + order_id);
 
-        // Only generate a new Order ID if it's not already set (order_id == 0)
         if (order_id == 0) {
-            order_id = generateNewOrderId(); // Generate new order ID
-            session.setOrder_id(order_id); // Save the new order ID in session
+            order_id = generateNewOrderId();
+            session.setOrder_id(order_id);
             System.out.println("New Order ID created: " + order_id);
         } else {
-            System.out.println("Using existing Order ID: " + order_id); // Debug log
+            System.out.println("Using existing Order ID: " + order_id);
         }
 
-        // Get the product ID from the selected row
         TableModel model = food.getModel();
-        String productId = String.valueOf(model.getValueAt(selectedRow, 0)); // Get the product ID from the selected row
-        System.out.println("Selected Product ID: " + productId); // Debug log
+        String productId = String.valueOf(model.getValueAt(selectedRow, 0));
+        System.out.println("Selected Product ID: " + productId);
 
         dbConnect db = new dbConnect();
         conn = db.getConnection();
@@ -1129,7 +1128,7 @@ private int generateNewOrderId() {
         rs = pstmt.executeQuery();
 
         if (rs.next()) {
-            int p_id = rs.getInt("p_id"); // Get the product ID from the result set
+            int p_id = rs.getInt("p_id");
             String p_name = rs.getString("p_name");
             float p_price = rs.getFloat("p_price");
             String p_brand = rs.getString("p_brand");
@@ -1137,10 +1136,8 @@ private int generateNewOrderId() {
             String p_category = rs.getString("p_category");
             String imagePath = rs.getString("p_image");
 
-            // Debug log for product details
             System.out.println("Product Details: " + p_id + ", " + p_name + ", " + p_price + ", " + p_brand + ", " + p_stock + ", " + p_category + ", " + imagePath);
 
-            // Check if product data is valid
             if (p_name == null || p_brand == null || imagePath == null) {
                 System.err.println("Error: Product details are incomplete or missing.");
                 JOptionPane.showMessageDialog(this, "Product details are incomplete. Cannot proceed.");
@@ -1148,9 +1145,11 @@ private int generateNewOrderId() {
             }
 
             // Now pass the p_id and order_id to processpage constructor
-            processpage pro = new processpage(p_id, order_id); // Pass both p_id and order_id to the constructor of processpage
+            processpage pro = new processpage(p_id, order_id);
 
-            // Populate the fields with product data
+            // Set the parent (current orderpage instance) for the processpage
+            pro.setParentOrderPage(this); // Pass 'this' (the current orderpage instance)
+
             pro.prodid.setText(String.valueOf(p_id));
             pro.prodname.setText(p_name);
             pro.prodprice.setText(String.valueOf(p_price));
@@ -1158,7 +1157,6 @@ private int generateNewOrderId() {
             pro.prodstock.setText(String.valueOf(p_stock));
             pro.prodcategory.setText(p_category);
 
-            // Handle the image
             if (imagePath != null && !imagePath.isEmpty()) {
                 pro.image.setIcon(pro.ResizeImage(imagePath, null, pro.image));
                 pro.oldpath = imagePath;
@@ -1168,9 +1166,9 @@ private int generateNewOrderId() {
                 System.out.println("No image found!");
             }
 
-            // Show the processpage
             pro.setVisible(true);
-            this.dispose(); // Close the current window (orderpage)
+            // You might want to keep the orderpage visible or handle its state as needed
+            // this.dispose();
         } else {
             System.err.println("Error: Product not found.");
             JOptionPane.showMessageDialog(this, "Error: Product not found in database.");
@@ -1582,6 +1580,6 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel reset;
     private javax.swing.JLabel supplies;
     private javax.swing.JPanel suppliesni;
-    private javax.swing.JLabel totalamount;
+    public javax.swing.JLabel totalamount;
     // End of variables declaration//GEN-END:variables
 }

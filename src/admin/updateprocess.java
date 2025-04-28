@@ -9,8 +9,10 @@ import config.SessionClass;
 import config.dbConnect;
 import java.awt.Color;
 import java.awt.Image;
+import java.io.File;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -26,11 +28,34 @@ public class updateprocess extends javax.swing.JFrame {
     /**
      * Creates new form updateprocess
      */
-    public updateprocess() {
+
+        public updateprocess() {
         initComponents();
-        
-        setLocationRelativeTo(null); // Center the frame
+       
+       
     }
+    
+   public javax.swing.JTextField getTotalAmTextField() {
+    return this.totalam;
+}
+    
+    // You'll need to add a member variable to hold a reference to the 'Total Order' form
+private updateorder parentTotalOrderForm; // Replace TotalOrderForm with the actual class name
+
+// And a setter method to receive the reference when the 'Update Order' form is created
+public void setParentTotalOrderForm(updateorder parent) {
+    this.parentTotalOrderForm = parent;
+}
+
+private void setTotalAmountFieldText(double total) {
+    this.totalam.setText(String.format("%.2f", total));
+}
+         
+    public String destination = "";
+    
+    File selectedFile;
+    public String oldpath;
+    public String path;
     
        Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
@@ -193,6 +218,11 @@ private String getCurrentUsername() {
         prodprice.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         prodprice.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         prodprice.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        prodprice.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                prodpriceActionPerformed(evt);
+            }
+        });
         jPanel3.add(prodprice, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 140, 30));
 
         totalam.setEditable(false);
@@ -306,6 +336,7 @@ private String getCurrentUsername() {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel12MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel12MouseClicked
@@ -343,142 +374,80 @@ private String getCurrentUsername() {
     }//GEN-LAST:event_formWindowActivated
 
     private void UPDATEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_UPDATEMouseClicked
-//      // Retrieve values from the text fields
-//    String newQuantityStr = newquantity.getText();
-//    String newCashStr = newcash.getText();
-//
-//    // Retrieve other necessary values (Order ID, Product Price, Current Stock, Old Quantity, Old Cash)
-//    String orderIdStr = orderitemid.getText();
-//    String productPriceStr = prodprice.getText();
-//    String currentStockStr = prodquan.getText(); // Assuming prodquan holds current product stock
-//    String oldQuantityStr = previousquantity.getText(); // Get the original quantity
-//    String oldCashStr = usercash.getText();       // Get the original cash
-//
-//    int orderId;
-//    int newQuantity;
-//    double newCash;
-//    double productPrice;
-//    int currentStock;
-//    int oldQuantity;
-//    double oldCash;
-//
-//    // Perform Input Validations
-//    if (newQuantityStr.trim().isEmpty() || newCashStr.trim().isEmpty()) {
-//        JOptionPane.showMessageDialog(null, "Please enter both new quantity and new cash.", "Input Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        newQuantity = Integer.parseInt(newQuantityStr);
-//        if (newQuantity <= 0) {
-//            JOptionPane.showMessageDialog(null, "New quantity must be a positive whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Invalid quantity format. Please enter a whole number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        newCash = Double.parseDouble(newCashStr);
-//        if (newCash < 0) {
-//            JOptionPane.showMessageDialog(null, "New cash cannot be negative.", "Input Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Invalid cash format. Please enter a valid number.", "Input Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        orderId = Integer.parseInt(orderIdStr);
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Error: Invalid Order ID.", "Database Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        productPrice = Double.parseDouble(productPriceStr);
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Error: Invalid Product Price.", "Data Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        currentStock = Integer.parseInt(currentStockStr);
-//        if (newQuantity > currentStock) {
-//            JOptionPane.showMessageDialog(null, "New quantity exceeds the current stock (" + currentStock + ").", "Stock Error", JOptionPane.ERROR_MESSAGE);
-//            return;
-//        }
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Error: Invalid Current Stock format.", "Data Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        oldQuantity = Integer.parseInt(oldQuantityStr);
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Error parsing old quantity: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    try {
-//        oldCash = Double.parseDouble(oldCashStr);
-//    } catch (NumberFormatException e) {
-//        JOptionPane.showMessageDialog(null, "Error parsing old cash: " + e.getMessage(), "Data Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    // Calculate the new total amount
-//    double newTotalAmount = newQuantity * productPrice;
-//
-//    // Calculate the change
-//    double change = newCash - newTotalAmount;
-//
-//    if (change < 0) {
-//        JOptionPane.showMessageDialog(null, "Insufficient cash. Please enter an amount equal to or greater than the total.", "Payment Error", JOptionPane.ERROR_MESSAGE);
-//        return;
-//    }
-//
-//    // Construct the update query.  Join orders and order_items.
-//    String updateQuery = "UPDATE orders o "
-//            + "JOIN order_items oi ON o.order_id = oi.order_id " // Join based on order_id
-//            + "SET oi.quantity = ?, "             // Update order_items quantity
-//            + "o.cash = ?, "                   // Update orders cash
-//            + "o.order_change = ? "             // Update orders change
-//            + "WHERE o.order_id = ?";            //  Where the order_id matches
-//
-//    dbConnect db = new dbConnect();
-//    try (Connection conn = db.getConnection();
-//         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
-//
-//        pstmt.setInt(1, newQuantity);
-//        pstmt.setDouble(2, newCash);
-//        pstmt.setDouble(3, change);
-//        pstmt.setInt(4, orderId);
-//
-//        int currentUserId = getCurrentUserId();
-//        String currentUsername = getCurrentUsername();
-//        logOrderUpdateAction(currentUserId, currentUsername, String.valueOf(orderId));
-//        pstmt.executeUpdate();
-//        JOptionPane.showMessageDialog(null, "Order updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
-//
-//        // Optionally, refresh the order table
-//        if (getParent() instanceof admin.updateorder) {
-//            ((admin.updateorder) getParent()).loadMyOrders();
-//        }
-//        updateorder or = new updateorder();
-//        or.setVisible(true);
-//        this.dispose();
-//    } catch (SQLException ex) {
-//        JOptionPane.showMessageDialog(null, "Error updating order: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-//        ex.printStackTrace();
-//    }
+  String newQuantityText = newquantity.getText();
+
+    if (newQuantityText.trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please enter the new quantity.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int newQuantity;
+    try {
+        newQuantity = Integer.parseInt(newQuantityText);
+        if (newQuantity <= 0) {
+            JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid quantity format.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int productStock = Integer.parseInt(prodquan.getText());
+    if (newQuantity > productStock) {
+        JOptionPane.showMessageDialog(this, "New quantity exceeds available stock.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+
+    int orderItemId = Integer.parseInt(orderitemid.getText());
+    double productPrice = Double.parseDouble(prodprice.getText());
+    double newItemTotal = newQuantity * productPrice;
+
+    dbConnect db = new dbConnect();
+    String updateQuery = "UPDATE order_items SET quantity = ?, item_total = ? WHERE order_item_id = ?";
+
+    try (Connection conn = db.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+
+        pstmt.setInt(1, newQuantity);
+        pstmt.setDouble(2, newItemTotal);
+        pstmt.setInt(3, orderItemId);
+
+        int rowsUpdated = pstmt.executeUpdate();
+
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, "Order item updated successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+
+            // Refresh the ordertable in the parent form
+            if (parentTotalOrderForm != null) {
+                parentTotalOrderForm.loadOrderItems();
+                parentTotalOrderForm.setVisible(true);
+            }
+            this.dispose(); // Close the Update Order form
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update order item.", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Database error during update: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } finally {
+        try {
+            db.getConnection().close();
+        } catch (SQLException ex) {
+            System.err.println("Error closing database connection: " + ex.getMessage());
+        }
+    }
     }//GEN-LAST:event_UPDATEMouseClicked
 
     private void totalamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_totalamActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_totalamActionPerformed
+
+    private void prodpriceActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_prodpriceActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_prodpriceActionPerformed
 
     /**
      * @param args the command line arguments
@@ -516,7 +485,7 @@ private String getCurrentUsername() {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel UPDATE;
+    public javax.swing.JPanel UPDATE;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel14;

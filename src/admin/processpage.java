@@ -44,6 +44,12 @@ public processpage(int p_id, int order_id) {
     System.out.println("Current Order ID: " + order_id);
 }
 
+private orderpage parentOrderPage;
+
+public void setParentOrderPage(orderpage parent) {
+    this.parentOrderPage = parent;
+}
+
 public int generateNewOrderId(int userId, Connection conn) {
     PreparedStatement pstmt = null;
     ResultSet rs = null;
@@ -543,22 +549,14 @@ String quantityText = quantity.getText();
             return; // Stop further processing if quantity is not positive
         }
 
-        // Assuming you have a way to access the current order ID.
-        // This might be stored in your SessionClass or passed between frames.
         SessionClass session = SessionClass.getInstance();
-        int currentOrderId = session.getOrder_id(); // Get the current order ID from the session
+        int currentOrderId = session.getOrder_id();
 
-        // Retrieve product details from the displayed fields
         int productId = Integer.parseInt(prodid.getText());
         double productPrice = Double.parseDouble(prodprice.getText());
-
-        // Calculate the total amount for this order item
         double totalAmount = quantityToAdd * productPrice;
 
-        // Create an instance of your dbConnect class
         dbConnect db = new dbConnect();
-
-        // Construct the SQL INSERT statement for order_items
         String insertOrderItemSQL = "INSERT INTO order_items (order_id, product_id, quantity, price, item_total) VALUES ("
                 + currentOrderId + ", "
                 + productId + ", "
@@ -566,22 +564,32 @@ String quantityText = quantity.getText();
                 + productPrice + ", "
                 + totalAmount + ")";
 
-        // Execute the INSERT statement
         int result = db.insertData(insertOrderItemSQL);
 
         if (result == 1) {
             JOptionPane.showMessageDialog(this, "Item added to order successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
 
-            // Navigate back to the orderpage frame
-            // Assuming you have an instance of orderpage or a way to create one
-            orderpage orderPage = new orderpage(); // Create a new instance of OrderPage
-            orderPage.setVisible(true);
-            this.dispose(); // Close the current "View Product" frame
+            // Refresh the parent orderpage if it exists
+            if (parentOrderPage != null) {
+                parentOrderPage.setCurrentOrderId(currentOrderId);
+                parentOrderPage.loadOrderedItems(currentOrderId, parentOrderPage.orderitem);
+                parentOrderPage.displayOrderTotal(); // Refresh the total amount as well
+                parentOrderPage.setVisible(true);
+                this.dispose(); // Close the current "View Product" frame
+            } else {
+                // Fallback: Create a new orderpage (less ideal but handles cases where parent is not set)
+                orderpage orderPage = new orderpage();
+                orderPage.setCurrentOrderId(currentOrderId);
+                orderPage.loadOrderedItems(currentOrderId, orderPage.orderitem);
+                orderPage.displayOrderTotal(); // Refresh the total amount as well
+                orderPage.setVisible(true);
+                this.dispose();
+            }
+
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add item to order.", "Error", JOptionPane.ERROR_MESSAGE);
         }
 
-        // Close the database connection
         try {
             db.getConnection().close();
         } catch (SQLException ex) {
