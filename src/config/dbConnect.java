@@ -59,9 +59,11 @@ public class dbConnect {
     }
 
     // Function to retrieve data
-    public ResultSet getData(String sql) throws SQLException {
-        Statement stmt = connect.createStatement();
-        ResultSet rst = stmt.executeQuery(sql);
-        return rst;
+ public ResultSet getData(String sql, Object... params) throws SQLException {
+    PreparedStatement pstmt = connect.prepareStatement(sql);
+    for (int i = 0; i < params.length; i++) {
+        pstmt.setObject(i + 1, params[i]);
     }
+    return pstmt.executeQuery();
+}
 }

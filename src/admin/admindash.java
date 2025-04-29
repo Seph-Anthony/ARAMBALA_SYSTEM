@@ -1087,7 +1087,7 @@ public void AllProcess() {
         // Create a new order in the orders table
         int userId = session.getU_id();
         String insertOrderSQL = "INSERT INTO orders (u_id, order_date, order_status, cash, order_change) VALUES ("
-                + userId + ", NOW(), 'Pending', 0.00, 0.00)";
+                + userId + ", NOW(), 'Processing', 0.00, 0.00)";
         int orderInsertResult = db.insertData(insertOrderSQL);
 
         if (orderInsertResult == 1) {

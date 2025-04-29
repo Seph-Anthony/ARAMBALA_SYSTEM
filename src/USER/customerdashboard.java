@@ -885,7 +885,7 @@ dbConnect db = new dbConnect();
 
         // Include order_cash and order_change with initial values (0.00)
         String insertOrderSQL = "INSERT INTO orders (u_id, order_date, order_status, cash, order_change) VALUES ("
-                + userId + ", NOW(), 'Pending', 0.00, 0.00)";
+                + userId + ", NOW(), 'Processing', 0.00, 0.00)";
         int orderInsertResult = db.insertData(insertOrderSQL);
 
         if (orderInsertResult == 1) {

@@ -56,13 +56,13 @@ private int order_id;
     public void setCurrentOrderId(int orderId) {
     this.currentOrderId = orderId;
 }
-    public void loadOrderedItems(int orderId, JTable orderitem) {
+  public void loadOrderedItems(int orderId, JTable orderitem) {
     dbConnect dbc = new dbConnect();
     DefaultTableModel model = (DefaultTableModel) orderitem.getModel();
     model.setRowCount(0); // Clear existing rows
 
     try {
-        String query = "SELECT p.p_name, oi.quantity, oi.price, oi.item_total " +
+        String query = "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total " + // Added oi.order_item_id
                        "FROM order_items oi " +
                        "JOIN product p ON oi.product_id = p.p_id " +
                        "WHERE oi.order_id = " + orderId;
@@ -70,11 +70,12 @@ private int order_id;
         ResultSet rs = dbc.getData(query);
 
         while (rs.next()) {
+            int orderItemId = rs.getInt("order_item_id"); // Retrieve order_item_id
             String productName = rs.getString("p_name");
             int quantity = rs.getInt("quantity");
             double price = rs.getDouble("price");
             double itemTotal = rs.getDouble("item_total");
-            model.addRow(new Object[]{productName, quantity, price, itemTotal});
+            model.addRow(new Object[]{orderItemId, productName, quantity, price, itemTotal}); // Add it to the row
         }
         rs.close();
 
@@ -158,8 +159,7 @@ private int generateNewOrderId() {
                        "p_brand AS 'Brand', " +
                        "p_price AS 'Price', " +
                        "p_stock AS 'Stock', " +
-                       "p_status AS 'Status', " +
-                       "p_image AS 'Image' " +
+                       "p_status AS 'Status' " +
                        "FROM product");
             food.setModel(DbUtils.resultSetToTableModel(rs));
              rs.close();
@@ -350,6 +350,7 @@ private int generateNewOrderId() {
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
+        jPasswordField1 = new javax.swing.JPasswordField();
         jPanel1 = new javax.swing.JPanel();
         jPanel8 = new javax.swing.JPanel();
         jPanel10 = new javax.swing.JPanel();
@@ -387,6 +388,11 @@ private int generateNewOrderId() {
         supplies = new javax.swing.JLabel();
         reset = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        edit = new javax.swing.JPanel();
+        jLabel10 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel5 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
         backbutton = new javax.swing.JLabel();
@@ -422,6 +428,8 @@ private int generateNewOrderId() {
 
         jMenu2.setText("jMenu2");
 
+        jPasswordField1.setText("jPasswordField1");
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowOpened(java.awt.event.WindowEvent evt) {
@@ -452,17 +460,18 @@ private int generateNewOrderId() {
         ));
         jScrollPane2.setViewportView(food);
 
-        jPanel10.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 510, 320));
+        jPanel10.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 510, 450));
 
         orderitem.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Product Name", "Quantity", "Price", "Total Amount"
+                "Product Name", "Product Name", "Quantity", "Price", "Total Amount"
             }
         ));
         jScrollPane1.setViewportView(orderitem);
@@ -473,7 +482,7 @@ private int generateNewOrderId() {
         jLabel9.setForeground(new java.awt.Color(0, 102, 102));
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("PRODUCTS");
-        jPanel10.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, -1));
+        jPanel10.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, -1));
 
         jLabel27.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         jLabel27.setForeground(new java.awt.Color(0, 102, 102));
@@ -502,7 +511,7 @@ private int generateNewOrderId() {
         jLabel26.setText("ADD ORDER");
         addorder.add(jLabel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 120, -1));
 
-        jPanel10.add(addorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 440, 140, 40));
+        jPanel10.add(addorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 430, 140, 40));
 
         entercash.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         entercash.addActionListener(new java.awt.event.ActionListener() {
@@ -566,7 +575,7 @@ private int generateNewOrderId() {
         jLabel24.setText("ADD ITEM");
         ADDORDER.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
-        jPanel8.add(ADDORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, 150, 40));
+        jPanel8.add(ADDORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 150, 40));
 
         VIEWORDER.setBackground(new java.awt.Color(0, 102, 102));
         VIEWORDER.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -607,7 +616,7 @@ private int generateNewOrderId() {
         jLabel23.setText("VIEW ORDER");
         VIEWORDER.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 20));
 
-        jPanel8.add(VIEWORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 170, 130, 40));
+        jPanel8.add(VIEWORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 130, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -698,7 +707,55 @@ private int generateNewOrderId() {
         jLabel1.setText("RESET");
         reset.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 20));
 
-        jPanel8.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 170, 130, 40));
+        jPanel8.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 130, 40));
+
+        edit.setBackground(new java.awt.Color(0, 102, 102));
+        edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        edit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                editMouseClicked(evt);
+            }
+        });
+        edit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("EDIT QUANTITY");
+        edit.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+
+        jPanel8.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 150, 40));
+
+        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 10, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 40, Short.MAX_VALUE)
+        );
+
+        jPanel8.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 10, 40));
+
+        jPanel5.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel5MouseClicked(evt);
+            }
+        });
+        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("DELETE ORDER");
+        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
+
+        jPanel8.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(754, 170, 170, 40));
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -10, 940, 720));
 
@@ -1402,9 +1459,10 @@ if (session.getOrder_id() == 0) {
     }//GEN-LAST:event_entercashActionPerformed
 
     private void addorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addorderMouseClicked
-        String cashText = entercash.getText();
+  String cashText = entercash.getText();
     SessionClass session = SessionClass.getInstance();
     int currentOrderId = session.getOrder_id();
+    dbConnect db = new dbConnect(); // Initialize dbConnect here
 
     if (currentOrderId == 0) {
         JOptionPane.showMessageDialog(this, "No active order to save.", "Validation Error", JOptionPane.ERROR_MESSAGE);
@@ -1425,7 +1483,6 @@ if (session.getOrder_id() == 0) {
         }
 
         // Calculate the total amount of the order
-        dbConnect db = new dbConnect();
         double totalAmount = 0.0;
         try {
             String getTotalQuery = "SELECT SUM(item_total) AS order_total FROM order_items WHERE order_id = " + currentOrderId;
@@ -1447,26 +1504,153 @@ if (session.getOrder_id() == 0) {
 
         double changeAmount = cashAmount - totalAmount;
 
-        // Update the orders table with cash and change
-        String updateOrderSQL = "UPDATE orders SET cash = ?, order_change = ?, order_status = 'Completed' WHERE order_id = ?";
-        try (java.sql.PreparedStatement pstmt = db.getConnection().prepareStatement(updateOrderSQL)) {
-            pstmt.setDouble(1, cashAmount);
-            pstmt.setDouble(2, changeAmount);
-            pstmt.setInt(3, currentOrderId);
-            int rowsUpdated = pstmt.executeUpdate();
+        Connection conn = null;
+        PreparedStatement pstmtUpdateOrder = null;
+        PreparedStatement pstmtUpdateProduct = null;
+
+        try {
+            conn = db.getConnection();
+            conn.setAutoCommit(false); // Start transaction
+
+            // Update the orders table
+            String updateOrderSQL = "UPDATE orders SET cash = ?, order_change = ?, order_status = 'Completed' WHERE order_id = ?";
+            pstmtUpdateOrder = conn.prepareStatement(updateOrderSQL);
+            pstmtUpdateOrder.setDouble(1, cashAmount);
+            pstmtUpdateOrder.setDouble(2, changeAmount);
+            pstmtUpdateOrder.setInt(3, currentOrderId);
+            int rowsUpdated = pstmtUpdateOrder.executeUpdate();
 
             if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Order saved successfully! Change: " + String.format("%.2f", changeAmount), "Success", JOptionPane.INFORMATION_MESSAGE);
-                // Reset the order_id in the session after saving
+                // Update product quantities
+                String updateProductSQL = "UPDATE product SET p_stock = p_stock - ? WHERE p_id = (SELECT product_id FROM order_items WHERE order_item_id = ?)";
+                pstmtUpdateProduct = conn.prepareStatement(updateProductSQL);
+
+                String getOrderItemsQuery = "SELECT order_item_id, quantity FROM order_items WHERE order_id = ?";
+                ResultSet rsOrderItems = db.getData(getOrderItemsQuery, currentOrderId);
+
+                while (rsOrderItems.next()) {
+                    int orderItemId = rsOrderItems.getInt("order_item_id");
+                    int orderedQuantity = rsOrderItems.getInt("quantity");
+                    pstmtUpdateProduct.setInt(1, orderedQuantity);
+                    pstmtUpdateProduct.setInt(2, orderItemId);
+                    pstmtUpdateProduct.executeUpdate();
+                }
+                rsOrderItems.close();
+
+                conn.commit(); // Commit transaction
+                JOptionPane.showMessageDialog(this, "Order completed successfully! Change: " + String.format("%.2f", changeAmount), "Success", JOptionPane.INFORMATION_MESSAGE);
                 session.setOrder_id(0);
-                // Optionally, navigate back to a previous page or clear the order items display
+                loadOrderedItems(0, orderitem);
+                displayOrderTotal();
+                entercash.setText("");
             } else {
-                JOptionPane.showMessageDialog(this, "Failed to save the order.", "Error", JOptionPane.ERROR_MESSAGE);
+                conn.rollback(); // Rollback if order update failed
+                JOptionPane.showMessageDialog(this, "Failed to complete the order.", "Error", JOptionPane.ERROR_MESSAGE);
             }
 
         } catch (SQLException ex) {
-            System.err.println("Error updating order: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error saving order to the database.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            if (conn != null) {
+                try {
+                    conn.rollback(); // Rollback on error
+                } catch (SQLException rollbackEx) {
+                    System.err.println("Error during rollback: " + rollbackEx.getMessage());
+                }
+            }
+            System.err.println("Error processing order: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Database error during order processing.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            try {
+                if (pstmtUpdateOrder != null) pstmtUpdateOrder.close();
+                if (pstmtUpdateProduct != null) pstmtUpdateProduct.close();
+                if (conn != null) conn.setAutoCommit(true); // Reset auto-commit
+                if (db.getConnection() != null) db.getConnection().close();
+            } catch (SQLException ex) {
+                System.err.println("Error closing resources: " + ex.getMessage());
+            }
+        }
+
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Invalid cash amount. Please enter a valid number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
+    }
+    }//GEN-LAST:event_addorderMouseClicked
+
+    private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked
+        // TODO add your handling code here:
+        
+       
+    int selectedRow = orderitem.getSelectedRow();
+
+    // Check if a row is selected
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "Please select an item to edit.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+    // Get the order_item_id from the selected row (assuming it's in the first column)
+    int orderItemId = (int) orderitem.getValueAt(selectedRow, 0);
+
+    // Create and display the Edit Quantity dialog
+    editquan editDialog = new editquan();
+
+    // Pass the order_item_id to the dialog
+    editDialog.setOrderItemIdToEdit(orderItemId);
+
+    // Pass a reference to the current orderpage instance to the dialog
+    editDialog.setParentOrderPage(this);
+
+    // Make the dialog modal
+    editDialog.setModal(true);
+    editDialog.setVisible(true);
+
+    // After the dialog is closed, refresh the order items table and total
+    if (currentOrderId != null) { // Ensure currentOrderId is initialized
+        loadOrderedItems(currentOrderId, orderitem);
+        displayOrderTotal();
+    } else {
+        System.err.println("Error: currentOrderId is null, cannot refresh table.");
+    }
+        
+    }//GEN-LAST:event_editMouseClicked
+
+    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+   
+    int selectedRow = orderitem.getSelectedRow();
+
+   
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "Please select an item to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        return;
+    }
+
+   
+    int orderItemIdToDelete = (int) orderitem.getValueAt(selectedRow, 0);
+
+    
+    int confirmation = JOptionPane.showConfirmDialog(this, "Are you sure you want to delete this item?", "Confirm Delete", JOptionPane.YES_NO_OPTION);
+
+    if (confirmation == JOptionPane.YES_OPTION) {
+        dbConnect db = new dbConnect();
+        String deleteSQL = "DELETE FROM order_items WHERE order_item_id = ?";
+
+        try (Connection conn = db.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(deleteSQL)) {
+
+            pstmt.setInt(1, orderItemIdToDelete);
+            int rowsDeleted = pstmt.executeUpdate();
+
+            if (rowsDeleted > 0) {
+                JOptionPane.showMessageDialog(this, "Item deleted successfully!", "Success", JOptionPane.INFORMATION_MESSAGE);
+                // Refresh the ordered items table and total
+                SessionClass session = SessionClass.getInstance();
+                loadOrderedItems(session.getOrder_id(), orderitem);
+                displayOrderTotal();
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to delete the item.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException ex) {
+            System.err.println("Error deleting item: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Database error during item deletion.", "Database Error", JOptionPane.ERROR_MESSAGE);
         } finally {
             try {
                 if (db.getConnection() != null) {
@@ -1476,11 +1660,10 @@ if (session.getOrder_id() == 0) {
                 System.err.println("Error closing database connection: " + ex.getMessage());
             }
         }
-
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(this, "Invalid cash amount. Please enter a valid number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
     }
-    }//GEN-LAST:event_addorderMouseClicked
+        
+        
+    }//GEN-LAST:event_jPanel5MouseClicked
 
     /**
      * @param args the command line arguments
@@ -1525,6 +1708,7 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel addorder;
     private javax.swing.JLabel backbutton;
     private javax.swing.JLabel beverage;
+    private javax.swing.JPanel edit;
     private javax.swing.JTextField entercash;
     public javax.swing.JTable food;
     private javax.swing.JPanel foodand;
@@ -1532,6 +1716,7 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel householdni;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
@@ -1551,6 +1736,7 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -1567,9 +1753,12 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
+    private javax.swing.JPasswordField jPasswordField1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;

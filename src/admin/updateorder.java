@@ -27,23 +27,70 @@ import lores.LOGIN;
  * @author Admin
  */
 public class updateorder extends javax.swing.JFrame {
-   
-    private DefaultTableModel orderItemsTableModel;
-    private dbConnect dbConnection;
+  
+
+ 
     /**
      * Creates new form updateorder
      */
 public updateorder() {
- 
     initComponents();
-    dbConnection = new dbConnect(); // Initialize your database connection
-    orderItemsTableModel = (DefaultTableModel) ordertable.getModel(); // Get the table model for the order items table
-    loadMyOrderItems(ordertable, orderItemsTableModel); // Load the order items
-    displayUserImage(adminimage);
-    displayUserImage(adminimage);
+        dbConnection = new dbConnect(); 
+        orderItemsTableModel = (DefaultTableModel) ordertable.getModel();
+        loadMyOrders(ordertable, orderItemsTableModel);
+        displayUserImage(adminimage);
+//        displayTotalOrders(); 
     
 }
 
+
+   private DefaultTableModel orderItemsTableModel;
+    private dbConnect dbConnection;
+  private void deleteOrder(int orderId) {
+        String sql = "UPDATE orders SET order_status = 'Archived' WHERE order_id = ?";
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setInt(1, orderId);
+            int rowsUpdated = pstmt.executeUpdate();
+            if (rowsUpdated > 0) {
+                JOptionPane.showMessageDialog(this, "Order archived successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                loadMyOrders(ordertable, (DefaultTableModel) ordertable.getModel()); // Refresh the table
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to archive the order.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error archiving order: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Database error during order archiving.", "Database Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+//private void displayTotalOrders() {
+//        SessionClass session = SessionClass.getInstance();
+//        int loggedInUserId = session.getU_id();
+//
+//        String sql = "SELECT COUNT(*) AS total_orders FROM orders WHERE u_id = ?";
+//        try (Connection conn = dbConnection.getConnection(); // Use the class-level dbConnection
+//             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+//
+//            pstmt.setInt(1, loggedInUserId);
+//            ResultSet rs = pstmt.executeQuery();
+//
+//            if (rs.next()) {
+//                int totalOrdersCount = rs.getInt("total_orders");
+//                totalorder.setText(String.valueOf(totalOrdersCount));
+//            } else {
+//                totalorder.setText("0");
+//            }
+//            rs.close();
+//
+//        } catch (SQLException ex) {
+//            System.err.println("Error getting total orders: " + ex.getMessage());
+//            JOptionPane.showMessageDialog(this, "Error retrieving total orders.", "Database Error", JOptionPane.ERROR_MESSAGE);
+//            totalorder.setText("Error");
+//        } 
+//    }
 
 // public void displayTotalOrderAmount() {
 //    dbConnect dbc = new dbConnect();
@@ -80,7 +127,7 @@ public updateorder() {
     
     public void loadOrderItems() {
     dbConnect dbc = new dbConnect();
-    DefaultTableModel model = (DefaultTableModel) ordertable.getModel(); // Assuming 'ordertable' is your JTable
+    DefaultTableModel model = (DefaultTableModel) ordertable.getModel(); // Assuming 'ordertable' is your JTable 
     model.setRowCount(0); // Clear existing rows
 
     SessionClass session = SessionClass.getInstance(); // Assuming order_id is in the session
@@ -119,73 +166,57 @@ public updateorder() {
     }
 }
 
- public void loadMyOrderItems(JTable orderItemsTable, DefaultTableModel orderItemsTableModel) {
-    // Clear existing data in the table
-    orderItemsTableModel.setRowCount(0);
+   public void loadMyOrders(JTable ordersTable, DefaultTableModel ordersTableModel) {
+        // Clear existing data in the table
+        ordersTableModel.setRowCount(0);
 
-    // Get the logged-in user's ID from the SessionClass
-    SessionClass session = SessionClass.getInstance();
-    int loggedInUserId = session.getU_id();
-    System.out.println("Attempting to load order items for user ID: " + loggedInUserId);
+        // Get the logged-in user's ID from the SessionClass
+        SessionClass session = SessionClass.getInstance();
+        int loggedInUserId = session.getU_id();
+        System.out.println("Attempting to load orders for user ID: " + loggedInUserId);
 
-    // Get the logged-in user's role
-    String loggedInUserRole = session.getType();
-    System.out.println("Logged in user role: " + loggedInUserRole);
+        // Construct the SQL query to get all non-archived orders for the logged-in user
+        String sql = "SELECT order_id, order_date, order_status, cash, order_change " +
+                "FROM orders " +
+                "WHERE u_id = ? AND order_status != 'Archived' " + // Exclude archived orders
+                "ORDER BY order_date DESC";
 
-    // Construct the SQL query based on the user's role
-    String sql;
-    if ("Admin".equalsIgnoreCase(loggedInUserRole) || "Employee".equalsIgnoreCase(loggedInUserRole)) {
-        // Admin and Employee: Show all order items
-        sql = "SELECT order_item_id, order_id, product_id, quantity, price, item_total FROM order_items ORDER BY order_item_id DESC";
-    } else {
-        // Customer (or other roles): Show only their order items (by joining with orders table)
-        sql = "SELECT oi.order_item_id, oi.order_id, oi.product_id, oi.quantity, oi.price, oi.item_total " +
-              "FROM order_items oi " +
-              "JOIN orders o ON oi.order_id = o.order_id " +
-              "WHERE o.u_id = ? " +
-              "ORDER BY oi.order_item_id DESC";
-    }
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-    dbConnect dbConnection = new dbConnect(); // Create an instance of your dbConnect class
-
-    try (Connection conn = dbConnection.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-        if (!"Admin".equalsIgnoreCase(loggedInUserRole) && !"Employee".equalsIgnoreCase(loggedInUserRole)) {
             pstmt.setInt(1, loggedInUserId);
-        }
 
-        try (ResultSet rs = pstmt.executeQuery()) {
-            System.out.println("Query executed successfully.");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                System.out.println("Query executed successfully.");
 
-            // Populate the table model with the retrieved data
-            int rowCount = 0;
-            while (rs.next()) {
-                rowCount++;
-                System.out.println("Row " + rowCount + " found - Order Item ID: " + rs.getInt("order_item_id") + ", Order ID: " + rs.getInt("order_id"));
+                // Populate the table model with the retrieved data
+                int rowCount = 0;
+                while (rs.next()) {
+                    rowCount++;
+                    System.out.println("Row " + rowCount + " found - Order ID: " + rs.getInt("order_id") + ", Order Date: " + rs.getTimestamp("order_date"));
 
-                Object[] rowData = {
-                        rs.getInt("order_item_id"),
-                        rs.getInt("order_id"),
-                        rs.getInt("product_id"),
-                        rs.getInt("quantity"),
-                        rs.getDouble("price"),
-                        rs.getDouble("item_total")
-                };
-                orderItemsTableModel.addRow(rowData);
+                    Object[] rowData = {
+                            rs.getInt("order_id"),
+                            rs.getTimestamp("order_date"),
+                            rs.getString("order_status"),
+                            rs.getDouble("cash"),
+                            rs.getDouble("order_change")
+                    };
+                    ordersTableModel.addRow(rowData);
+                }
+                System.out.println("Total orders loaded: " + rowCount);
+
+                // Set the table model for the JTable
+                ordersTable.setModel(ordersTableModel);
+
             }
-            System.out.println("Total order items loaded: " + rowCount);
 
-            // Set the table model for the JTable
-            orderItemsTable.setModel(orderItemsTableModel);
-
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, "Error loading orders: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
         }
-
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error loading order items: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
     }
-}
+
 
     
 
@@ -253,15 +284,15 @@ public updateorder() {
         jLabel25 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        totalorders = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
         jLabel24 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         ordertable = new javax.swing.JTable();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        orderitem = new javax.swing.JTable();
 
         jLabel1.setText("jLabel1");
 
@@ -368,8 +399,13 @@ public updateorder() {
         jLabel25.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel25.setForeground(new java.awt.Color(0, 102, 102));
         jLabel25.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel25.setText("Update Order");
+        jLabel25.setText("View Order");
         jLabel25.setVerifyInputWhenFocusTarget(false);
+        jLabel25.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel25MouseClicked(evt);
+            }
+        });
         update.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 140, 30));
 
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -384,47 +420,18 @@ public updateorder() {
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel6.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/checkgamay.png"))); // NOI18N
-        jPanel6.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 80, 70));
-
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
+        jPanel2.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        totalorders.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        totalorders.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jPanel2.add(totalorders, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 60, 30));
-
-        jPanel6.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 80, 30));
-
-        jPanel4.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 230, 120));
-
-        jPanel7.setBackground(new java.awt.Color(0, 102, 102));
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-
-        jPanel4.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 230, 10));
-
-        jLabel24.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel24.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel24.setFont(new java.awt.Font("Segoe UI Black", 1, 48)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
         jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel24.setText("Total Order");
+        jLabel24.setText("TOTAL ORDERS");
         jLabel24.setVerifyInputWhenFocusTarget(false);
-        jPanel4.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 230, 30));
+        jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 460, 70));
+
+        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 540, 90));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 600, 180));
 
@@ -436,15 +443,14 @@ public updateorder() {
         ordertable.setForeground(new java.awt.Color(0, 102, 102));
         ordertable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
             },
             new String [] {
-                "Order Item ID", "Order ID", "Product ID", "Quantity", "Price", "Total Amount"
+                "Order ID", "Order Date", "Order Status", "Cash", "Change"
             }
         ));
         ordertable.setToolTipText("");
@@ -455,7 +461,35 @@ public updateorder() {
         });
         jScrollPane2.setViewportView(ordertable);
 
-        jPanel9.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 580, 400));
+        jPanel9.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 580, 180));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel4.setText("ORDERED ITEMS");
+        jPanel9.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("PRODUCTS");
+        jPanel9.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+
+        orderitem.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Order Item ID", "Product Name", "Quantity", "Price", "Total Amount"
+            }
+        ));
+        jScrollPane3.setViewportView(orderitem);
+
+        jPanel9.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 580, 170));
 
         jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 600, 420));
 
@@ -546,61 +580,58 @@ public updateorder() {
     }//GEN-LAST:event_deleteMouseExited
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-    // Get the selected row from the table displaying order items (ordertable)
-    JTable orderItemsTable = this.ordertable;
-    int selectedRow = orderItemsTable.getSelectedRow();
+     // TODO add your handling code here:
+        
+         // Get the selected row from the orders table (ordertable)
+    int selectedRow = ordertable.getSelectedRow();
 
     // Check if a row is selected
     if (selectedRow < 0) {
-        JOptionPane.showMessageDialog(null, "Please select an order item to update.");
+        JOptionPane.showMessageDialog(this, "Please select an order to view items.", "Information", JOptionPane.INFORMATION_MESSAGE);
         return;
     }
 
-    // Get the order_item_id from the selected row
-    int selectedOrderItemId = (int) orderItemsTable.getValueAt(selectedRow, 0);
+    // Get the order_id from the selected row (assuming it's in the first column)
+    int selectedOrderId = (int) ordertable.getValueAt(selectedRow, 0);
 
-    // Retrieve the data for the selected order item
+    // Load the items for the selected order into the orderitem table
+    loadOrderItemsForSelectedOrder(selectedOrderId, orderitem);
+}
+
+public void loadOrderItemsForSelectedOrder(int orderId, JTable orderItemsTable) {
+    // Clear existing data in the order items table
+    DefaultTableModel model = (DefaultTableModel) orderItemsTable.getModel();
+    model.setRowCount(0);
+
     dbConnect dbConnection = new dbConnect();
 
     try (Connection conn = dbConnection.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(
-                 "SELECT oi.order_item_id, oi.product_id, p.p_name, oi.quantity, oi.price, oi.item_total, p.p_stock, p.p_image " + // Added oi.item_total
+                 "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total " +
                  "FROM order_items oi " +
                  "JOIN product p ON oi.product_id = p.p_id " +
-                 "WHERE oi.order_item_id = ?")) {
+                 "WHERE oi.order_id = ?"
+         )) {
 
-        pstmt.setInt(1, selectedOrderItemId);
-        ResultSet rs = pstmt.executeQuery();
+        pstmt.setInt(1, orderId);
 
-        // Check if the order item exists
-        if (!rs.next()) {
-            JOptionPane.showMessageDialog(null, "Selected order item not found.");
-            return;
+        try (ResultSet rs = pstmt.executeQuery()) {
+            System.out.println("Successfully retrieved order items for Order ID: " + orderId);
+
+            while (rs.next()) {
+                Object[] rowData = {
+                        rs.getInt("order_item_id"),
+                        rs.getString("p_name"),
+                        rs.getInt("quantity"),
+                        rs.getDouble("price"),
+                        rs.getDouble("item_total")
+                };
+                model.addRow(rowData);
+            }
         }
 
-        // Populate the Update Process form
-        updateprocess updateForm = new updateprocess();
-
-        updateForm.orderitemid.setText(String.valueOf(rs.getInt("order_item_id")));
-        updateForm.prodid.setText(String.valueOf(rs.getInt("product_id")));
-        updateForm.prodprice.setText(String.valueOf(rs.getDouble("price")));
-        updateForm.previousquantity.setText(String.valueOf(rs.getInt("quantity")));
-        updateForm.prodquan.setText(String.valueOf(rs.getInt("p_stock"))); // Set product quantity
-        updateForm.totalam.setText(String.valueOf(rs.getDouble("item_total")));
-updateForm.prodimage.setIcon(updateForm.ResizeImage(rs.getString("p_image"),null,updateForm.prodimage));
-      updateForm.oldpath = rs.getString("p_image");
-      updateForm.path = rs.getString("p_image");
-      updateForm.destination=rs.getString("p_image");        
-
-
-// Set total amount
-        // Optionally display the product name
-        // updateForm.productNameLabel.setText(rs.getString("p_name"));
-
-        updateForm.setVisible(true);
-
     } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Error retrieving order item details: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(this, "Error loading order items: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
     }//GEN-LAST:event_updateMouseClicked
@@ -610,61 +641,27 @@ updateForm.prodimage.setIcon(updateForm.ResizeImage(rs.getString("p_image"),null
     }//GEN-LAST:event_ordertableMouseClicked
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
-        // TODO add your handling code here:
-        
-          int rowIndex = ordertable.getSelectedRow();
-    
-    if (rowIndex < 0) {
-        JOptionPane.showMessageDialog(null, "Please select a product to delete.");
-        return;
-    }
-    
-    // Get the product ID from the selected row
-    TableModel model = ordertable.getModel();
-    int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
-    
-    // Confirmation dialog
-    int confirm = JOptionPane.showConfirmDialog(
-        this,
-        "Are you sure you want to delete this product?",
-        "Confirm Delete",
-        JOptionPane.YES_NO_OPTION
-    );
-    
-    if (confirm == JOptionPane.YES_OPTION) {
-        try {
-            // Connect to the database
-            dbConnect dbc = new dbConnect();
-            
-            // Prepare the DELETE query
-            String query = "DELETE FROM orders WHERE s_id = ?";
-            PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
-            pstmt.setInt(1, productId);
-            
-            // Execute the query
-            int rowsDeleted = pstmt.executeUpdate();
-            
-            if (rowsDeleted > 0) {
-                JOptionPane.showMessageDialog(this, "Order deleted successfully.");
-                
-                // Refresh the table to reflect the changes
-     loadMyOrderItems(ordertable, orderItemsTableModel);
-                
-                // Update the counts
-                
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to delete the product.");
-            }
-            
-            // Close the statement
-            pstmt.close();
-        } catch (SQLException ex) {
-            System.out.println("Error: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error deleting the product.");
+      
+      int selectedRow = ordertable.getSelectedRow();
+        if (selectedRow < 0) {
+            JOptionPane.showMessageDialog(this, "Please select an order to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            return;
         }
-    }
-        
+        int orderIdToDelete = (int) ordertable.getValueAt(selectedRow, 0);
+        String orderStatus = (String) ordertable.getValueAt(selectedRow, 2); // Get the order status (assuming it's the 3rd column)
+
+        if ("Pending".equalsIgnoreCase(orderStatus)) {
+            JOptionPane.showMessageDialog(this, "Cannot delete orders with Pending status.", "Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop the deletion process
+        }
+        deleteOrder(orderIdToDelete);
+
+    
     }//GEN-LAST:event_deleteMouseClicked
+
+    private void jLabel25MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel25MouseClicked
+    
+    }//GEN-LAST:event_jLabel25MouseClicked
 
     /**
      * @param args the command line arguments
@@ -707,12 +704,13 @@ updateForm.prodimage.setIcon(updateForm.ResizeImage(rs.getString("p_image"),null
     private javax.swing.JLabel adminimage;
     public javax.swing.JPanel delete;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
@@ -720,14 +718,13 @@ updateForm.prodimage.setIcon(updateForm.ResizeImage(rs.getString("p_image"),null
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JToolBar jToolBar1;
+    private javax.swing.JTable orderitem;
     public javax.swing.JTable ordertable;
-    private javax.swing.JLabel totalorders;
     public javax.swing.JPanel update;
     // End of variables declaration//GEN-END:variables
 }
