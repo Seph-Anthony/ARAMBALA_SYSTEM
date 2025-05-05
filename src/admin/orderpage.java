@@ -16,10 +16,12 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import config.SessionClass;
+import java.awt.Window;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.Statement;
+import javax.swing.SwingUtilities;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
@@ -31,13 +33,14 @@ public class orderpage extends javax.swing.JFrame {
  private int p_id;
 private int order_id;
      private Integer currentOrderId = null;
-    
+private dbConnect dbConnection;
     
     /**
      * Creates new form orderpage
      */
     public orderpage() {
         initComponents();
+        dbConnection = new dbConnect();
         displayfood();
         Allpersonal();
         Allsupplies();
@@ -52,6 +55,40 @@ private int order_id;
     }
     Color logcolorx = new Color(63,195,128);
     Color excolorx = new Color(255,255,255);
+     dbConnect db = new dbConnect();
+ private void logOrderAction(int orderId, double cashAmount, double changeAmount) {
+    Connection conn = null;
+    PreparedStatement pstmt = null;
+    SessionClass session = SessionClass.getInstance();
+    int userId = session.getU_id(); // Get the user ID
+    String username = session.getUsername();
+
+    try {
+        conn = db.getConnection(); // Use the instance db to get the connection
+        String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
+        pstmt = conn.prepareStatement(sql);
+
+        // Shorten the activity string
+        String activity = username + " completed order #" + orderId;
+        pstmt.setInt(1, userId);
+        pstmt.setString(2, activity);
+        pstmt.executeUpdate();
+
+    } catch (SQLException e) {
+        System.err.println("Failed to log order action: " + e.getMessage());
+    } finally {
+        try {
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException e) {
+            System.err.println("Error closing resources: " + e.getMessage());
+        }
+    }
+} 
     
     public void setCurrentOrderId(int orderId) {
     this.currentOrderId = orderId;
@@ -513,6 +550,7 @@ private int generateNewOrderId() {
 
         jPanel10.add(addorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 430, 140, 40));
 
+        entercash.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         entercash.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         entercash.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -1459,7 +1497,7 @@ if (session.getOrder_id() == 0) {
     }//GEN-LAST:event_entercashActionPerformed
 
     private void addorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addorderMouseClicked
-  String cashText = entercash.getText();
+        String cashText = entercash.getText();
     SessionClass session = SessionClass.getInstance();
     int currentOrderId = session.getOrder_id();
     dbConnect db = new dbConnect(); // Initialize dbConnect here
@@ -1543,6 +1581,21 @@ if (session.getOrder_id() == 0) {
                 loadOrderedItems(0, orderitem);
                 displayOrderTotal();
                 entercash.setText("");
+
+                // Log the order completion
+                logOrderAction(currentOrderId, cashAmount, changeAmount); //calling the logOrderAction
+
+                // Redirect to dashboard
+                Window window = SwingUtilities.getWindowAncestor(this); // Get the current window
+                if (session.getType().equalsIgnoreCase("Admin")) {
+                    admindash ad = new admindash();
+                    ad.setVisible(true);
+                    this.dispose(); // Close the current order page
+                } else {
+                    customerdashboard cd = new customerdashboard();
+                    cd.setVisible(true);
+                    this.dispose(); // Close the current order page
+                }
             } else {
                 conn.rollback(); // Rollback if order update failed
                 JOptionPane.showMessageDialog(this, "Failed to complete the order.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -1572,6 +1625,7 @@ if (session.getOrder_id() == 0) {
     } catch (NumberFormatException e) {
         JOptionPane.showMessageDialog(this, "Invalid cash amount. Please enter a valid number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
     }
+  
     }//GEN-LAST:event_addorderMouseClicked
 
     private void editMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseClicked

@@ -7,6 +7,7 @@ package admin;
 import config.dbConnect;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 /**
@@ -90,7 +91,7 @@ private orderpage parentOrderPage;
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 340, 60));
 
-        editquan.setText("editquan");
+        editquan.setFont(new java.awt.Font("Segoe UI Black", 1, 12)); // NOI18N
         editquan.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
         editquan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -152,8 +153,8 @@ private orderpage parentOrderPage;
     }//GEN-LAST:event_jPanel9MouseClicked
 
     private void updatequantityMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatequantityMouseClicked
-        // TODO add your handling code here:
-         String newQuantityText = editquan.getText();
+       // TODO add your handling code here:
+    String newQuantityText = editquan.getText();
 
     if (newQuantityText.trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter the new quantity.", "Validation Error", JOptionPane.ERROR_MESSAGE);
@@ -177,6 +178,32 @@ private orderpage parentOrderPage;
 
     try (Connection conn = db.getConnection();
          PreparedStatement pstmt = conn.prepareStatement(updateQuery)) {
+
+        // First, get the product ID and current stock for the item being edited
+        int productId = 0;
+        int currentStock = 0;
+        try {
+            String getProductInfoQuery = "SELECT product_id, p.p_stock FROM order_items oi JOIN product p ON oi.product_id = p.p_id WHERE oi.order_item_id = ?";
+            PreparedStatement pstmtGetInfo = conn.prepareStatement(getProductInfoQuery);
+            pstmtGetInfo.setInt(1, orderItemIdToEdit);
+            ResultSet rs = pstmtGetInfo.executeQuery();
+            if (rs.next()) {
+                productId = rs.getInt("product_id");
+                currentStock = rs.getInt("p_stock");
+            }
+            rs.close();
+            pstmtGetInfo.close();
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error retrieving product information: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+            return; // Stop the update if product info cannot be retrieved
+        }
+
+        // Check if the new quantity exceeds the current stock
+        if (newQuantity > currentStock) {
+            JOptionPane.showMessageDialog(this, "Insufficient stock. Only " + currentStock + " available.", "Stock Limit Exceeded", JOptionPane.ERROR_MESSAGE);
+            return; // Stop the update if the quantity is too high
+        }
 
         pstmt.setInt(1, newQuantity);
         pstmt.setInt(2, newQuantity); // Use newQuantity to recalculate item_total
@@ -204,6 +231,7 @@ private orderpage parentOrderPage;
             System.err.println("Error closing database connection: " + ex.getMessage());
         }
     }
+
         
     }//GEN-LAST:event_updatequantityMouseClicked
 

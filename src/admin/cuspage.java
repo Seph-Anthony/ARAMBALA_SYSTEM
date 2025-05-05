@@ -29,12 +29,14 @@ import java.sql.*;
  * @author Admin
  */
 public class cuspage extends javax.swing.JFrame {
-
+private dbConnect dbConnection;
     /**
      * Creates new form addcus
      */
     public cuspage() {
         initComponents();
+            dbConnection = new dbConnect();
+        
         showdata();
         AllUsers();
         ActiveUser();
@@ -53,6 +55,43 @@ public class cuspage extends javax.swing.JFrame {
             }
         });
     }
+    
+    
+    
+    private boolean hasOrderRecords(int userId, Connection conn) {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    boolean hasRecords = false;
+
+    try {
+        String query = "SELECT COUNT(*) FROM orders WHERE u_id = ?";  // Corrected table name to "orders"
+        pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, userId);
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            hasRecords = (count > 0);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error checking order records: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } finally {
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error closing resources: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+    return hasRecords;
+}
+
     
      private void logUserDeletionAction(int loggedInUserId, String loggedInUsername, String deletedUsername) {
         String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
@@ -712,39 +751,40 @@ cusdash.setBackground(logcolor);
     }//GEN-LAST:event_actMouseClicked
 
     private void delemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_delemMouseClicked
-        // TODO add your handling code here:
-        
-        int rowIndex = usertable.getSelectedRow();
+   Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
 
+    try {
+        conn = dbConnection.getConnection();
+
+        int rowIndex = usertable.getSelectedRow();
         if (rowIndex < 0) {
-            JOptionPane.showMessageDialog(null, "Please select a user to delete.");
+            JOptionPane.showMessageDialog(this, "Please select a user to delete.");
             return;
         }
 
-        // Get the user ID and username from the selected row
         TableModel model = usertable.getModel();
-        int userIdToDelete = (int) model.getValueAt(rowIndex, 0); // Assuming u_id is in the first column
-        String usernameToDelete = (String) model.getValueAt(rowIndex, 1); // Assuming u_username is in the second column
+        int userIdToDelete = (int) model.getValueAt(rowIndex, 0);
+        String usernameToDelete = (String) model.getValueAt(rowIndex, 1);
 
-        // Confirmation dialog
-        int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure you want to delete this user?",
-            "Confirm Delete",
-            JOptionPane.YES_NO_OPTION
-        );
+        // Check if the user has any order records
+        if (hasOrderRecords(userIdToDelete, conn)) {
+            JOptionPane.showMessageDialog(this, "Cannot delete user.  User has existing order records.", "Error", JOptionPane.ERROR_MESSAGE);
+            //  No return here.  We want to redirect even if there are records.
+        } else {
+            // Confirmation dialog
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to delete this user?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION);
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            try {
-                // Connect to the database
-                dbConnect dbc = new dbConnect();
-
-                // Prepare the DELETE query
+            if (confirm == JOptionPane.YES_OPTION) {
                 String query = "DELETE FROM user WHERE u_id = ?";
-                PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+                pstmt = conn.prepareStatement(query);
                 pstmt.setInt(1, userIdToDelete);
 
-                // Execute the query
                 int rowsDeleted = pstmt.executeUpdate();
 
                 if (rowsDeleted > 0) {
@@ -756,28 +796,39 @@ cusdash.setBackground(logcolor);
                     String currentUsername = ses.getUsername();
                     logUserDeletionAction(currentUserId, currentUsername, usernameToDelete);
 
-                    // Refresh the table to reflect the changes
+                    // Refresh the table
                     showdata();
-
-                    // Update the counts
                     AllUsers();
                     PendingUser();
                     ActiveUser();
                 } else {
-                    JOptionPane.showMessageDialog(this, "Failed to delete the User.");
+                    JOptionPane.showMessageDialog(this, "Failed to delete the user.");
                 }
-
-                // Close the statement
-                pstmt.close();
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                JOptionPane.showMessageDialog(this, "Error deleting the user.");
             }
         }
-    
-    
-        
-        
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error deleting user: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } finally {
+        // Close resources
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error closing resources: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+    // outside the try-catch-finally
+    dispose();
+    new admindash().setVisible(true);
     }//GEN-LAST:event_delemMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

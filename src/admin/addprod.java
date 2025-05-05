@@ -526,14 +526,26 @@ private int getCurrentUserId() {
         if (result == 1) {
             JOptionPane.showMessageDialog(null, "Product added successfully.");
             // ... (logging) ...
+            
+                  // Add the logging here
+        int userId = getCurrentUserId();  // Get the current user's ID
+        String productName = proname.getText(); // Get the product name
+        String username = ses.getUsername();
+        logProductAdditionAction(userId, productName, username);
+            
+            
         } else {
             JOptionPane.showMessageDialog(null, "Error adding product. Please check your input or try again.", "Error", JOptionPane.ERROR_MESSAGE);
         }
+        
+       
+        
     } catch (SQLException ex) {
         JOptionPane.showMessageDialog(null, "An error occurred: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         ex.printStackTrace();
     }
- 
+      admindash ad = new admindash();
+        ad.setVisible(true);
     }//GEN-LAST:event_addMouseClicked
 
     private void addMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addMouseEntered

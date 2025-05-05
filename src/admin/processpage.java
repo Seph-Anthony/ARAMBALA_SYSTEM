@@ -251,7 +251,6 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         image = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         prodbrand = new javax.swing.JTextField();
         prodname = new javax.swing.JTextField();
@@ -265,6 +264,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel8 = new javax.swing.JLabel();
         jLabel19 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel17 = new javax.swing.JPanel();
@@ -273,7 +273,7 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel11 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         addditem = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel13 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
         jTextArea1.setColumns(20);
@@ -323,11 +323,6 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel12.setForeground(new java.awt.Color(0, 102, 102));
         jLabel12.setText("Stock:");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, -1, 20));
-
-        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel13.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel13.setText("Brand:");
-        jPanel2.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, -1, 20));
 
         jLabel14.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(0, 102, 102));
@@ -404,6 +399,11 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/finalcategory.png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 240, 70, 60));
 
+        jLabel20.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel20.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel20.setText("Brand:");
+        jPanel2.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 30, -1, 20));
+
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 700, 370));
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
@@ -466,16 +466,11 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
         });
         addditem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel1.setText("ORDER ITEM");
-        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel1MouseClicked(evt);
-            }
-        });
-        addditem.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
+        jLabel13.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel13.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel13.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel13.setText("Order Item");
+        addditem.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
         jPanel1.add(addditem, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 520, 150, 40));
 
@@ -538,7 +533,7 @@ String quantityText = quantity.getText();
 
     if (quantityText.trim().isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please enter the quantity.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-        return; // Stop further processing if quantity is empty
+        return;
     }
 
     int quantityToAdd;
@@ -546,7 +541,7 @@ String quantityText = quantity.getText();
         quantityToAdd = Integer.parseInt(quantityText);
         if (quantityToAdd <= 0) {
             JOptionPane.showMessageDialog(this, "Quantity must be a positive number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
-            return; // Stop further processing if quantity is not positive
+            return;
         }
 
         SessionClass session = SessionClass.getInstance();
@@ -557,6 +552,28 @@ String quantityText = quantity.getText();
         double totalAmount = quantityToAdd * productPrice;
 
         dbConnect db = new dbConnect();
+
+        // Check for sufficient stock
+        int currentStock = 0;
+        try {
+            String getStockQuery = "SELECT p_stock FROM product WHERE p_id = " + productId;
+            ResultSet stockResult = db.getData(getStockQuery);
+            if (stockResult.next()) {
+                currentStock = stockResult.getInt("p_stock");
+            }
+            stockResult.close();
+        } catch (SQLException ex) {
+            System.err.println("Error getting product stock: " + ex.getMessage());
+            JOptionPane.showMessageDialog(this, "Error checking product stock.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            return; // Stop the process if there's an error fetching stock
+        }
+
+        if (quantityToAdd > currentStock) {
+            JOptionPane.showMessageDialog(this, "Insufficient stock. Only " + currentStock + " available.", "Stock Limit Exceeded", JOptionPane.ERROR_MESSAGE);
+            return; // Stop adding item if quantity exceeds stock
+        }
+        //end check
+
         String insertOrderItemSQL = "INSERT INTO order_items (order_id, product_id, quantity, price, item_total) VALUES ("
                 + currentOrderId + ", "
                 + productId + ", "
@@ -573,7 +590,7 @@ String quantityText = quantity.getText();
             if (parentOrderPage != null) {
                 parentOrderPage.setCurrentOrderId(currentOrderId);
                 parentOrderPage.loadOrderedItems(currentOrderId, parentOrderPage.orderitem);
-                parentOrderPage.displayOrderTotal(); // Refresh the total amount as well
+                parentOrderPage.displayOrderTotal();
                 parentOrderPage.setVisible(true);
                 this.dispose(); // Close the current "View Product" frame
             } else {
@@ -581,7 +598,7 @@ String quantityText = quantity.getText();
                 orderpage orderPage = new orderpage();
                 orderPage.setCurrentOrderId(currentOrderId);
                 orderPage.loadOrderedItems(currentOrderId, orderPage.orderitem);
-                orderPage.displayOrderTotal(); // Refresh the total amount as well
+                orderPage.displayOrderTotal();
                 orderPage.setVisible(true);
                 this.dispose();
             }
@@ -600,10 +617,6 @@ String quantityText = quantity.getText();
         JOptionPane.showMessageDialog(this, "Invalid quantity. Please enter a valid number.", "Validation Error", JOptionPane.ERROR_MESSAGE);
     }
     }//GEN-LAST:event_addditemMouseClicked
-
-    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel1MouseClicked
 
     private void quantityActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_quantityActionPerformed
         // TODO add your handling code here:
@@ -663,7 +676,6 @@ String quantityText = quantity.getText();
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel addditem;
     public javax.swing.JLabel image;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
@@ -675,6 +687,7 @@ String quantityText = quantity.getText();
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;

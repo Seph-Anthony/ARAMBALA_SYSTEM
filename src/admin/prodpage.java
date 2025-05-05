@@ -27,12 +27,13 @@ import java.sql.*;
  * @author Admin
  */
 public class prodpage extends javax.swing.JFrame {
-
+private dbConnect dbConnection;
     /**
      * Creates new form prodpage
      */
     public prodpage() {
         initComponents();
+          dbConnection = new dbConnect();
         AllProd();
         displayData();
         AvailableProd();
@@ -52,9 +53,39 @@ public class prodpage extends javax.swing.JFrame {
         });
         
     }
-    
-    
-    
+private boolean hasSalesRecords(int productId, Connection conn) {
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+    boolean hasRecords = false;
+
+    try {
+        String query = "SELECT COUNT(*) FROM order_items WHERE product_id = ?";
+        pstmt = conn.prepareStatement(query);
+        pstmt.setInt(1, productId);
+        rs = pstmt.executeQuery();
+
+        if (rs.next()) {
+            int count = rs.getInt(1);
+            hasRecords = (count > 0);
+        }
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error checking sales records: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } finally {
+        try{
+            if(rs != null){
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+        } catch(SQLException e){
+            JOptionPane.showMessageDialog(this, "Error closing resources: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        }
+    }
+    return hasRecords;
+}
     
  private void logProductDeletionAction(int userId, String username, String productName) {
         String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
@@ -689,72 +720,90 @@ up.image.setIcon(up.ResizeImage(rs.getString("p_image"),null,up.image));
     }//GEN-LAST:event_EDITMouseClicked
 
     private void DELETEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseClicked
-      
-        // Inside the DELETEMouseClicked method
- SessionClass ses =  SessionClass.getInstance();
+   Connection conn = null;
+    PreparedStatement pstmt = null;
+    ResultSet rs = null;
+
+    try {
+        conn = dbConnection.getConnection();
 
         int rowIndex = protable.getSelectedRow();
-
         if (rowIndex < 0) {
-            JOptionPane.showMessageDialog(null, "Please select a product to delete.");
+            JOptionPane.showMessageDialog(this, "Please select a product to delete.");
             return;
         }
 
-        // Get the product ID and name from the selected row
         TableModel model = protable.getModel();
-        int productId = (int) model.getValueAt(rowIndex, 0); // Assuming p_id is in the first column
-        String productName = (String) model.getValueAt(rowIndex, 1); // Assuming p_name is in the second column
+        int productId = (int) model.getValueAt(rowIndex, 0);
+        String productName = (String) model.getValueAt(rowIndex, 1);
 
-        // Confirmation dialog
-        int confirm = JOptionPane.showConfirmDialog(
-            this,
-            "Are you sure you want to delete this product?",
-            "Confirm Delete",
-            JOptionPane.YES_NO_OPTION
-        );
+        // Check if the product has any sales records
+        if (hasSalesRecords(productId, conn)) {
+            JOptionPane.showMessageDialog(this, "Cannot delete product. It has existing sales records.", "Error", JOptionPane.ERROR_MESSAGE);
+            //  No return here.  We want to redirect even if there are records.
+        } else { // Only proceed with deletion if no sales records
+            int confirm = JOptionPane.showConfirmDialog(
+                    this,
+                    "Are you sure you want to delete this product?",
+                    "Confirm Delete",
+                    JOptionPane.YES_NO_OPTION);
+            if (confirm == JOptionPane.YES_OPTION) {
 
-        if (confirm == JOptionPane.YES_OPTION) {
-            try {
-                // Connect to the database
-                dbConnect dbc = new dbConnect();
-
-
-                int currentUserId = getCurrentUserId();
-                String username = ses.getUsername();
-
-                // Prepare the DELETE query
                 String query = "DELETE FROM product WHERE p_id = ?";
-                PreparedStatement pstmt = dbc.getConnection().prepareStatement(query);
+                pstmt = conn.prepareStatement(query);
                 pstmt.setInt(1, productId);
 
-                // Execute the query
                 int rowsDeleted = pstmt.executeUpdate();
 
                 if (rowsDeleted > 0) {
                     JOptionPane.showMessageDialog(this, "Product deleted successfully.");
 
-                    // Log the product deletion action
+                    int currentUserId = getCurrentUserId();
+                    SessionClass ses = SessionClass.getInstance();
+                    String username = ses.getUsername();
                     logProductDeletionAction(currentUserId, username, productName);
-
-                    // Refresh the table to reflect the changes
-                    displayData();
-
-                    // Update the counts
-                    AllProd();
-                    AvailableProd();
-                    NotAvail();
+                    //moved redirection
                 } else {
                     JOptionPane.showMessageDialog(this, "Failed to delete the product.");
                 }
-
-                // Close the statement
-                pstmt.close();
-            } catch (SQLException ex) {
-                System.out.println("Error: " + ex.getMessage());
-                JOptionPane.showMessageDialog(this, "Error deleting the product.");
             }
         }
-        
+
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error deleting product: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    } finally {
+        // Close resources in a finally block
+        try {
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            if (conn != null) {
+                conn.close();
+            }
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error closing resources: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }
+    }
+
+    // Determine user role and redirect (Moved outside the if (rowsDeleted > 0) block)
+    SessionClass ses = SessionClass.getInstance(); //moved
+    if ("Admin".equals(ses.getType())) { 
+        dispose();
+        new admindash().setVisible(true);
+    } else if ("Employee".equals(ses.getType())) {
+        dispose();
+        new employdash().setVisible(true);
+    } else {
+        dispose();
+        new admindash().setVisible(true);
+    }
+
     }//GEN-LAST:event_DELETEMouseClicked
 
     private void resetbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_resetbuttonActionPerformed
