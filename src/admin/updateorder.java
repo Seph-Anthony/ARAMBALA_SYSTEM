@@ -73,7 +73,7 @@ public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItems
                 double itemTotal = rs.getDouble("item_total"); // Added item_total
 
                 // Format the output string as needed.  Added spacing for better readability
-                String itemDetails = String.format("Item: %-20s Qty: %-4d Price: %-10.2f Total: %.2f", 
+                String itemDetails = String.format("Item:%-20s Qty:%-4d Price:%-10.2f Total:%.2f", 
                                                    productName, quantity, price, itemTotal);
                 listModel.addElement(itemDetails);
             }
@@ -519,7 +519,6 @@ public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItems
         jPanel7.setBackground(new java.awt.Color(255, 255, 255));
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        totallist.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         totallist.setModel(new javax.swing.AbstractListModel<String>() {
             String[] strings = { "Order Item ID", "Product name", "Quantity", "Price", "Total Amount" };
             public int getSize() { return strings.length; }
