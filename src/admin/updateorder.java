@@ -5,6 +5,8 @@
  */
 package admin;
 
+import USER.customerdashboard;
+import USER.employdash;
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import config.dbConnect;
@@ -14,8 +16,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
@@ -41,6 +45,45 @@ public updateorder() {
         displayUserImage(adminimage);
 //        displayTotalOrders(); 
     
+}
+
+public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItemsList) { // Changed parameter type
+    // Clear existing data in the JList
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+
+    dbConnect dbConnection = new dbConnect();
+
+    try (Connection conn = dbConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(
+                "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total "
+                + "FROM order_items oi "
+                + "JOIN product p ON oi.product_id = p.p_id "
+                + "WHERE oi.order_id = ?"
+         )) {
+
+        pstmt.setInt(1, orderId);
+
+        try (ResultSet rs = pstmt.executeQuery()) {
+            System.out.println("Successfully retrieved order items for Order ID: " + orderId);
+
+            while (rs.next()) {
+                String productName = rs.getString("p_name");
+                int quantity = rs.getInt("quantity");
+                double price = rs.getDouble("price");
+                double itemTotal = rs.getDouble("item_total"); // Added item_total
+
+                // Format the output string as needed.  Added spacing for better readability
+                String itemDetails = String.format("Item: %-20s Qty: %-4d Price: %-10.2f Total: %.2f", 
+                                                   productName, quantity, price, itemTotal);
+                listModel.addElement(itemDetails);
+            }
+            orderItemsList.setModel(listModel); // Set the model for the JList
+        }
+
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(this, "Error loading order items: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        ex.printStackTrace();
+    }
 }
 
 
@@ -273,7 +316,7 @@ public updateorder() {
         jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         adminimage = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
+        backtoorderpage = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         admindash = new javax.swing.JLabel();
         adinfo = new javax.swing.JLabel();
@@ -289,10 +332,11 @@ public updateorder() {
         jPanel9 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         ordertable = new javax.swing.JTable();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        jScrollPane3 = new javax.swing.JScrollPane();
-        orderitem = new javax.swing.JTable();
+        jPanel6 = new javax.swing.JPanel();
+        jPanel7 = new javax.swing.JPanel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        totallist = new javax.swing.JList<>();
 
         jLabel1.setText("jLabel1");
 
@@ -321,13 +365,13 @@ public updateorder() {
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 170, 140));
 
-        jPanel10.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
+        backtoorderpage.setBackground(new java.awt.Color(0, 102, 102));
+        backtoorderpage.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel10MouseClicked(evt);
+                backtoorderpageMouseClicked(evt);
             }
         });
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        backtoorderpage.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/images-removebg-preview.png"))); // NOI18N
@@ -336,9 +380,9 @@ public updateorder() {
                 jLabel6MouseClicked(evt);
             }
         });
-        jPanel10.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
+        backtoorderpage.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 50, 40));
 
-        jPanel3.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, 60, 60));
+        jPanel3.add(backtoorderpage, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 60, 60));
 
         admindash.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
         admindash.setForeground(new java.awt.Color(255, 255, 255));
@@ -414,7 +458,7 @@ public updateorder() {
 
         jPanel3.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 250, 160, 70));
 
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 600));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 210, 640));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -431,9 +475,9 @@ public updateorder() {
         jLabel24.setVerifyInputWhenFocusTarget(false);
         jPanel2.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 10, 460, 70));
 
-        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 540, 90));
+        jPanel4.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 540, 90));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 600, 180));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, 840, 140));
 
         jPanel9.setBackground(new java.awt.Color(255, 255, 255));
         jPanel9.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -461,49 +505,47 @@ public updateorder() {
         });
         jScrollPane2.setViewportView(ordertable);
 
-        jPanel9.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 580, 180));
-
-        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("ORDERED ITEMS");
-        jPanel9.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 220, -1, -1));
+        jPanel9.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 420, 460));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(0, 102, 102));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("PRODUCTS");
-        jPanel9.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, -1, -1));
+        jLabel5.setText("Orders");
+        jPanel9.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, -1, -1));
 
-        orderitem.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
-            },
-            new String [] {
-                "Order Item ID", "Product Name", "Quantity", "Price", "Total Amount"
-            }
-        ));
-        jScrollPane3.setViewportView(orderitem);
+        jPanel6.setBackground(new java.awt.Color(0, 102, 102));
+        jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel9.add(jScrollPane3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 240, 580, 170));
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 600, 420));
+        totallist.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        totallist.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Order Item ID", "Product name", "Quantity", "Price", "Total Amount" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane4.setViewportView(totallist);
+
+        jPanel7.add(jScrollPane4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 350, 440));
+
+        jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 370, 460));
+
+        jPanel9.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 10, 390, 480));
+
+        jPanel1.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 140, 840, 500));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 811, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 1061, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -511,24 +553,94 @@ public updateorder() {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        // TODO add your handling code here:
-       orderpage or = new orderpage();
-       or.setVisible(true);
-       this.dispose();
-        // Show a confirmation dialog
+      SessionClass session = SessionClass.getInstance();
+        String userType = session.getType();
+
+        if (userType != null) {
+           
+            if(userType.equals("Admin")){
+               
+                    admindash adminDashboard = new admindash();
+                    adminDashboard.setVisible(true);
+                    
+                    
+            }
+           if(userType.equals("Customer")){
+                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
+                    customerDashboard.setVisible(true);
+                    
+                    
+           }
+           
+           if(userType.equals("Employee")){
+               
+                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
+                    employeeDashboard.setVisible(true);
+                
+                    
+           }
+              
+                    // Handle cases where the user type is not recognized
+                
+                    // Optionally, you can redirect to a default dashboard or show an error message
+                 
+            
+            this.dispose(); 
+        } else {
+            // Handle the case where the session doesn't have user type information
+      JOptionPane.showMessageDialog(null,"No account login first");
+      this.dispose();
+            // Optionally, show an error message
+        }
 
     }//GEN-LAST:event_jLabel6MouseClicked
 
-    private void jPanel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel10MouseClicked
-      orderpage or = new orderpage();
-       or.setVisible(true);
-       this.dispose();
+    private void backtoorderpageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_backtoorderpageMouseClicked
+    
+        SessionClass session = SessionClass.getInstance();
+        String userType = session.getType();
 
+        if (userType != null) {
+           
+            if(userType.equals("Admin")){
+               
+                    admindash adminDashboard = new admindash();
+                    adminDashboard.setVisible(true);
+                    
+                    
+            }
+           if(userType.equals("Customer")){
+                    customerdashboard customerDashboard = new customerdashboard(); // Replace with your actual customer dashboard class name
+                    customerDashboard.setVisible(true);
+                    
+                    
+           }
+           
+           if(userType.equals("Employee")){
+               
+                    employdash employeeDashboard = new employdash(); // Replace with your actual employee dashboard class name
+                    employeeDashboard.setVisible(true);
+                
+                    
+           }
+              
+                    // Handle cases where the user type is not recognized
+                
+                    // Optionally, you can redirect to a default dashboard or show an error message
+                 
+            
+            this.dispose(); 
+        } else {
+            // Handle the case where the session doesn't have user type information
+      JOptionPane.showMessageDialog(null,"No account login first");
+      this.dispose();
+            // Optionally, show an error message
+        }
    
-    }//GEN-LAST:event_jPanel10MouseClicked
+    }//GEN-LAST:event_backtoorderpageMouseClicked
 
     private void formWindowActivated(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowActivated
-        // TODO add your handling code here:
+        // TODO add your handling code here: 
         
           SessionClass ses = SessionClass.getInstance();
     
@@ -580,9 +692,7 @@ public updateorder() {
     }//GEN-LAST:event_deleteMouseExited
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-     // TODO add your handling code here:
-        
-         // Get the selected row from the orders table (ordertable)
+ // Get the selected row from the orders table (ordertable)
     int selectedRow = ordertable.getSelectedRow();
 
     // Check if a row is selected
@@ -594,46 +704,8 @@ public updateorder() {
     // Get the order_id from the selected row (assuming it's in the first column)
     int selectedOrderId = (int) ordertable.getValueAt(selectedRow, 0);
 
-    // Load the items for the selected order into the orderitem table
-    loadOrderItemsForSelectedOrder(selectedOrderId, orderitem);
-}
-
-public void loadOrderItemsForSelectedOrder(int orderId, JTable orderItemsTable) {
-    // Clear existing data in the order items table
-    DefaultTableModel model = (DefaultTableModel) orderItemsTable.getModel();
-    model.setRowCount(0);
-
-    dbConnect dbConnection = new dbConnect();
-
-    try (Connection conn = dbConnection.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(
-                 "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total " +
-                 "FROM order_items oi " +
-                 "JOIN product p ON oi.product_id = p.p_id " +
-                 "WHERE oi.order_id = ?"
-         )) {
-
-        pstmt.setInt(1, orderId);
-
-        try (ResultSet rs = pstmt.executeQuery()) {
-            System.out.println("Successfully retrieved order items for Order ID: " + orderId);
-
-            while (rs.next()) {
-                Object[] rowData = {
-                        rs.getInt("order_item_id"),
-                        rs.getString("p_name"),
-                        rs.getInt("quantity"),
-                        rs.getDouble("price"),
-                        rs.getDouble("item_total")
-                };
-                model.addRow(rowData);
-            }
-        }
-
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error loading order items: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
+    // Load the items for the selected order into the JList (totallist)
+    loadOrderItemsForSelectedOrder(selectedOrderId, totallist); // Changed to totallist
     }//GEN-LAST:event_updateMouseClicked
 
     private void ordertableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ordertableMouseClicked
@@ -702,6 +774,7 @@ public void loadOrderItemsForSelectedOrder(int orderId, JTable orderItemsTable) 
     private javax.swing.JLabel adinfo;
     private javax.swing.JLabel admindash;
     private javax.swing.JLabel adminimage;
+    private javax.swing.JPanel backtoorderpage;
     public javax.swing.JPanel delete;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -709,22 +782,22 @@ public void loadOrderItemsForSelectedOrder(int orderId, JTable orderItemsTable) 
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JToolBar jToolBar1;
-    private javax.swing.JTable orderitem;
     public javax.swing.JTable ordertable;
+    private javax.swing.JList<String> totallist;
     public javax.swing.JPanel update;
     // End of variables declaration//GEN-END:variables
 }

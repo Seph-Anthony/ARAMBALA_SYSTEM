@@ -20,6 +20,8 @@ import net.proteanit.sql.DbUtils;
 import java.lang.String;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.DefaultListModel;
+import javax.swing.JList;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -35,7 +37,7 @@ public class vieworder extends javax.swing.JFrame {
      */
 public vieworder() {
         initComponents();
-    
+     dbConnection = new dbConnect();
         displayAllOrders(); // Call the method to display only pending orders
         
           SearchButton.addActionListener(new ActionListener() {
@@ -51,6 +53,57 @@ public vieworder() {
         });
         
     }
+
+
+private void populateProductList(Connection conn, int orderId, JList<String> productList) throws SQLException {
+    DefaultListModel<String> listModel = new DefaultListModel<>();
+    // 2. Query the "order_items" and "product" tables to get the product details for the order
+    String productQuery = "SELECT p.p_name, oi.quantity, oi.price "
+            + "FROM order_items oi "
+            + "JOIN product p ON oi.product_id = p.p_id "
+            + "WHERE oi.order_id = ?";
+    try (PreparedStatement productPstmt = conn.prepareStatement(productQuery)) {
+        productPstmt.setInt(1, orderId);
+        try (ResultSet productRs = productPstmt.executeQuery()) {
+            while (productRs.next()) {
+                String productName = productRs.getString("p_name");
+                int quantity = productRs.getInt("quantity");
+                double price = productRs.getDouble("price");
+
+                
+                String formattedString = String.format("%-30s %-25d %-25.2f %-25.2f", productName, quantity, price, (quantity * price));
+                listModel.addElement(formattedString);
+            }
+        }
+    }
+    productList.setModel(listModel); // set the model for the JList
+}
+
+//private void populateProductList(Connection conn, int orderId, JList<String> productList) throws SQLException {
+//    DefaultListModel<String> listModel = new DefaultListModel<>();
+//    // 2. Query the "order_items" and "product" tables to get the product details for the order
+//    String productQuery = "SELECT p.p_name, oi.quantity, oi.price "
+//            + "FROM order_items oi "
+//            + "JOIN product p ON oi.product_id = p.p_id "
+//            + "WHERE oi.order_id = ?";
+//    try (PreparedStatement productPstmt = conn.prepareStatement(productQuery)) {
+//        productPstmt.setInt(1, orderId);
+//        try (ResultSet productRs = productPstmt.executeQuery()) {
+//            while (productRs.next()) {
+//                String productName = productRs.getString("p_name");
+//                int quantity = productRs.getInt("quantity");
+//                double price = productRs.getDouble("price");
+//
+//                // Use String.format for better alignment
+//                String formattedString = String.format("%-20s %8d %10.2f", productName, quantity, price);
+//                listModel.addElement(formattedString);
+//            }
+//        }
+//    }
+//    productList.setModel(listModel); // set the model for the JList
+//}
+
+
 
 public void loadMyOrders(JTable ordersTable, DefaultTableModel ordersTableModel) {
         // Clear existing data in the table
@@ -222,15 +275,15 @@ Color logcolor = new Color(63,195,128);
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
         jPanel14 = new javax.swing.JPanel();
         jLabel9 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
+        jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         print = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jLabel21 = new javax.swing.JLabel();
         searchuser = new javax.swing.JTextField();
         SearchButton = new javax.swing.JButton();
@@ -295,12 +348,6 @@ Color logcolor = new Color(63,195,128);
 
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 70, -1, -1));
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("ORDERS OVERVIEW");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 390, -1));
-
         jPanel14.setBackground(new java.awt.Color(0, 102, 102));
         jPanel14.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -335,6 +382,12 @@ Color logcolor = new Color(63,195,128);
         );
 
         jPanel3.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 100, -1, 30));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel7.setText("ORDERS OVERVIEW");
+        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 390, -1));
 
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 720, 100));
 
@@ -393,22 +446,11 @@ Color logcolor = new Color(63,195,128);
         });
         print.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("RECEIPT");
-        jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel5MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel5MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel5MouseExited(evt);
-            }
-        });
-        print.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 20));
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel3.setText("RECEIPT");
+        print.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 20));
 
         jPanel1.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 110, 40));
 
@@ -593,7 +635,7 @@ Color logcolor = new Color(63,195,128);
         String currentOrderStatus = (String) viewprocess.getValueAt(selectedRow, 2); //get order status
 
         if("Complete".equalsIgnoreCase(currentOrderStatus)){
-             JOptionPane.showMessageDialog(this, "Order is already Complete.", "Error", JOptionPane.ERROR_MESSAGE);
+             JOptionPane.showMessageDialog(this, "Order is already Completed.", "Error", JOptionPane.ERROR_MESSAGE);
              return;
         }
 
@@ -602,12 +644,12 @@ Color logcolor = new Color(63,195,128);
 
         try {
             conn = dbConnection.getConnection();
-            String sql = "UPDATE orders SET order_status = 'Complete' WHERE order_id = ?";
+            String sql = "UPDATE orders SET order_status = 'Completed' WHERE order_id = ?";
             pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, orderIdToUpdate);
             int rowsUpdated = pstmt.executeUpdate();
             if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Order status updated to Complete.", "Success", JOptionPane.INFORMATION_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Order status updated to Completed.", "Success", JOptionPane.INFORMATION_MESSAGE);
                 loadMyOrders(viewprocess, (DefaultTableModel) viewprocess.getModel()); // Refresh the table
             } else {
                 JOptionPane.showMessageDialog(this, "Failed to update order status.", "Error", JOptionPane.ERROR_MESSAGE);
@@ -651,13 +693,6 @@ Color logcolor = new Color(63,195,128);
         
     }//GEN-LAST:event_updateMouseExited
 
-    private void jLabel5MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseEntered
-        // TODO add your handling code here:
-        
-        print.setBackground(logcolor);
-        
-    }//GEN-LAST:event_jLabel5MouseEntered
-
     private void printMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseEntered
         // TODO add your handling code here:
          print.setBackground(logcolor);
@@ -672,86 +707,78 @@ Color logcolor = new Color(63,195,128);
     }//GEN-LAST:event_printMouseExited
 
     private void printMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_printMouseClicked
-   
-     int row = viewprocess.getSelectedRow();
+       int row = viewprocess.getSelectedRow();
+    if (row < 0) {
+        JOptionPane.showMessageDialog(null, "Please select an order!");
+        return;
+    }
 
-        if (row < 0) {
-            JOptionPane.showMessageDialog(null, "Please select an order!");
-            return;
-        }
+    Connection conn = null; // Declare connection outside the try block
+    try {
+        TableModel tbl = viewprocess.getModel();
+        int orderId = (int) tbl.getValueAt(row, 0);
+        System.out.println("Selected orderId: " + orderId);
 
-        try  { // Use try-with-resources to auto-close connections
-            dbConnect db = new dbConnect();
-            TableModel tbl = viewprocess.getModel();
+        dbConnect dbConnection = new dbConnect(); // Use your dbConnect class
+        conn = dbConnection.getConnection();  // Get the connection
 
-            // 1.  Get the order ID (s_id) from the selected row.  s_id is at index 0
-            int orderId = (int) tbl.getValueAt(row, 0);
-            System.out.println("Selected row: " + row);
-            System.out.println("Selected orderId (s_id) from orderDisplayTable: " + orderId);
+        String orderQuery = "SELECT o.order_id, o.order_date, o.cash, o.order_change, o.order_status, u.u_id, u.u_fname, u.u_lname, u.u_contact, u.u_email, u.u_username, u.u_type, u.u_stat "
+                + "FROM orders o "
+                + "JOIN user u ON o.u_id = u.u_id "
+                + "WHERE o.order_id = ?";
+        try (PreparedStatement orderPstmt = conn.prepareStatement(orderQuery)) {
+            orderPstmt.setInt(1, orderId);
+            try (ResultSet orderRs = orderPstmt.executeQuery()) {
+                orderprint orderPrintForm = new orderprint(); // Initialize here!
 
-            // 2. Query the "process" table to get the order details
-            String query = "SELECT u_id, s_id, s_date, s_quantity, s_totalam, s_cash, s_change FROM process WHERE s_id = ?";
-            try (Connection conn = db.getConnection(); // Get connection from dbConnect
-                 PreparedStatement pstmt = conn.prepareStatement(query)) {
-                pstmt.setInt(1, orderId);
-                try (ResultSet processRs = pstmt.executeQuery()) {
-                    if (processRs.next()) {
-                        int customerId = processRs.getInt("u_id");
-                        int orderIdForLabel = processRs.getInt("s_id");
-                        String orderDate = processRs.getString("s_date");
-                        double ordertotal = processRs.getDouble("s_totalam");
-                        double ordercash = processRs.getDouble("s_cash");
-                        double orderchange = processRs.getDouble("s_change");
-                        int quantity = processRs.getInt("s_quantity");
-                        System.out.println("Retrieved customerId (u_id) from process: " + customerId);
-                        System.out.println("Retrieved orderIdForLabel (s_id) from process: " + orderIdForLabel);
-                        System.out.println("Retrieved orderDate (s_date) from process: " + orderDate);
-                        System.out.println("Retrieved quantity (s_quantity) from process: " + quantity);
-
-                        // 3. Query the "user" table to get the customer's details
-                        String userQuery = "SELECT * FROM user WHERE u_id = ?";
-                        try (PreparedStatement userStmt = conn.prepareStatement(userQuery)) {
-                            userStmt.setInt(1, customerId);
-                            try (ResultSet userRs = userStmt.executeQuery()) {
-                                if (userRs.next()) {
-                                    orderprint order = new orderprint();
-
-                                    // Populate the orderprint frame with customer data from the "user" table
-                                    order.cusid.setText(String.valueOf(userRs.getInt("u_id")));
-                                    order.fname.setText(userRs.getString("u_fname"));
-                                    order.lname.setText(userRs.getString("u_lname"));
-                                    order.cuscontact.setText(userRs.getString("u_contact"));
-                                    order.cusemail.setText(userRs.getString("u_email"));
-                                    order.cususername.setText(userRs.getString("u_username"));
-                                    order.custype.setText(userRs.getString("u_type"));
-                                    order.cusstatus.setText(userRs.getString("u_stat"));
-
-                                    // Populate the JLabels
-                                    order.orid.setText(String.valueOf(orderIdForLabel));
-                                    order.ordate.setText(orderDate);
-                                    order.totalam.setText(String.valueOf(ordertotal));
-                                    order.cash.setText(String.valueOf(ordercash));
-                                    order.change.setText(String.valueOf(orderchange));
-                                    order.orderquan.setText(String.valueOf(quantity));
-
-                                    order.setVisible(true);
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Error: Customer data not found!");
-                                    return;
-                                }
-                            }
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Error: Order data not found!");
-                        return;
+                if (orderRs.next()) {
+                    String orderStatus = orderRs.getString("order_status"); // Get the order status
+                    if (!"Completed".equalsIgnoreCase(orderStatus)) { // Check if it's "Completed"
+                        JOptionPane.showMessageDialog(null, "Cannot print receipt for an order that is not completed.  Order Status: " + orderStatus);
+                        return; // Stop processing if not completed
                     }
+
+                    // Populate the orderPrintForm with data from the "orders" and "user" tables
+                    orderPrintForm.orid.setText(String.valueOf(orderRs.getInt("order_id")));
+                    orderPrintForm.ordate.setText(orderRs.getTimestamp("order_date").toString());
+                    orderPrintForm.totalam.setText(String.valueOf(orderRs.getDouble("cash") - orderRs.getDouble("order_change")));
+                    orderPrintForm.cash.setText(String.valueOf(orderRs.getDouble("cash")));
+                    orderPrintForm.change.setText(String.valueOf(orderRs.getDouble("order_change")));
+
+                    orderPrintForm.cusid.setText(String.valueOf(orderRs.getInt("u_id")));
+                    orderPrintForm.fname.setText(orderRs.getString("u_fname"));
+                    orderPrintForm.lname.setText(orderRs.getString("u_lname"));
+                    orderPrintForm.cuscontact.setText(orderRs.getString("u_contact"));
+                    orderPrintForm.cusemail.setText(orderRs.getString("u_email"));
+                    orderPrintForm.cususername.setText(orderRs.getString("u_username")); // Corrected variable name.
+                    orderPrintForm.custype.setText(orderRs.getString("u_type"));
+                    orderPrintForm.cusstatus.setText(orderRs.getString("u_stat"));
+
+                    // Populate the JList in orderPrintForm with product details
+                    populateProductList(conn, orderId, orderPrintForm.productlist); // Corrected variable name
+
+                    orderPrintForm.setVisible(true); // Show the orderPrintForm
+                    this.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error: Order data not found!");
+                    return;
                 }
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
-            ex.printStackTrace();
         }
-    
+    } catch (SQLException ex) {
+        JOptionPane.showMessageDialog(null, "Error: " + ex.getMessage());
+        ex.printStackTrace();
+    } finally {
+        // Ensure the connection is closed in the finally block
+        if (conn != null) {
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace(); // Log the error, but don't throw an exception here
+            }
+        }
+    }
+
     
     }//GEN-LAST:event_printMouseClicked
 
@@ -799,22 +826,22 @@ Color logcolor = new Color(63,195,128);
 
                     if ("Pending".equals(currentStatusFromDB)) {
                         // Update the status in the database to "Complete"
-                        try (PreparedStatement updatePstmt = con.prepareStatement("UPDATE orders SET order_status = 'Complete' WHERE order_id = ?")) {
+                        try (PreparedStatement updatePstmt = con.prepareStatement("UPDATE orders SET order_status = 'Completed' WHERE order_id = ?")) {
                             updatePstmt.setInt(1, selectedOrderId);
                             int rowsAffected = updatePstmt.executeUpdate();
 
                             if (rowsAffected > 0) {
                                 // Optionally, update the table model to reflect the change immediately
                                 if (orderStatusColumnIndex < viewprocess.getColumnCount()) {
-                                    viewprocess.getModel().setValueAt("Complete", rowIndex, orderStatusColumnIndex);
+                                    viewprocess.getModel().setValueAt("Completed", rowIndex, orderStatusColumnIndex);
                                 }
-                                JOptionPane.showMessageDialog(null, "Order status updated to Complete.");
+                                JOptionPane.showMessageDialog(null, "Order status updated to Completed.");
                             } else {
                                 JOptionPane.showMessageDialog(null, "Failed to update order status.");
                             }
                         }
                     } else if ("Complete".equals(currentStatusFromDB)) {
-                        JOptionPane.showMessageDialog(null, "Order status is already Complete.");
+                        JOptionPane.showMessageDialog(null, "Order status is already Completed.");
                     } else {
                         JOptionPane.showMessageDialog(null, "Order status is not Pending and cannot be updated.");
                     }
@@ -828,20 +855,6 @@ Color logcolor = new Color(63,195,128);
         ex.printStackTrace();
     }
     }//GEN-LAST:event_jLabel4MouseClicked
-
-    private void jLabel5MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseExited
-        // TODO add your handling code here:
-        
-        print.setBackground(excolor);
-        
-    }//GEN-LAST:event_jLabel5MouseExited
-
-    private void jLabel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel5MouseClicked
-        // TODO add your handling code here:
-        
-           displayAllOrders();
-        
-    }//GEN-LAST:event_jLabel5MouseClicked
 
     private void searchuserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchuserMouseReleased
         // TODO add your handling code here:
@@ -925,8 +938,8 @@ Color logcolor = new Color(63,195,128);
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel14;

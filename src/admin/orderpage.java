@@ -56,6 +56,19 @@ private dbConnect dbConnection;
     Color logcolorx = new Color(63,195,128);
     Color excolorx = new Color(255,255,255);
      dbConnect db = new dbConnect();
+     
+      public void reloadOrderPageData(int orderId) {
+        if (orderId != currentOrderId) {
+            currentOrderId = orderId; //update the order id
+        }
+        loadOrderedItems(orderId, orderitem);  // Load data based on orderId
+        displayOrderTotal();
+    }
+      
+       public void setCurrentOrderId(int orderId) {
+        this.currentOrderId = orderId;
+    }
+     
  private void logOrderAction(int orderId, double cashAmount, double changeAmount) {
     Connection conn = null;
     PreparedStatement pstmt = null;
@@ -90,9 +103,7 @@ private dbConnect dbConnection;
     }
 } 
     
-    public void setCurrentOrderId(int orderId) {
-    this.currentOrderId = orderId;
-}
+   
   public void loadOrderedItems(int orderId, JTable orderitem) {
     dbConnect dbc = new dbConnect();
     DefaultTableModel model = (DefaultTableModel) orderitem.getModel();
@@ -407,10 +418,6 @@ private int generateNewOrderId() {
         ADDORDER3 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
         jLabel24 = new javax.swing.JLabel();
-        VIEWORDER = new javax.swing.JPanel();
-        ADDORDER1 = new javax.swing.JPanel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel23 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel17 = new javax.swing.JLabel();
         personal = new javax.swing.JLabel();
@@ -427,7 +434,6 @@ private int generateNewOrderId() {
         jLabel1 = new javax.swing.JLabel();
         edit = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel3 = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
@@ -613,48 +619,7 @@ private int generateNewOrderId() {
         jLabel24.setText("ADD ITEM");
         ADDORDER.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
-        jPanel8.add(ADDORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 150, 40));
-
-        VIEWORDER.setBackground(new java.awt.Color(0, 102, 102));
-        VIEWORDER.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        VIEWORDER.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                VIEWORDERMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                VIEWORDERMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                VIEWORDERMouseExited(evt);
-            }
-        });
-        VIEWORDER.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        ADDORDER1.setBackground(new java.awt.Color(0, 102, 102));
-        ADDORDER1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
-        ADDORDER1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                ADDORDER1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                ADDORDER1MouseExited(evt);
-            }
-        });
-        ADDORDER1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("ADD ORDER");
-        ADDORDER1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 100, 20));
-
-        VIEWORDER.add(ADDORDER1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 560, 120, 40));
-
-        jLabel23.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel23.setText("VIEW ORDER");
-        VIEWORDER.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 20));
-
-        jPanel8.add(VIEWORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 170, 130, 40));
+        jPanel8.add(ADDORDER, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 170, 150, 40));
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -671,7 +636,7 @@ private int generateNewOrderId() {
         personal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel2.add(personal, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 90, 50));
 
-        jPanel8.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 150, 140));
+        jPanel8.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 20, 150, 140));
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
         jPanel6.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -688,7 +653,7 @@ private int generateNewOrderId() {
         household.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel6.add(household, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 90, 50));
 
-        jPanel8.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, 150, 140));
+        jPanel8.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 20, 150, 140));
 
         jPanel11.setBackground(new java.awt.Color(255, 255, 255));
         jPanel11.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -705,7 +670,7 @@ private int generateNewOrderId() {
         beverage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel11.add(beverage, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 90, 50));
 
-        jPanel8.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 20, 150, 140));
+        jPanel8.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 20, 150, 140));
 
         jPanel13.setBackground(new java.awt.Color(255, 255, 255));
         jPanel13.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
@@ -722,7 +687,7 @@ private int generateNewOrderId() {
         supplies.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102), 2));
         jPanel13.add(supplies, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 90, 50));
 
-        jPanel8.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 150, 140));
+        jPanel8.add(jPanel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 20, 150, 140));
 
         reset.setBackground(new java.awt.Color(0, 102, 102));
         reset.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -743,9 +708,9 @@ private int generateNewOrderId() {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("RESET");
-        reset.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 110, 20));
+        reset.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 130, 20));
 
-        jPanel8.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 170, 130, 40));
+        jPanel8.add(reset, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 170, 150, 40));
 
         edit.setBackground(new java.awt.Color(0, 102, 102));
         edit.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -762,21 +727,6 @@ private int generateNewOrderId() {
         edit.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
         jPanel8.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 150, 40));
-
-        jPanel3.setBackground(new java.awt.Color(0, 0, 0));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 10, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 40, Short.MAX_VALUE)
-        );
-
-        jPanel8.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 170, 10, 40));
 
         jPanel5.setBackground(new java.awt.Color(0, 102, 102));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -952,7 +902,9 @@ private int generateNewOrderId() {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 1131, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 1, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1134,28 +1086,6 @@ private int generateNewOrderId() {
 
 
     }//GEN-LAST:event_jPanel14MouseClicked
-
-    private void VIEWORDERMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWORDERMouseEntered
-        // TODO add your handling code here:
-        
-        VIEWORDER.setBackground(logcolor);
-        
-    }//GEN-LAST:event_VIEWORDERMouseEntered
-
-    private void VIEWORDERMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWORDERMouseExited
-        // TODO add your handling code here:
-        
-         VIEWORDER.setBackground(excolor);
-        
-    }//GEN-LAST:event_VIEWORDERMouseExited
-
-    private void ADDORDER1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDORDER1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADDORDER1MouseEntered
-
-    private void ADDORDER1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDORDER1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_ADDORDER1MouseExited
 
     private void ADDORDER3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDORDER3MouseEntered
         // TODO add your handling code here:
@@ -1471,15 +1401,6 @@ private int generateNewOrderId() {
         
     }//GEN-LAST:event_foodandMouseExited
 
-    private void VIEWORDERMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_VIEWORDERMouseClicked
-        // TODO add your handling code here:
-        
-        updateorder order = new updateorder();
-        order.setVisible(true);
-        this.dispose();
-        
-    }//GEN-LAST:event_VIEWORDERMouseClicked
-
     private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
         // TODO add your handling code here:
         
@@ -1551,7 +1472,7 @@ if (session.getOrder_id() == 0) {
             conn.setAutoCommit(false); // Start transaction
 
             // Update the orders table
-            String updateOrderSQL = "UPDATE orders SET cash = ?, order_change = ?, order_status = 'Completed' WHERE order_id = ?";
+            String updateOrderSQL = "UPDATE orders SET cash = ?, order_change = ?, order_status = 'Pending' WHERE order_id = ?";
             pstmtUpdateOrder = conn.prepareStatement(updateOrderSQL);
             pstmtUpdateOrder.setDouble(1, cashAmount);
             pstmtUpdateOrder.setDouble(2, changeAmount);
@@ -1756,9 +1677,7 @@ if (session.getOrder_id() == 0) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ADDORDER;
-    private javax.swing.JPanel ADDORDER1;
     private javax.swing.JPanel ADDORDER3;
-    private javax.swing.JPanel VIEWORDER;
     private javax.swing.JPanel addorder;
     private javax.swing.JLabel backbutton;
     private javax.swing.JLabel beverage;
@@ -1784,7 +1703,6 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
-    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
@@ -1794,7 +1712,6 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
@@ -1807,7 +1724,6 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel jPanel13;
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;

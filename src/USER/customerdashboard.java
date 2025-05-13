@@ -7,6 +7,7 @@ package USER;
 
 import admin.admindash;
 import admin.orderpage;
+import admin.updateorder;
 import static admin.updateuser.getHeightFromWidth;
 import admin.vieworder;
 import config.SessionClass;
@@ -38,6 +39,9 @@ public class customerdashboard extends javax.swing.JFrame {
     private javax.swing.JTextField txtlname;
     private javax.swing.JTextField txtcontact;
     private javax.swing.JTextField txtemail;
+    
+    
+
     /**
      * Creates new form adminUser
      */
@@ -62,6 +66,11 @@ public class customerdashboard extends javax.swing.JFrame {
         
         
     }
+    
+    
+    
+   
+
     
       private void logProductAdditionAction(int userId, String Username) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
@@ -259,6 +268,18 @@ public void AllProd() {
         jLabel16 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
+        jPanel27 = new javax.swing.JPanel();
+        viewprders = new javax.swing.JPanel();
+        jPanel32 = new javax.swing.JPanel();
+        jPanel33 = new javax.swing.JPanel();
+        jPanel34 = new javax.swing.JPanel();
+        update3 = new javax.swing.JPanel();
+        jPanel35 = new javax.swing.JPanel();
+        jPanel36 = new javax.swing.JPanel();
+        jPanel37 = new javax.swing.JPanel();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel37 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
         jPanel26 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -498,7 +519,7 @@ public void AllProd() {
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/list35.png"))); // NOI18N
         jPanel9.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 100, 60));
 
-        jPanel7.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 160, 120));
+        jPanel7.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 380, 160, 120));
 
         jPanel10.setBackground(new java.awt.Color(0, 102, 102));
         jPanel10.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -517,9 +538,84 @@ public void AllProd() {
         });
         jPanel10.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 40, 40));
 
-        jPanel7.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 570, 60, 60));
+        jPanel7.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 660, 60, 60));
 
-        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 640));
+        jPanel27.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel27.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel27.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        viewprders.setBackground(new java.awt.Color(255, 255, 255));
+        viewprders.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                viewprdersMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                viewprdersMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                viewprdersMouseExited(evt);
+            }
+        });
+        viewprders.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel32.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        viewprders.add(jPanel32, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, 30));
+
+        jPanel33.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel34.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel33.add(jPanel34, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, 30));
+
+        viewprders.add(jPanel33, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, 30));
+
+        update3.setBackground(new java.awt.Color(255, 255, 255));
+        update3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                update3MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                update3MouseExited(evt);
+            }
+        });
+        update3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel35.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        update3.add(jPanel35, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, 30));
+
+        jPanel36.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jPanel37.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel36.add(jPanel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, 30));
+
+        update3.add(jPanel36, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 10, 150, 30));
+
+        jLabel30.setBackground(new java.awt.Color(63, 195, 128));
+        jLabel30.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel30.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel30.setText("UPDATE ORDER");
+        jLabel30.setVerifyInputWhenFocusTarget(false);
+        update3.add(jLabel30, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 180, 30));
+
+        viewprders.add(update3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 180, 50));
+
+        jLabel37.setBackground(new java.awt.Color(63, 195, 128));
+        jLabel37.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel37.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel37.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel37.setText("View Orders");
+        jLabel37.setVerifyInputWhenFocusTarget(false);
+        viewprders.add(jLabel37, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 140, 30));
+
+        jPanel27.add(viewprders, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 140, 50));
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/receipt.png"))); // NOI18N
+        jPanel27.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 80, 40));
+
+        jPanel7.add(jPanel27, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 520, 160, 120));
+
+        jPanel1.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 190, 720));
 
         jPanel26.setBackground(new java.awt.Color(255, 255, 255));
         jPanel26.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 102, 102)));
@@ -541,7 +637,7 @@ public void AllProd() {
         ));
         jScrollPane1.setViewportView(tableuser);
 
-        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 670, 270));
+        jPanel2.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 60, 670, 350));
 
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/searh gamaykaayu.png"))); // NOI18N
@@ -590,7 +686,7 @@ public void AllProd() {
         jLabel9.setText("Search Product Category");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 260, 20));
 
-        jPanel26.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 690, 340));
+        jPanel26.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 290, 690, 420));
 
         jLabel18.setBackground(new java.awt.Color(63, 195, 128));
         jLabel18.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -769,7 +865,7 @@ public void AllProd() {
         });
         jPanel26.add(jLabel28, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 0, 40, 40));
 
-        jPanel1.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 730, 640));
+        jPanel1.add(jPanel26, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 0, 730, 720));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -779,7 +875,7 @@ public void AllProd() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 723, Short.MAX_VALUE)
         );
 
         pack();
@@ -1039,6 +1135,33 @@ dbConnect db = new dbConnect();
 
     }//GEN-LAST:event_jLabel28MouseClicked
 
+    private void update3MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update3MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_update3MouseEntered
+
+    private void update3MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_update3MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_update3MouseExited
+
+    private void viewprdersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewprdersMouseClicked
+        // TODO add your handling code here:
+        
+        
+        updateorder update = new updateorder();
+       update.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_viewprdersMouseClicked
+
+    private void viewprdersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewprdersMouseEntered
+        // TODO add your handling code here:
+        viewprders.setBackground(logcolor);
+    }//GEN-LAST:event_viewprdersMouseEntered
+
+    private void viewprdersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewprdersMouseExited
+        // TODO add your handling code here:
+        viewprders.setBackground(logcolor);
+    }//GEN-LAST:event_viewprdersMouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -1092,18 +1215,21 @@ dbConnect db = new dbConnect();
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
     private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel27;
     private javax.swing.JLabel jLabel28;
     private javax.swing.JLabel jLabel29;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
     private javax.swing.JLabel jLabel31;
     private javax.swing.JLabel jLabel32;
     private javax.swing.JLabel jLabel33;
     private javax.swing.JLabel jLabel34;
     private javax.swing.JLabel jLabel35;
     private javax.swing.JLabel jLabel36;
+    private javax.swing.JLabel jLabel37;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -1127,11 +1253,18 @@ dbConnect db = new dbConnect();
     private javax.swing.JPanel jPanel24;
     private javax.swing.JPanel jPanel25;
     private javax.swing.JPanel jPanel26;
+    private javax.swing.JPanel jPanel27;
     private javax.swing.JPanel jPanel28;
     private javax.swing.JPanel jPanel29;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel30;
     private javax.swing.JPanel jPanel31;
+    private javax.swing.JPanel jPanel32;
+    private javax.swing.JPanel jPanel33;
+    private javax.swing.JPanel jPanel34;
+    private javax.swing.JPanel jPanel35;
+    private javax.swing.JPanel jPanel36;
+    private javax.swing.JPanel jPanel37;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
@@ -1150,5 +1283,7 @@ dbConnect db = new dbConnect();
     private javax.swing.JLabel totalprod;
     private javax.swing.JPanel update;
     private javax.swing.JPanel update1;
+    private javax.swing.JPanel update3;
+    private javax.swing.JPanel viewprders;
     // End of variables declaration//GEN-END:variables
 }
