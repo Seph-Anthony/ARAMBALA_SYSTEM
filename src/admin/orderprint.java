@@ -7,6 +7,7 @@ package admin;
 
 import USER.customerdashboard;
 import USER.employdash;
+import config.PanelPrinter;
 import config.SessionClass;
 import java.awt.Dimension;
 import java.awt.GridLayout;
@@ -63,31 +64,24 @@ public class orderprint extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel9 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
-        jPanel7 = new javax.swing.JPanel();
+        page = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         fname = new javax.swing.JLabel();
         cusid = new javax.swing.JLabel();
         lname = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         cuscontact = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         cususername = new javax.swing.JLabel();
-        jLabel16 = new javax.swing.JLabel();
         cusemail = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         custype = new javax.swing.JLabel();
         cusstatus = new javax.swing.JLabel();
-        jLabel18 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel19 = new javax.swing.JLabel();
         orid = new javax.swing.JLabel();
         ordate = new javax.swing.JLabel();
         jLabel20 = new javax.swing.JLabel();
@@ -100,6 +94,12 @@ public class orderprint extends javax.swing.JFrame {
         jLabel25 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         productlist = new javax.swing.JList<>();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        jLabel16 = new javax.swing.JLabel();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
         jPanel10 = new javax.swing.JPanel();
         jPanel11 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -132,14 +132,20 @@ public class orderprint extends javax.swing.JFrame {
         jPanel1.setLayout(null);
 
         jPanel5.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel5.setLayout(null);
 
         jPanel6.setBackground(new java.awt.Color(0, 102, 102));
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel5.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel5.add(jPanel6);
+        jPanel6.setBounds(0, 0, 0, 0);
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        jPanel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel2MouseClicked(evt);
+            }
+        });
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel3.setBackground(new java.awt.Color(0, 102, 102));
@@ -153,7 +159,8 @@ public class orderprint extends javax.swing.JFrame {
         jLabel1.setText("PRINT");
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(11, 0, 70, 30));
 
-        jPanel5.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 710, 90, 30));
+        jPanel5.add(jPanel2);
+        jPanel2.setBounds(210, 730, 90, 30);
 
         jPanel9.setBackground(new java.awt.Color(0, 102, 102));
         jPanel9.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -172,153 +179,126 @@ public class orderprint extends javax.swing.JFrame {
         });
         jPanel9.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 40, 40));
 
-        jPanel5.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 0, 60, 40));
+        jPanel5.add(jPanel9);
+        jPanel9.setBounds(420, 0, 60, 40);
 
-        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        page.setBackground(new java.awt.Color(255, 255, 255));
+        page.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel3.setText("PROD TRACK RECEIPT");
-        jPanel7.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 23, -1, -1));
+        page.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(148, 23, -1, -1));
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel4.setText("_______________________________________________");
-        jPanel7.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, -1, -1));
+        page.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 290, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setText("Ward 2 Minglanilla Cebu");
-        jPanel7.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 46, -1, -1));
+        page.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(163, 46, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel7.setText("09336672311");
-        jPanel7.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 67, -1, -1));
+        page.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(183, 67, -1, -1));
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel8.setText("|||||||||||||||||||||||||||||||||||||||||||||||");
-        jPanel7.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 88, -1, -1));
+        page.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 88, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel9.setText("INFROMATION");
-        jPanel7.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, -1, -1));
-
-        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("Customer Name:");
-        jPanel7.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 110, 20));
-
-        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel11.setText("Customer ID:");
-        jPanel7.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 190, 90, 20));
+        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel9.setText("TYPE");
+        page.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 80, -1));
 
         jLabel13.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        jPanel7.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(275, 132, -1, -1));
+        page.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(392, 132, -1, -1));
 
-        fname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        fname.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         fname.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        fname.setText("fname");
-        jPanel7.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 100, 23));
+        fname.setText("FIRSTNAME");
+        page.add(fname, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 210, 100, 23));
 
-        cusid.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cusid.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         cusid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cusid.setText("cusid");
-        jPanel7.add(cusid, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 140, 23));
+        cusid.setText("CUSTOMER ID");
+        page.add(cusid, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 130, 140, 23));
 
-        lname.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
-        lname.setText("lname");
-        jPanel7.add(lname, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 130, 120, 23));
+        lname.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
+        lname.setText("LASTNAME");
+        page.add(lname, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 120, 23));
 
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel14.setText("Customer Contact:");
-        jPanel7.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 120, 20));
-
-        cuscontact.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cuscontact.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cuscontact.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cuscontact.setText("cuscontact");
-        jPanel7.add(cuscontact, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 220, 140, 23));
+        cuscontact.setText("CONTACT");
+        page.add(cuscontact, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 260, 140, 23));
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setText("ORDER DETAILS");
-        jPanel7.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, -1, 20));
+        page.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 310, -1, 20));
 
-        cususername.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cususername.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cususername.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cususername.setText("cususername");
-        jPanel7.add(cususername, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 140, 23));
+        cususername.setText("USERNAME");
+        page.add(cususername, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 260, 140, 23));
 
-        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel16.setText("Customer Email:");
-        jPanel7.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 250, -1, 20));
-
-        cusemail.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cusemail.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cusemail.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cusemail.setText("cusemail");
-        jPanel7.add(cusemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 250, 140, 23));
+        cusemail.setText("EMAIL");
+        page.add(cusemail, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 210, 158, 23));
 
-        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel17.setText("Account Type:");
-        jPanel7.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 280, 90, 20));
-
-        custype.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        custype.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         custype.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        custype.setText("custype");
-        jPanel7.add(custype, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 280, 140, 23));
+        custype.setText("CUSTOMER TYPE");
+        page.add(custype, new org.netbeans.lib.awtextra.AbsoluteConstraints(308, 150, 140, 23));
 
-        cusstatus.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
+        cusstatus.setFont(new java.awt.Font("SansSerif", 0, 14)); // NOI18N
         cusstatus.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        cusstatus.setText("cusstatus");
-        jPanel7.add(cusstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 310, 140, 23));
-
-        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel18.setText("Status:");
-        jPanel7.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 310, 90, 20));
+        cusstatus.setText("CUSTOMER STATUS");
+        page.add(cusstatus, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 150, 140, 23));
 
         jLabel12.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel12.setText("_______________________________________________");
-        jPanel7.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
-
-        jLabel19.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel19.setText("Customer Username:");
-        jPanel7.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, 20));
+        page.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
 
         orid.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         orid.setText("orid");
-        jPanel7.add(orid, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 390, 170, 20));
+        page.add(orid, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 350, 170, 20));
 
         ordate.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         ordate.setText("ordate");
-        jPanel7.add(ordate, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 370, 170, 20));
+        page.add(ordate, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 330, 170, 20));
 
-        jLabel20.setText("Order Date:");
-        jPanel7.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 370, 70, 20));
+        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel20.setText("ORDER DATE:");
+        page.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 330, 80, 20));
 
-        jLabel22.setText("Order ID:");
-        jPanel7.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 390, -1, 20));
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel22.setText("ORDER ID:");
+        page.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, 70, 20));
 
         jLabel23.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel23.setText("Total Amount:");
-        jPanel7.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 90, 20));
+        page.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, 90, 20));
 
         jLabel24.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel24.setText("Cash:");
-        jPanel7.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 610, 40, 20));
+        page.add(jLabel24, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 610, 40, 20));
 
         change.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         change.setText("change");
-        jPanel7.add(change, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 630, 170, 20));
+        page.add(change, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 630, 170, 20));
 
         totalam.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         totalam.setText("totalam");
-        jPanel7.add(totalam, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, 170, 20));
+        page.add(totalam, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 590, 170, 20));
 
         cash.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         cash.setText("cash");
-        jPanel7.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 610, 170, 20));
+        page.add(cash, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 610, 170, 20));
 
         jLabel25.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel25.setText("Change:");
-        jPanel7.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 630, 50, 20));
+        page.add(jLabel25, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 630, -1, 20));
 
         productlist.setFont(new java.awt.Font("SansSerif", 0, 12)); // NOI18N
         productlist.setModel(new javax.swing.AbstractListModel<String>() {
@@ -328,9 +308,39 @@ public class orderprint extends javax.swing.JFrame {
         });
         jScrollPane1.setViewportView(productlist);
 
-        jPanel7.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 410, 440, 180));
+        page.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 440, 220));
 
-        jPanel5.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 460, 660));
+        jLabel10.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel10.setText("INFROMATION");
+        page.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 110, 94, -1));
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("CONTACT");
+        page.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 250, 80, -1));
+
+        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("STATUS");
+        page.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 80, -1));
+
+        jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel16.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel16.setText("NAME");
+        page.add(jLabel16, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 80, -1));
+
+        jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel17.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel17.setText("USERNAME");
+        page.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 250, 80, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel18.setText("EMAIL");
+        page.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 80, -1));
+
+        jPanel5.add(page);
+        page.setBounds(20, 50, 460, 660);
 
         jPanel10.setBackground(new java.awt.Color(255, 255, 255));
         jPanel10.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -346,22 +356,21 @@ public class orderprint extends javax.swing.JFrame {
         jLabel2.setText("PRINTING FORMS");
         jPanel10.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, -1, 30));
 
-        jPanel5.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 210, 30));
+        jPanel5.add(jPanel10);
+        jPanel10.setBounds(30, 10, 210, 30);
 
         jPanel1.add(jPanel5);
-        jPanel5.setBounds(0, 0, 520, 750);
+        jPanel5.setBounds(0, 0, 500, 780);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 516, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 500, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 741, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 771, Short.MAX_VALUE)
         );
 
         pack();
@@ -452,6 +461,15 @@ public class orderprint extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_jPanel9MouseClicked
 
+    private void jPanel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel2MouseClicked
+
+        
+        JPanel myPanel = new JPanel();
+        PanelPrinter pPrint = new PanelPrinter(page);
+        pPrint.printPanel();
+        
+    }//GEN-LAST:event_jPanel2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -507,7 +525,6 @@ public class orderprint extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel22;
@@ -529,13 +546,13 @@ public class orderprint extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPanel jPanel9;
     private javax.swing.JScrollPane jScrollPane1;
     public javax.swing.JLabel lname;
     public javax.swing.JLabel ordate;
     public javax.swing.JLabel orid;
+    private javax.swing.JPanel page;
     public javax.swing.JList<String> productlist;
     public javax.swing.JLabel totalam;
     // End of variables declaration//GEN-END:variables

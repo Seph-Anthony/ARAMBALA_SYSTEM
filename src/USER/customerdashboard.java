@@ -1159,7 +1159,7 @@ dbConnect db = new dbConnect();
 
     private void viewprdersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_viewprdersMouseExited
         // TODO add your handling code here:
-        viewprders.setBackground(logcolor);
+        viewprders.setBackground(excolor);
     }//GEN-LAST:event_viewprdersMouseExited
 
     /**

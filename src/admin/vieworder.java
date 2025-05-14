@@ -32,26 +32,28 @@ import javax.swing.table.DefaultTableModel;
 public class vieworder extends javax.swing.JFrame {
   private DefaultTableModel orderItemsTableModel;
     private dbConnect dbConnection;
+     private Connection conn; //  Move the connection to be a class-level variable
     /**
-     * Creates new form vieworder
+
      */
 public vieworder() {
-        initComponents();
-     dbConnection = new dbConnect();
-        displayAllOrders(); // Call the method to display only pending orders
-        
-          SearchButton.addActionListener(new ActionListener() {
+             initComponents();
+        dbConnection = new dbConnect();
+        conn = dbConnection.getConnection(); // Get connection in constructor
+
+        displayAllOrders();
+
+        SearchButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 String username = searchuser.getText().trim();
                 if (!username.isEmpty()) {
                     searchUser(username);
                 } else {
-                    JOptionPane.showMessageDialog(vieworder.this, "Please enter a user ID.");
+                    JOptionPane.showMessageDialog(vieworder.this, "Please enter a username.");
                 }
             }
         });
-        
     }
 
 
@@ -210,52 +212,82 @@ private String getCurrentUsername() {
     return ses.getUsername();
 }
 
-
-
 private void searchUser(String username) {
-        Connection conn = null;
         PreparedStatement pstmt = null;
         ResultSet rs = null;
         try {
-            conn = dbConnection.getConnection();
-            String sql = "SELECT order_id, order_date, order_status, cash, order_change, u_id FROM orders WHERE u_id = ?"; //select from orders
+            String sql = "SELECT order_id, order_date, order_status, cash, order_change, u_id FROM orders WHERE u_id = ?";
             pstmt = conn.prepareStatement(sql);
-            pstmt.setString(1, username); // Use setString to prevent SQL injection
+            pstmt.setString(1, username);
             rs = pstmt.executeQuery();
             viewprocess.setModel(DbUtils.resultSetToTableModel(rs));
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(this, "Error searching for user: " + ex.getMessage());
             ex.printStackTrace();
         } finally {
-            try {
-                if (rs != null) {
-                    rs.close();
-                }
-                if (pstmt != null) {
-                    pstmt.close();
-                }
-                if (conn != null) {
-                    conn.close();
-                }
-            } catch (SQLException ex) {
-                JOptionPane.showMessageDialog(this, "Error closing resources: " + ex.getMessage());
-                ex.printStackTrace();
-            }
+            closeResources(rs, pstmt); // Use helper method
         }
     }
 
-  public void displayAllOrders() {
+    private void closeResources(ResultSet rs, PreparedStatement pstmt) {
         try {
-            dbConnect dbc = new dbConnect();
-//            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash Given', s_change AS 'Change Amount', s_status AS 'Order Status', s_date AS 'Order Date' FROM process ");
-            ResultSet rs = dbc.getData("SELECT order_id AS 'Order ID', u_id AS 'User ID', order_date AS 'Order Date', order_status AS 'Status', cash AS 'Cash', order_change AS 'Change' FROM orders ORDER BY order_id DESC");
-            viewprocess.setModel(DbUtils.resultSetToTableModel(rs)); // Assuming your JTable is named 'vieworder'
-            rs.close();
+            if (rs != null) {
+                rs.close();
+            }
+            if (pstmt != null) {
+                pstmt.close();
+            }
+            //  DO NOT close the connection here.
         } catch (SQLException ex) {
-            System.out.println("Errors: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Error displaying data: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error closing resources: " + ex.getMessage());
+            ex.printStackTrace();
         }
     }
+
+    @Override
+    protected void finalize() throws Throwable {
+        super.finalize();
+        try {
+            if (conn != null && !conn.isClosed()) {
+                conn.close();
+                System.out.println("Connection closed in finalize()");
+            }
+        } catch (SQLException ex) {
+            System.err.println("Error closing connection in finalize(): " + ex.getMessage());
+            ex.printStackTrace();
+        }
+    }
+
+ 
+   
+      private void displayAllOrders() {
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
+        try {
+            String sql = "SELECT order_id, order_date, order_status, cash, order_change, u_id FROM orders";
+            pstmt = conn.prepareStatement(sql);
+            rs = pstmt.executeQuery();
+            viewprocess.setModel(DbUtils.resultSetToTableModel(rs));
+        } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(this, "Error displaying all orders: " + ex.getMessage());
+            ex.printStackTrace();
+        } finally {
+            closeResources(rs, pstmt); // Use helper method
+        }
+    }
+
+//  public void displayAllOrders() {
+//        try {
+//            dbConnect dbc = new dbConnect();
+////            ResultSet rs = dbc.getData("SELECT s_id AS 'Order ID', u_id AS 'User ID', p_id AS 'Product ID', s_quantity AS 'Quantity', s_totalam AS 'Total Amount', s_cash AS 'Cash Given', s_change AS 'Change Amount', s_status AS 'Order Status', s_date AS 'Order Date' FROM process ");
+//            ResultSet rs = dbc.getData("SELECT order_id AS 'Order ID', u_id AS 'User ID', order_date AS 'Order Date', order_status AS 'Status', cash AS 'Cash', order_change AS 'Change' FROM orders ORDER BY order_id DESC");
+//            viewprocess.setModel(DbUtils.resultSetToTableModel(rs)); // Assuming your JTable is named 'vieworder'
+//            rs.close();
+//        } catch (SQLException ex) {
+//            System.out.println("Errors: " + ex.getMessage());
+//            JOptionPane.showMessageDialog(this, "Error displaying data: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+//        }
+//    }
 Color logcolor = new Color(63,195,128);
     Color excolor = new Color(0,102,102);
     /**
@@ -281,14 +313,14 @@ Color logcolor = new Color(63,195,128);
         jLabel7 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         update = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jLabel21 = new javax.swing.JLabel();
         print = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
         searchuser = new javax.swing.JTextField();
         SearchButton = new javax.swing.JButton();
         reset1 = new javax.swing.JPanel();
-        jLabel6 = new javax.swing.JLabel();
+        jLabel23 = new javax.swing.JLabel();
+        jLabel22 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -412,22 +444,12 @@ Color logcolor = new Color(63,195,128);
         });
         update.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("UPDATE STATUS ");
-        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel4MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel4MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel4MouseExited(evt);
-            }
-        });
-        update.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 150, 30));
+        jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel21.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel21.setText("UPDATE STATUS");
+        jLabel21.setVerifyInputWhenFocusTarget(false);
+        update.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 180, 30));
 
         jPanel1.add(update, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 190, 50));
 
@@ -453,13 +475,6 @@ Color logcolor = new Color(63,195,128);
         print.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 20));
 
         jPanel1.add(print, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 230, 110, 40));
-
-        jLabel21.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
-        jLabel21.setForeground(new java.awt.Color(0, 102, 102));
-        jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("ORDERS");
-        jLabel21.setVerifyInputWhenFocusTarget(false);
-        jPanel1.add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 140, 30));
 
         searchuser.setFont(new java.awt.Font("SansSerif", 1, 14)); // NOI18N
         searchuser.setHorizontalAlignment(javax.swing.JTextField.CENTER);
@@ -501,24 +516,21 @@ Color logcolor = new Color(63,195,128);
         });
         reset1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("RESET");
-        jLabel6.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel6MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel6MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel6MouseExited(evt);
-            }
-        });
-        reset1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
+        jLabel23.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("RESET");
+        jLabel23.setVerifyInputWhenFocusTarget(false);
+        reset1.add(jLabel23, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 90, 30));
 
         jPanel1.add(reset1, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 110, 50));
+
+        jLabel22.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel22.setText("ORDERS");
+        jLabel22.setVerifyInputWhenFocusTarget(false);
+        jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 140, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -625,39 +637,50 @@ Color logcolor = new Color(63,195,128);
     }//GEN-LAST:event_jPanel14MouseEntered
 
     private void updateMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseClicked
-       
-         int selectedRow = viewprocess.getSelectedRow();
-        if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select an order to update.", "Information", JOptionPane.INFORMATION_MESSAGE);
-            return;
-        }
-        int orderIdToUpdate = (int) viewprocess.getValueAt(selectedRow, 0);
-        String currentOrderStatus = (String) viewprocess.getValueAt(selectedRow, 2); //get order status
+    int selectedRow = viewprocess.getSelectedRow();
+    if (selectedRow < 0) {
+        JOptionPane.showMessageDialog(this, "Please select an order to update.", "Information", JOptionPane.INFORMATION_MESSAGE);
+        // No return here.  We will refresh the frame anyway.
+    }
 
-        if("Complete".equalsIgnoreCase(currentOrderStatus)){
-             JOptionPane.showMessageDialog(this, "Order is already Completed.", "Error", JOptionPane.ERROR_MESSAGE);
-             return;
-        }
+    Connection conn = null;
+    PreparedStatement pstmt = null;
 
-        Connection conn = null;
-        PreparedStatement pstmt = null;
-
-        try {
-            conn = dbConnection.getConnection();
-            String sql = "UPDATE orders SET order_status = 'Completed' WHERE order_id = ?";
-            pstmt = conn.prepareStatement(sql);
-            pstmt.setInt(1, orderIdToUpdate);
-            int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Order status updated to Completed.", "Success", JOptionPane.INFORMATION_MESSAGE);
-                loadMyOrders(viewprocess, (DefaultTableModel) viewprocess.getModel()); // Refresh the table
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to update order status.", "Error", JOptionPane.ERROR_MESSAGE);
+    conn = dbConnection.getConnection();
+    if (conn == null) {
+        JOptionPane.showMessageDialog(this, "Failed to connect to the database.", "Error", JOptionPane.ERROR_MESSAGE);
+        // No return here. We will refresh the frame anyway.
+    } else { // Only try to update if the connection was successful
+        try{
+            int orderIdToUpdate = (int) viewprocess.getValueAt(selectedRow, 0);
+            System.out.println("Selected orderId: " + orderIdToUpdate);
+            
+            String currentOrderStatus = (String) viewprocess.getValueAt(selectedRow, 2);
+            System.out.println("Current Status: " + currentOrderStatus);
+            
+            if ("Completed".equalsIgnoreCase(currentOrderStatus)) {
+                JOptionPane.showMessageDialog(this, "Order status cannot be updated because it is already Completed.", "Error", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (SQLException ex) {
-            JOptionPane.showMessageDialog(this, "Database error during order status update: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-            ex.printStackTrace();
-        } finally {
+            else{
+                String newStatus = "Completed";
+                String sql = "UPDATE orders SET order_status = ? WHERE order_id = ?";
+                pstmt = conn.prepareStatement(sql);
+                pstmt.setString(1, newStatus);
+                pstmt.setInt(2, orderIdToUpdate);
+                int rowsUpdated = pstmt.executeUpdate();
+                if (rowsUpdated > 0) {
+                    JOptionPane.showMessageDialog(this, "Order status updated to " + newStatus + ".", "Success", JOptionPane.INFORMATION_MESSAGE);
+                }
+                else {
+                    JOptionPane.showMessageDialog(this, "Failed to update order status.", "Error", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+            
+            
+        }catch(Exception e){
+            JOptionPane.showMessageDialog(this, "Error updating the database.  " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        finally {
             try {
                 if (pstmt != null) {
                     pstmt.close();
@@ -670,15 +693,14 @@ Color logcolor = new Color(63,195,128);
                 ex.printStackTrace();
             }
         }
-    
+    }
+    // Dispose of the current frame and create a new one.  This happens *always*
+    this.dispose();
+    java.awt.EventQueue.invokeLater(() -> {
+        vieworder newViewOrder = new vieworder(); // Create a new instance
+        newViewOrder.setVisible(true);
+    });
     }//GEN-LAST:event_updateMouseClicked
-
-    private void jLabel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseEntered
-        // TODO add your handling code here:
-        
-        update.setBackground(logcolor);
-        
-    }//GEN-LAST:event_jLabel4MouseEntered
 
     private void updateMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateMouseEntered
         // TODO add your handling code here:
@@ -787,75 +809,6 @@ Color logcolor = new Color(63,195,128);
              
     
     
-    private void jLabel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseExited
-        // TODO add your handling code here:
-            update.setBackground(excolor);
-    }//GEN-LAST:event_jLabel4MouseExited
-
-    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
-        int rowIndex = viewprocess.getSelectedRow();
-    if (rowIndex < 0) {
-        JOptionPane.showMessageDialog(null, "Please select an order.");
-        return;
-    }
-
-    // Assuming the order_id is in the first column (index 0) of your viewprocess table
-    int orderIdColumnIndex = 0;
-    int selectedOrderId = (int) viewprocess.getModel().getValueAt(rowIndex, orderIdColumnIndex);
-
-    // Assuming the 'Status' is in the fourth column (index 3). Adjust if it's different.
-    int orderStatusColumnIndex = 3;
-    String currentStatusInTable = (String) viewprocess.getModel().getValueAt(rowIndex, orderStatusColumnIndex);
-
-    if (!"Pending".equals(currentStatusInTable)) {
-        JOptionPane.showMessageDialog(null, "Only pending orders can be updated to Complete.");
-        return;
-    }
-
-    try {
-        dbConnect db = new dbConnect();
-        Connection con = db.getConnection();
-        String currentStatusFromDB;
-
-        // Use try-with-resources to ensure resources are closed automatically
-        try (PreparedStatement pstmt = con.prepareStatement("SELECT order_status FROM orders WHERE order_id = ?")) {
-            pstmt.setInt(1, selectedOrderId);
-            try (ResultSet rs = pstmt.executeQuery()) {
-                if (rs.next()) {
-                    currentStatusFromDB = rs.getString("order_status");
-
-                    if ("Pending".equals(currentStatusFromDB)) {
-                        // Update the status in the database to "Complete"
-                        try (PreparedStatement updatePstmt = con.prepareStatement("UPDATE orders SET order_status = 'Completed' WHERE order_id = ?")) {
-                            updatePstmt.setInt(1, selectedOrderId);
-                            int rowsAffected = updatePstmt.executeUpdate();
-
-                            if (rowsAffected > 0) {
-                                // Optionally, update the table model to reflect the change immediately
-                                if (orderStatusColumnIndex < viewprocess.getColumnCount()) {
-                                    viewprocess.getModel().setValueAt("Completed", rowIndex, orderStatusColumnIndex);
-                                }
-                                JOptionPane.showMessageDialog(null, "Order status updated to Completed.");
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Failed to update order status.");
-                            }
-                        }
-                    } else if ("Complete".equals(currentStatusFromDB)) {
-                        JOptionPane.showMessageDialog(null, "Order status is already Completed.");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Order status is not Pending and cannot be updated.");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Could not find order with ID: " + selectedOrderId);
-                }
-            }
-        }
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(null, "Database Error: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
-    }//GEN-LAST:event_jLabel4MouseClicked
-
     private void searchuserMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_searchuserMouseReleased
         // TODO add your handling code here:
 
@@ -869,21 +822,9 @@ Color logcolor = new Color(63,195,128);
         // TODO add your handling code here:
     }//GEN-LAST:event_SearchButtonActionPerformed
 
-    private void jLabel6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseClicked
-
-    private void jLabel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseEntered
-
-    private void jLabel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel6MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel6MouseExited
-
     private void reset1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseClicked
         // TODO add your handling code here:
-         loadMyOrders(viewprocess, (DefaultTableModel) viewprocess.getModel());
+        displayAllOrders();
         
         
     }//GEN-LAST:event_reset1MouseClicked
@@ -936,9 +877,9 @@ Color logcolor = new Color(63,195,128);
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
