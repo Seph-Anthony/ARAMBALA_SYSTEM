@@ -362,6 +362,12 @@ private int getCurrentUserId() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                selectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                selectMouseExited(evt);
+            }
         });
         select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -687,6 +693,16 @@ private int getCurrentUserId() {
         
         add.setBackground(excolor);
     }//GEN-LAST:event_jLabel10MouseExited
+
+    private void selectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseEntered
+        // TODO add your handling code here:
+        select.setBackground(logcolor);
+    }//GEN-LAST:event_selectMouseEntered
+
+    private void selectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseExited
+        // TODO add your handling code here:
+        select.setBackground(excolor);
+    }//GEN-LAST:event_selectMouseExited
     
    
     

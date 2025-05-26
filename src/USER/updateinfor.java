@@ -11,6 +11,7 @@ import static admin.updateuser.usname;
 import config.SessionClass;
 import config.dbConnect;
 import config.passwordHasher;
+import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.security.NoSuchAlgorithmException;
@@ -95,7 +96,8 @@ public class updateinfor extends javax.swing.JFrame {
         });
     }
 
-  
+  Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
   
   
  private void logProductAdditionAction(int userId, String Username) {
@@ -377,6 +379,12 @@ public boolean dupcheck() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 updateclickMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updateclickMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updateclickMouseExited(evt);
+            }
         });
         updateclick.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -545,6 +553,16 @@ int currentUserId = getCurrentUserId();
     private void newpassFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_newpassFieldActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_newpassFieldActionPerformed
+
+    private void updateclickMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateclickMouseEntered
+        // TODO add your handling code here:
+        updateclick.setBackground(logcolor);
+    }//GEN-LAST:event_updateclickMouseEntered
+
+    private void updateclickMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updateclickMouseExited
+        // TODO add your handling code here:
+        updateclick.setBackground(excolor);
+    }//GEN-LAST:event_updateclickMouseExited
 
     /**
      * @param args the command line arguments

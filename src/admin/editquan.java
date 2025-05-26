@@ -5,6 +5,7 @@
  */
 package admin;
 import config.dbConnect;
+import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,8 @@ private orderpage parentOrderPage;
         
     }
     
+      Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
     public void setOrderItemIdToEdit(int orderItemId) {
     this.orderItemIdToEdit = orderItemId;
     // You might want to fetch and display the current quantity here if needed
@@ -105,6 +108,12 @@ private orderpage parentOrderPage;
         updatequantity.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 updatequantityMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updatequantityMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updatequantityMouseExited(evt);
             }
         });
         updatequantity.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -234,6 +243,16 @@ private orderpage parentOrderPage;
 
         
     }//GEN-LAST:event_updatequantityMouseClicked
+
+    private void updatequantityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatequantityMouseEntered
+       
+        updatequantity.setBackground(logcolor);
+    }//GEN-LAST:event_updatequantityMouseEntered
+
+    private void updatequantityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatequantityMouseExited
+   
+        updatequantity.setBackground(excolor);
+    }//GEN-LAST:event_updatequantityMouseExited
 
     /**
      * @param args the command line arguments

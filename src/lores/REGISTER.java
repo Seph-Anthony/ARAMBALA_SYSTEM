@@ -3519,6 +3519,7 @@ private void logRegistrationAction(String username) {
     private void registerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_registerMouseClicked
   dbConnect db = new dbConnect();
     String defaultImagePath = "src/userimages/default_user.png"; // Define your default image path
+    String defaultAns = "N/A";
 
     // Validate all fields
     if (usernamere.getText().isEmpty() || fname.getText().isEmpty() || lname.getText().isEmpty() ||
@@ -3589,9 +3590,13 @@ private void logRegistrationAction(String username) {
         }
 
         // Insert new user into the database, including the default image path
-        String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat, u_image) " +
-                       "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "', " +
-                       "'" + email.getText() + "', '" + contact.getText() + "', '" + selectedType + "', '" + passwords + "', '" + status + "', '" + defaultImagePath + "')";
+       
+        // Insert new user into the database, including default image path and new answer fields
+         // Insert new user into the database, including default image path and new answer fields
+       String query = "INSERT INTO user (u_username, u_fname, u_lname, u_email, u_contact, u_type, u_password, u_stat, u_ans1, u_ans2, u_ans3, u_image) " +
+               "VALUES ('" + usernamere.getText() + "', '" + fname.getText() + "', '" + lname.getText() + "', " +
+               "'" + email.getText() + "', '" + contact.getText() + "', '" + selectedType + "', '" + passwords + "', '" + status + "', " +
+               "'" + "N/A" + "', '" + "N/A" + "', '" + "N/A" + "', '" + defaultImagePath + "')";
 
         if (db.insertData(query) == 1) {
             JOptionPane.showMessageDialog(null, "User Successfully Added");

@@ -350,6 +350,12 @@ public void displayUserImage(JLabel admiimage) {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 updatePanelMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                updatePanelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                updatePanelMouseExited(evt);
+            }
         });
         updatePanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -532,6 +538,12 @@ public void displayUserImage(JLabel admiimage) {
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel4MouseExited(evt);
             }
         });
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -866,6 +878,26 @@ public void displayUserImage(JLabel admiimage) {
         // TODO add your handling code here:
         select.setBackground(excolor);
     }//GEN-LAST:event_selectMouseExited
+
+    private void jPanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseEntered
+        // TODO add your handling code here:
+        jPanel4.setBackground(logcolor);
+    }//GEN-LAST:event_jPanel4MouseEntered
+
+    private void jPanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseExited
+        // TODO add your handling code here:
+        jPanel4.setBackground(excolor);
+    }//GEN-LAST:event_jPanel4MouseExited
+
+    private void updatePanelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatePanelMouseEntered
+        // TODO add your handling code here:
+        updatePanel.setBackground(logcolor);
+    }//GEN-LAST:event_updatePanelMouseEntered
+
+    private void updatePanelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_updatePanelMouseExited
+        // TODO add your handling code here:
+        updatePanel.setBackground(excolor);
+    }//GEN-LAST:event_updatePanelMouseExited
 
     /**
      * @param args the command line arguments

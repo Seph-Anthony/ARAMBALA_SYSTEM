@@ -375,6 +375,12 @@ private int getCurrentUserId() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 selectMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                selectMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                selectMouseExited(evt);
+            }
         });
         select.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -594,6 +600,15 @@ private int getCurrentUserId() {
                     }
                 }
     }//GEN-LAST:event_selectMouseClicked
+
+    private void selectMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseEntered
+        // TODO add your handling code here:
+        select.setBackground(logcolor);
+    }//GEN-LAST:event_selectMouseEntered
+
+    private void selectMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_selectMouseExited
+select.setBackground(excolor);        // TODO add your handling code here:
+    }//GEN-LAST:event_selectMouseExited
 
     /**
      * @param args the command line arguments
