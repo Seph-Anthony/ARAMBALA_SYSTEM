@@ -8,6 +8,7 @@ package admin;
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
 import config.dbConnect;
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -43,7 +44,10 @@ public processpage(int p_id, int order_id) {
     System.out.println("Selected Product ID: " + p_id);
     System.out.println("Current Order ID: " + order_id);
 }
-
+  Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102
+    );
+    
 private orderpage parentOrderPage;
 
 public void setParentOrderPage(orderpage parent) {
@@ -463,6 +467,12 @@ public  ImageIcon ResizeImage(String ImagePath, byte[] pic, JLabel label) {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addditemMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addditemMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addditemMouseExited(evt);
+            }
         });
         addditem.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -637,6 +647,14 @@ String quantityText = quantity.getText();
         }
 
     }//GEN-LAST:event_quantityActionPerformed
+
+    private void addditemMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addditemMouseEntered
+addditem.setBackground(logcolor); 
+    }//GEN-LAST:event_addditemMouseEntered
+
+    private void addditemMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addditemMouseExited
+        addditem.setBackground(excolor);
+    }//GEN-LAST:event_addditemMouseExited
 
     /**
      * @param args the command line arguments

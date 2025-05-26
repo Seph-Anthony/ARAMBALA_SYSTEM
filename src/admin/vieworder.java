@@ -321,6 +321,7 @@ Color logcolor = new Color(63,195,128);
         reset1 = new javax.swing.JPanel();
         jLabel23 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -531,6 +532,12 @@ Color logcolor = new Color(63,195,128);
         jLabel22.setText("ORDERS");
         jLabel22.setVerifyInputWhenFocusTarget(false);
         jPanel1.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 140, 30));
+
+        jLabel4.setBackground(new java.awt.Color(0, 102, 102));
+        jLabel4.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 102, 102));
+        jLabel4.setText("Search User ID");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 220, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -831,10 +838,13 @@ Color logcolor = new Color(63,195,128);
 
     private void reset1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseEntered
         // TODO add your handling code here:
+        
+        reset1.setBackground(logcolor);
     }//GEN-LAST:event_reset1MouseEntered
 
     private void reset1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_reset1MouseExited
         // TODO add your handling code here:
+        reset1.setBackground(excolor);
     }//GEN-LAST:event_reset1MouseExited
 
     /**
@@ -880,6 +890,7 @@ Color logcolor = new Color(63,195,128);
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;

@@ -434,7 +434,7 @@ private int generateNewOrderId() {
         jLabel1 = new javax.swing.JLabel();
         edit = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
-        jPanel5 = new javax.swing.JPanel();
+        deleteorder = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         jPanel12 = new javax.swing.JPanel();
         jPanel14 = new javax.swing.JPanel();
@@ -544,6 +544,12 @@ private int generateNewOrderId() {
         addorder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addorderMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                addorderMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                addorderMouseExited(evt);
             }
         });
         addorder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -718,6 +724,12 @@ private int generateNewOrderId() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 editMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                editMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                editMouseExited(evt);
+            }
         });
         edit.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -728,22 +740,28 @@ private int generateNewOrderId() {
 
         jPanel8.add(edit, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 170, 150, 40));
 
-        jPanel5.setBackground(new java.awt.Color(0, 102, 102));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-        jPanel5.addMouseListener(new java.awt.event.MouseAdapter() {
+        deleteorder.setBackground(new java.awt.Color(0, 102, 102));
+        deleteorder.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+        deleteorder.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel5MouseClicked(evt);
+                deleteorderMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                deleteorderMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                deleteorderMouseExited(evt);
             }
         });
-        jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        deleteorder.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel3.setText("DELETE ORDER");
-        jPanel5.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
+        deleteorder.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 150, -1));
 
-        jPanel8.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(754, 170, 170, 40));
+        jPanel8.add(deleteorder, new org.netbeans.lib.awtextra.AbsoluteConstraints(754, 170, 170, 40));
 
         jPanel1.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, -10, 940, 720));
 
@@ -1587,7 +1605,7 @@ if (session.getOrder_id() == 0) {
         
     }//GEN-LAST:event_editMouseClicked
 
-    private void jPanel5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel5MouseClicked
+    private void deleteorderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteorderMouseClicked
    
     int selectedRow = orderitem.getSelectedRow();
 
@@ -1638,7 +1656,36 @@ if (session.getOrder_id() == 0) {
     }
         
         
-    }//GEN-LAST:event_jPanel5MouseClicked
+    }//GEN-LAST:event_deleteorderMouseClicked
+
+    private void editMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseEntered
+        // TODO add your handling code here:
+        edit.setBackground(logcolor);
+    }//GEN-LAST:event_editMouseEntered
+
+    private void editMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_editMouseExited
+edit.setBackground(excolor);        // TODO add your handling code here:
+    }//GEN-LAST:event_editMouseExited
+
+    private void deleteorderMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteorderMouseEntered
+        // TODO add your handling code here:
+        deleteorder.setBackground(logcolor);
+    }//GEN-LAST:event_deleteorderMouseEntered
+
+    private void deleteorderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteorderMouseExited
+        // TODO add your handling code here:
+        deleteorder.setBackground(excolor);
+    }//GEN-LAST:event_deleteorderMouseExited
+
+    private void addorderMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addorderMouseEntered
+        // TODO add your handling code here:
+        addorder.setBackground(logcolor);
+    }//GEN-LAST:event_addorderMouseEntered
+
+    private void addorderMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addorderMouseExited
+        // TODO add your handling code here:
+        addorder.setBackground(excolor);
+    }//GEN-LAST:event_addorderMouseExited
 
     /**
      * @param args the command line arguments
@@ -1681,6 +1728,7 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel addorder;
     private javax.swing.JLabel backbutton;
     private javax.swing.JLabel beverage;
+    private javax.swing.JPanel deleteorder;
     private javax.swing.JPanel edit;
     private javax.swing.JTextField entercash;
     public javax.swing.JTable food;
@@ -1725,7 +1773,6 @@ if (session.getOrder_id() == 0) {
     private javax.swing.JPanel jPanel14;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel8;
     private javax.swing.JPasswordField jPasswordField1;
