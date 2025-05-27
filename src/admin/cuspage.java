@@ -344,7 +344,7 @@ public void showdata(){
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(0, 102, 102));
         jLabel8.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel8.setText("USER'S PAGE");
+        jLabel8.setText("USERS PAGE");
         jLabel8.setVerifyInputWhenFocusTarget(false);
         jPanel5.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 300, -1));
 

@@ -66,6 +66,7 @@ public class newpass extends javax.swing.JFrame {
         
     }
     
+   
          private void logProductAdditionAction(int userId, String Username) {
     String sql = "INSERT INTO logs (user_id, act, log_date) VALUES (?, ?, NOW())";
 

@@ -10,6 +10,7 @@ import USER.employdash;
 import admin.admindash;
 import config.SessionClass;
 import config.dbConnect;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -41,6 +42,9 @@ public security() {
     this.contact = ses.getContact();
     this.userType = ses.getType();
 }
+
+Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
     
     /**
      * This method is called from within the constructor to initialize the form.
@@ -163,6 +167,12 @@ public security() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 verifysecurityMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                verifysecurityMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                verifysecurityMouseExited(evt);
+            }
         });
         verifysecurity.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -280,6 +290,16 @@ public security() {
         ex.printStackTrace();
     }
     }//GEN-LAST:event_verifysecurityMouseClicked
+
+    private void verifysecurityMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifysecurityMouseEntered
+        // TODO add your handling code here:
+        verifysecurity.setBackground(logcolor);
+    }//GEN-LAST:event_verifysecurityMouseEntered
+
+    private void verifysecurityMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifysecurityMouseExited
+        // TODO add your handling code here:
+        verifysecurity.setBackground(excolor);
+    }//GEN-LAST:event_verifysecurityMouseExited
 
     /**
      * @param args the command line arguments

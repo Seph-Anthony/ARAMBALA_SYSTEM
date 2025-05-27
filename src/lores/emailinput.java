@@ -7,6 +7,7 @@ package lores;
 
 import config.SessionClass;
 import config.dbConnect;
+import java.awt.Color;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
@@ -23,6 +24,9 @@ public class emailinput extends javax.swing.JFrame {
     public emailinput() {
         initComponents();
     }
+    
+      Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -121,6 +125,12 @@ public class emailinput extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 verifyemailMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                verifyemailMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                verifyemailMouseExited(evt);
+            }
         });
 
         jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -152,6 +162,12 @@ public class emailinput extends javax.swing.JFrame {
         jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel4MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel4MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel4MouseExited(evt);
             }
         });
 
@@ -262,6 +278,26 @@ public class emailinput extends javax.swing.JFrame {
     private void jLabel1039MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1039MouseEntered
         // TODO add your handling code here:
     }//GEN-LAST:event_jLabel1039MouseEntered
+
+    private void verifyemailMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifyemailMouseEntered
+        // TODO add your handling code here:
+       verifyemail.setBackground(logcolor);
+    }//GEN-LAST:event_verifyemailMouseEntered
+
+    private void verifyemailMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_verifyemailMouseExited
+        // TODO add your handling code here:
+        verifyemail.setBackground(excolor);
+    }//GEN-LAST:event_verifyemailMouseExited
+
+    private void jPanel4MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseEntered
+        // TODO add your handling code here:
+        jPanel4.setBackground(logcolor);
+    }//GEN-LAST:event_jPanel4MouseEntered
+
+    private void jPanel4MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseExited
+        // TODO add your handling code here:
+        jPanel4.setBackground(excolor);
+    }//GEN-LAST:event_jPanel4MouseExited
 
     /**
      * @param args the command line arguments

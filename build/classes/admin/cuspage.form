@@ -250,7 +250,7 @@
               <Color blue="66" green="66" red="0" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="USER&apos;S PAGE"/>
+            <Property name="text" type="java.lang.String" value="USERS PAGE"/>
             <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
           </Properties>
           <Constraints>
