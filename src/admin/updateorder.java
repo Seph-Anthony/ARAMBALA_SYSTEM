@@ -13,6 +13,7 @@ import config.dbConnect;
 import java.awt.Color;
 import java.awt.Image;
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +33,8 @@ import lores.LOGIN;
  */
 public class updateorder extends javax.swing.JFrame {
   
-
+ private DefaultTableModel orderItemsTableModel;
+    private dbConnect dbConnection; // This instance will hold the single database connection.
  
     /**
      * Creates new form updateorder
@@ -43,71 +45,134 @@ public updateorder() {
         orderItemsTableModel = (DefaultTableModel) ordertable.getModel();
         loadMyOrders(ordertable, orderItemsTableModel);
         displayUserImage(adminimage);
+        
 //        displayTotalOrders(); 
+
+delete.addMouseListener(new java.awt.event.MouseAdapter() {
+    public void mouseClicked(java.awt.event.MouseEvent evt) {
+        deleteMouseClicked(evt);
+    }
+});
     
 }
 
-public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItemsList) { // Changed parameter type
-    // Clear existing data in the JList
-    DefaultListModel<String> listModel = new DefaultListModel<>();
+  public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItemsList) {
+        DefaultListModel<String> listModel = new DefaultListModel<>();
 
-    dbConnect dbConnection = new dbConnect();
+        // IMPORTANT CHANGE: DO NOT create a new dbConnect instance here.
+        // Use the class-level 'dbConnection' instance.
+        Connection conn = null; // Declare resources outside try-finally
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
-    try (Connection conn = dbConnection.getConnection();
-         PreparedStatement pstmt = conn.prepareStatement(
-                "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total "
-                + "FROM order_items oi "
-                + "JOIN product p ON oi.product_id = p.p_id "
-                + "WHERE oi.order_id = ?"
-         )) {
+        try {
+            conn = dbConnection.getConnection(); // Get the shared connection from the class-level instance
+            
+            // Check if connection is null or closed (defensive programming)
+            if (conn == null || conn.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Database connection is not available for loading order items.", "Connection Error", JOptionPane.ERROR_MESSAGE);
+                return; // Exit the method if connection is not usable
+            }
 
-        pstmt.setInt(1, orderId);
+            pstmt = conn.prepareStatement(
+                    "SELECT oi.order_item_id, p.p_name, oi.quantity, oi.price, oi.item_total "
+                    + "FROM order_items oi "
+                    + "JOIN product p ON oi.product_id = p.p_id "
+                    + "WHERE oi.order_id = ?"
+            );
+            pstmt.setInt(1, orderId);
 
-        try (ResultSet rs = pstmt.executeQuery()) {
+            rs = pstmt.executeQuery();
             System.out.println("Successfully retrieved order items for Order ID: " + orderId);
 
             while (rs.next()) {
                 String productName = rs.getString("p_name");
                 int quantity = rs.getInt("quantity");
                 double price = rs.getDouble("price");
-                double itemTotal = rs.getDouble("item_total"); // Added item_total
+                double itemTotal = rs.getDouble("item_total"); 
 
-                // Format the output string as needed.  Added spacing for better readability
                 String itemDetails = String.format("Item:%-20s Qty:%-4d Price:%-10.2f Total:%.2f", 
                                                    productName, quantity, price, itemTotal);
                 listModel.addElement(itemDetails);
             }
-            orderItemsList.setModel(listModel); // Set the model for the JList
-        }
+            orderItemsList.setModel(listModel);
 
-    } catch (SQLException ex) {
-        JOptionPane.showMessageDialog(this, "Error loading order items: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-        ex.printStackTrace();
-    }
-}
-
-
-   private DefaultTableModel orderItemsTableModel;
-    private dbConnect dbConnection;
-  private void deleteOrder(int orderId) {
-        String sql = "UPDATE orders SET order_status = 'Archived' WHERE order_id = ?";
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            pstmt.setInt(1, orderId);
-            int rowsUpdated = pstmt.executeUpdate();
-            if (rowsUpdated > 0) {
-                JOptionPane.showMessageDialog(this, "Order archived successfully.", "Success", JOptionPane.INFORMATION_MESSAGE);
-                loadMyOrders(ordertable, (DefaultTableModel) ordertable.getModel()); // Refresh the table
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to archive the order.", "Error", JOptionPane.ERROR_MESSAGE);
-            }
         } catch (SQLException ex) {
-            System.err.println("Error archiving order: " + ex.getMessage());
-            JOptionPane.showMessageDialog(this, "Database error during order archiving.", "Database Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Error loading order items: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        } finally {
+            // CRITICAL: Close ResultSet and PreparedStatement manually
+            // DO NOT close 'conn' here, as it's the shared connection from dbConnection
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error closing ResultSet in loadOrderItemsForSelectedOrder: " + e.getMessage());
+                e.printStackTrace();
+            }
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error closing PreparedStatement in loadOrderItemsForSelectedOrder: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
+
+
+
+
+    private void deleteOrder(int orderId) {
+        // Use the class-level dbConnection instance to get a connection
+        Connection con = null; // Declare outside try-finally
+        PreparedStatement pstmt = null;
+
+        try {
+            con = dbConnection.getConnection(); // Get the shared connection
+            // Check if connection is null or closed
+            if (con == null || con.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Database connection is not available for deleting order.", "Connection Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            String sql = "UPDATE orders SET order_status = 'Archived' WHERE order_id = ?";
+            pstmt = con.prepareStatement(sql);
+            pstmt.setInt(1, orderId);
+
+            int rowsAffected = pstmt.executeUpdate();
+
+            if (rowsAffected > 0) {
+                // REMOVED: JOptionPane.showMessageDialog(this, "Order archived successfully.");
+                loadMyOrders(ordertable, (DefaultTableModel) ordertable.getModel());
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to archive the order.");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error archiving order: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } catch (Exception e) { 
+            JOptionPane.showMessageDialog(this, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
+        } finally {
+            // CRITICAL: Manually close PreparedStatement
+            // DO NOT close 'con' here
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error closing PreparedStatement in deleteOrder: " + e.getMessage());
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+
+
 
 //private void displayTotalOrders() {
 //        SessionClass session = SessionClass.getInstance();
@@ -209,54 +274,73 @@ public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItems
     }
 }
 
-   public void loadMyOrders(JTable ordersTable, DefaultTableModel ordersTableModel) {
-        // Clear existing data in the table
-        ordersTableModel.setRowCount(0);
+    public void loadMyOrders(JTable ordersTable, DefaultTableModel ordersTableModel) {
+        ordersTableModel.setRowCount(0); // Clear existing data in the table
 
-        // Get the logged-in user's ID from the SessionClass
         SessionClass session = SessionClass.getInstance();
         int loggedInUserId = session.getU_id();
         System.out.println("Attempting to load orders for user ID: " + loggedInUserId);
 
-        // Construct the SQL query to get all non-archived orders for the logged-in user
         String sql = "SELECT order_id, order_date, order_status, cash, order_change " +
                 "FROM orders " +
-                "WHERE u_id = ? AND order_status != 'Archived' " + // Exclude archived orders
+                "WHERE u_id = ? AND order_status != 'Archived' " + 
                 "ORDER BY order_date DESC";
 
-        try (Connection conn = dbConnection.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        Connection conn = null; // Declare resources outside try-finally
+        PreparedStatement pstmt = null;
+        ResultSet rs = null;
 
+        try {
+            conn = dbConnection.getConnection(); // Get the shared class-level connection
+            if (conn == null || conn.isClosed()) {
+                JOptionPane.showMessageDialog(this, "Database connection is not available for loading orders.", "Connection Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            pstmt = conn.prepareStatement(sql);
             pstmt.setInt(1, loggedInUserId);
 
-            try (ResultSet rs = pstmt.executeQuery()) {
-                System.out.println("Query executed successfully.");
+            rs = pstmt.executeQuery();
+            System.out.println("Query executed successfully for loadMyOrders.");
 
-                // Populate the table model with the retrieved data
-                int rowCount = 0;
-                while (rs.next()) {
-                    rowCount++;
-                    System.out.println("Row " + rowCount + " found - Order ID: " + rs.getInt("order_id") + ", Order Date: " + rs.getTimestamp("order_date"));
-
-                    Object[] rowData = {
-                            rs.getInt("order_id"),
-                            rs.getTimestamp("order_date"),
-                            rs.getString("order_status"),
-                            rs.getDouble("cash"),
-                            rs.getDouble("order_change")
-                    };
-                    ordersTableModel.addRow(rowData);
-                }
-                System.out.println("Total orders loaded: " + rowCount);
-
-                // Set the table model for the JTable
-                ordersTable.setModel(ordersTableModel);
-
+            int rowCount = 0;
+            while (rs.next()) {
+                rowCount++;
+                Object[] rowData = {
+                        rs.getInt("order_id"),
+                        rs.getTimestamp("order_date"),
+                        rs.getString("order_status"),
+                        rs.getDouble("cash"),
+                        rs.getDouble("order_change")
+                };
+                ordersTableModel.addRow(rowData);
             }
+            System.out.println("Total orders loaded: " + rowCount);
+
+            ordersTable.setModel(ordersTableModel);
 
         } catch (SQLException ex) {
             JOptionPane.showMessageDialog(null, "Error loading orders: " + ex.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
+        } finally {
+            // CRITICAL: Manually close ResultSet and PreparedStatement
+            // DO NOT close 'conn' here
+            try {
+                if (rs != null) {
+                    rs.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error closing ResultSet in loadMyOrders: " + e.getMessage());
+                e.printStackTrace();
+            }
+            try {
+                if (pstmt != null) {
+                    pstmt.close();
+                }
+            } catch (SQLException e) {
+                System.err.println("Error closing PreparedStatement in loadMyOrders: " + e.getMessage());
+                e.printStackTrace();
+            }
         }
     }
 
@@ -713,20 +797,20 @@ public void loadOrderItemsForSelectedOrder(int orderId, JList<String> orderItems
 
     private void deleteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_deleteMouseClicked
       
-      int selectedRow = ordertable.getSelectedRow();
+   int selectedRow = ordertable.getSelectedRow();
         if (selectedRow < 0) {
-            JOptionPane.showMessageDialog(this, "Please select an order to delete.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Deleted.", "Information", JOptionPane.INFORMATION_MESSAGE);
             return;
         }
         int orderIdToDelete = (int) ordertable.getValueAt(selectedRow, 0);
-        String orderStatus = (String) ordertable.getValueAt(selectedRow, 2); // Get the order status (assuming it's the 3rd column)
+        String orderStatus = (String) ordertable.getValueAt(selectedRow, 2);
 
         if ("Pending".equalsIgnoreCase(orderStatus)) {
             JOptionPane.showMessageDialog(this, "Cannot delete orders with Pending status.", "Error", JOptionPane.ERROR_MESSAGE);
-            return; // Stop the deletion process
+            return;
         }
         deleteOrder(orderIdToDelete);
-
+    
     
     }//GEN-LAST:event_deleteMouseClicked
 
