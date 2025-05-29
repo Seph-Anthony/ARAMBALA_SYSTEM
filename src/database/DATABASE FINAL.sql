@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 05, 2025 at 09:58 PM
+-- Generation Time: May 29, 2025 at 04:41 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -877,7 +877,180 @@ INSERT INTO `logs` (`log_id`, `user_id`, `act`, `log_date`) VALUES
 (844, 30, 'User logged in: markyyy', '2025-05-06'),
 (845, 30, 'markyyy completed order #171', '2025-05-06'),
 (846, 30, 'User logged in: markyyy', '2025-05-06'),
-(847, 30, 'markyyy completed order #172', '2025-05-06');
+(847, 30, 'markyyy completed order #172', '2025-05-06'),
+(848, 30, 'User logged in: markyyy', '2025-05-07'),
+(849, 30, 'User logged in: markyyy', '2025-05-07'),
+(850, 30, 'User logged in: markyyy', '2025-05-07'),
+(851, 30, 'User logged in: markyyy', '2025-05-08'),
+(852, 30, 'User logged in: markyyy', '2025-05-08'),
+(853, 33, 'User logged in: sensen', '2025-05-08'),
+(854, 33, 'User logged in: sensen', '2025-05-08'),
+(855, 30, 'User logged in: markyyy', '2025-05-08'),
+(856, 30, 'User logged in: markyyy', '2025-05-13'),
+(857, 30, 'User logged in: markyyy', '2025-05-13'),
+(858, 30, 'User logged in: markyyy', '2025-05-13'),
+(859, 30, 'User logged in: markyyy', '2025-05-13'),
+(860, 30, 'User logged in: markyyy', '2025-05-13'),
+(861, 30, 'User logged in: markyyy', '2025-05-13'),
+(862, 30, 'User logged in: markyyy', '2025-05-13'),
+(863, 30, 'User logged in: markyyy', '2025-05-13'),
+(864, 30, 'User logged in: markyyy', '2025-05-13'),
+(865, 30, 'User logged in: markyyy', '2025-05-13'),
+(866, 30, 'User logged in: markyyy', '2025-05-13'),
+(867, 30, 'User logged in: markyyy', '2025-05-13'),
+(868, 30, 'User logged in: markyyy', '2025-05-13'),
+(869, 30, 'User logged in: markyyy', '2025-05-13'),
+(870, 30, 'User logged in: markyyy', '2025-05-13'),
+(871, 30, 'User logged in: markyyy', '2025-05-13'),
+(872, 30, 'User logged in: markyyy', '2025-05-13'),
+(873, 30, 'User logged in: markyyy', '2025-05-13'),
+(874, 30, 'User logged in: markyyy', '2025-05-13'),
+(875, 30, 'User logged in: markyyy', '2025-05-13'),
+(876, 30, 'User logged in: markyyy', '2025-05-13'),
+(877, 30, 'User logged in: markyyy', '2025-05-13'),
+(878, 30, 'User logged in: markyyy', '2025-05-13'),
+(879, 30, 'User logged in: markyyy', '2025-05-13'),
+(880, 30, 'User logged in: markyyy', '2025-05-13'),
+(881, 30, 'User logged in: markyyy', '2025-05-13'),
+(882, 30, 'markyyy completed order #177', '2025-05-13'),
+(883, 30, 'User logged in: markyyy', '2025-05-13'),
+(884, 30, 'User logged in: markyyy', '2025-05-13'),
+(885, 30, 'User logged in: markyyy', '2025-05-13'),
+(886, 30, 'User logged in: markyyy', '2025-05-13'),
+(887, 30, 'User logged in: markyyy', '2025-05-13'),
+(888, 30, 'User logged in: markyyy', '2025-05-13'),
+(889, 30, 'User logged in: markyyy', '2025-05-13'),
+(890, 30, 'User logged in: markyyy', '2025-05-13'),
+(891, 30, 'User logged in: markyyy', '2025-05-13'),
+(892, 30, 'User logged in: markyyy', '2025-05-13'),
+(893, 30, 'User logged in: markyyy', '2025-05-13'),
+(894, 30, 'User logged in: markyyy', '2025-05-13'),
+(895, 30, 'User logged in: markyyy', '2025-05-13'),
+(896, 30, 'User logged in: markyyy', '2025-05-13'),
+(897, 30, 'User logged in: markyyy', '2025-05-14'),
+(898, 30, 'User logged in: markyyy', '2025-05-14'),
+(899, 30, 'User logged in: markyyy', '2025-05-14'),
+(900, 30, 'User logged in: markyyy', '2025-05-14'),
+(901, 30, 'User logged in: markyyy', '2025-05-14'),
+(902, 30, 'User logged in: markyyy', '2025-05-14'),
+(903, 30, 'User logged in: markyyy', '2025-05-14'),
+(904, 30, 'User logged in: markyyy', '2025-05-14'),
+(905, 30, 'User logged in: markyyy', '2025-05-14'),
+(906, 30, 'User logged in: markyyy', '2025-05-14'),
+(907, 30, 'User logged in: markyyy', '2025-05-14'),
+(908, 30, 'User logged in: markyyy', '2025-05-14'),
+(909, 30, 'User logged in: markyyy', '2025-05-15'),
+(910, 30, 'User logged in: markyyy', '2025-05-15'),
+(911, 30, 'User logged in: markyyy', '2025-05-15'),
+(912, 30, 'User logged in: markyyy', '2025-05-15'),
+(913, 30, 'User logged in: markyyy', '2025-05-15'),
+(914, 30, 'User logged in: markyyy', '2025-05-15'),
+(915, 30, 'User logged in: markyyy', '2025-05-15'),
+(916, 30, 'markyyy completed order #181', '2025-05-15'),
+(917, 30, 'User logged in: markyyy', '2025-05-15'),
+(918, 30, 'User logged in: markyyy', '2025-05-15'),
+(919, 30, 'User logged in: markyyy', '2025-05-15'),
+(920, 30, 'User logged in: markyyy', '2025-05-15'),
+(921, 30, 'User logged in: markyyy', '2025-05-15'),
+(922, 30, 'User logged in: markyyy', '2025-05-15'),
+(923, 30, 'User logged in: markyyy', '2025-05-15'),
+(924, 30, 'User logged in: markyyy', '2025-05-15'),
+(925, 30, 'User logged in: markyyy', '2025-05-15'),
+(926, 30, 'User logged in: markyyy', '2025-05-15'),
+(927, 30, 'User logged in: markyyy', '2025-05-15'),
+(928, 30, 'User logged in: markyyy', '2025-05-15'),
+(929, 30, 'User logged in: markyyy', '2025-05-15'),
+(930, 30, 'User logged in: markyyy', '2025-05-15'),
+(931, 30, 'User logged in: markyyy', '2025-05-15'),
+(932, 30, 'User logged in: markyyy', '2025-05-15'),
+(933, 30, 'User logged in: markyyy', '2025-05-15'),
+(934, 30, 'User logged in: markyyy', '2025-05-15'),
+(935, 30, 'User logged in: markyyy', '2025-05-15'),
+(936, 30, 'User logged in: markyyy', '2025-05-15'),
+(937, 30, 'User logged in: markyyy', '2025-05-15'),
+(938, 30, 'User logged in: markyyy', '2025-05-15'),
+(939, 30, 'User logged in: markyyy', '2025-05-15'),
+(940, 30, 'User logged in: markyyy', '2025-05-15'),
+(941, 30, 'User logged in: markyyy', '2025-05-15'),
+(942, 30, 'User logged in: markyyy', '2025-05-15'),
+(943, 30, 'User logged in: markyyy', '2025-05-15'),
+(944, 30, 'User logged in: markyyy', '2025-05-26'),
+(945, 30, 'markyyy deleted a product: Shoes', '2025-05-26'),
+(946, 30, 'User logged in: markyyy', '2025-05-26'),
+(947, 30, 'User logged in: markyyy', '2025-05-26'),
+(948, 30, 'User logged in: markyyy', '2025-05-26'),
+(949, 30, 'User logged in: markyyy', '2025-05-26'),
+(950, 30, 'User logged in: markyyy', '2025-05-26'),
+(951, 30, 'User logged in: markyyy', '2025-05-26'),
+(952, 30, 'markyyy completed order #185', '2025-05-26'),
+(953, 33, 'User logged in: sensen', '2025-05-26'),
+(954, 33, 'User logged in: sensen', '2025-05-27'),
+(955, 33, 'User logged in: sensen', '2025-05-27'),
+(956, 33, 'User logged in: sensen', '2025-05-27'),
+(957, 30, 'User logged in: markyyy', '2025-05-27'),
+(958, 33, 'User logged in: sensen', '2025-05-27'),
+(959, 33, 'User logged in: sensen', '2025-05-27'),
+(960, 33, 'User logged in: sensen', '2025-05-27'),
+(961, 34, 'User logged in: table', '2025-05-27'),
+(962, 33, 'User logged in: sensen', '2025-05-27'),
+(963, 33, 'User logged in: sensen', '2025-05-27'),
+(964, 33, 'User logged in: sensen', '2025-05-27'),
+(965, 33, 'User logged in: sensen', '2025-05-27'),
+(966, 33, 'User logged in: sensen', '2025-05-27'),
+(967, 33, 'User logged in: sensen', '2025-05-27'),
+(968, 33, 'User logged in: sensen', '2025-05-27'),
+(969, 41, 'User Registered: mikejohn', '2025-05-27'),
+(970, 41, 'User logged in: mikejohn', '2025-05-27'),
+(971, 41, 'User logged in: mikejohn', '2025-05-27'),
+(972, 41, 'User logged in: mikejohn', '2025-05-27'),
+(973, 30, 'User logged in: markyyy', '2025-05-27'),
+(974, 30, 'User logged in: markyyy', '2025-05-27'),
+(975, 41, 'User logged in: mikejohn', '2025-05-27'),
+(976, 41, 'User logged in: mikejohn', '2025-05-27'),
+(977, 41, 'User logged in: mikejohn', '2025-05-27'),
+(978, 33, 'User logged in: sensen', '2025-05-27'),
+(979, 41, 'User logged in: mikejohn', '2025-05-27'),
+(980, 33, 'User logged in: sensen', '2025-05-27'),
+(981, 33, 'User logged in: sensen', '2025-05-27'),
+(982, 41, 'User logged in: mikejohn', '2025-05-27');
+INSERT INTO `logs` (`log_id`, `user_id`, `act`, `log_date`) VALUES
+(983, 33, 'User logged in: sensen', '2025-05-27'),
+(984, 41, 'User logged in: mikejohn', '2025-05-27'),
+(985, 30, 'User logged in: markyyy', '2025-05-27'),
+(986, 30, 'User logged in: markyyy', '2025-05-27'),
+(987, 30, 'User logged in: markyyy', '2025-05-27'),
+(988, 41, 'User logged in: mikejohn', '2025-05-27'),
+(989, 33, 'User logged in: sensen', '2025-05-27'),
+(990, 30, 'User logged in: markyyy', '2025-05-28'),
+(991, 30, 'User logged in: markyyy', '2025-05-28'),
+(992, 30, 'User logged in: markyyy', '2025-05-28'),
+(993, 30, 'User logged in: markyyy', '2025-05-28'),
+(994, 30, 'User logged in: markyyy', '2025-05-28'),
+(995, 30, 'User logged in: markyyy', '2025-05-28'),
+(996, 30, 'User logged in: markyyy', '2025-05-28'),
+(997, 30, 'User logged in: markyyy', '2025-05-28'),
+(998, 30, 'User logged in: markyyy', '2025-05-28'),
+(999, 30, 'User logged in: markyyy', '2025-05-28'),
+(1000, 30, 'User logged in: markyyy', '2025-05-28'),
+(1001, 30, 'User logged in: markyyy', '2025-05-28'),
+(1002, 30, 'User logged in: markyyy', '2025-05-28'),
+(1003, 30, 'User logged in: markyyy', '2025-05-28'),
+(1004, 30, 'User logged in: markyyy', '2025-05-28'),
+(1005, 30, 'User logged in: markyyy', '2025-05-28'),
+(1006, 30, 'User logged in: markyyy', '2025-05-29'),
+(1007, 30, 'User logged in: markyyy', '2025-05-29'),
+(1008, 30, 'User logged in: markyyy', '2025-05-29'),
+(1009, 30, 'User logged in: markyyy', '2025-05-29'),
+(1010, 33, 'User logged in: sensen', '2025-05-29'),
+(1011, 30, 'User logged in: markyyy', '2025-05-29'),
+(1012, 30, 'User logged in: markyyy', '2025-05-29'),
+(1013, 30, 'User Added Security:markyyy', '2025-05-29'),
+(1014, 33, 'User logged in: sensen', '2025-05-29'),
+(1015, 33, 'User logged in: sensen', '2025-05-29'),
+(1016, 33, 'User logged in: sensen', '2025-05-29'),
+(1017, 33, 'User logged in: sensen', '2025-05-29'),
+(1018, 30, 'User logged in: markyyy', '2025-05-29'),
+(1019, 33, 'User logged in: sensen', '2025-05-29');
 
 -- --------------------------------------------------------
 
@@ -899,20 +1072,35 @@ CREATE TABLE `orders` (
 --
 
 INSERT INTO `orders` (`order_id`, `u_id`, `order_date`, `order_status`, `cash`, `order_change`) VALUES
-(53, 30, '2025-04-27 15:56:29', 'Completed', 200, 50),
-(109, 30, '2025-04-28 17:30:28', 'Completed', 200, 185),
+(53, 30, '2025-05-27 19:49:37', 'Completed', 200, 50),
+(109, 30, '2025-05-27 19:49:33', 'Completed', 200, 185),
 (114, 30, '2025-04-28 18:18:10', 'Completed', 60, 5),
-(128, 30, '2025-04-29 16:24:55', 'Pending', 300, 40),
-(129, 30, '2025-04-29 16:33:44', 'Pending', 300, 85),
+(128, 30, '2025-05-14 18:04:38', 'Completed', 300, 40),
+(129, 30, '2025-05-14 18:19:00', 'Completed', 300, 85),
 (133, 30, '2025-04-29 16:47:41', 'Completed', 300, 25),
 (135, 30, '2025-04-29 16:50:18', 'Completed', 400, 185),
 (163, 33, '2025-05-05 18:03:27', 'Completed', 500, 270),
-(164, 30, '2025-05-05 18:37:29', 'Completed', 400, 200),
+(164, 30, '2025-05-27 19:49:28', 'Completed', 400, 200),
 (165, 30, '2025-05-05 18:45:40', 'Completed', 400, 358),
 (166, 30, '2025-05-05 18:57:23', 'Completed', 200, 51),
 (170, 30, '2025-05-05 19:25:11', 'Completed', 270, 20),
-(171, 30, '2025-05-05 19:26:24', 'Completed', 100, 55),
-(172, 30, '2025-05-05 19:35:09', 'Completed', 400, 195);
+(171, 30, '2025-05-14 18:17:30', 'Completed', 100, 55),
+(172, 30, '2025-05-05 19:35:09', 'Completed', 400, 195),
+(174, 30, '2025-05-29 13:29:17', 'Completed', 0, 0),
+(175, 30, '2025-05-27 19:44:02', 'Archived', 0, 0),
+(176, 30, '2025-05-27 19:44:05', 'Archived', 0, 0),
+(177, 30, '2025-05-13 15:57:19', 'Completed', 250, 20),
+(181, 30, '2025-05-14 17:11:18', 'Completed', 1000, 300),
+(182, 30, '2025-05-27 19:44:11', 'Archived', 0, 0),
+(183, 30, '2025-05-27 19:44:14', 'Archived', 0, 0),
+(184, 30, '2025-05-27 19:44:09', 'Archived', 0, 0),
+(185, 30, '2025-05-26 07:48:23', 'Pending', 500, 390),
+(186, 41, '2025-05-26 18:11:56', 'Processing', 0, 0),
+(191, 30, '2025-05-27 19:47:15', 'Completed', 0, 0),
+(193, 33, '2025-05-26 18:31:05', 'Processing', 0, 0),
+(194, 33, '2025-05-26 18:33:59', 'Processing', 0, 0),
+(197, 30, '2025-05-28 18:05:49', 'Processing', 0, 0),
+(198, 30, '2025-05-28 18:06:27', 'Processing', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -956,7 +1144,22 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`
 (115, 170, 8, 5, 50, 250),
 (116, 171, 11, 3, 15, 45),
 (117, 172, 8, 2, 50, 100),
-(118, 172, 37, 5, 21, 105);
+(118, 172, 37, 5, 21, 105),
+(119, 174, 8, 2, 50, 100),
+(120, 175, 6, 1, 20, 20),
+(121, 176, 6, 1, 20, 20),
+(122, 177, 3, 2, 15, 30),
+(123, 177, 4, 2, 100, 200),
+(124, 181, 4, 5, 100, 500),
+(125, 181, 31, 4, 50, 200),
+(126, 183, 10, 2, 40, 80),
+(127, 185, 6, 3, 20, 60),
+(128, 185, 13, 2, 25, 50),
+(129, 186, 4, 2, 100, 200),
+(132, 191, 11, 2, 15, 30),
+(134, 193, 23, 2, 56, 112),
+(135, 194, 11, 2, 15, 30),
+(136, 198, 14, 2, 150, 300);
 
 -- --------------------------------------------------------
 
@@ -980,15 +1183,14 @@ CREATE TABLE `product` (
 --
 
 INSERT INTO `product` (`p_id`, `p_name`, `p_category`, `p_brand`, `p_price`, `p_stock`, `p_status`, `p_image`) VALUES
-(3, 'Piattos', 'Food and Bevarage', 'Oishii', 15, 41, 'Available', 'src/userimages/arrowback.png'),
-(4, 'Kitchen Knife', 'Household Essentials', 'TrustTolly', 100, 44, 'Available', ''),
-(6, 'Noodles', 'Food and Beverage', 'Lucky me', 20, 47, 'Available', ''),
+(3, 'Piattos', 'Food and Bevarage', 'Oishii', 15, 39, 'Available', 'src/userimages/arrowback.png'),
+(4, 'Kitchen Knife', 'Household Essentials', 'TrustTolly', 100, 37, 'Available', ''),
+(6, 'Noodles', 'Food and Beverage', 'Lucky me', 20, 44, 'Available', ''),
 (8, 'Shoes', 'Food and Beverage', 'Nike', 50, 6, 'Available', ''),
-(9, 'Shoes', 'Personal Wellness', 'Nike', 500, 10, 'Available', ''),
 (10, 'Wrench', 'Supplies Utilities', 'Mr Tool', 40, 16, 'Available', ''),
 (11, 'Water Bottle', 'Food and Beverage', 'Minerale', 15, 24, 'Available', ''),
 (12, 'Spring Water Mineral', 'Food and Beverage', 'Lemineralee', 15, 63, 'Available', ''),
-(13, 'Sip Water Bottles ', 'Food and Beverage', 'SIP ITT', 25, 69, 'Available', 'src/userimages/LOGO SYSTEM small.png'),
+(13, 'Sip Water Bottles ', 'Food and Beverage', 'SIP ITT', 25, 67, 'Available', 'src/userimages/LOGO SYSTEM small.png'),
 (14, 'Camping Chair', 'Household Essentials', 'Let\'s Go Camping', 150, 9, 'Available', 'src/userimages/pexels-summer-stock-325117.jpg'),
 (15, 'Hammer', 'Supplies Utilities', 'Saving Tools', 200, 0, 'Available', 'src/userimages/Screenshot 2025-03-07 224221.png'),
 (23, 'testingProduct', 'Household Essentials', 'testtest', 56, 56, 'Available', ''),
@@ -998,7 +1200,7 @@ INSERT INTO `product` (`p_id`, `p_name`, `p_category`, `p_brand`, `p_price`, `p_
 (28, 'Oishi halang', 'Food and Beverage', '2222', 25, 25, 'Available', 'C:\\Users\\Public\\Pictures\\Screenshots\\NetbeansImage\\eyegamay.png'),
 (29, 'Nivea Men', 'Personal Wellness', 'SkinCare ni', 80, 100, 'Available', 'C:\\Users\\Public\\Pictures\\Screenshots\\NetbeansImage\\code . step.png'),
 (30, 'papers', 'Supplies Utilities', 'Great Paper', 10, 256, 'Available', 'C:\\Users\\Public\\Pictures\\Screenshots\\NetbeansImage\\record35.png'),
-(31, 'Tool Set', 'Supplies Utilities', 'Set Realisitc', 50, 58, 'Available', 'src/productimages/8f933736-c6a9-4404-8a91-51c43d958c36.png'),
+(31, 'Tool Set', 'Supplies Utilities', 'Set Realisitc', 50, 54, 'Available', 'src/productimages/8f933736-c6a9-4404-8a91-51c43d958c36.png'),
 (32, 'Tool Set', 'Supplies Utilities', 'Set Realisitc', 50, 58, 'Available', 'src/productimages/6d9f1b1a-0e9c-421e-9e17-8b8c68c012c1.png'),
 (33, 'Picture Booth', 'Household Essentials', 'PicturePicture', 1000, 1, 'Available', 'src/productimages/ff9d236f-06c8-4b90-883b-d2a89384e971.png'),
 (35, 'ToolKit', 'Household Essentials', 'Letsgo', 100, 52, 'Available', 'src/productimages/d3218424-311c-443e-88b7-5e3024e346d4.png'),
@@ -1021,9 +1223,9 @@ CREATE TABLE `user` (
   `u_type` varchar(150) NOT NULL,
   `u_password` varchar(150) NOT NULL,
   `u_stat` varchar(150) NOT NULL,
-  `u_ans1` varchar(50) NOT NULL,
-  `u_ans2` varchar(50) NOT NULL,
-  `u_ans3` varchar(50) NOT NULL,
+  `u_ans1` varchar(50) DEFAULT NULL,
+  `u_ans2` varchar(50) DEFAULT NULL,
+  `u_ans3` varchar(50) DEFAULT NULL,
   `u_image` varchar(150) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -1046,14 +1248,15 @@ INSERT INTO `user` (`u_id`, `u_username`, `u_fname`, `u_lname`, `u_email`, `u_co
 (30, 'markyyy', 'Mark J', 'Cortes', 'cortssss@gmail.com', '09786787656', 'Admin', 'zCyQI3x9JrUvKxD9qsij6jVXM+MmFCGFz9xRhEwpSIQ=', 'Active', 'Brown', 'English', 'markmark', 'src/userimages/efb94b6c-5b8b-401a-bc1d-ef66b71b9867.png'),
 (31, 'otep', 'Anthony Joseph', 'Arambala', 'bala@gmail.com', '09897865789', 'Admin', '17FNiCXG3TsYN9RkcJjjc8Tdn4YmFbqKeadxSU4fzfA=', 'Active', 'N/A', 'N/A', 'N/A', 'src/images/testingimage.jpg'),
 (32, 'dinaaa', 'Dina Mae', 'Saduguan', 'sad@gmail.com', '09675554321', 'Admin', 'XeF/2zJhykzKccq73oq5/jz3WC28lcnNJxRBwVgSxQw=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/0a38176b-98b5-400e-8665-83c06b69f8db.jpg'),
-(33, 'sensen', 'Zennia', 'Arambala', 'zenzenn@gmail.com', '09876545678', 'Customer', '48TEKXn42oKsAF7xLqhm77+xDGpjIbX6lYiQ8lZAT5w=', 'Active', 'Green', 'Math', 'nniaa', 'src/userimages/composercheck download.png'),
+(33, 'sensen', 'Zennia', 'Arambala', 'zenzenn@gmail.com', '09876545678', 'Employee', '48TEKXn42oKsAF7xLqhm77+xDGpjIbX6lYiQ8lZAT5w=', 'Active', 'Green', 'Math', 'nniaa', 'src/userimages/add-product.png'),
 (34, 'table', 'Table tennis', 'Ping Pong', 'pongpong@gmail.com', '09897866543', 'Admin', 'Emgaq/LARGbtMikEzRzoYbhLKlxwZ2bK3QcZG84idXs=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/859eb6a1-238e-40dd-8e2d-375c38e1d10a.png'),
 (35, 'larlarlarlar', 'larry John', 'John John', 'johnnyjohhnyy@gmail.com', '09667543121', 'Customer', 'NaysV9CqcImAuFfEdHqc88iAoVHolOLTqFY4bmXJA4A=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/astock.png'),
 (36, 'zenzenzen', 'Zennia', 'Requillio', 'zen@gmail.com', '09897854678', 'Admin', 'ZbpqF9+QjOW0QZ/xyb906uEonvmpPHWoe72l8jKi9OQ=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/product-management2222.png'),
 (37, 'cristcrist', 'Crist Christ', 'Ababon', 'crist@gmail.com', '09897898765', 'Employee', '2Af8OEDN6l0vaY0eLRBDOdvUDUvi5QOonaGmaXBxgZM=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/default_user.png'),
 (38, 'TestingTesting', 'Hello ', 'Baymax', 'baymax@gmail.com', '09999898765', 'Customer', 'rmo1FWeja7ZaFujx6/851E6zGYnL2HIA+WmWQMVwvlo=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/d05a86b7-518f-4429-9557-67896260a36a.png'),
 (39, 'ChanChan ', 'ChanChan ', 'ChanChan ', 'Chan@gmail.com', '09897877898', 'Admin', 'HZnw/ZI2SkFooY5xdUuXbipDtzL+zxV0Cj7u98/zoYg=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/3672cba3-5b31-4b11-a653-1fa241852e6b.png'),
-(40, 'cashcashcash', 'Cash DOllar', 'Dollar Cash', 'dollar@gmail.com', '09887898765', 'Admin', 'gvdTjB90DXAR+Vj84OYdNG8tCsXHc/YpvAUUNYwIdZ0=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/fa6a315c-3dee-4159-82de-f289799c9a4d.png');
+(40, 'cashcashcash', 'Cash DOllar', 'Dollar Cash', 'dollar@gmail.com', '09887898765', 'Admin', 'gvdTjB90DXAR+Vj84OYdNG8tCsXHc/YpvAUUNYwIdZ0=', 'Active', 'N/A', 'N/A', 'N/A', 'src/userimages/fa6a315c-3dee-4159-82de-f289799c9a4d.png'),
+(41, 'mikejohn', 'Mike John', 'Bustamante', 'mikejohnny@gmail.com', '09777678654', 'Employee', '+Gx7Oh7UWYtBvBOCjs7C3e7ouumCnMQ9p/s1Y8AEyZA=', 'Active', NULL, NULL, NULL, 'src/userimages/default_user.png');
 
 --
 -- Indexes for dumped tables
@@ -1101,19 +1304,19 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=848;
+  MODIFY `log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1020;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=174;
+  MODIFY `order_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
 
 --
 -- AUTO_INCREMENT for table `order_items`
 --
 ALTER TABLE `order_items`
-  MODIFY `order_item_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=119;
+  MODIFY `order_item_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=137;
 
 --
 -- AUTO_INCREMENT for table `product`
@@ -1125,7 +1328,7 @@ ALTER TABLE `product`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `u_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
 
 --
 -- Constraints for dumped tables
