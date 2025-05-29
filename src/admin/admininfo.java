@@ -8,6 +8,7 @@ package admin;
 import USER.SecurityLog;
 import static admin.updateuser.getHeightFromWidth;
 import config.SessionClass;
+import java.awt.Color;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -27,7 +28,8 @@ public class admininfo extends javax.swing.JFrame {
         initComponents();
         displayUserImage(imageinfoadmin);
     }
-    
+     Color logcolor = new Color(63,195,128);
+    Color excolor = new Color(0,102,102);
     
     
     
@@ -350,6 +352,12 @@ public class admininfo extends javax.swing.JFrame {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jPanel6MouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jPanel6MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jPanel6MouseExited(evt);
+            }
         });
         jPanel6.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -441,6 +449,16 @@ public class admininfo extends javax.swing.JFrame {
         log.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_jPanel6MouseClicked
+
+    private void jPanel6MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseEntered
+        // TODO add your handling code here:
+        jPanel6.setBackground(logcolor);
+    }//GEN-LAST:event_jPanel6MouseEntered
+
+    private void jPanel6MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel6MouseExited
+        // TODO add your handling code here:
+        jPanel6.setBackground(excolor);
+    }//GEN-LAST:event_jPanel6MouseExited
 
     /**
      * @param args the command line arguments
