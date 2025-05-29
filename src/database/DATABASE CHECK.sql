@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 29, 2025 at 04:41 PM
+-- Generation Time: May 29, 2025 at 09:26 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -1050,7 +1050,8 @@ INSERT INTO `logs` (`log_id`, `user_id`, `act`, `log_date`) VALUES
 (1016, 33, 'User logged in: sensen', '2025-05-29'),
 (1017, 33, 'User logged in: sensen', '2025-05-29'),
 (1018, 30, 'User logged in: markyyy', '2025-05-29'),
-(1019, 33, 'User logged in: sensen', '2025-05-29');
+(1019, 33, 'User logged in: sensen', '2025-05-29'),
+(1020, 30, 'User logged in: markyyy', '2025-05-30');
 
 -- --------------------------------------------------------
 
@@ -1086,21 +1087,9 @@ INSERT INTO `orders` (`order_id`, `u_id`, `order_date`, `order_status`, `cash`, 
 (170, 30, '2025-05-05 19:25:11', 'Completed', 270, 20),
 (171, 30, '2025-05-14 18:17:30', 'Completed', 100, 55),
 (172, 30, '2025-05-05 19:35:09', 'Completed', 400, 195),
-(174, 30, '2025-05-29 13:29:17', 'Completed', 0, 0),
-(175, 30, '2025-05-27 19:44:02', 'Archived', 0, 0),
-(176, 30, '2025-05-27 19:44:05', 'Archived', 0, 0),
 (177, 30, '2025-05-13 15:57:19', 'Completed', 250, 20),
 (181, 30, '2025-05-14 17:11:18', 'Completed', 1000, 300),
-(182, 30, '2025-05-27 19:44:11', 'Archived', 0, 0),
-(183, 30, '2025-05-27 19:44:14', 'Archived', 0, 0),
-(184, 30, '2025-05-27 19:44:09', 'Archived', 0, 0),
-(185, 30, '2025-05-26 07:48:23', 'Pending', 500, 390),
-(186, 41, '2025-05-26 18:11:56', 'Processing', 0, 0),
-(191, 30, '2025-05-27 19:47:15', 'Completed', 0, 0),
-(193, 33, '2025-05-26 18:31:05', 'Processing', 0, 0),
-(194, 33, '2025-05-26 18:33:59', 'Processing', 0, 0),
-(197, 30, '2025-05-28 18:05:49', 'Processing', 0, 0),
-(198, 30, '2025-05-28 18:06:27', 'Processing', 0, 0);
+(185, 30, '2025-05-26 07:48:23', 'Pending', 500, 390);
 
 -- --------------------------------------------------------
 
@@ -1145,21 +1134,12 @@ INSERT INTO `order_items` (`order_item_id`, `order_id`, `product_id`, `quantity`
 (116, 171, 11, 3, 15, 45),
 (117, 172, 8, 2, 50, 100),
 (118, 172, 37, 5, 21, 105),
-(119, 174, 8, 2, 50, 100),
-(120, 175, 6, 1, 20, 20),
-(121, 176, 6, 1, 20, 20),
 (122, 177, 3, 2, 15, 30),
 (123, 177, 4, 2, 100, 200),
 (124, 181, 4, 5, 100, 500),
 (125, 181, 31, 4, 50, 200),
-(126, 183, 10, 2, 40, 80),
 (127, 185, 6, 3, 20, 60),
-(128, 185, 13, 2, 25, 50),
-(129, 186, 4, 2, 100, 200),
-(132, 191, 11, 2, 15, 30),
-(134, 193, 23, 2, 56, 112),
-(135, 194, 11, 2, 15, 30),
-(136, 198, 14, 2, 150, 300);
+(128, 185, 13, 2, 25, 50);
 
 -- --------------------------------------------------------
 
@@ -1304,13 +1284,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `logs`
 --
 ALTER TABLE `logs`
-  MODIFY `log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1020;
+  MODIFY `log_id` int(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1021;
 
 --
 -- AUTO_INCREMENT for table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `order_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=201;
+  MODIFY `order_id` int(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=202;
 
 --
 -- AUTO_INCREMENT for table `order_items`
