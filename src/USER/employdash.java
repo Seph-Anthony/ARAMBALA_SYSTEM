@@ -155,7 +155,7 @@ public void CompleteProd() {
         // Use try-with-resources
         try (Connection conn = dbc.getConnection(); //get connection
              Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS acctt FROM orders WHERE order_status = 'Complete'")) { // Corrected status to order_status
+             ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS acctt FROM orders WHERE order_status = 'Completed'")) { // Corrected status to order_status
 
             if (rs.next()) {
                 int activeuserr = rs.getInt("acctt");
